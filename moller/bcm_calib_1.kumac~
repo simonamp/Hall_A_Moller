@@ -1,0 +1,52 @@
+MACRO bcm_calib_1 n=3
+*
+* ===  BCM calibration
+* ===  n - number of runs (vector runbcm([n]) contains the run numbers)
+*
+
+  ve/cr bcmr1([n]) r
+  ve/cr rate1([n]) r
+  ve/cr erate1([n]) r 
+  ve/cr ebcm1([n]) r 
+
+  ve/read bcmr1,rate1,erate1 bcm_calib_3.dat ! OC
+  zone 1 2
+  bcmmx=0.
+  ratmx=0.
+  do i=1,[n]
+    bcm=bcmr1([i])
+*    bcm=[bcm]-661.
+*    ve/in bcmr1([i]) [bcm]
+    rat=rate1([i])
+    if [bcm]>[bcmmx] then
+      bcmmx=[bcm]
+      ratmx=[rat]
+    endif
+  enddo
+
+  sca=[bcmmx]/[ratmx]
+  mess [bcmmx] [rat] [sca]
+  ve/oper/vsca rate1 [sca] rate1
+
+  x2=[bcmmx]*1.2
+  x2=8000
+  null 0 [x2] -1000 [x2]
+  atit 'BCM' 'Rate' 
+  gr/hplot/err bcmr1 rate1 ebcm1 erate1 [n] 20 0.1
+*  fu/pl 1.342*x-6622 -10000 70000 s
+*  fu/pl 1.022*x-569. -10000 70000 s
+*  fu/pl -25.8+0.864*x+0.799e-5*x**2 -10000 70000 s
+*  fu/pl 0.826*x+193. -10000 70000 s
+* ve/cr parb(3) r 0 1. 0.
+ ve/cr parb(3) r
+ ve/fit bcmr1 rate1 erate1 p2 ! 3 parb
+  gr/hplot/err bcmr1 rate1 ebcm1 erate1 [n] 20 0.1
+  atit 'BCM' 'Rate' 
+
+RETURN
+
+
+
+
+
+

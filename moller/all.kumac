@@ -1,0 +1,22 @@
+MACRO all run1=90000 run2=1 delay=9 ptar=10. scal=1
+
+  tauto=1
+  if [ptar]<1. then
+    tauto=0
+  endif
+ 
+  do i=[run1],[run2]
+    exec run run=[i]
+    if [tauto]>0 then
+      exec asymt  delay=[delay] run=[i]
+    else
+      exec asymt  delay=[delay] run=[i] tauto=[tauto] ptar=[ptar]
+    endif
+    if [scal]>0 then
+      exec run_scal run=[i]
+    endif
+    cd //pawc
+    h/del 0
+  enddo
+
+RETURN

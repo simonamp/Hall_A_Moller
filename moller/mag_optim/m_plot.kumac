@@ -1,0 +1,95 @@
+MACRO m_plot same=0 m0=24 m1=20 m2=22 m3=24 col=1 dxk=0 dyk=0 plth=1 msiz=0.1
+*
+* ---  Plots the results of m_opt simulation
+*
+
+
+    ne=$VLEN(enerv)
+    if [ne]=0 then
+      goto eend
+    endif
+
+    wy=2
+    if [plth]=0 then
+      wy=1
+    endif
+
+    set pmci [col]
+
+    if [same]=0 then
+      ve/cr xyl(2,2,2)
+      zone 1 [wy]
+      x1=enerv(1)
+      x1=[x1]-0.2
+      x2=$SIGMA(vmax(enerv))
+      x2=[x2]+0.2
+      y1=0
+      y2=$SIGMA(vmax(thetv))
+      y2=[y2]+5.
+      ve/in xyl(1:2,1:2,1) [x1] [x2] [y1] [y2]
+      if [plth]=1 then
+        null [x1] [x2] [y1] [y2]
+        atit 'Beam energy, GeV' 'Acceptance in [Q]?CM!, degrees'
+      endif
+    else
+      zone 1 [wy] 1 s
+      mess S1
+      x1=xyl(1,1,1)
+      x2=xyl(2,1,1)
+      y1=xyl(1,2,1)
+      y2=xyl(2,2,1)
+      if [plth]=1 then
+        null [x1] [x2] [y1] [y2] ab
+      endif
+    endif
+    if [plth]=1 then
+      gr/hpl/err enerv thetv err1 err1 [ne] [m0] [msiz] txt=' ' 
+      x=$SIGMA([x1]*0.7+[x2]*0.3)
+      y=$SIGMA([y1]*0.8+[y2]*0.2+[dyk])
+      gr/hpl/key [x] [y] [m0] [txt] 
+    endif
+
+
+    if [same]=0 then
+      y1=3.
+      y1=$SIGMA(min([y1],vmin(q1mav)))
+      y1=$SIGMA(min([y1],vmin(q2mav)))
+      y1=$SIGMA(min([y1],vmin(q3mav)))
+      y1=[y1]-0.5
+      y2=-3.
+      y2=$SIGMA(max([y2],vmax(q1mav)))
+      y2=$SIGMA(max([y2],vmax(q2mav)))
+      y2=$SIGMA(max([y2],vmax(q3mav)))
+      y2=[y2]+0.1
+      ve/in xyl(1:2,1:2,2) [x1] [x2] [y1] [y2]
+      null [x1] [x2] [y1] [y2] 
+      atit 'Beam energy, GeV' 'Fields in Moller quads, kGs'
+    else
+      zone 1 [wy] [wy] s
+      x1=xyl(1,1,2)
+      x2=xyl(2,1,2)
+      y1=xyl(1,2,2)
+      y2=xyl(2,2,2)
+      null [x1] [x2] [y1] [y2] ab
+    endif
+    gr/hpl/err enerv q1mav err1 err1 [ne] [m1] [msiz]
+    x=$SIGMA([x1]*0.7+[x2]*0.3+[dxk])
+    y=$SIGMA([y1]*0.8+[y2]*0.2)
+    gr/hpl/key [x] [y] [m1] 'Q1' 
+    gr/hpl/err enerv q2mav err1 err1 [ne] [m2] [msiz]
+    y=$SIGMA([y1]*0.85+[y2]*0.15)
+    gr/hpl/key [x] [y] [m2] 'Q2' 
+    gr/hpl/err enerv q3mav err1 err1 [ne] [m3] [msiz]
+    y=$SIGMA([y1]*0.90+[y2]*0.10)
+    gr/hpl/key [x] [y] [m3] 'Q3' 
+    y=$SIGMA([y1]*0.75+[y2]*0.25)
+    text [x] [y] [txt] 0.27 0. C
+
+    set pmci 1
+
+    eend:
+RETURN
+
+
+
+

@@ -1,0 +1,521 @@
+MACRO a_analyse lun=X id=1000 fill=1 cut=30 cutb=20 cutc=10 xt1=-0.8 xt2=0.8 xtm1=-1.2 xtm2=1.2 
+*
+* --- Analyse a scal ntuple
+*     lun - logical unit
+*     id - >=0 histograms starting number
+*     fill = 0 - only print the results
+*     cut - cuts starting number
+*     cutb - cut on the beam rate/window
+*     cutc - cut on the coincidence rate/window
+*     xt1,xt2 - cuts on the relative X-position of the target in cm (for the rate estimates)
+*     xtm1,xtm2 - cuts on the relative X-position of the target in cm (for the rate estimates)
+  
+ namsc1='Left arm                         '
+ namsc2='Right arm                        '
+ namsc3='Coincidence                      '
+ namsc4='Coincidence accidentals          '
+ namsc5='BCM                              '
+ namsc6='Left arm accidentals / LED pulses'
+ namsc7='100 kHz in window                '
+ namsc8='100 kHz                          '
+ namsc9='Left LG                          '
+ namsc10='Right LG                         '
+ namsc11='Left aperture                    '
+ namsc12='Right aperture                   '
+
+ idp1=[id]+21
+ idp2=[id]+22
+
+ if [fill]=0 then
+   goto eend
+ endif
+
+ nvsca=12
+ if $VDIM(kvsca,1)<[nvsca] then
+   ve/cr kvsca([nvsca]) i
+   ve/in kvsca    1  2  3  4  5  6 12 15 21 22 24 25
+ endif 
+ if $VDIM(kvnorm,1)<[nvsca] then
+   ve/cr kvnorm([nvsca]) i
+   ve/in kvnorm   1  1  1  1  0  1  0  0  1  1  1  1
+ endif 
+
+ if $VDIM(kvpol,1)<[nvsca] then
+   ve/cr kvpol([nvsca]) i
+   ve/in kvpol    2  2  2  1  1  1  0  0  1  1  1  1
+ endif 
+
+ if $VDIM(kvpolbg,1)<[nvsca] then
+   ve/cr kvpolbg([nvsca]) i
+   ve/in kvpolbg  0  0  0  0  0  0  0  0  0  0  0  0
+ endif 
+ if $VDIM(kvpolnr,1)<[nvsca] then
+   ve/cr kvpolnr([nvsca]) i
+   ve/in kvpolnr  1  1  1  1  2  0  0  0  0  0  0  0
+ endif 
+
+ mxruns=40
+ if $VDIM(a_runs_dat,2)<[mxruns] then
+   ve/cr a_runs_dat(8,[mxruns]) r
+ endif
+ ntmp=[mxruns]*8
+ ve/in a_runs_dat [ntmp]*0
+
+ if $VDIM(a_resu_com,1)<20 then
+   ve/cr a_resu_com(20) r
+ endif
+ ve/in a_resu_com 20*0
+
+ if $VDIM(a_resu_chn,2)<[nvsca] then
+   ve/cr a_resu_chn(8,[nvsca]) r
+ endif
+ ntmp=[nvsca]*8 
+ ve/in a_resu_chn [ntmp]*0
+
+ if $VDIM(ia_resu_chn,1)<[nvsca] then
+   ve/cr ia_resu_chn([nvsca]) r
+ endif
+ ve/in ia_resu_chn [nvsca]*0
+
+ if $VDIM(par,1)<10 then
+   ve/cr par(10) r
+ endif
+ if $VDIM(epar,1)<10 then
+   ve/cr epar(10) r
+ endif
+
+ if $VDIM(kcurruns,1)<40 then
+   ve/cr kcurruns(40) i
+ endif
+ ve/in kcurruns 40*0
+
+ if $VDIM(ktargs,1)<10 then
+   ve/cr ktargs(10) i
+ endif
+ ve/in ktargs 10*0
+
+ if $VDIM(hkcoils,1)<10 then
+   ve/cr hkcoils(10) r
+ endif
+ ve/in hkcoils 10*0
+
+* Beam current
+ cut1=[cut]+1
+ cut $[cut]  ifzug=0
+ cut2=[cut]+2
+ cut $[cut1] a_signal.f(5,0,0,0,0,0,0)>[cutb]
+ 
+* Get the average beam rate
+
+ idtmp=[id]+100
+ if $HEXIST([idtmp])>0 then
+   h/del [idtmp]
+ endif 
+ nt/pl //[lun]/1.a_signal.f(5,0,0,0,0,0,0) $[cut].and.$[cut1] ! ! ! N [idtmp]
+ nent=$HINFO([idtmp],'ENTRIES')
+ if [nent]<5 then
+   mess Too few entries [nent], exiting... 
+   exitm
+ endif
+
+ bmave=$HINFO([idtmp],'MEAN')
+ bmrms=$HINFO([idtmp],'RMS')
+
+ h/del [idtmp]
+ nt/pl //[lun]/1.nelem $[cut].and.$[cut1] ! ! ! N [idtmp]
+ nelem=$HINFO([idtmp],'MEAN')
+ nelem=$SIGMA(INT([nelem]+0.3))
+ if [nelem]<1 then
+   mess Too few train elements [nelem], exiting... 
+   exitm
+ endif
+
+ mess Beam: [nent] average=[bmave]  rms=[bmrms]  train elements [nelem]
+ 
+ cutb1=$SIGMA(MIN([bmave]*0.5,[bmave]-10*[bmrms]))
+ cutb2=$SIGMA(8.*[bmrms]+4)
+ cut $[cut2] a_signal.f(5,0,0,0,0,0,0)>[cutb1].and.a_spread.f(5)*[bmave]<[cutb2]
+
+ cut3=[cut]+3
+ cut $[cut3] a_signal.f(3,0,0,0,0,0,0)>[cutc]
+ cut4=[cut]+4
+ cut $[cut4] [xt1]<a_tpos.f(1,1)<[xt2]
+ cut5=[cut]+5
+ cut $[cut5] [xtm1]<a_tpos.f(1,1)<[xtm2]
+ 
+ if $HEXIST([idp1])>0 then
+   h/del [idp1]
+ endif 
+ nt/pl //[lun]/1.a_signal.f(3,0,0,0,0,0,0)%izug $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [idp1]
+
+*  Get the run numbers
+ wait
+
+ h/del [idtmp]
+ nt/pl //[lun]/1.izrun $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [idtmp]
+ nx=$HINFO([idtmp],'XBINS')
+ if $VDIM(xvrtmp,1)>0 then
+   ve/del xvrtmp
+ endif
+ if $VDIM(yvrtmp,1)>0 then
+   ve/del yvrtmp
+ endif
+ ve/cr xvrtmp([nx]) r
+ ve/cr yvrtmp([nx]) r
+ h/get_vec/absc [idtmp] xvrtmp  
+ h/get_vec/cont [idtmp] yvrtmp  
+ k=0
+ r=0
+ do i=1,[nx]
+   x=xvrtmp([i])
+   x=$SIGMA(INT([x]))
+   y=yvrtmp([i])
+   if [y]>0 then
+     if [r]<>[x] .AND. [k]<$VDIM(kcurruns,1) then
+       k=[k]+1
+       r=[x]
+       ve/in kcurruns([k]) [r]
+     endif
+   endif
+ enddo
+
+ do i=1,$VLEN(kcurruns,1)
+   r=kcurruns([i])
+   if [r]>0 .AND. [i]<=$VDIM(a_runs_dat,2) then
+
+     ve/in a_runs_dat(1,[i]) [r]
+
+     exec get_settings run=[r]
+     itarg=run_sett(101)
+     ve/in a_runs_dat(2,[i]) [itarg]
+     coils=run_sett(79)
+     ve/in a_runs_dat(3,[i]) [coils]
+     coils=$EVAL(ABS([coils]))
+
+     find=0
+     do j=1,$VLEN(ktargs,1)
+       tt=ktargs([j])
+       if [tt]=[itarg] then
+         find=1
+       endif
+     enddo
+     if [find]=0 then
+       j=$VLEN(ktargs,1)+1
+       ve/in ktargs([j]) [itarg]
+     endif
+
+     find=0
+     do j=1,$VLEN(hkcoils,1)
+       tt=hkcoils([j])       
+       tt=$EVAL(ABS([tt]))
+       mess tt=[tt] [coils]
+       d=$EVAL(ABS([tt]-[coils]))
+       if [d]<0.01 then
+         find=1
+       endif
+     enddo
+     if [find]=0 then
+       j=$VLEN(hkcoils,1)+1
+       ve/in hkcoils([j]) [coils]
+     endif
+
+   endif
+ enddo
+
+ if $HEXIST([idp2])>0 then
+   h/del [idp2]
+ endif 
+ 2dh [idp2] 'Target X vs Y' 35 -3. 4. 40 -2. 2. 
+ nt/pl //[lun]/1.a_tpos.f(1,1)%a_tpos.f(2,0) $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [idp2]
+ nsc=[nvsca]
+* nsc=5
+ do isc=1,[nsc]
+   jsc=kvsca([isc])
+   if [jsc].GT.0 .AND. [jsc]<33 then
+     id0=[id]+100+[isc]
+     if $HEXIST([id0])>0 then
+       h/del [id0]
+     endif
+     inorm=kvnorm([isc])
+     anorm=1.
+     if [inorm]>0 then
+       anorm=[bmave]
+     endif
+     nt/pl //[lun]/1.a_signal.f([jsc],[inorm],0,0,0,0,0)*[anorm] $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [id0]
+     x1=$HINFO([id0],'XMIN')
+     x2=$HINFO([id0],'XMAX')
+     x1=$SIGMA(MAX(0.,[x1]))
+     x1=$SIGMA(INT(([x1]-5)/10.)*10)
+     x2=$SIGMA(INT(([x2]+15)/10.)*10)
+     dxmin=$SIGMA(1./[nelem])
+     nmx=100
+     dx=$SIGMA(([x2]-[x1])/[nmx])
+*     dx=$SIGMA(MAX([dx],[dxmin]))
+     if [dx]<$SIGMA([dxmin]*2) then
+       dx=[dxmin]
+     elseif [dx]<$SIGMA([dxmin]*4) then
+       dx=$SIGMA([dxmin]*2)
+     elseif [dx]<2 then
+       dx=1
+     elseif [dx]<5 then
+       dx=2
+     elseif [dx]<10 then
+       dx=5
+     else
+       dx=$SIGMA(INT([dx]/10.+0.1)*10)
+     endif
+     nx=$SIGMA(INT(([x2]-[x1])/[dx]+0.1))
+     x2=$SIGMA([x1]+[nx]*[dx])
+     h/del [id0]
+     nam=[namsc[isc]]
+     tit='Rate/window for '//[nam]
+     1dh [id0] [tit] [nx] [x1] [x2]
+     mess [id0] [nx] [x1] [x2] [dx]
+     dd=$SIGMA([dxmin]*0.1)
+     nt/pl //[lun]/1.a_signal.f([jsc],[inorm],0,0,0,0,0)*[anorm]+[dd] $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [id0]
+     ave=$HINFO([id0],'MEAN')
+     rms=$HINFO([id0],'RMS')
+     sum=$HINFO([id0],'SUM')
+     err=$SIGMA([rms]/SQRT([sum]-1))
+     ve/in a_resu_chn(1:2,[isc]) [ave] [err]   
+*     ve/in a_resu_chn(2,[isc]) [err]       
+*
+* ----        Helicity dependent distributions
+*
+     id01=[id]+200+[isc]
+     if $HEXIST([id01])>0 then
+       h/del [id01]
+     endif
+     tit='Rate/window for hel 0 (-helmh)'//[nam]
+     1dh [id01] [tit] [nx] [x1] [x2]
+     idopt [id01] stat
+     nt/pl //[lun]/1.a_signal.f([jsc],[inorm],1,0,0,0,0)*[anorm] $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [id01]
+
+     id02=[id]+300+[isc]
+     if $HEXIST([id02])>0 then
+       h/del [id02]
+     endif
+     tit='Rate/window for hel 1 (-helmh)'//[nam]
+     1dh [id02] [tit] [nx] [x1] [x2]
+     idopt [id02] stat
+     nt/pl //[lun]/1.a_signal.f([jsc],[inorm],2,0,0,0,0)*[anorm] $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut4] ! ! ! N [id02]
+*
+*
+*     Asymmetry calculation
+*
+     ias=kvpol([isc])
+     if [ias]>0 then
+       ibg=kvpolbg([isc])
+       nrm=kvpolnr([isc])
+       ias=[ias]
+       nx=200
+       id1=[id]+500+[isc]
+       x1h=0.1
+
+
+       id2=[id]+600+[isc]
+       x2h=2.
+
+       if [isc]=4 then
+         x1h=$SIGMA([x1h]*10)
+         x2h=$SIGMA([x2h]*10)
+         nx=[nx]*2
+       endif
+       if [isc]=5 then
+         nx=[nx]*5
+       endif
+
+       if $HEXIST([id1])>0 then
+         h/del [id1]
+       endif
+       if $HEXIST([id2])>0 then
+         h/del [id2]
+       endif
+       tit='Asymmetry for '//[nam]
+       1dh [id1] [tit] [nx] -[x1h] [x1h]
+       nt/pl //[lun]/1.a_asymm.f([jsc],[ibg],[nrm],1,0,0,0) _ 
+              $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut5] ! ! ! N [id1]
+       ave=$HINFO([id1],'MEAN')
+       rms=$HINFO([id1],'RMS')
+       sum=$HINFO([id1],'SUM')
+       asyc=0
+       easyc=0
+       if [sum]>10 then
+         ve/in par(1:3) $HINFO([id1],'MAX') [ave] [rms]
+         h/fit [id1] g 0 3 par ! ! ! epar
+         asyc=par(2)
+         awid=par(3)
+         easyc=epar(2)
+         easyc=$SIGMA(ABS([easyc]))
+* Was the fit OK?
+         awidh=$SIGMA([awid]/SQRT([sum]))
+         ia=ia_resu_chn([isc])
+         if [easyc]<$SIGMA([awidh]*0.2) .OR. [easyc]>$SIGMA([awidh]*5.) then 
+           a1=$HINFO([id01],'MEAN')
+           a2=$HINFO([id02],'MEAN')
+*           r1=$HINFO([id01],'RMS')
+*           r2=$HINFO([id02],'RMS')
+           asyc=$SIGMA(([a2]-[a1])/([a2]+[a1]))
+*           aa=$SIGMA(2./([a2]+[a1])**2)
+*           easyc=$SIGMA([aa]*SQRT(([a1]*[r2])**2+([a2]*[r1])**2))
+           easyc=$SIGMA([rms]/SQRT([sum]))
+           ia=$SIGMA([ia]+1) 
+*           mess NOFIT= [a1] [r1] [a2] [r2] [asyc] [aa] [easyc]
+         else
+           ia=$SIGMA([ia]+2) 
+         endif
+       endif
+       ve/in ia_resu_chn([isc]) [ia] 
+       ve/in a_resu_chn(3:4,[isc]) [asyc] [easyc]       
+
+       if [ias]>1 then
+
+          h/del [idtmp]
+          nt/pl //[lun]/1.a_asymm.f([jsc],[ibg],[nrm],-1,0,0,0) _ 
+              $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut5] ! ! ! N [idtmp]
+          pfact=$HINFO([idtmp],'MEAN')
+          pfactrms=$HINFO([idtmp],'RMS')
+          asyc=$SIGMA([asyc]*[pfact])
+          easyc=$SIGMA([easyc]*[pfact])
+          easyc=$SIGMA(ABS([easyc]))
+          ve/in a_resu_chn(5:6,[isc]) [asyc] [easyc]       
+
+          tit='Polarization for '//[nam]
+          1dh [id2] [tit] [nx] -[x2h] [x2h]
+          nt/pl //[lun]/1.a_asymm.f([jsc],[ibg],[nrm],2,0,0,0) _ 
+              $[cut].and.$[cut1].and.$[cut2].and.$[cut3].and.$[cut5] ! ! ! N [id2]
+          ave=$HINFO([id2],'MEAN')
+          rms=$HINFO([id2],'RMS')
+          ve/in par(1:3) $HINFO([id2],'MAX') [ave] [rms]
+          h/fit [id2] g 0 3 par ! ! ! epar
+          polc=par(2)
+          pwid=par(3)
+          epolc=epar(2)
+          epolc=$SIGMA(ABS([epolc]))
+          ve/in a_resu_chn(7:8,[isc]) [polc] [epolc]     
+       endif
+
+     endif 
+     
+   endif
+ enddo
+
+ eend:
+
+ zone 2 2
+ opt liny
+ set fit 111
+
+ txt='Moller analysis for file '//[lun]//' runs'
+ do i=1,$VLEN(a_run_dat,2)
+   r=a_run_dat(1,[i])
+   if [r]>0 then
+     txt=[txt]//' '//[r]
+   endif
+ enddo
+
+ txt=[txt]//' targets'
+ do i=1,$VLEN(ktargs,1)
+   r=ktargs([i])
+   txt=[txt]//' '//[r]
+ enddo
+
+ txt=[txt]//' coils'
+ do i=1,$VLEN(hkcoils,1)
+   r=hkcoils([i])
+   txt=[txt]//' '//[r]
+ enddo
+
+ titl [txt]
+ tit=[txt]
+
+ opt utit
+ h/pl [idp1]
+ atit 'Hel. cycle (zug) number' 'Coincidences/window'
+ opt htit
+ h/pl [idp2] box
+ atit 'Y (Z), cm, target' 'X cm, target'
+ id2=[id]+600+3
+ nx=$HINFO([id2],'XBINS')
+ x1=$HINFO([id2],'XMIN')
+ x2=$HINFO([id2],'XMAX')
+ dx=$EVAL(([x2]-[x1])/[nx])
+ 
+ h/pl [id2]
+ txt='Cycles/'//[dx]
+ atit 'Beam polarization' [txt]
+
+ nvsca=$VDIM(kvsca)
+ nsc=[nvsca]
+
+
+* mess '  Aver. rate/33ms window      Asymmetry         Polar. (Pt av)     Polarization '
+* ve/wri a_resu_chn ! _
+* F9.2,' +/- ',F9.3,2X,F10.6,F9.6,3X,F8.4,F7.4,3X,F8.4,F7.4
+
+ mess [tit]
+ mess '  runs  target coils,A '
+ do i=1,$VDIM(a_runs_dat,1)
+   r=a_runs_dat(1,[i])
+   if [r]>0 then
+     itarg=a_runs_dat(2,[i])
+     coils=a_runs_dat(3,[i])
+     lin=$format([r],I6)
+     lin=' '//[lin]//'  '//$FORMAT([itarg],I3)//' '//$FORMAT([coils],F7.2)
+     mess [lin]
+   endif
+ enddo
+
+
+
+ mess '                                         Aver. rate/33ms window  flag          Asymmetry             Polar. (Pt av)          Polarization '
+ do isc=1,[nsc]
+   ias=kvpol([isc])
+
+   lin=$format([isc],I2)
+   lin=' '//[lin]//'  '//[namsc[isc]]
+   k=1
+   a=a_resu_chn([k],[isc])
+   lin=[lin]//'  '//$FORMAT([a],F9.2)
+   k=[k]+1
+   a=a_resu_chn([k],[isc])
+   lin=[lin]//' +/- '//$FORMAT([a],F9.3)
+
+   a=ia_resu_chn([isc])
+   lin=[lin]//' '//$FORMAT([a],I3)
+
+   if [ias]>0 then
+     k=[k]+1
+     a=a_resu_chn([k],[isc])
+     lin=[lin]//'    '//$FORMAT([a],F10.6)
+     k=[k]+1
+     a=a_resu_chn([k],[isc])
+     lin=[lin]//' +/- '//$FORMAT([a],F10.6)
+
+     if [ias]>1 then
+       k=[k]+1
+       a=a_resu_chn([k],[isc])
+*   mess [lin]
+       lin=[lin]//'    '//$FORMAT([a],F8.4)
+*   mess [lin]
+       k=[k]+1
+       a=a_resu_chn([k],[isc])
+       lin=[lin]//' +/- '//$FORMAT([a],F7.4)
+*   mess [lin]
+*   mess lin1=[lin]
+
+       k=[k]+1
+       a=a_resu_chn([k],[isc])
+       lin=[lin]//'    '//$FORMAT([a],F9.4)
+*   mess a=[a]
+*   mess lin2=[lin]
+       k=[k]+1
+       a=a_resu_chn([k],[isc])
+       lin=[lin]//' +/- '//$FORMAT([a],F8.4)
+     endif
+   endif
+*   lin=$QUOTE([lin])
+   mess [lin]
+ enddo
+
+RETURN

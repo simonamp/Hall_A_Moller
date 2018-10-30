@@ -1,0 +1,8 @@
+MACRO targ_ang_cal
+  ve/cr dial(8) r 21 29 38 119 137 146 155 163
+  ve/cr trat(8) r 20.5 28.4 37.1 117.6 136.2 144.2 152.8 160.5
+  ve/cr erat(8) r
+  null -10 180 -10 180
+  gr/hpl/err dial trat erat erat 8 20 0.1
+  atit 'Dial' 'Angle from the rates'
+RETURN

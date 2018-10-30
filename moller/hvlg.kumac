@@ -1,0 +1,84 @@
+MACRO hvlg  e0=1.061 set=0
+* Moller calorimeter HV calculation
+   if [set]=0 then
+ nc=4
+ ve/cr ben([nc]) r   2.428   3.484   4.900   6.070  
+ ve/cr ch1([nc]) r  1540.0  1490.0  1425.0  1375.0
+ ve/cr ch2([nc]) r  1685.0  1585.0  1500.0  1450.0
+ ve/cr ch3([nc]) r  1905.0  1835.0  1730.0  1655.0
+ ve/cr ch4([nc]) r  1810.0  1680.0  1590.0  1540.0
+ ve/cr ch5([nc]) r  1610.0  1565.0  1490.0  1440.0
+ ve/cr ch6([nc]) r  1530.0  1440.0  1380.0  1320.0
+ ve/cr ch7([nc]) r  1615.0  1548.0  1470.0  1403.0
+ ve/cr ch8([nc]) r  1700.0  1560.0  1480.0  1410.0
+   goto hv
+   elseif [set]=1 then
+ nc=3
+ ve/cr ben([nc]) r   3.660   4.700   5.900
+ ve/cr ch1([nc]) r  1320.0  1352.0  1332.0
+ ve/cr ch2([nc]) r  1476.0  1426.0  1406.0
+ ve/cr ch3([nc]) r  1650.0  1630.0  1610.0
+ ve/cr ch4([nc]) r  1571.0  1527.0  1507.0
+ ve/cr ch5([nc]) r  1392.0  1410.0  1391.0
+ ve/cr ch6([nc]) r  1371.0  1340.0  1320.0
+ ve/cr ch7([nc]) r  1447.0  1393.0  1373.0
+ ve/cr ch8([nc]) r  1520.0  1464.0  1444.0
+   goto hv
+   elseif [set]>1 then
+ nc=4
+* runs             15304    15202    15441    14788  
+ ve/cr ben([nc]) r 1.714    2.254    3.35     5.563
+ ve/cr ch1([nc]) r 1644.7   1615.0   1444.3   1326.2         
+ ve/cr ch2([nc]) r 1775.5   1804.3   1540.5   1401.4
+ ve/cr ch3([nc]) r 2069.8   1929.3   1759.9   1610.0        
+ ve/cr ch4([nc]) r 1914.7   1800.1   1630.8   1485.5      
+ ve/cr ch5([nc]) r 1706.0   1621.1   1500.9   1370.6     
+ ve/cr ch6([nc]) r 1605.8   1509.8   1400.7   1295.6     
+ ve/cr ch7([nc]) r 1711.2   1660.7   1500.5   1350.4      
+ ve/cr ch8([nc]) r 1786.0   1735.5   1555.5   1385.8    
+
+   endif
+*
+
+
+
+ hv:
+ ve/cr par(3) r 1.0 1.0 1.0
+ ve/cr hve(8) r
+ opt nbox
+ opt ndat
+ opt nstat
+ sigma err=array([nc],0.001#0.001)
+ sigma erh=array([nc],10.#10.)
+ null 0.9 6.2 1300. 2020.
+ xc=1.1
+ yc0=1900.
+ text [xc] [yc0] Ebeam=[e0]GeV 0.4
+   do lg=1,8
+      lg1=[lg]
+       if [lg1]=8 then
+         lg1=1
+       endif
+     set pmci [lg1]
+     set plci [lg1]
+     set txci [lg1]
+     mt=19+[lg1]
+     set mtyp [mt]
+     gr/hpl/err ben ch[lg] err erh [nc] [mt] ! s
+     ve/fit ben ch[lg]  err p1 wsq 0 par
+     aa=par(1)
+     bb=par(2)
+*     mess aa=[aa], bb=[bb]
+     hv=[aa]+[e0]*[bb]
+     ve/in hve([lg]) [hv]
+     yc=[yc0]-[lg]*50.
+     text [xc] [yc] Ch[lg]=[hv]V 0.4 
+   enddo
+ set txci 1
+ mess For Ebeam=[e0]GeV
+ atitle 'Beam Energy, GeV' 'High Voltage, V'
+ text 3.5 2050. 'Moller Calorimeter High Voltage' 0.5 0 C  
+ ve/pr hve
+
+
+RETURN

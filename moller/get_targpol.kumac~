@@ -1,0 +1,183 @@
+MACRO get_targpol  hcoil=[hcoil] target=[target] zcm=[zcm] print=1 clear=1 init=0 angl=[angl]
+
+*** Jan 2009 AG: modified for different target polarization normalization pr
+*** and different target angle [angl] deg.
+*
+* --- Get the target polarization in the tpolcur(1) vector
+*     hcoil - coils current
+*     target - target number
+*     zcm - the coordinate along the foil (nearly Z)
+*     print=0 - do not print anything
+*          =1 - print something
+*          =2 - print more
+*     clear=0 - do not erase auxilliary vector
+*          >0 - erase them
+*     init>0 - fill the vectors for Pol(Z) (called via tpol_z.f)
+*
+
+  if $VDIM(tpolcur,1)<5 then
+    ve/cr tpolcur(5) r
+  endif
+
+  if [target]<1 .OR. [target]>5 then
+     ve/in tpolcur(1:3) 0.000001 1. 1.
+     exitm
+  endif
+
+*  Vectors to store the pointers to arrays/histograms with various target data 
+  mxt=50
+  if $VDIM(idpolall,1)<[mxt] then
+    id=50000
+    ve/cr idpolall([mxt]) i
+    do i=1,[mxt]
+      id=[id]+10
+      ve/in idpolall([i]) [id]
+    enddo
+  endif
+  if $VDIM(itpolall,1)<[mxt] then
+    ve/cr itpolall([mxt]) i
+  endif
+  if $VDIM(tpolall,2)<[mxt] then
+    ve/cr tpolall(2,[mxt]) r
+  endif
+
+  ahcoil=$SIGMA(ABS([hcoil]))
+  ve/in tpolcur(5) 0.
+
+  nst=$VLEN(itpolall,1)
+* ---   Is the point already stored?
+  find=0
+  do i=1,[nst]
+     t=itpolall([i])
+     h=tpolall(1,[i])
+     dh=$SIGMA(ABS([h]-[ahcoil]))
+     if [t]=[target] .AND. [dh]<0.01 then
+       find=[i]
+       goto endl0
+     endif
+  enddo
+  endl0:
+
+  if [find]>0 then
+    id=idpolall([find])
+    id1=[id]+1
+    h/get_vec/con [id] tarz
+    h/get_vec/con [id1] poltarz
+    h=tpolall(1,[find])
+    ve/in tpolcur(2) [target]
+    ve/in tpolcur(3) [h]
+    ve/in tpolcur(4) 1.
+    mess Use entry [find] , histograms id=[id],[id1]
+
+    exitm
+
+  endif
+
+*mess Step 1
+
+  hmin=5.7
+  hmax=20.0
+  
+  if [ahcoil]<[hmin] then
+     mess ahcoil=[ahcoil] is less than the min allowed value of [hmin]
+     ahcoil=[hmin]
+     ve/in tpolcur(5) 1.
+  endif
+  if [ahcoil]>[hmax] then
+     mess ahcoil=[ahcoil] is greater than the max allowed value of [hmax]
+     ahcoil=[hmax]
+     ve/in tpolcur(5) 1.
+  endif
+
+*  To mm
+  z=$SIGMA([zcm]*10.)
+  zlim1=-25.
+  zlim2=30.
+  if [z]>[zlim2] then
+     mess z=[z] is greater than the max allowed value of [zlim2]
+     z=[zlim2]
+     ve/in tpolcur(5) 1.
+  endif
+  if [z]<[zlim1] then
+     mess z=[z] is less than the min allowed value of [zlim1]
+     z=[zlim1]
+     ve/in tpolcur(5) 1.
+  endif
+
+*  z=$FORMAT([z],F5.1)
+  lcd targpol
+    if [run]<14900 then
+  exec point_p target=[target] bop=[ahcoil] foil_coor=[z] print=[print] clear=[clear] init=[init] pr=[pr] angl=[angl]
+    elseif
+  exec point_p2011 target=[target] bop=[ahcoil] foil_coor=[z] print=[print] clear=[clear] init=[init] pr=[pr] angl=[angl]
+    endif
+  lcd ../
+
+  if [init]>0 then
+    nc=$VDIM(poltarz,1)
+    ve/in tpolcur(4) 1.
+    nc1=$VDIM(tpolcur,1)
+    fnam='inc/a_tpol.inc'
+    if $FEXIST([fnam]) then
+      shell rm -f [fnam]
+    endif 
+    fmess 'C == Vectors for current target polarization (Z)' [fnam]
+    inam='      INTEGER MXTPOLZ'
+    fmess [inam] [fnam]
+    inam='      PARAMETER (MXTPOLZ='//[nc]//')'
+    fmess [inam] [fnam]
+    inam='      VECTOR POLTARZ('//[nc]//'),TARZ('//[nc]//')'
+    fmess [inam] [fnam]    
+    inam='      VECTOR TPOLCUR('//[nc1]//')'
+    fmess [inam] [fnam]    
+    fmess 'C  TPOLCUR(1) - polar, (2)=target, (3) - hcoil, (4) >0 - Z vector stored, (5)=1 - Z/Hcoil beyond the limits' [fnam]
+
+
+    nst=$VLEN(itpolall,1)
+    mxt=$VDIM(itpolall,1)
+*     If the arrays are full - erase all 
+    if [nst]>=[mxt] then
+       ve/in itpolall [mxt]*0
+       do i=1,[mxt]
+          id=idpolall([i])
+          h/del [id]
+          id=[id]+1
+          h/del [id]
+       enddo
+    endif
+
+* ---   Fill the data (if new)
+    find=0
+    do i=1,[nst]
+       t=itpolall([i])
+       h=tpolall(1,[i])
+       dh=$SIGMA(ABS([h]-[ahcoil]))
+       if [t]=[target] .AND. [dh]<0.01 then
+         find=[i]
+         goto endl1
+       endif
+    enddo
+    endl1:
+
+    if [find]=0 then
+      nst=[nst]+1
+      ve/in itpolall([nst]) [target]
+      ve/in  tpolall(1,[nst]) [hcoil]
+      nz=$VDIM(tarz,1)
+      id=idpolall([nst])
+      id1=[id]+1
+      1dh [id] 'Z coord' [nz] 0 [nz]
+      h/put_vec/con [id] tarz
+      1dh [id1] 'Polariz' [nz] 0 [nz]
+      h/put_vec/con [id1] poltarz
+      mess Fill entry [nst] with [nz] points, histograms id=[id],[id1]
+
+    endif
+
+  endif
+
+*  ve/pri tpolcur
+RETURN
+
+  
+  

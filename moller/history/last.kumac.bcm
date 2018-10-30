@@ -1,0 +1,27 @@
+*** Begin of history file: Fri Nov  6 13:14:04 2009
+exec run run=13825
+nt/sca //lun21/1 nsca>0 100 1 ! itrig(1) itrig(6)
+nt/sca //lun21/1 nsca>0 100 1 ! itrig(1) itrig(6) itrig(7)
+nt/sca //lun21/1 nsca>0 1000 1 ! itrig(1) itrig(6) itrig(7)
+nt/sca //lun21/1 nsca>0 100 1 ! itrig(1) itrig(6) itrig(8)
+nt/sca //lun21/1 nsca>0 1000 1 ! itrig(1) itrig(6) itrig(8)
+aexec run_scal run=13825
+shell
+exec run_scal run=13825
+ld //
+shell
+nt/sca //lun21/1 nsca>-1 1000 1 ! itrig(1) itrig(6) itrig(8)
+exec asymwr run=13825 ptar=0.08
+exec run_scal run=13825
+shell
+h/fil 60 /adaql1/data1/moller/moller_scal_led_13825.nt
+nt/pri //lun60/1
+ant/pl //lun60/1.a_asym
+shell
+nt/pl //lun60/1.a_asymm.f(5,0,0,0,0,0,0)
+zone 2 2
+nt/pl //lun60/1.a_asymm.f(5,0,0,0,0,0,0)
+1dh 101 'asym' 1000 -0.01 0.01
+nt/pl //lun60/1.a_asymm.f(5,0,0,0,0,0,0) ! -101
+exit
+*** End   of history file: Fri Nov  6 13:26:11 2009

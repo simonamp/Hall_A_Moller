@@ -1,0 +1,13 @@
+MACRO re_asymp run1=0 run2=0 angl=33.
+*
+*
+* ===   Re-analyze several runs
+
+ do r=[run1],[run2]
+    exec run run=[r]
+    exec asymp run=[r] angl=[angl]
+    clo 0
+    ve/del lrun
+ enddo
+
+RETURN

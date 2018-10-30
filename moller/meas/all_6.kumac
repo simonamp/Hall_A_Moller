@@ -1,0 +1,26 @@
+MACRO all_4
+
+   clo 0
+   ve/del lrun
+   cd //pawc
+   h/del 0
+
+   n=0
+   do i=3982,4019
+     exec run name=moller_pulser run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 nevadc=10  
+     n=[n]+1
+     if [n]=5 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+   enddo
+
+
+
+RETURN
+
+

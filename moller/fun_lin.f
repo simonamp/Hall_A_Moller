@@ -1,0 +1,5 @@
+      REAL FUNCTION FUN_LIN(X)
+      COMMON/PAWPAR/ PAR(10)
+C
+      FUN_LIN=PAR(1)*X
+      END

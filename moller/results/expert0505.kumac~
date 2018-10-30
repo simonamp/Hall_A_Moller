@@ -1,0 +1,48 @@
+MACRO expert0505
+* old DAQ
+ ve/cr runo(9) r 14504  14505  14506  14507  14508  14509  14510  14511  14512 
+ ve/cr aold(9) r .0553  .0550  .0556  .0558  .0558  .0549  .0558  .0558  .0553
+ ve/cr eold(9) r .0004  .0004  .0004  .0004  .0004  .0003  .0003  .0003  .0004
+* new DAQ
+* ve/cr runn(17) r 
+* ve/cr anew(17) r 
+* ve/cr enew(17) r 
+ ve/cr li(2) r 14507.5 14507.5
+ ve/cr ln(2) r 0.05 0.06
+
+
+ opt ndat
+ opt nbox
+ opt nstat
+ sigma ero=array(9,0.01#0.01)
+ sigma ern=array(17,0.01#0.01)
+ fort/fil 56 expert0505.ps
+ meta 56 -112
+ zone
+ null 14503 14513 0.0540 0.0566
+ atitle 'Old DAQ Runs' 'Beam Asymmetry'
+ selnt 1
+ text 13.0 20.5 'CW beam vs. EXPERT mode, 05/05/2010' 0.45 0 C
+ selnt 10
+ set pmci 2
+ set txci 2
+ gr/hpl/err runo aold  ero eold 12 20 0.3
+ text 14503.5 0.0564 'Old Moller DAQ' 0.35
+ text 14503.5 0.0563 'CWbeam: 0.05543+/-0.0002' 0.35
+ text 14503.5 0.0562 'EXPERT: 0.05558+/-0.0002' 0.35
+ set pmci 1
+ set txci 1
+* gr/hpl/err runn anew  ern enew 17 22 0.3
+* text 14417.5 0.0505 'New Moller DAQ' 0.35
+* text 14417.5 0.0500 'CWbeam - 0.05335+/-0.00006' 0.35
+* text 14417.5 0.0495 'EXPERT - 0.05090+/-0.00006' 0.35
+ ve/pl ln%li ! sl
+ text 14509 0.0541 'CW beam' 0.5
+ text 14504 0.0541 'EXPERT mode' 0.5
+ text 14512 0.0543 'Raster OFF' 0.4 90. 
+ close 56
+
+RETURN
+
+
+

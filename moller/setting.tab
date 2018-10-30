@@ -1,0 +1,16 @@
+
+ The field (B kGs) in the quads Q1-Q3 is defined as B=p0+p1*E+p2*E**2
+ where E is the beam energy (GeV) and p0-p2 - coefficients.
+ GL=B*k, where:
+        Q1      Q2      Q3
+ k    9023.   7215.   7255.
+
+Energy range (GeV)        Q1                          Q2                          Q3
+                 p0       p1       p2        p0       p1       p2        p0       p1       p2    
+ 0.7 - 2.0     0.515    1.3046  -0.26062   0.       0.       0.       -0.49378  1.02605 -0.18970
+ 2.0 - 5.9     0.515    1.3046  -0.26062  -0.73333  0.36667  0.        0.76296 -0.13713  0.07855
+ 5.9 - 8.0    12.698   -3.5253   0.20862  -0.73333  0.36667  0.       -3.80181  1.89482 -0.13590
+
+
+ The dipole field ishould be set as:  B=1.74*E(GeV), in kGs
+                                      BdL=B*k, where k=164270.

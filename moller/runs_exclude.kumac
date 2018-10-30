@@ -1,0 +1,13 @@
+MACRO runs_exclude cut=13
+*
+* --- Defines a set of runs to exclude for polarization measurements
+*
+
+  if [cut] .le. 0 .or. [cut]>100  then
+     mess Error in runs_exclude.kumac: cut number=[cut] is out of range
+     exitm
+  endif
+
+  cut $[cut] irun<3799.or.irun>3863
+
+RETURN

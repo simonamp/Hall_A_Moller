@@ -1,0 +1,84 @@
+MACRO calib_pos nlun=0 book=1 fill=1 ids=300 
+
+*
+* ---    Position calibration
+*
+*
+ if [nlun]=0 then
+   mess Error: nlun is not set
+   exitm
+ endif
+
+ if [fill]<1 .AND. [book]>0 then
+   mess Warning - fill=[fill], book is set to 0
+   book=0
+ endif
+
+ step=0.002 
+ nch=1./[step]
+ nch=$SIGMA(INT([nch]+0.1))
+* mess nch=[nch]
+* exitm
+ titl 'Moller position calibration'
+
+ cut $11 nadc=12.and.ihit(1)>0.and.ihit(2)>0.and.ihit(4)>0.and.ihit(5)>0
+
+ ve/cr idd0(1) i [ids]
+
+ if [book]>0 then
+   do ie=1,4
+     do arm=1,2
+       do i=1,4
+         id=[ids]+10*[ie]+([arm]-1)*4+[i]
+         lgch=([arm]-1)*4+[i]
+         tit='position LG '//[lgch] 
+         1dh [id] [tit] [nch] -0.5 0.5
+       enddo
+     enddo
+   enddo
+ endif
+
+ if [fill]>0 then
+   do ie=1,4
+     swap=1
+     if [ie]=1 .OR. [ie]=4 then
+       swap=0
+     endif
+     do arm=1,2
+       id1=[ids]+10*[ie]+([arm]-1)*4+1
+       id2=[ids]+10*[ie]+([arm]-1)*4+2
+       id3=[ids]+10*[ie]+([arm]-1)*4+3
+       id4=[ids]+10*[ie]+([arm]-1)*4+4
+       nt/pl //[nlun]/1.getpos.f([arm],0)-[ie] $11 -[id3]
+       if [swap]>0 then
+         nt/pl //[nlun]/1.-(getpos.f([arm],0)-[ie]) $11 -[id4]
+         add [id3] [id4] [id1]
+       else
+         add [id3] [id3] [id1]
+       endif
+     enddo
+   enddo
+ endif
+
+ ve/cr vposcor([nch],4,2) r
+ ve/cr vpostep(1) r [step]
+
+ do ie=1,4
+   do arm=1,2
+     id1=[ids]+10*[ie]+([arm]-1)*4+1
+     id2=[ids]+10*[ie]+([arm]-1)*4+2
+     call integ.for([id1],[id2],3)
+*     smooth [id4]
+     h/get_vec/con [id2] vposcor(1:[nch],[ie],[arm]) 
+   enddo
+ enddo
+
+ id=[ids]+1
+ 1dh [id] 'position left' 200 0 5
+ nt/pl //[nlun]/1.poscor.f(getpos.f(1,0)) $11 -[id]
+ id=[ids]+2
+ 1dh [id] 'position left' 200 0 5
+ nt/pl //[nlun]/1.poscor.f(getpos.f(2,0)) $11 -[id]
+
+RETURN
+

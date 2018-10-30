@@ -1,0 +1,52 @@
+MACRO ptarg_plot target=3 arg=0 z=0. dz=3. i=18. di=3. np=40 fill=1 print=1
+*
+* Plots the target polarization for foil "target":
+*   arg=0 - at the given z, for bop=(i-di:i+di), np points
+*      =1 - at the given bop=i, for z=(z-dz:z+dz), np points
+*
+
+  if [fill]=0 then
+    goto plot
+  endif
+
+  if $VDIM(pt_pol,1)<[np] then
+     ve/cr pt_pol([np]) r
+  endif
+  ve/in pt_pol $VDIM(pt_pol,1)*0.
+*
+  if $VDIM(pt_arg,1)<[np] then
+     ve/cr pt_arg([np]) r
+  endif
+  ve/in pt_arg $VDIM(pt_arg,1)*0.
+
+
+  if [arg]=0 then
+    x1=$SIGMA([i]-[di])
+    x2=$SIGMA([i]+[di])
+  elseif [arg]=1 then  
+    x1=$SIGMA([z]-[dz])
+    x2=$SIGMA([z]+[dz])
+  else
+    mess Agrument arg=[arg] is out of range 0:1
+    exitm
+  endif
+
+  n=0
+  dx=$SIGMA(([x2]-[x1])/[np])
+
+  do ip=1,[np]
+    x=$SIGMA([x1]+([ip]-0.5)*[dx])
+    if [arg]=0 then
+      exec get_targpol target=[target] hcoil=[x] zcm=[z] print=[print]
+    elseif [arg]=1 then  
+      exec get_targpol target=[target] hcoil=[i] zcm=[x] print=[print]
+    endif
+    p=tpolcur(1)
+*    mess [ip] [x] [p]
+    n=[n]+1
+    ve/in pt_arg([n]) [x]
+    ve/in pt_pol([n]) [p]
+  enddo  
+
+  plot:
+RETURN

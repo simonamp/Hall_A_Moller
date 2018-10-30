@@ -1,0 +1,128 @@
+MACRO book_v_run nadd=0  
+*
+* --- Books the vector for run-wise information or increases the vector length 
+*     nadd - number of additional runs to accomodate 
+*     nmin - the minimum increment
+*
+* --- ip=krunpnt(irun), resrun(1:50,ip) - the data for the run irun
+*        krustat(1) - np - number of entries to resrun
+*               (2) - 0  - last operation was OK
+*                   > 0  - error
+* n1 - 1-st dimension
+*  n1 should be dividable by 4 :  
+  n1=80
+  nmin=100
+  nc1=15
+  nc2=10
+
+  mess start book_v_run nadd=[nadd]
+
+  if $VDIM(krustat,1)<5 then
+    ve/cr krustat(5) i
+    if $VDIM(krunpnt,1)>0 then
+      mess Warning from book_v_run.kumac : rebook krunpnt and resrun
+      ve/del krunpnt
+    endif
+  endif
+
+  ve/in krustat(2) 0
+
+  mxrun=20000
+  if $VDIM(krunpnt,1)<[mxrun] then
+    ve/cr krunpnt([mxrun]) i
+  endif
+
+  n01=$VDIM(resrun,1)
+  n02=$VDIM(resrun,2)
+
+  if [n02]>0 .AND. [n01] .NE. [n1] then
+    mess From book_v_run: the 1-st dimension of existing RESRUN is different than requested: [n01]" " [n1] 
+    mess From book_v_run: vector RESRUN deleted
+    ve/del resrun
+    ve/del eresrun
+    ve/del consrun
+    ve/del nrsrun
+    n01=0
+    n02=0
+  endif
+
+  if [n01]<1 .OR. [n02]<1 then
+    nf1=[n1]
+    nf2=[nmin]
+    ve/cr resrun([nf1],[nf2]) r
+    ve/cr eresrun([nf1],[nf2]) r
+    ve/cr consrun([nc1],[nf2]) r
+    ve/cr nrsrun([nc2],[nf2]) i
+  else
+    if [nadd]>0 then
+      if $VDIM(tmpv,1)>0 then
+        ve/del tmpv
+      endif
+      nf1=[n1]
+      nd2=$SIGMA(MAX([nadd],[nmin]))
+      nf2=[n02]+[nd2]
+
+      ve/cop resrun tmpv
+      ve/del resrun
+      ve/cr resrun([nf1],[nf2]) r
+      do i=1,[n02]
+        ve/cop tmpv(1:[nf1],[i]) resrun(1:[nf1],[i])
+      enddo
+      ve/del tmpv
+
+      ve/cop eresrun tmpv
+      ve/del eresrun
+      ve/cr eresrun([nf1],[nf2]) r
+      do i=1,[n02]
+        ve/cop tmpv(1:[nf1],[i]) eresrun(1:[nf1],[i])
+      enddo
+      ve/del tmpv
+
+      ve/cop consrun tmpv
+      ve/del consrun
+      ve/cr consrun([nc1],[nf2]) r
+      do i=1,[n02]
+        ve/cop tmpv(1:[nc1],[i]) consrun(1:[nc1],[i])
+      enddo
+      ve/del tmpv
+
+      ve/cop nrsrun tmpv
+      ve/del nrsrun
+      ve/cr nrsrun([nc2],[nf2]) i
+      do i=1,[n02]
+        ve/cop tmpv(1:[nc2],[i]) nrsrun(1:[nc2],[i])
+      enddo
+      ve/del tmpv
+
+    endif
+  endif
+*  ve/pri krustat
+
+  fnam='inc/v_run.inc'
+  if $FEXIST([fnam]) then
+    shell rm -f [fnam]
+  endif
+  inam='      INTEGER MXKRUN,MXRRUN,MXRESW,MXRCONS,MXRCNTS'
+  fmess [inam] [fnam]
+  inam='      PARAMETER (MXKRUN='//[mxrun]//',MXRRUN='//[nf2]//',MXRESW='//[nf1]//')'
+  fmess [inam] [fnam]
+  inam='      PARAMETER (MXRCONS='//[nc1]//',MXRCNTS='//[nc2]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR KRUNPNT('//[mxrun]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR KRUSTAT('//'5'//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR CONSRUN('//[nc1]//','//[nf2]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR RESRUN('//[nf1]//','//[nf2]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR ERESRUN('//[nf1]//','//[nf2]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR NRSRUN('//[nc2]//','//[nf2]//')'
+  fmess [inam] [fnam]
+
+RETURN
+
+
+
+

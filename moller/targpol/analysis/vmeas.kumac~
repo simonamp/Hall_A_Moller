@@ -1,0 +1,62 @@
+MACRO vmeas file=XX stage=0
+*
+*  Analyze one measurement:
+*  1) - read the file into vtmp
+*  2) - remove the single channel peaks (noise)
+*  3) - filter out 60Hz noise
+*  4) - filter out other noises (about 1Hz)
+*
+  if $VDIM(vstatus,1)<20 then
+    ve/cr vstatus(20) r
+  endif
+  ve/in vstatus(1) 0 
+
+  if $FEXIST([file])=0 then
+    mess vmeas.kumac - the file [file] is missing
+    exitm
+  endif
+
+  if $VDIM(pp1,1)>0 then
+    ve/del pp1
+  endif
+  if $VDIM(pp2,1)>0 then
+    ve/del pp2
+  endif
+
+* - Read the file
+  ve/read pp1,pp2 [file]
+
+  nl=$VDIM(pp1,1)
+  if $VDIM(vtmp,1)<>[nl] then
+    if $VDIM(vtmp,1)>0 then
+      ve/del vtmp
+    endif
+  endif
+
+  ve/copy pp1 vtmp
+
+*  Remove one channel noise
+
+* exitm
+  exec vclean serr=3.
+
+*  Find the right 60Hz cycle length and filter it out
+
+  exec vbgsub nd=1000 dastep=0.3E-4 nshift=61 tune=1 
+
+  if $VDIM(vtmp0,1)<>[nl] then
+    if $VDIM(vtmp0,1)>0 then
+      ve/del vtmp0
+    endif
+  endif
+  ve/copy vtmp vtmp0
+  ve/copy vtmp1 vtmp
+
+*  Subtract the smoothed lower frequence noise about 0.8Hz (8570 bins  period), with internal structure of about 20Hz (475 bins))
+
+  exec vbgsub nd=8570 tune=1 dastep=0.0005 nshift=41 da=0 spline=1
+
+
+  ve/in vstatus(1) 1
+  
+RETURN

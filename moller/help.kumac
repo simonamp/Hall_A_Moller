@@ -1,0 +1,54 @@
+MACRO help chain=1 pr=5 angl=20.5 
+* read chain ' Input chain number (1-10)'
+ ve/cr runn(3) r 12336 12337 12338   
+ 
+ nn=$sigma(NCO(runn))
+ 1dh 101 'asym' 200 -0.1 0.1
+ fctrs=0.0
+ do i=1,[nn]
+ run=runn([i])
+* ln=50+[i]
+ exec run run=[run]
+* exec asymwr run=[run]
+* ln=50+[i]
+ exec asymu run=[run]  pr=[pr]
+ exec run_scalu  run=[run] pr=[pr]
+ nt/pl //lun[ln]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4._
+and.-0.2<abs(a_asymm.f(3,4,1,0,0,0,0))<0.2 -101
+ h/fit 101 g
+fctr[i]=consrun(9,[i])
+mess Factor=[fctr[i]]
+fctrs=[fctrs]+[fctr[i]]
+mess Factor Sum = [fctrs]
+chain ch[chain] //lun[ln]
+* wait
+ enddo
+fctr=[fctrs]/[nn]
+
+ nt/pl //ch[chain]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4._
+and.-0.2<abs(a_asymm.f(3,4,1,0,0,0,0))<0.2 -101
+ h/fit 101 g
+ asym_ave=$HINFO(101,'MEAN')
+ mess chain=[chain] 
+* wait
+exec asym_avr nn=[nn] pr=[pr]
+mess Asymmetry Average=[asym_ave]
+res[pr]=[fctr]*[asym_ave]*100.
+mess Factor Average=[fctr]
+mess Polarization=[res[pr]]
+ in=[pr]+1
+ ve/input result([in]) [res[pr]]
+
+call prunpri.f(11000,14000)
+*wait
+*   ve/de lrun,mrun,ktyrun,tpolcur,idpolall,itpolall,tpolraw,casym,fasym
+*   ve/de poltarz,tpolarr,tpolfld,ilun,irun,irty,ichis,nnlim,
+*   ve/de lruns,mruns,ktyruns,bcmlin,acuts,ecasym,rasym,erasym,efasym
+*   ve/de nasym,coasym,krustat,krunpnt,resrun,eresrun,consrun,nrsrun
+*   ve/de limsca,naspar,para,run_sett,irs_corr,krs_corr,vrs_corr
+*   ve/de nc,tpolbop,pres,fil1,fil2,fres,tarz,as1,es1,xx,ex,tpolall
+*   cd //pawc
+*   hi/de 0
+*wait
+
+RETURN

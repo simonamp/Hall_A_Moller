@@ -1,0 +1,26 @@
+MACRO hv
+
+  ve/cr hv(3) r 1750 1800 1850
+  ve/cr hv1(3) r 1700 1750 1800
+  ve/cr lhv(3)
+  ve/cr lhv1(3)
+  ve/cr amp(3,8) r
+  ve/cr lamp(3,8) r
+  ve/in amp  300 480 780   370 570 940   330 550 930   415 680  1000   490 770 1000   404 690 1000   244 390 640  420 690 1000 
+
+  do i=1,8
+    do j=1,3
+       a=amp([j],[i])
+       b=$SIGMA(LOG10([a]))
+       ve/in lamp([j],[i]) [b]
+    enddo
+  enddo
+  do i=1,3
+    a=hv([i])
+    b=$SIGMA(LOG10([a]))
+    ve/in lhv([i]) [b]
+    a=hv1([i])
+    b=$SIGMA(LOG10([a]))
+    ve/in lhv1([i]) [b]
+  enddo
+RETURN

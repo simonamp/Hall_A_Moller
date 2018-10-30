@@ -1,0 +1,61 @@
+MACRO r_create lun=1 name=pol_curr.rz
+*
+* ---    Creates a RZ file for current Moller results. 
+* ---    If a file exists - print a message and do nothing
+*
+  if [lun]<1 .OR. [lun]>99 then
+    mess Mess from r_create.kumac: LUN=[lun] is out of range
+    exitm
+  endif
+
+  clo [lun]
+
+  if $FEXIST([name])>0 then
+    mess Mess from r_create.kumac: File [name] exists. It will be appended.
+    ze/rz/file [lun] [name] ! U
+    if $IQUEST(1)>0 then
+       mess Mess from r_create.kumac 1: error opening the file [name]
+       exitm
+    endif
+  else
+    shell cp template.rz [name] 
+    shell chmod +w [name]
+    ze/rz/file [lun] [name] ! U
+    if $IQUEST(1)>0 then
+       mess Mess from r_create.kumac 2: error opening the file [name]
+       exitm
+    endif
+    cd //lun[lun]
+*
+* ===        Data = SETI - from settings 
+*                   SCAL - from scaler  data (polarization, counting rates..)
+*                   TRIG - from trigger data (peak positions ...)
+*                   POIN - pointers to the MEAS directory
+* ===    dat_type =    I - integer
+* ===                  R - real
+*
+    ze/rz/mdir runs 3 IHH Run_numb Data dat_type 
+    if $IQUEST(1)>0 then
+       mess Mess from r_create.kumac 3: error making RUNS in [name]
+       exitm
+    endif
+    cd //lun[lun]
+*
+* ===        Data = POLA - polarization, ...
+*                   POIN - pointers to the RUNS directory
+* ===    dat_type =    I - integer
+* ===                  R - real
+    ze/rz/mdir meas 3 IHH M_numb   Data dat_type 
+    if $IQUEST(1)>0 then
+       mess Mess from r_create.kumac 3: error making MEAS in [name]
+       exitm
+    endif
+    mess File [name] is created and attached to lun[lun]:
+    ld //lun[lun]
+    cd //lun[lun]
+  endif
+  
+RETURN
+
+
+

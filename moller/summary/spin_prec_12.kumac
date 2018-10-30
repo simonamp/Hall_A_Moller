@@ -1,0 +1,87 @@
+MACRO spin_prec_12
+opt ndate
+zone 2 2
+set csiz 0.5
+set pmci 1
+fort/fil 56 spin_prec_12.ps
+meta 56 -112
+
+*
+*
+*runs 13059-130...
+* old from 01/13/2009
+ np=4
+ ve/cr exx([np]) r 
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr ebpol([np]) r
+ ve/in wang   30.    50.    70.   -30.
+ ve/in bpol   81.07  90.8   88.35  9.40
+ ve/in ebpol   0.33   0.24   0.24  0.24
+
+ ve/cr ipfit(2) i
+ ve/in ipfit 0 0
+ ve/cr par(10) r
+ ve/in par(1:2) 90. 60.
+
+ ve/in ipfit 0 0
+ null -40 80 -5.0 100
+ ve/fit wang bpol ebpol wave_1.f S 2 par
+ ve/in ipfit 3 0
+ set hcol 2
+ fu/pl wave_1.f -40 80 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ text -10. 20. 'a) 01/13/09 raw results' 0.3 
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#
+ selnt 1
+ text 13.0 20.5 'Moller results for Spin Dances 01/13/09 and 02/11/09' 0.4 0 C
+ selnt 10
+
+* with target polarization correction
+ np=10
+ ve/cr exx([np]) r 
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr ebpol([np]) r
+ ve/in wang   30.    50.     70.  -30.    54.    30.0   30.0   30.0   20.0   23.0
+ ve/in bpol   80.74  90.49   88.58  1.20  90.67  81.35  81.94  81.52  72.59  73.23
+ ve/in ebpol   0.35   0.24   0.24   0.24  0.24    0.24   0.23   0.23   0.22   0.21
+
+ ve/in ipfit 0 0
+ null -40 80 -5.0 100
+ ve/fit wang bpol ebpol wave_1.f S 2 par
+ ve/in ipfit 3 0
+ set hcol 2
+ fu/pl wave_1.f -40 80 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ text -10. 20. 'b) 01/13+02/11+Pt cor.' 0.3 
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#
+
+* with HALLA:p correction Eb=2892MeV
+ ve/in bpol  79.70  89.77   88.22  1.77  90.21  80.56  79.63  80.46  71.46  74.26
+
+ ve/in ipfit 0 0
+ null -40 80 -5.0 100
+ ve/fit wang bpol ebpol wave_1.f S 2 par
+ ve/in ipfit 3 0
+ set hcol 2
+ fu/pl wave_1.f -40 80 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ text -10. 20. 'c) (b)+HALLA"j#p=5892MeV' 0.3
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#
+
+* with HALLA:p correction Eb=2892MeV and linac asymmetry 0.007
+ ve/in bpol  79.99  90.14   88.76  1.29  90.50  80.75  80.26  80.76  71.99  73.92  
+
+ ve/in ipfit 0 0
+ null -40 80 -5.0 100
+ ve/fit wang bpol ebpol wave_1.f S 2 par
+ ve/in ipfit 3 0
+ set hcol 2
+ fu/pl wave_1.f -40 80 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ text -10. 20. 'd) (c)+linacs asym=0.8"Y#' 0.3
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#
+
+ close 56
+

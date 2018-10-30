@@ -1,0 +1,237 @@
+MACRO dead_tim_pl meas=1 subtr=0
+*
+*  Plot the dead time
+*
+  titl 'Dead time and BCM calibration'
+  if [meas]=1 then
+*      runs 6460-6497
+    n=4
+    ve/cr beam([n])  r 0.2   0.4   1.0   2.0
+    ve/cr dtled([n]) r 0.013 0.026 0.067 0.128
+    ve/cr coinc([n]) r 804e2 151e3 415e3 787e3 
+    ve/cr bcm([n])   r 2566  4768  12770 24109
+    ve/cr accid([n]) r 561   1962  14130 49225
+    ve/cr pol([n])   r 0.684 0.682 0.673 0.653
+    ve/cr epol([n])  r 0.002 0.002 0.002 0.002
+    if $VDIM(polc)>[n] then
+      ve/del polc
+    endif     
+*    ve/oper/vbia pol -0.650 polc
+    ve/oper/vbia pol 0. polc
+  elseif [meas]>1 then
+    nr=300
+    ve/cr irdt([nr]) i
+    ve/cr ilat([nr]) i
+    ve/cr irat([nr]) i
+    ve/cr icdt([nr]) i
+    ve/cr acdt([nr]) r
+    ve/cr bcdt([nr]) r
+
+    if [meas]=2 then
+      ve/read irdt,icdt,acdt,bcdt runs.tab.dtime '(1X,I4,16X,I7,F7.0,F8.0)'
+      n=5
+      ve/cr irl(2,[n]) i 
+      ve/in irl(1:2,1) 8934 8939
+      ve/in irl(1:2,2) 8955 8965
+      ve/in irl(1:2,3) 8923 8928
+      ve/in irl(1:2,4) 8950 8953
+      ve/in irl(1:2,5) 8942 8947
+      ve/cr beam([n]) r   0.125  0.310  0.470  0.930  1.48
+      ve/cr dtled([n]) r  0.006  0.014  0.022  0.034  0.069
+      ve/cr pol([n])   r  0.7580 0.7598 0.7518 0.7461 0.7348 
+      ve/cr epol([n])  r  0.0019 0.0013 0.0015 0.0013 0.0013
+      ve/oper/vbia pol -0.7580 polc
+    elseif [meas]=3 then
+      ve/read irdt,icdt,acdt,bcdt runs.tab.dtime_1 '(I5,16X,I7,F7.0,F8.0)'
+      n=4
+      ve/cr irl(2,[n]) i 
+      ve/in irl(1:2,1) 9888 9894
+      ve/in irl(1:2,2) 9900 9901
+      ve/in irl(1:2,3) 9898 9899
+      ve/in irl(1:2,4) 9904 9905
+      ve/cr beam([n]) r   0.340  0.820  1.520  1.95
+      ve/cr dtled([n]) r
+      ve/cr pol([n])   r
+      ve/cr epol([n])  r
+      ve/oper/vbia pol -0.8118 polc
+    elseif [meas]=4 then
+      ve/read irdt,ilat,irat,icdt,acdt,bcdt runs.tab.dtime_1 '(I5,I8,I8,I7,F7.0,F8.0)'
+      n=7
+      ve/cr irl(2,[n]) i 
+      ve/in irl(1:2,1) 9921 9921
+      ve/in irl(1:2,2) 9922 9922
+      ve/in irl(1:2,3) 9923 9923
+      ve/in irl(1:2,4) 9924 9924
+      ve/in irl(1:2,5) 9925 9925
+      ve/in irl(1:2,6) 9926 9926
+      ve/in irl(1:2,7) 9927 9927
+      ve/cr beam([n]) r   0.29   0.150  0.500  0.930  2.00  3.12 4.05
+      ve/cr dtled([n]) r
+      ve/cr pol([n])   r
+      ve/cr epol([n])  r
+      ve/oper/vbia pol -0.8118 polc
+    elseif [meas]=5 then
+      ve/read irdt,ilat,irat,icdt,acdt,bcdt runs.tab.dtime_2 '(I5,I8,I8,I7,F7.0,F8.0)'
+      n=8
+      ve/cr irl(2,[n]) i 
+      ve/in irl(1:2,1) 10018 10019
+      ve/in irl(1:2,2) 10021 10020 
+      ve/in irl(1:2,3) 10022 10023
+      ve/in irl(1:2,4) 10025 10024
+      ve/in irl(1:2,5) 10026 10027
+      ve/in irl(1:2,6) 10029 10028
+      ve/in irl(1:2,7) 10030 10031
+      ve/in irl(1:2,8) 10033 10032
+      ve/cr beam([n]) r   0.29   0.140  0.530  1.00  2.00  3.00   4.00  0.10 
+      ve/cr dtled([n]) r
+      ve/cr pol([n])   r
+      ve/cr epol([n])  r
+      ve/oper/vbia pol -0.8118 polc
+    endif
+
+    nall=$VLEN(irdt,1)
+
+    ve/cr arml([n]) r 
+    ve/cr armr([n]) r 
+    ve/cr coinc([n]) r 
+    ve/cr ecoinc([n]) r 
+    ve/cr bcm([n])   r 
+    ve/cr accid([n]) r
+    mess n=[n]
+
+    do j=1,[n]
+      k=0
+      ca=0
+      aa=0
+      ba=0
+      la=0
+      ra=0
+      ir1=irl(1,[j])
+      ir2=irl(2,[j])
+      do i=1,[nall]
+        ir=irdt([i])
+        if [ir]>=[ir1] .AND. [ir]<=[ir2] then
+          k=[k]+1
+          la=[la]+ilat([i])
+          ra=[ra]+irat([i])
+          ca=[ca]+icdt([i])
+          aa=[aa]+acdt([i])
+          ba=[ba]+bcdt([i])
+        endif
+      enddo
+*      mess j,k=[j] [k] [ir1] [ir2]
+      if [k]>0 then
+        ca=[ca]/[k]
+        eca=$SIGMA(SQRT([ca]/1000.))
+        aa=[aa]/[k]
+        ba=[ba]/[k]
+        la=[la]/[k]
+        ra=[ra]/[k]
+        ve/in arml([j]) [la]
+        ve/in armr([j]) [ra]
+        ve/in coinc([j]) [ca]
+        ve/in ecoinc([j]) [eca]
+        ve/in accid([j]) [aa]
+        ve/in bcm([j]) [ba]
+      endif
+    enddo
+
+  endif
+  ve/cr exx([n]) r
+
+  do i=1,[n]
+    be=beam([i])
+    a=coinc([i])
+    b=accid([i])
+    c=bcm([i])
+    d=$SIGMA(([a]-[b])/[c])
+    mess [be] [d]
+  enddo
+
+  ve/oper/vsub coinc accid coinc1
+
+  if $SIGMA(ABS(VMAX(pol)))>0.001 .OR. $SIGMA(ABS(VMIN(pol)))>0.001 then
+    ve/cr parb(2) r 0 -1.E-6 
+    ve/fit bcm polc epol p1 0 2 parb
+    a=parb(1)
+    b=parb(2)
+    x2=$SIGMA(VMAX(bcm)*1.2)
+    y1=$SIGMA(VMIN(polc)*1.2-VMAX(polc)*0.2)
+    y2=$SIGMA(VMAX(polc)*1.2-VMIN(polc)*0.2)
+    null 0 [x2] [y1] [y2]
+    atit 'BCM' 'Polar'
+    gr/hpl/err bcm polc exx epol [n]  20 0.1
+    ve/cr parb(2) r 0 -1.E-6 
+    ve/fit bcm polc epol p1 0 2 parb
+    ve/cr parb(2) r 0 -1.E-6 
+    ve/fit bcm polc epol p1 0 2 parb
+    if [a]>0 then
+      fu/pl [b]*x+[a] 0 [x2] s
+    else
+      fu/pl [b]*x-ABS([a]) 0 [x2] s
+    endif
+    x2=$SIGMA(VMAX(coinc)*1.1)
+    null 0 [x2] [y1] [y2]
+    gr/hpl/err coinc polc exx epol [n] 20 0.1
+
+    ve/cr parb(2) r 0 -1.
+    ve/fit dtled polc epol p1 ' ' 2 parb
+    gr/hpl/err dtled polc exx epol [n] 20 0.1
+
+  endif
+
+  x2=$SIGMA(VMAX(bcm)*1.1)
+
+  y1=$SIGMA(VMIN(coinc)*1.2-VMAX(coinc)*0.2)
+  y2=$SIGMA(VMAX(coinc)*1.2-VMIN(coinc)*0.2)
+  null 0 [x2] [y1] [y2]
+  atit 'BCM/sec' 'Coincidence/sec'
+  ve/cr parb(2) r 0 10.
+  ve/fit bcm coinc ecoinc p1 'SW' 2 parb
+  gr/hpl/err bcm coinc exx ecoinc [n] 20 0.1
+  a=parb(1)
+  b=parb(2)
+  if [a]>0 then
+    fu/pl [b]*x+[a] 0 [x2] s
+  else
+    fu/pl [b]*x-ABS([a]) 0 [x2] s
+  endif
+
+  y1=$SIGMA(VMIN(arml)*1.2-VMAX(arml)*0.2)
+  y2=$SIGMA(VMAX(arml)*1.2-VMIN(arml)*0.2)
+  null 0 [x2] [y1] [y2]
+  atit 'BCM/sec' 'Left arm/sec'
+  ve/cr parb(2) r 0 10.
+  ve/fit bcm arml ecoinc p1 'SW' 2 parb
+  gr/hpl/err bcm arml exx ecoinc [n] 20 0.1
+  a=parb(1)
+  b=parb(2)
+  if [a]>0 then
+    fu/pl [b]*x+[a] 0 [x2] s
+  else
+    fu/pl [b]*x-ABS([a]) 0 [x2] s
+  endif
+
+  y1=$SIGMA(VMIN(armr)*1.2-VMAX(armr)*0.2)
+  y2=$SIGMA(VMAX(armr)*1.2-VMIN(armr)*0.2)
+  null 0 [x2] [y1] [y2]
+  atit 'BCM/sec' 'Right arm/sec'
+  ve/cr parb(2) r 0 10.
+  ve/fit bcm armr ecoinc p1 'SW' 2 parb
+  gr/hpl/err bcm armr exx ecoinc [n] 20 0.1
+  a=parb(1)
+  b=parb(2)
+  if [a]>0 then
+    fu/pl [b]*x+[a] 0 [x2] s
+  else
+    fu/pl [b]*x-ABS([a]) 0 [x2] s
+  endif
+RETURN
+
+
+
+
+
+
+
+

@@ -1,0 +1,601 @@
+      REAL FUNCTION ZUGTOFILE(IDELAY,KHELFLA,NEVADC,LENZUG
+     +                       ,DTICK,TANGL,HELM,LOUT)
+C
+C===     For G0 helicity scheme (starting Oct,2002)
+C===     Scalers: write the "zug" data to a file (for subsequent ntuple production) 
+C
+      IMPLICIT NONE
+      INTEGER NEVADC        !  number of adc triggers per window
+     +       ,LENZUG        !  >0 -  the length of the train, <0 - the train is inverted (1-st signal - logical 0)
+     +       ,IDELAY        !  >0 - delay (normally 8 cycles)
+     +       ,KHELFLA       !  =0 - compare all helicity info, +1 - ignore ADC, +10 - ignore scaler's ITRIG(6), +100 - ignore isca(10)
+     +       ,LOUT          !  logical unit for the output file
+C
+      REAL    TANGL         !  target angle
+     +       ,HELM          !  Helmholtz coils current
+     +       ,DTICK         !  average number of ticks between 2 scaler triggers
+C
+C
+      INCLUDE ?
+C      INCLUDE 'comis23083.inc'
+C
+      INCLUDE 'inc/cntasym.inc'
+C
+      VECTOR KVERR(32)      !  error counters
+      VECTOR RUN_SETT(120)
+C      INTEGER KVERR(32)      !  error counters
+C      REAL RUN_SETT(120)
+C
+      INTEGER    mxsca,mxsca2
+      PARAMETER (mxsca=32,mxsca2=mxsca*2)
+C
+C---           Stack for cycles
+C
+      INTEGER    mxstack       ! max delay length 
+      PARAMETER (mxstack=129)
+      INTEGER jsca(mxsca,mxstack)  ! scaler values for the history of cycles 
+     +       ,jdif(mxsca,mxstack)  ! scaler increments for the history of cycles 
+     +           ,jnadc(mxstack)   ! number of ADC events in the cycle
+     +           ,jhelcur(mxstack) ! current helicities (shifted in case of delayed)
+     +           ,jhelsca(mxstack) ! current helicity of the scaler event
+     +           ,jhelrec(mxstack) ! reconstructed helicities (correct also in case of delayed)
+     +           ,jticksc(mxstack) ! tick values (for the scaler readout)
+     +           ,jticka1(mxstack) ! tick 1-st ADC 
+     +           ,jticka2(mxstack) ! tick last ADC
+     +           ,jzugsca(mxstack) ! helicity train (4 cycles) starting signal (1-st cycle), this scaler event  
+     +           ,jzug(mxstack)    ! helicity train (4 cycles): <0 - not defined, 0,1
+     +           ,jzugend(mxstack) ! =n>0 - last in a train of n, =n<0 iabs(n) - the same, but error in this train
+     +           ,jcycer(mxstack)  ! error in this cycle =0 - OK
+C
+C==========         Event data
+      INTEGER itickev              ! tick
+     +       ,izugev               ! train start flag (from TRIG)
+     +       ,ihelev               ! helicity flag (from TRIG)
+     +       ,nscalim              ! number of readout scalers, limited by the array dimension
+C
+C==========         Cycle data
+      INTEGER istack               ! pointer of the current cycle in the delay stack
+     +       ,iheladc              ! current helicity: ADC    events  (0 or 1)
+     +       ,ihel                 ! current helicity: cycle (previous ADC events == previous scaler event)
+     +       ,itickadcf            ! tick for the 1-st ADC
+     +       ,itickadcl            ! tick for the last ADC
+     +       ,izugadc              ! train start signal from ADC events
+     +       ,izugsca              ! train start signal from SCALER events
+     +       ,izug                 ! train start 
+     +       ,isprev               ! pointer to the previous cycle in the stack (0 if missing)
+     +       ,ispdel               ! pointer to the cycle for which the delayed helicity arrives
+     +       ,itimerr              ! >0 detected error in timing of the cycle
+     +       ,ierr                 ! error in the cycle
+     +       ,isphel               ! pointer to the cycle where the helicity signal for THIS cycle is recorded
+C                                     for run<12700 each cycle contained the helicity for the NEXT cycle
+     +       ,ispqrt               ! pointer to the cycle where the QRT signal for THIS cycle is recorded
+C                                     so far, each cycle contained the helicity for the NEXT cycle
+C
+      INTEGER mxerrpri             ! max number of error messages to print
+     +       ,idelcur              !  the number of the cycle delayed, =1 - for no delay =9 for delayed  
+     +       ,lzug                 ! length of the train
+     +       ,izugmark             ! flag to mark the current train, =1 - the current cycle is the last old, =2 - the first new
+     +       ,ipri                 ! print flag
+     +       ,ksca                 ! number of scalers written
+     +       ,kelem                ! number of elements written
+     +       ,lenzuga              ! ABS(LENZUG)
+C============= Counters
+      INTEGER ievv                 ! counter of the scaler triggers
+     +       ,ieva                 ! counter of the ADC triggers in the given cycle
+     +       ,nzug                 ! number os trains (4-cycles)
+     +       ,nerr                 ! number of printable errors
+     +       ,ifirst               ! first entry
+     +       ,icyczug              ! number of cycles in one train
+     +       ,khelshift            ! =1 for runs <12700, =0 - afrter. the heliciity of the
+C                                     scaler trigger was read AFTER the proper window (shift =+1)
+C                                     Since Apr 2008 the MPS signal comes 25us earlier, and the
+C                                     helicity flag belongs to the proper window
+     +       ,kheladc              ! >0 - include ADC helicities
+     +       ,khelsca              ! >0 - inclide scaler events ITRIG(6) helicities
+     +       ,kheltru              ! >0 - scalers isca(10) (clock*hel) and isca(12) (clock) 
+      INTEGER i,j,k,m,isp
+C
+      REAL scdif                   !  auxil
+     +    ,bzcent                  ! Mag. field at the center 
+C
+      SAVE jsca,jnadc,jhelcur,jhelsca,jhelrec
+     +    ,jticksc,jticka1,jticka2,jzugsca,jzug,jzugend,jcycer
+C
+      DATA ievv/0/
+      DATA ieva/0/
+      DATA iheladc/-1/
+      DATA izugadc/-1/
+      DATA istack/0/
+      DATA nerr/0/
+      DATA mxerrpri/100/
+      DATA itickadcf/0/
+      DATA itickadcl/0/
+      DATA nzug/0/
+      DATA icyczug/0/
+      DATA lzug/4/
+      DATA ifirst/1/
+      DATA ipri/0/
+C
+C     ------------------------------------------------------------------
+C
+      ZUGTOFILE=1.
+C
+      IF(ifirst.NE.0) THEN
+         ifirst=0
+         DO i=1,32
+            KVERR(i)=0
+         ENDDO
+      ENDIF
+C
+      idelcur=IDELAY
+      nscalim=MIN(NSCA,mxsca)
+C
+      lenzuga=ABS(LENZUG)
+      IF(lenzuga.GT.0.AND.lenzuga.LT.10) lzug=lenzuga
+C
+      khelshift=1
+      IF(IRUN.GT.12000) khelshift=0
+C
+      kheladc=1
+      IF(MOD(KHELFLA,10).NE.0) kheladc=0
+      khelsca=1
+      IF(MOD(KHELFLA/10,10).NE.0) khelsca=0
+      kheltru=1
+      IF(MOD(KHELFLA/100,10).NE.0) kheltru=0
+C
+      itickev=ITICK
+      ihelev=ITRIG(6)
+C
+      izugev=ITRIG(8)
+      IF(LENZUG.LT.0) izugev=1-izugev        ! the QRT signal is inverted
+C
+      ierr=0
+C      WRITE(6,*) 'Start ',ITRIG(1),ITRIG(2),itickev,ihelev,izugev,ieva
+C     +        ,icyczug,nzug
+C
+C---          ADC events
+C
+      IF(ITRIG(1).NE.0) THEN
+         ieva=ieva+1
+         itickadcl=itickev
+C---        Find the current helicity signal
+         ihel=0
+         IF(IADC(12).GT.150) ihel=1 ! Use the ADC signal for helicity
+C
+         IF(KHELADC.LT.0) THEN
+            ihel=ihelev             ! Use only the helicity from ITRIG 
+         ELSE IF(KHELADC.EQ.0) THEN
+            IF(ihelev.NE.ihel) THEN ! Check the helicity consistency
+               ihel=-1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Helicity inconsistency ADC ev=',idnevt
+     +              ,ieva,' ADC12=',ihel,' TRIG(6)=',ihelev,itickev
+               ENDIF
+            ENDIF
+         ENDIF
+C
+         IF(ieva.EQ.1) THEN
+            itickadcf=itickev
+            iheladc=ihel
+            izugadc=izugev
+         ELSE
+            IF(iheladc.NE.ihel) THEN
+               iheladc=-1
+               KVERR(1)=KVERR(1)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Helicity flip at ADC ev=',idnevt
+     +              ,ieva,ievv,itickadcl-itickadcf,iheladc,ihel
+               ENDIF
+            ENDIF
+            IF(izugadc.NE.izugev) THEN
+               izugadc=-1
+               KVERR(2)=KVERR(2)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Train start flip at ADC ev=',idnevt
+     +              ,ieva,ievv,itickadcl-itickadcf
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDIF
+C
+C      write(6,*)' iheladc=',iheladc
+      IF(NSCA.LE.0) GO TO 999
+C
+C----          Scaler event - reconstruct one cycle
+C
+C----      Ignore the identical scaler events at the same time stamps (happened a few times)
+C          with no ADC events     
+C
+      IF(istack.NE.0.AND.ieva.EQ.0) THEN
+         IF(itickev.EQ.jticksc(istack).AND.
+     +      ISCA(12)-jsca(12,istack).LT.100) THEN
+            WRITE(6,*) ' Ignore a twin scaler event at ',ievv+1
+            GO TO 999
+         ENDIF
+      ENDIF
+C
+      ievv=ievv+1
+C
+C---     Store the current cycle
+C
+      isprev=istack
+      istack=istack+1
+      IF(istack.GT.mxstack) istack=istack-mxstack
+C      WRITE(6,*) 'stack',ievv,istack
+C
+      jcycer(istack)=0
+      jzug(istack)=-1
+      jzugend(istack)=0
+      jzugsca(istack)=izugev
+      jticksc(istack)=itickev
+      jticka1(istack)=itickadcf
+      jticka2(istack)=itickadcl
+      jnadc(istack)=ieva
+      jhelsca(istack)=ihelev
+      jhelcur(istack)=-1
+      jhelrec(istack)=-1
+      DO i=1,nscalim
+         jsca(i,istack)=ISCA(i)
+         jdif(i,istack)=-1
+      ENDDO
+C
+C---    Pointers to the right helicity, QRT (the delay is not considered at this moment)
+C
+      isphel=isprev
+      IF(khelshift.EQ.0) isphel=istack
+      ispqrt=isprev
+C
+C---    Calculate the scaler increments 
+      IF(isprev.GT.0) THEN
+         DO i=1,nscalim
+            jdif(i,istack)=jsca(i,istack)-jsca(i,isprev)
+         ENDDO
+      ELSE
+         jcycer(istack)=-1
+      ENDIF
+C
+C---     Check the clock of the cycle
+C
+      IF(DTICK.GT.0.) THEN
+         IF(ieva.GT.0) THEN
+            IF(itickev-itickadcf-DTICK.GT.2.) ierr=1
+C            IF(itickev-itickadcl.LT.2) ierr=1
+         ENDIF
+         IF(isprev.GT.0) THEN
+            IF(ABS(itickev-jticksc(isprev)-DTICK).GT.2.) ierr=1
+         ENDIF
+         IF(ierr.NE.0) THEN
+            KVERR(3)=KVERR(3)+1
+            nerr=nerr+1
+            IF(nerr.LT.mxerrpri) THEN
+               WRITE(6,*) ' Wrong timing in cycle=',ievv
+     +           ,' tick=',itickev
+            ENDIF
+         ENDIF
+      ENDIF
+C
+C---    Find the train status (start of train) 
+C
+      IF(ierr.EQ.0) THEN
+         izug=-1
+         IF(ieva.GT.0) izug=izugadc
+         IF(isprev.GT.0) THEN
+            IF(izug.GT.-1) THEN
+               IF(izug.NE.jzugsca(ispqrt)) izug=-1
+            ELSE
+               izug=jzugsca(ispqrt)
+            ENDIF
+         ENDIF
+         IF(izug.LT.0) THEN
+            IF(ievv.GT.1.OR.ieva.GT.0) THEN
+               KVERR(4)=KVERR(4)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Train inconsistency in cycle=',ievv
+     +                 ,' tick=',itickev
+               ENDIF
+            ENDIF
+         ELSE
+            jzug(istack)=izug
+         ENDIF
+      ENDIF 
+C
+C---    Check the number of ADC events for this gate
+C
+      IF(ierr.EQ.0.AND.NEVADC.GT.0) THEN
+         IF(ieva.NE.NEVADC) THEN
+            ierr=1
+            KVERR(5)=KVERR(5)+1
+            nerr=nerr+1
+            IF(nerr.LT.mxerrpri) THEN
+               WRITE(6,*) ' Wrong number of ADC events in cycle=',ievv
+     +               ,ieva,NEVADC
+     +           ,' tick=',itickev
+            ENDIF
+         ENDIF
+      ENDIF
+C
+C---    Find the helicity (delay ignored) of the current cycle.
+C---    The sources: 
+C         a) ITRIG(6) of the ADC events before this scaler event
+C         b) ITRIG(6) of the scaler event (this or previous, see khelshift)
+C         c) the BEST: jdif(10)=100kHz*Hel, jdif(12)=100kHz
+C
+      IF(ierr.EQ.0) THEN
+         ihel=-1
+C
+         IF(kheltru.NE.0) THEN                 ! scalers
+            scdif=ABS(REAL(jdif(12,istack)-jdif(10,istack)))
+            IF(scdif.LT.jdif(12,istack)*0.10) ihel=1 ! use clock*helicity
+            IF(scdif.GT.jdif(12,istack)*0.90) ihel=0
+            IF(ihel.LT.0) WRITE(6,*) ' The scaler (10), (12) rates '
+     +        ,'are inconsistent, helicity issue '
+     +        ,ievv,jdif(1,istack),jdif(12,istack)
+         ENDIF
+C
+         IF(kheladc.NE.0.AND.ieva.GT.0) THEN   ! ADC 
+            IF(ihel.GE.0) THEN
+               IF(ihel.NE.iheladc) ihel=-1
+            ELSE
+               ihel=iheladc
+            ENDIF
+         ENDIF
+C
+         IF(khelsca.NE.0.AND.isphel.GT.0) THEN ! scaler's ITRIG(6)
+            IF(ihel.GE.0) THEN
+               IF(ihel.NE.jhelsca(isphel)) ihel=-1
+            ELSE
+               ihel=jhelsca(isphel)
+            ENDIF
+         ENDIF
+C
+         IF(ihel.LT.0) THEN
+            ierr=1
+            IF(ievv.GT.1.OR.ieva.GT.0) THEN
+               KVERR(6)=KVERR(6)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Helicity flip in cycle=',ievv
+     +             ,' tick=',itickev,ieva,isphel,jhelsca(isphel),iheladc  
+               ENDIF
+            ENDIF
+         ELSE
+            jhelcur(istack)=ihel
+         ENDIF
+      ENDIF
+C
+      IF(ierr.NE.0) jcycer(istack)=ierr
+C
+C---     Check whether a full train is finished
+C
+      izugmark=0
+      ierr=0
+C
+      icyczug=icyczug+1
+C
+C---      A new train has arrived?
+C
+      IF(jzug(istack).GT.0) THEN
+         IF(icyczug.GT.1) THEN
+C            WRITE(6,*) ' Train marked 2 ',icyczug 
+            izugmark=2
+            ierr=1
+            IF(ievv.GE.lzug) THEN
+               KVERR(7)=KVERR(7)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Short train ievv='
+     +                 ,ievv,icyczug
+     +           ,' tick=',itickev
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDIF
+C
+C---      Full number of cycles in the train?
+C
+      IF(izugmark.EQ.0.AND.icyczug.GE.lzug) izugmark=1
+C
+C---     Mark the train
+C
+      IF(izugmark.NE.0) THEN
+         isp=istack-izugmark-icyczug+2
+         IF(isp.LE.0) isp=isp+mxstack
+         IF(jzug(isp).NE.1) THEN
+            ierr=1
+            IF(ievv.GE.lzug) THEN
+               KVERR(8)=KVERR(8)+1
+               nerr=nerr+1
+               IF(nerr.LT.mxerrpri) THEN
+                  WRITE(6,*) ' Wrong train sequence ievv='
+     +                 ,ievv,icyczug,jzug(isp)
+     +           ,' tick=',itickev
+               ENDIF
+            ENDIF
+         ENDIF
+         isp=istack-izugmark+1
+         IF(isp.LE.0) isp=isp+mxstack
+         jzugend(isp)=icyczug-izugmark+1
+         IF(ierr.NE.0) jzugend(isp)=-jzugend(isp) 
+         icyczug=izugmark-1
+C         WRITE(6,*) ' Train marked as',izugmark,icyczug 
+      ENDIF
+C
+C---     Assign the delayed helicity to the appropriate cycle 
+C
+      ispdel=0                 ! pointer to the old cycle
+      IF(ievv.GT.idelcur) THEN
+         ispdel=istack-idelcur
+         IF(ispdel.LE.0) ispdel=ispdel+mxstack
+      ENDIF
+C
+C---   Check all the cycles up to the right one
+C
+      IF(ispdel.GT.0) THEN
+         k=0
+         DO i=0,idelcur
+            isp=istack-i
+            IF(isp.LE.0) isp=isp+mxstack
+            IF(jhelcur(isp).LT.0) k=1
+         ENDDO
+         IF(k.EQ.0) THEN
+            IF(DTICK.GT.0.) THEN
+               IF(ABS(jticksc(istack)-jticksc(ispdel)-DTICK*idelcur)
+     +                .GT.2.) THEN
+                  ispdel=0
+                  KVERR(9)=KVERR(9)+1
+                  nerr=nerr+1
+                  IF(nerr.LT.mxerrpri) THEN
+                     WRITE(6,*) ' Wrong tick count, delayed ievv='
+     +                    ,ievv,jticksc(istack)-jticksc(ispdel)
+     +           ,' tick=',itickev
+                  ENDIF
+               ENDIF
+            ENDIF
+         ELSE
+            KVERR(10)=KVERR(10)+1
+            nerr=nerr+1
+            IF(nerr.LT.mxerrpri) THEN
+               WRITE(6,*) ' Wrong helicity sequence, delayed ievv='
+     +              ,ievv
+     +           ,' tick=',itickev
+            ENDIF
+         ENDIF
+         IF(k.EQ.0) jhelrec(ispdel)=jhelcur(istack)
+      ENDIF
+C
+C---   Copy the old, helicity filled train (if it is completed) to a buffer for writing out
+C
+      IF(ispdel.GT.0) THEN
+C         write(6,*) ' Cycle...',ITRIG(8),ispdel,istack
+C     +             ,jzugend(ispdel),ITRIG(6),jhelrec(ispdel)
+ 
+         IF(jzugend(ispdel).NE.0) THEN
+C
+            nzug=nzug+1
+            KZUG=nzug
+C
+            NELEM=MIN(IABS(jzugend(ispdel)),MXELEM)
+            KRUN=IRUN
+            ANGL=TANGL
+            HELMH=HELM
+C
+C---        Get the magnetic field from the current
+C
+C            bzcent=BOP_FLD(IRUN,HELM)
+C
+            ITARG=RUN_SETT(101)
+            XYTARG(1)=RUN_SETT(102)
+            XYTARG(2)=RUN_SETT(103)
+            PTARG=RUN_SETT(104)
+            IFZUG=0
+            IF(jzugend(ispdel).LT.0) IFZUG=2
+C
+            ierr=0
+            NSCAL=0
+            ksca=MIN(mxsca,MXCNT)
+            kelem=MIN(lzug,MXELEM)
+C
+            DO i=1,NELEM
+               isp=ispdel-NELEM+i
+               IF(isp.LE.0) isp=isp+mxstack
+               JTICK(i)=jticksc(isp)
+               JADC(i)=jnadc(isp)
+               IF(JADC(i).GT.0) THEN
+                  JDTICKAF(i)=JTICK(i)-jticka1(isp)
+                  JDTICKAL(i)=JTICK(i)-jticka2(isp)
+               ELSE
+                  JDTICKAF(i)=0
+                  JDTICKAL(i)=0
+               ENDIF
+               JHEL(i)=jhelrec(isp)
+               JFLA(i)=jcycer(isp)
+C
+               IF(jcycer(isp).NE.0) ierr=1
+               IF(jhelrec(isp).LT.0) ierr=1
+C
+               k=MIN(nscalim,MXCNT)
+               NSCAL=MAX(NSCAL,k)
+               DO j=1,k
+                  JCNT(j,i)=jdif(j,isp)
+               ENDDO
+            ENDDO
+C
+            IF(ierr.NE.0) IFZUG=IFZUG+1
+C
+            IF(ipri.NE.0) THEN
+               WRITE(6,1500) nzug,istack,KRUN,IFZUG,NELEM
+     +            ,(JFLA(j),JDTICKAF(j),JDTICKAL(j),JADC(j),JHEL(j)
+     +            ,(JCNT(k,j),k=3,5,2),j=1,NELEM)
+ 1500          FORMAT(' zug',2I4,I7,2I3,4('   CY',3I3,2I3,2I6))
+            ENDIF
+C
+            IF(LOUT.GT.0) THEN
+C               IF(nzug.EQ.1) THEN
+C                  WRITE(LOUT,ERR=199) kelem,ksca  ! write out the dimensions (problems if in the same record...) 
+C               ENDIF
+               WRITE(LOUT,ERR=199) kelem,ksca
+     +               ,KRUN
+     +               ,ANGL   
+     +               ,HELMH  
+     +               ,PTARG
+     +               ,ITARG
+     +               ,(XYTARG(i),i=1,2)
+     +               ,KZUG   
+     +               ,IFZUG  
+     +               ,NELEM  
+     +               ,NSCAL
+     +              ,(JTICK(i) 
+     +               ,JDTICKAF(i) 
+     +               ,JDTICKAL(i) 
+     +               ,JFLA(i)     
+     +               ,JADC(i)     
+     +               ,JHEL(i)     
+     +               ,(JCNT(j,i),j=1,ksca),i=1,kelem)
+C               WRITE(78,*) 
+C     +                KRUN
+C     +               ,KZUG   
+C     +               ,IFZUG  
+C     +               ,NELEM  
+C     +              ,(JHEL(i),i=1,kelem)
+               KVERR(20)=KVERR(20)+1
+               GO TO 200
+ 199           WRITE(6,*) ' *** ZUGTOFILE: error writing LUN=',LOUT
+ 200           CONTINUE
+            ENDIF
+C
+         ENDIF
+      ENDIF
+C
+C      IF(IABS(itickev-789578).LT.20) THEN
+      IF(ievv.GE.16.AND.ipri.GT.10) THEN
+         WRITE(6,*) 'ievv=',ievv 
+         DO i=16,1,-1
+            isp=istack-i+1
+            IF(isp.LE.0) isp=isp+mxstack
+            WRITE(6,2000) isp
+     +           ,jzugend(isp) ! =n>0 - 1-st in a train of n, =n<0 iabs(n) - the same, but error in this train 
+     +           ,jzug(isp)    ! helicity train (4 cycles): <0 - not defined, 0,1
+     +           ,jcycer(isp)  ! error in this cycle =0 - OK
+     +           ,jhelrec(isp) ! reconstructed helicities (correct also in case of delayed)
+     +           ,jhelcur(isp) ! current helicities (shifted in case of delayed)
+     +           ,jhelsca(isp) ! current helicity of the scaler event
+     +           ,jzugsca(isp) ! helicity train (4 cycles) starting signal (1-st cycle), this scaler event  
+     +           ,jticksc(isp) ! tick values (for the scaler readout)
+     +           ,jticka1(isp) ! tick 1-st ADC 
+     +           ,jticka2(isp) ! tick last ADC
+ 2000       FORMAT(I4,2X,7I4,3I11)
+         ENDDO
+      ENDIF
+C
+C---     Reset the ADC counters
+C
+      itickadcf=0
+      itickadcl=0
+      ieva=0
+C
+ 999  CONTINUE
+      END

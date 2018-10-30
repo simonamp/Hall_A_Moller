@@ -1,0 +1,92 @@
+MACRO getrun lun=0 run=0 
+*
+* --- Checks if the run/lun is attached
+* --- One should set either lun or run
+* --- Output goes to vectors ilun(1) and irun(1)
+
+ if $VDIM(ilun)=0 .OR. $VDIM(irun)=0 .OR. $VDIM(irty)=0 then
+   ve/cr ilun(1) i
+   ve/cr irun(1) i
+   ve/cr irty(1) i
+ else
+   ve/in ilun(1) 0
+   ve/in irun(1) 0
+   ve/in irty(1) 0
+ endif
+
+ mess lun=[lun] run=[run]
+ if [run]>0 .AND. [lun]>0 then
+   mess Error: run=[run], lun=[lun] You should set either run or lun
+   exitm
+ endif
+
+ if [run].LE.0 .AND. [lun].LE.0 then
+   mess Error: run=[run], lun=[lun] You should set either run or lun
+   exitm
+ endif
+
+ if $VLEN(lrun)=0 .OR. $VLEN(mrun)=0 then
+   mess Error: vectors lrun/mrun are not initialized. Use run.kumac
+   exitm  
+ endif
+ n=$VLEN(lrun)
+ iadr=0
+
+ if [run]>0 then
+   lun=0
+   do i=1,[n]
+     l=lrun([i])
+*     mess [l] [run]
+     if [l]=[run] then
+       lun=mrun([i])
+       iadr=[i]
+     endif
+   enddo
+   if [lun]=0 then
+     mess Error: run=[run] is not initialized. Use run.kumac
+     exitm  
+   endif
+ else
+   run=0
+   do i=1,[n]
+     l=mrun([i])
+     if [l]=[lun] then
+       run=lrun([i])
+       iadr=[i]
+     endif
+   enddo
+   if [run]=0 then
+      mess No run number for lun=[lun]
+      exitm
+   endif
+ endif  
+ if [iadr]>0 then
+    mess OK: lun=[lun] is used for for run=[run]
+    kty=ktyrun([iadr])
+    ve/in irty(1) [kty]
+
+    ve/in ilun(1) [lun]
+    ve/in irun(1) [run]
+*
+* --- Get the file name
+*
+    for/file 78 tmp.out
+    output_lp 78
+    ld //
+    clo 78
+    output_lp 6
+    if $FEXIST(fort.78)>0 then
+      shell rm fort.78
+    endif
+    shell 'grep LUN'//[lun]//' tmp.out | awk ''{print $2}'' > tmp.runname' 
+ endif
+
+RETURN
+
+
+
+
+
+
+
+

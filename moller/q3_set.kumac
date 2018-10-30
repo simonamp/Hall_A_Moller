@@ -1,0 +1,43 @@
+MACRO q3_set f=0.5 p=1 k=1
+*** p=1 - input of one field value, kG 
+*** p>1 - input of vector of field values
+*** k=1 - old field, kG --> real field, kG and set current, Amp
+*** k=2 - GEANT field, kG --> set current, Amp 
+ve/de *
+   if [k]=1 then
+     if [p]>1 then
+ ve/cr fl(15) r 1.1   1.0   0.9   0.8   0.7   0.6  0.54   0.5   0.4
+ np=$sigma(NCO(fl))
+     elseif [p]=1 then
+ ve/cr fl(1) r [f]
+ np=1
+      endif
+   do k=1,[np]
+ f=fl([k])
+ fg=[f]*1000.
+ cr=[f]/0.02416
+ f1=30.48+24.948*[cr]-0.35388E-01*[cr]*[cr]+0.36251E-03*[cr]*[cr]*[cr]
+ f2=[f1]-0.14297E-05*[cr]*[cr]*[cr]*[cr]+0.15242E-08*[cr]*[cr]*[cr]*[cr]*[cr]
+ rt=[f2]/[fg]
+ mess Field old=[fg]G   Set Current=[cr]A   Field real=[f2]G   Ratio=[rt]  
+    enddo
+
+   elseif [k]=2 then 
+     if [p]>1 then
+ ve/cr fl(15) r -6.0 -3.0 -0.01 0.01 1.35 1.4 1.45 1.48 
+ np=$sigma(NCO(fl))
+     elseif [p]=1 then
+ ve/cr fl(1) r [f]
+ np=1
+      endif
+   do k=1,[np]
+ f=fl([k])
+ fg=[f]*1000.
+ c1=-1.315+0.4101E-01*[fg]+0.15644E-05*[fg]*[fg]-0.4145E-09*[fg]*[fg]*[fg]
+ c2=[c1]-0.36829E-13*[fg]*[fg]*[fg]*[fg]+0.14817E-16*[fg]*[fg]*[fg]*[fg]*[fg]
+ rt=[c2]/[fg]
+ mess Field=[f]kG    Set Current=[c2]A    Coef=[rt]  
+    enddo
+  endif
+
+RETURN

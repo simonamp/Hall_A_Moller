@@ -1,0 +1,40 @@
+MACRO pos_resol id0=400 arm=1 fill=1
+
+ 
+ if [arm]=1 then
+   a1=1
+   a2=2
+   t1=L
+   t2=R
+ else
+   a1=2
+   a2=1
+   t1=R
+   t2=L
+ endif
+
+ slice=0.1
+ nslice=3./[slice]
+ if [fill]>0 then
+   ve/cr sresol(100) r
+   ve/cr xresol(100) r
+
+   do i=1,[nslice]
+     x1=1.+([i]-1.5)*[slice]
+     x2=[x1]+[slice]
+     id=[id0]+[i]
+     tit='Pos  '//[t1]//' for Pos '//[t2]//' in '//[x1]//' - '//[x2]
+     1dh [id] [tit] 200 0 5  
+     nt/pl //lr/1.poscor.f(getpos.f([a1],0)) $11.and.[x1]<poscor.f(getpos.f([a2],0))<[x2] -[id]
+     h/fit [id] g ' ' 0 par
+     x=([x1]+[x2])/2.
+     ve/in xresol([i]) [x]
+     y=par(3)
+     ve/in sresol([i]) [y]
+   enddo
+ endif
+
+ null 0 5 0 1
+ gr/hpl /err xresol sresol err err [nslice] 20
+
+RETURN

@@ -1,0 +1,132 @@
+*** Begin of history file: Wed May 27 13:27:11 2009
+exec sett_magp e0=4.727 nq=3 p=3
+exec sett_magp e0=4.727 nq=3 p=3
+exec sett_magp e0=2.4255 nq=3 p=3
+exec sett_magp e0=2.4255 nq=3 p=1
+exec sett_magp e0=2.4255 nq=2 p=1
+exec sett_magp e0=2.4255 nq=2 p=3
+exec run run=13349
+exec run run=13349
+exec lg_spectra run=13349
+exec lg_spectra run=13349
+exec asymu delay=0 run=13349
+exec asymu delay=0 run=13349
+call prunpri.f(10000,20000)
+exec run run=13350
+exec lg_spectra run=13350
+exec asymu delay=0 run=13350
+call prunpri.f(10000,20000)
+exec run run=13351
+exec lg_spectra run=13351
+exec asymu delay=0 run=13351
+call prunpri.f(10000,20000)
+exec run run=13352
+exec lg_spectra run=13352
+exec asymu delay=0 run=13352
+call prunpri.f(10000,20000)
+exec run run=13353
+exec lg_spectra run=13353
+exec asymu delay=0 run=13353
+call prunpri.f(10000,20000)
+exec run run=13354
+exec lg_spectra run=13354
+exec asymu delay=0 run=13354
+call prunpri.f(10000,20000)
+exec run run=13355
+exec lg_spectra run=13355
+exec asymu delay=0 run=13355
+call prunpri.f(10000,20000)
+exec run run=13356
+exec lg_spectra run=13356
+exec asymu delay=0 run=13356
+call prunpri.f(10000,20000)
+exec run run=13357
+exec lg_spectra run=13357
+exec asymu delay=0 run=13357
+call prunpri.f(10000,20000)
+zone
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13357
+exec run run=13357
+exec lg_spectra run=13357
+exec asymu delay=0 run=13357
+call prunpri.f(10000,20000)
+zone
+exec asym_av run1=13349 run2=13357
+exec asym_av run1=13349 run2=13353
+exec asym_av run1=13354 run2=13357
+exec run run=13358
+exec lg_spectra run=13358
+exec asymu delay=0 run=13358
+call prunpri.f(10000,20000)
+exec run run=13359
+exec lg_spectra run=13359
+exec asymu delay=0 run=13359
+call prunpri.f(10000,20000)
+exec run run=13360
+exec lg_spectra run=13360
+exec asymu delay=0 run=13360
+call prunpri.f(10000,20000)
+exec run run=13361
+exec lg_spectra run=13361
+exec asymu delay=0 run=13361
+call prunpri.f(10000,20000)
+exec asy_av run1=13358 run2=13361
+zone
+exec asym_av run1=13358 run2=13361
+exec asym_av run1=13358 run2=13361
+exec run run=13362
+exec lg_spectra run=13362
+exec asymu delay=0 run=13362
+call prunpri.f(10000,20000)
+exec run run=13363
+exec lg_spectra run=13363
+exec asymu delay=0 run=13363
+call prunpri.f(10000,20000)
+exec run run=13364
+exec lg_spectra run=13364
+exec asymu delay=0 run=13364
+call prunpri.f(10000,20000)
+exec run run=13365
+exec lg_spectra run=13365
+exec asymu delay=0 run=13365
+call prunpri.f(10000,20000)
+exec asym_av run1=13362 run2=13365
+zone
+exec asym_av run1=13362 run2=13365
+exec asym_av run1=13362 run2=13365
+exec asym_av run1=13358 run2=13365
+exec asym_av run1=13358 run2=13365
+exec run run=13366
+exec lg_spectra run=13366
+exec asymu delay=0 run=13366
+call prunpri.f(10000,20000)
+exec asym_av run1=13349 run2=13365
+zone
+exec asym_av run1=13349 run2=13365
+zone 2
+exec asym_av run1=13349 run2=13365
+zone
+exec asym_av run1=13349 run2=13365
+exec asym_av run1=13349 run2=13365
+exec run run=13367
+exec lg_spectra run=13367
+exec asymu delay=0 run=13367
+call prunpri.f(10000,20000)
+exec run run=13368
+exec lg_spectra run=13368
+exec asymu delay=0 run=13368
+call prunpri.f(10000,20000)
+exec run run=13369
+exec lg_spectra run=13369
+exec asymu delay=0 run=13369
+call prunpri.f(10000,20000)
+exec run run=13370
+exec lg_spectra run=13370
+exec asymu delay=0 run=13370
+call prunpri.f(10000,20000)
+*** End   of history file: Wed May 27 16:40:13 2009

@@ -1,0 +1,96 @@
+MACRO get_settings_n run=0 clear=0
+*
+* --- Get the settings into a vector run_sett(100)
+* --- If the vector is already filled - do not refill it (if clear>0 - always refill)
+*
+
+ if $VDIM(run_sett,1)<180 then
+   ve/cr run_sett(120) r
+ endif
+ nl=$VDIM(run_sett,1)
+ runold=run_sett(100)
+ runold=$SIGMA(INT([runold]+0.1))
+
+ if [run]>0 .AND. [runold]=[run] .AND. [clear]=0 then
+    mess Use the existing vector with the run settings data
+    exitm
+ endif
+
+ ve/in run_sett [nl]*0.
+
+ if [run]<1 then
+   mess Error in get_settings.kumac : run number [run] is out of range
+   exitm
+ endif
+
+*  Find the settings file
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp
+ endif
+ fmong='mollerrun_'//[run]//'.set'
+ shell find [dirm] -name [fmong] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]<1 then
+   mess Setting file [fmong] has not been found. Exiting...
+   exitm
+ endif
+ 
+ fmon=$SHELL('cat tmp.nam | head -1',1) 
+ mess Settings file [fmon]
+ 
+*
+* ---  Fix the date format
+*
+ shell 'cat '//[fmon]//' | grep -v ''^\# Date '' | grep -v ''^End Run Time'' > tmp.mon1' 
+ shell 'cat tmp.mon1 | grep -v ''^Hcoils current (Amps)'' > tmp.mon'
+ shell rm -f tmp.mon1 
+ comn='cat '//[fmon]//' | grep ''^\# Date '' | cut -c8-32'
+ date=$SHELL([comn])
+ comn='date +''%Y %m %d %H %M %S'' -d "'//[date]//'"'
+ date1=$SHELL([comn],1)
+ shell 'echo ''# Date                               Moll_start_run_time  : '''//[date1]//' >> tmp.mon'
+ comn='cat '//[fmon]//' | grep ''^End Run Time'' | cut -c16-43'
+ date=$SHELL([comn])
+ comn='date +''%Y %m %d %H %M %S'' -d "'//[date]//'"'
+ date1=$SHELL([comn],1)
+ shell 'echo ''End Run Time                         Moll_end___run_time  : '''//[date1]//' >> tmp.mon'
+* shell 'cat '//[fmon]//' | grep ''^Hcoils current (Amps)'' >> tmp.mon
+ shell 'cat '//[fmon]//' |  grep ''^Hcoils current (Amps)'' | awk ''{t++; print $1" "$2" "$3"                  Moll_hcoil_a_"t"     " $(NF-1)" "$NF}''' >> tmp.mon
+
+* Template file
+ ftab=run_settings_new.tab
+ if $FEXIST([ftab])=0 then
+   mess The file with a table of the variables [ftab] is missing. Exiting ...
+   exitm
+ endif
+
+ shell ln -sf [ftab] fort.1
+ shell ln -sf tmp.mon fort.2
+
+ for/clo 1
+ for/clo 2
+
+ call get_sett_n.f 
+
+* shell rm -f fort.1
+* shell rm -f fort.2
+* shell rm -f tmp.mon
+* shell rm -f tmp.nam
+*
+**      The real current is 2 times larger than the measurement (the scale factor for the ADC)
+*
+ a=run_sett(79)
+ a=$SIGMA([a]*2.)
+ ve/in run_sett(79) [a]
+
+ ve/in run_sett(100) [run]
+
+
+ call targpos.f([run])
+
+RETURN
+

@@ -1,0 +1,31 @@
+MACRO meas_040609 fill=1 fillscal=0
+*
+* --- measurement 9 June 2004 Wien=15.946
+*
+*     Define the data set
+   ngr=1
+*   ve/cr killrun(2) i 11161 11162
+   ve/cr iru(2,3,[ngr]) i
+   ve/cr ang(3,[ngr]) r 
+* Run ranges for 3 target angle measurements
+
+   ve/in iru(1:2,1,1) 11169 11170
+   ve/in ang(1,1) 90.
+
+   ve/in iru(1:2,2,1) 11165 11168
+   ve/in ang(2,1) 25.0
+
+   ve/in iru(1:2,3,1) 11171 11174
+   ve/in ang(3,1) 165.0
+
+   exec analyze_set ngr=[ngr] fill=[fill] fillscal=[fillscal] delay=9 nevadc=-1
+
+RETURN
+
+
+
+
+
+
+
+

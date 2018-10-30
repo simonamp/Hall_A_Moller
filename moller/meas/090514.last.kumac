@@ -1,0 +1,28 @@
+*** Begin of history file: Tue Jun 23 15:34:55 2009
+exec run run=13323
+exec asymu delay=0 run=13323
+exec run run=13324
+exec asymu delay=0 run=13324
+exec run run=13325
+exec asymu delay=0 run=13325
+exec run run=13326
+exec asymu delay=0 run=13326
+call prunpri.f(10000,20000)
+exec asym_av run1=13323 run2=13326
+exec run run=13327
+exec asymu delay=0 run=13327
+exec run run=13328
+exec asymu delay=0 run=13328
+exec run run=13329
+exec asymu delay=0 run=13329
+exec run run=13330
+exec asymu delay=0 run=13330
+call prunpri.f(10000,20000)
+exec asym_av run1=13327 run2=13330
+exec asym_av run1=13323 run2=13330
+opla
+exec asym_av run1=13323 run2=13330
+clops
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Tue Jun 23 15:38:59 2009

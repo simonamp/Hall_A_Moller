@@ -1,0 +1,62 @@
+MACRO cal_ini1 attach=1
+
+ ve/cr ichlim(2,5) i 
+ ve/cr ilglim(2,5) i 
+
+ ve/in ichlim(1:2,4) -6  1 
+ ve/in ichlim(1:2,3)  3  6   
+ ve/in ichlim(1:2,2) 11 14 
+ ve/in ichlim(1:2,1) 16 25  
+
+ ve/in ilglim(1:2,1)  1  4 
+ ve/in ilglim(1:2,2)  5  8 
+ ve/in ilglim(1:2,3)  9 12 
+ ve/in ilglim(1:2,4) 13 16 
+
+if [attach]=0 then
+  goto eend
+endif
+
+*  collim 4mm col=4           
+exec run run=7581 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7582 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 4mm col=3           
+exec run run=7583 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7584 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 4mm col=2.5 (center) trigger=hodoscope           
+exec run run=7588 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7589 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 4mm col=2
+exec run run=7591 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7592 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 4mm col=1
+exec run run=7595 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7596 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 8mm col=2
+exec run run=7598 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7599 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+*  collim 2mm col=2
+exec run run=7600 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7601 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+exec run run=7602 dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/
+
+chain col4mm //lun21 //lun22 //lun23 //lun24 //lun27 //lun28 //lun29 //lun30
+chain col8mm //lun31 //lun32
+chain col2mm //lun33 //lun34 //lun35
+
+chain clmn2 //lun27 //lun28
+chain clmn3 //lun23 //lun24 
+
+chain clmn23 //lun23 //lun24 //lun27 //lun28
+
+eend:
+
+RETURN
+
+

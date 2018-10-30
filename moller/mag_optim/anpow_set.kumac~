@@ -1,0 +1,9 @@
+MACRO anpow_set  e0=6.0
+* calculation of analysing power for asym11
+* e0  - electron beam energies, GeV
+* anp - analysing power
+ ap1=$sigma(0.80505-0.67685E-01*[e0]+0.24454E-01*[e0]**2-0.37949E-02*[e0]**3)
+ ap11=$sigma(0.27325E-03*[e0]**4-0.74346E-05*[e0]**5)
+ ap=[ap1]+[ap11]
+ mess Eb=[e0]GeV, Q1=[ap]
+RETURN

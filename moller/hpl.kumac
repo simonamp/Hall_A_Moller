@@ -1,0 +1,19 @@
+macro hpl id=1 del=1 n=1 par= 
+id0=[id]
+mx=[n]-1
+* mess par=[par] 
+id=[id0]-[del]
+n=0
+next:
+  n=[n]+1
+  id=[id]+[del]
+  idd=[id]
+  if $LEN([par])> 0 then
+    idd=[idd][par]
+  endif
+  mess [idd]
+  h/pl [idd]
+  if [n]>[mx] goto fin
+goto next
+fin:
+return

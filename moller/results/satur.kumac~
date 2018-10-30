@@ -1,0 +1,92 @@
+MACRO satur
+**** 05/15/2010
+**** Targets 2 and 3 saturation test
+
+
+ ve/cr fild(6) r  2.0     2.5    2.8    3.0    3.4    3.8
+ ve/cr tar2(6) r 80.93  89.13  89.28  90.49  90.15  92.23
+ ve/cr ert2(6) r  0.28   0.30   0.31   0.30   0.30   0.32
+* ve/cr tar3(6) r 82.32  89.05  90.54  90.80  92.23  92.30
+* ve/cr ert3(6) r  0.32   0.29   0.30   0.31   0.31   0.32
+ ve/cr tar3(6) r 81.99  89.00  90.44  90.66  91.79  92.94
+ ve/cr ert3(6) r  0.22   0.23   0.24   0.25   0.26   0.28
+ ve/cr tars(6) r 81.46  89.06  89.91  90.58  90.97  92.52
+ ve/cr erts(6) r  0.18   0.20   0.25   0.20   0.20   0.20
+ ve/cr filo(4) r   2.0    2.8    3.0    3.5
+ ve/cr taro(4) r 79.32   86.0   86.4  88.22
+ ve/cr erto(4) r  0.2     0.2    0.2   0.2  
+
+ ve/cr fil0(3) r   2.0   2.8    3.5
+ ve/cr tar0(3) r 79.32  86.0  88.22
+ ve/cr ert0(3) r  0.2    0.2    0.2  
+ ve/cr fil4(1) r  3.8
+ ve/cr tar4(1) r 92.47
+ ve/cr ert4(1) r  0.32
+ 
+ ve/cr fil1(3)  r   2.0    2.8    3.4  
+ ve/cr tar21(3) r 80.93  89.28  90.15   
+ ve/cr ert21(3) r  0.28   0.31   0.30
+ ve/cr tar31(3) r 81.99  90.44  91.79  
+ ve/cr ert31(3) r  0.22   0.24   0.26   
+      
+ ve/cr fil2(3)  r    2.5    3.0    3.8 
+ ve/cr tar22(3) r  89.13  90.49  92.23
+ ve/cr ert22(3) r   0.30   0.30   0.32
+ ve/cr tar32(3) r  89.00  90.66  92.94
+ ve/cr ert32(3) r   0.23   0.25   0.28
+
+
+ set stat 1111111
+ opt ndat
+ opt nbox
+ sigma err=array(6,0.01#0.01)
+ sigma er4=array(1,0.01#0.01)
+ ve/cr parv(10) r
+* ve/fit  fil1  tar21 ert21  p2 ! 1 parv
+*wait
+* ve/fit  fil1  tar31 ert31  p2 ! 1 parv
+*wait
+
+ fort/fil 56 satur.ps
+ meta 56 -112
+
+ null 1.9 3.9 78.5 95.0
+ set pmci 2
+ set txci 2
+ set plci 2
+ gr/hpl/err fild tar2  err ert2  6  20  0.3
+ gr/hpl/key 3.0 85.0  20 '-Target 2 (1um)'
+ ve/pl tar21%fil1 ! sc
+ ve/pl tar22%fil2 ! sc
+ set pmci 4
+ set txci 4
+ set plci 4
+ gr/hpl/key 3.0 84.0  22 '-Target 3 (4um)'
+ gr/hpl/err fild tar3  err ert3  6  22  0.3  
+ ve/pl tar31%fil1 ! sc
+ ve/pl tar32%fil2 ! sc
+* set pmci 6
+* set txci 6
+* gr/hpl/key 3.0 83.0  30 '-Targets average'
+* gr/hpl/err fild tars  err erts  6  30  0.3
+* ve/pl tars%fild ! sc
+ set pmci 6
+ set txci 6
+ set plci 6
+ gr/hpl/key 3.0 82.0  29 '-Target 3 04/03'
+ sigma tar0=tar0*1.0337
+ sigma taro=taro*1.0337
+ ve/pl tar0%fil0 ! sc
+ gr/hpl/err filo taro  err erto  4  29  0.3
+ set txci 1
+ set pmci 1
+ gr/hpl/key 3.0 83.0  24 '-Target 4 (12.5um)'
+ gr/hpl/err fil4 tar4  er4 ert4  1  24  0.3
+ atitle 'Moller magnet field, T'   'Beam Polarization, r.u.' 
+ selnt 1
+ text 13.0 20.5 'Moller targets saturation test' 0.4 0 C
+ selnt 10
+
+ close 56
+
+RETURN

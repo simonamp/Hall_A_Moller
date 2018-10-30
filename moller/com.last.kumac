@@ -1,0 +1,11 @@
+*** Begin of history file: Wed Aug 26 09:53:44 2009
+mess $sigma((590.60-549.40)/(590.60+549.40))
+ve/cr vprec(8) r
+mess $sigma((590.60+549.40)/2.)
+ve/in vprec(1:5) 0.570 1 1 0 0.0361403
+fu/pl spinpred.f -90 90
+ve/in vprec(1:5) 0.570 1 3 0 0.0361403
+fu/pl spinpred.f -90 90 s
+loca
+exit
+*** End   of history file: Wed Aug 26 10:01:05 2009

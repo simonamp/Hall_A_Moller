@@ -1,0 +1,30 @@
+MACRO asym_avt run1=1 run2=30 bpn=1
+opt ndat
+ nr=6
+ ve/cr bp([nr]) r _ 
+87.4141 86.6331 86.4807 88.9513 86.5979 85.1325
+ ve/cr err([nr]) r _ 
+1.0941 1.0571 1.0756 1.0562 1.0903 1.0741
+ zone
+ fort/fil 56 moller_15431-15434.ps
+ meta 56 -112
+ opt ndat
+ sigma er1=array([nr],0.001#0.001)
+* sigma rn=array([nr],1#[nr])
+ sigma rn=array([nr],15431#15434)
+ ve/cr parv(5) r
+ set dmod 3
+ ve/in parv(1) 0.5
+ ve/fit  rn  bp err  p0 ! 1 parv
+ set dmod 0
+* null 14417 14460 -92.0   -87.0
+ gr/hpl/err rn bp  err err [nr] 20 0.3
+ atitle 'Runs'   'Beam Polarization, "Y#'  
+* atitle 'Moller Targets'   'Beam Polarization, "Y#' 
+ selnt 1
+ text 13.0 20.5 'Moller results, Wien=+20, 05/04/2012' 0.5 0 C
+ selnt 10
+ close 56
+
+RETURN 
+

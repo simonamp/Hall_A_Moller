@@ -1,0 +1,27 @@
+MACRO spin_prec_9 
+*
+*
+*runs 12152-1217..
+ np=5
+ ve/cr exx([np]) r 
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr ebpol([np]) r
+ ve/in wang   -6.0   9.   24.   39.   54.  
+ ve/in bpol   82.2  88.1  87.8  82.0  70.6  
+ ve/in ebpol   0.2   0.2   0.2   0.2   0.2
+
+ ve/cr ipfit(2) i
+ ve/in ipfit 0 0
+ ve/cr par(10) r
+ ve/in par(1:2) 85. 24.
+
+ set csiz 0.5
+* gr/hpl/err wang bpol exx ebpol 5 20 0.2
+ ve/fit wang bpol ebpol wave_1.f 1 2 par
+* null -10 60 66 92.
+ gr/hpl/err wang bpol exx ebpol 5 20 0.2
+* a=par(1)
+* b=par(2)
+* mess [a] [b]
+* fu/pl [a]*cos((x-[b])*3.1416/180.) -10 60 s

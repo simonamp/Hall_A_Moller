@@ -1,0 +1,346 @@
+*** Begin of history file: Tue Jan 13 11:28:15 2009
+exec run run=13054
+exec lg_spectra run=13054
+exec lg_spectra run=13054
+loca
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13054
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13054
+zone 2 2
+exec run run=13055
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13055
+exec lg_spectra run=13055
+exec lg_spectra run=13055
+exec lg_spectra run=13055 cut=11
+call prunpri.f(10000,20000)
+ve/cr vprec(8) r
+ve/in vprec(1:3) 0.5835 1 1
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f 0 90
+zone 1 1
+fu/pl spinpred.f 0 90
+fu/pl spinpred.f -90 90
+loca
+exec run run=13056
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13056
+zone 2 2
+call prunpri.f(10000,20000)
+fu/pl spinpred.f -90 90
+exec run run=13057
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13057
+ve/in vprec(1:3) 0.5835 1 5
+ve/in vprec(1:3) 0.5836 1 5
+fu/pl spinpred.f -90 90
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f -90 90 s
+zone 1 1
+fu/pl spinpred.f 20 60
+ve/in vprec(1:3) 0.5836 1 5
+fu/pl spinpred.f 20 60 s
+loca
+call prunpri.f(10000,20000)
+exec run run=13058
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13058
+call prunpri.f(10000,20000)
+exec asym_av run1=13055 run2=13058
+exec run run=13059
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13059
+call prunpri.f(10000,20000)
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f -80 -20
+fu/pl spinpred.f -60 -20
+ve/in vprec(1:3) 0.5837 1 5
+fu/pl spinpred.f -60 -20 s
+loca
+exec run run=13060
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13060
+call prunpri.f(10000,20000)
+exec asym_av run1=13055 run2=13058
+exec run run=13061
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13061
+mess $sigma(90.8*0.94)
+mess $sigma(90.8*0.90)
+mess $sigma(90.8*cos(20*3.14/180))
+call prunpri.f(10000,20000)
+exec run run=13062
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13062
+exec run run=13063
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13063
+call prunpri.f(10000,20000)
+fu/pl spinpred.f -60 -20
+fu/pl spinpred.f --60 90
+fu/pl spinpred.f -60 90
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f -60 90
+ve/in vprec(1:3) 0.5835 2 5
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5835 1 5
+null -60 90 -1.1 1.1
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5835 2 5
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5835 3 5
+fu/pl spinpred.f -60 90 s
+exec run run=13064
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13064
+call prunpri.f(10000,20000)
+exec asym_av run1=13059 run2=13060
+exec asym_av run1=13061 run2=13064
+exec asym_av run1=13055 run2=13060
+null -60 90 -1.1 1.1
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f -60 90 s
+null -60 90 -1.1 1.1
+set hcol 2
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5835 2 5
+set hcol 3
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5835 3 5
+set hcol 4
+fu/pl spinpred.f -60 90 s
+loca
+ve/in vprec(1:3) 0.5835 3 4
+fu/pl spinpred.f -60 90 s
+loca
+exec run run=13065
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13065
+mess $sigma(0.5835*10+0.0656)
+mess $sigma((5.892-0.0656)/10)
+null -60 90 -1.1 1.1
+set hcol 2
+ve/in vprec(1:3) 0.5826 1 5
+fu/pl spinpred.f -60 90 s
+mess $sigma((5.893-0.0656)/10)
+ve/in vprec(1:3) 0.5827 1 5
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5826 1 5
+ve/in vprec(1:3) 0.58264 1 5
+fu/pl spinpred.f -60 90 s
+null -60 90 -1.1 1.1
+fu/pl spinpred.f -60 90 s
+set hcol 2
+ve/in vprec(1:3) 0.58264 2 5
+fu/pl spinpred.f -60 90 s
+set hcol 3
+fu/pl spinpred.f -60 90 s
+exec run run=13066
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13066
+set hcol 4
+call prunpri.f(10000,20000)
+lcd summary
+exec spin_prec_9
+lcd ..
+exec run run=13067
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13067
+exec spin_prec_9
+exec run run=13068
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13068
+exec asym_av run1=13065 run2=13068
+lcd summary
+exec spin_prec_10
+exec spin_prec_10
+lcd ..
+null -60 90 -1.1 1.1
+ve/in vprec(1:3) 0.58264 1 5
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.583 1 5
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.5832 1 5
+fu/pl spinpred.f -60 90 s
+null -60 90 -1.1 1.1
+fu/pl spinpred.f -60 90 s
+loca
+mess $sigma(0.5832*10+0.06564)
+exec run run=13070
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13070
+lcd summary
+exec spin_prec_10
+gr/hpl/err wang bpol exx ebpol 4 20 0.2
+exec spin_prec_10
+help ve/fit
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+help ve/fit
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+exec spin_prec_10
+loca
+lcd ..
+exec run run=13071
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13071
+exec run run=13072
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13072
+exec run run=13073
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13073
+call prunpri.f(10000,20000)
+exec asym_av run1=13070 run2=13073
+lcd summary
+exec spin_prec_10
+lcd ..
+ve/in vprec(1:3) 0.5832 1 5
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:3) 0.58325 1 5
+mess $call('spinpred.f(54.)')
+mess $call('spinpred.f(55.)')
+mess $call('spinpred.f(54.)')
+mess $call('spinpred.f(55.)')
+exec run run=13074
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13074
+null -60 90 -1.1 1.1
+fu/pl spinpred.f -60 90 s
+ve/in vprec(1:3) 0.58325 2 5
+set hcol 3
+fu/pl spinpred.f -60 90 s
+set hcol 4
+ve/in vprec(1:3) 0.58325 3 4
+fu/pl spinpred.f -60 90 s
+loca
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-18.)*3.1416/180)**2+cos((x-24.)*3.1416/180)**2)/3. -60 90 s
+loca
+exec run run=13075
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13075
+mess $call('spinpred.f(55.)')
+call prunpri.f(10000,20000)
+exec run run=13076
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13076
+call prunpri.f(10000,20000)
+exec run run=13077
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13077
+exec asym_av run1=13074 run2=13077
+mess $sigma(81.1/91.)
+null 0 50 -1.1 1.1
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-18.)*3.1416/180)**2+cos((x-24.)*3.1416/180)**2)/3. 0 50 s
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-18.)*3.1416/180)**2+cos((x-24.)*3.1416/180)**2)/3. -90 90
+ve/in vprec(1:3) 0.58325 1 5
+exec run run=13079
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13079
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13079
+exec run run=13080
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13080
+exec run run=13081
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13081
+ve/in vprec(1:3) 0.58325 1 5
+mess $call('spinpred.f(55.)')
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:3) 0.58325 1 5 1
+mess $call('spinpred.f(54.)')
+exec run run=13082
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13082
+mess $call('spinpred.f(54.)')
+call prunpri.f(10000,20000)
+exec asym_av run1=13078 run2=13081
+call prunpri.f(10000,20000)
+exec asym_av run1=13079 run2=13082
+exec run run=13083
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13083
+exec run run=13084
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13084
+exec run run=13084
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:3) 0.58325 1 5 1
+ve/pri vprec
+ve/in vprec(1:4) 0.58325 1 5 1
+mess $call('spinpred.f(54.)')
+mess $sigma(11518/360.)
+ve/in vprec(1:4) 0.58325 1 5 0
+mess $call('spinpred.f(54.)')
+mess $call('spinpred.f(50.)')
+mess $call('spinpred.f(50.)')
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:4) 0.58326 1 5 0
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:4) 0.5833 1 5 0
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:4) 0.5834 1 5 0
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:4) 0.58335 1 5 0
+mess $call('spinpred.f(54.)')
+exec run run=13084 reload=1
+exec run run=13084 reload=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13084
+call prunpri.f(10000,20000)
+ve/in vprec(1:4) 0.58335 2 5 0
+mess $call('spinpred.f(54.)')
+mess $call('spinpred.f(18.)')
+mess $call('spinpred.f(19.)')
+mess $call('spinpred.f(17.)')
+mess $call('spinpred.f(15.6)')
+ve/in vprec(1:4) 0.58335 3 4 0
+mess $call('spinpred.f(24.)')
+mess $call('spinpred.f(23.)')
+exec run run=13085
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13085
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-15.6)*3.1416/180)**2+cos((x-23.)*3.1416/180)**2)/3. -90 90
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-15.6)*3.1416/180)**2+cos((x-23.)*3.1416/180)**2)/3. 0 40
+loca
+exec run run=13086
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13086
+call prunpri.f(10000,20000)
+[Bcall prunpri.f(10000,20000)
+exec asym_av run1=13083 run2=13086
+call prunpri.f(10000,20000)
+exec run run=13087
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13087
+zone 2 2
+exec run run=13088
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13088
+exec run run=13089
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13089
+exec run run=13090
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13090
+exec asym_av run1=13087 run2=13090
+exec run run=13091
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13091
+exec run run=13092
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13092
+exec run run=13093
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13093
+exec asym_av run1=13074 run2=13090
+mess $sigma((91.02+90.52+90.8)/3)
+exec run run=13094
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13094
+exec asym_av run1=13091 run2=13094
+call prunpri.f(10000,20000)
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13094
+exec get_settings run=13094 clear=1
+exec get_settings run=13091 clear=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13091
+exec get_settings run=13092 clear=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13092
+exec get_settings run=13093 clear=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13093
+exec get_settings run=13094 clear=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13094
+call prunpri.f(10000,20000)
+exec asym_av run1=13091 run2=13094
+exec asym_av run1=13091 run2=13094
+mess $sigma((91.02+90.52+90.8)/3)
+mess $sigma(90.8/91.0*82.3)
+lcd summary
+exec spin_prec_10
+exec spin_prec_10
+set hfit 111
+set fit 111
+exec spin_prec_10
+exec spin_prec_10
+opt ndat
+titl 'Spin dance on 2009/01/13'
+zone 1 1
+exec spin_prec_10
+opla
+exec spin_prec_10
+clops
+ve/pri
+ve/li
+ve/pri vprec
+mess $sigma(0.58335*10+0.06564)
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-15.6)*3.1416/180)**2+0*cos((x-23.)*3.1416/180)**2)/3. 0 40
+fu/pl (cos((x-54.)*3.1416/180)**2+cos((x-15.6)*3.1416/180)**2+0*cos((x-23.)*3.1416/180)**2)/3. 0 40
+exit
+*** End   of history file: Tue Jan 13 18:25:49 2009

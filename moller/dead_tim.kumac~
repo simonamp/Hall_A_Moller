@@ -1,0 +1,113 @@
+MACRO dead_tim fill=1 dir=/work/halla/moller/disk1/exp
+*MACRO dead_tim fill=1 dir=/work/halla/com97/moller/tst_01/
+*
+* === dead time
+*
+* ve/cr krun(10)    i 1227 1213 1222 1216
+* ve/cr current(10) r 0.54 1.95 3.05 4.53 
+ ve/cr krun(10)    i 15830 15831 15829 15832
+ ve/cr current(10) r 0.22  0.33  0.47  0.67 
+ ve/cr deadarm(10) r
+ ve/cr dead3co(10) r
+ ve/cr err(20) r
+
+ nrun=4
+
+
+   do ir=1,[nrun]
+*
+*    === find the run
+*
+     run=krun([ir])
+     exec getrun run=[run] lun=0
+     lun=ilun(1)
+     if [lun]=0 then
+       exec run run=[run] dir=[dir]
+     endif
+
+     exec getrun run=[run] lun=0
+     lun=ilun(1)
+     if [lun]=0 then
+       mess Run [run] is not found. Abort...
+       exitm
+     endif
+
+   enddo
+
+
+ cut $5 260<iadc(1)+iadc(2)+iadc(3)+iadc(4)-270<380
+ cut $6 260<iadc(5)+iadc(6)+iadc(7)+iadc(8)-270<380 
+ titl 'Moller dead time study'
+ ve/cr tmp(4) r
+
+ zone 3 [nrun]
+
+ do ir=1,[nrun]
+   run=krun([ir])
+   exec getrun run=[run] lun=0
+   lun=ilun(1)
+
+   id0=[run]*1000
+
+   if [fill]>0 then
+     id1=[id0]+1
+     tit='trig=LGL LGR(Y) vs ApR(X) run'//[run] 
+     id=[id1]
+     2dh [id] [tit] 2 0 160 2 0 160
+     nt/pl //lun[lun]/1.ihit(2)%ihit(5) nadc>0.and.$5.and.$6 -[id]   
+
+     tit='trig=LGL LGR(Y) vs ApR(X) hit in ApL run'//[run] 
+     id=[id0]+2
+     h/cop [id1] [id] [tit]
+     nt/pl //lun[lun]/1.ihit(2)%ihit(5) nadc>0.and.$5.and.$6.and.ihit(4)>0 -[id]   
+
+     tit='trig=LGL LGR(Y) vs ApR(X) no hit in ApL run'//[run] 
+     id=[id0]+3
+     h/cop [id1] [id] [tit]
+     nt/pl //lun[lun]/1.ihit(2)%ihit(5) nadc>0.and.$5.and.$6.and.ihit(4)=0 -[id]   
+   else
+     id1=[id0]+1
+     id=[id1]
+     idopt [id] tabl
+     h/pl [id]
+
+     id=[id1]+1
+     idopt [id] tabl
+     h/pl [id]
+     id=[id1]+2
+     idopt [id] tabl
+     h/pl [id]
+
+   endif
+
+   id=[id0]+1
+   nev=$HINFO([id],'ENTRIES')
+   h/get_vec/con [id] tmp
+   c2=tmp(4)
+   inef=([nev]-[c2])/[nev]
+   ve/in deadarm([ir]) [inef]
+
+   id=[id0]+2
+   h/get_vec/con [id] tmp
+   c2=tmp(4)
+   inef1=([nev]-[c2])/[nev]
+   ve/in dead3co([ir]) [inef1]
+   mess Events=[nev] ineffic arm=[inef] , ineffic 3-coin=[inef1]
+
+
+ enddo
+
+ opt pto
+ set xmgl 2.5
+ set asiz 0.35
+ set xlab 1.6 
+ zone 2 2 3
+ null 0 5 0 0.10
+ gr/hpl/err current deadarm err err 4 24
+ atit 'beam [m]A' 'Deadtime losses in the R-arm'
+ opt npto
+
+RETURN
+
+
+

@@ -1,0 +1,17 @@
+MACRO vfget
+*
+* --- Get the results of DFT analysis
+*
+ve/del vv0
+ve/del vv1
+ve/del vv2
+ve/del vv3
+ve/del vv4
+
+ve/read vv0 fort.22
+ve/read vv1 fort.23
+ve/read vv2 fort.24
+ve/read vv3 fort.25
+ve/read vv4 fort.26
+RETURN
+      

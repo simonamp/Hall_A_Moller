@@ -1,0 +1,81 @@
+*** Begin of history file: Tue Oct 13 14:06:03 2009
+exec run run=13657
+exec lg_spectra run=13657
+loca
+loca
+zone 3 2
+exec asymv run=13657
+exec lg_spectra run=13657
+loca
+exec run run=13658
+exec lg_spectra run=13658
+exec asymv run=13658
+exec run run=13660
+exec lg_spectra run=13660
+loca
+exec asymv run=13660
+zone 2 3
+exec asymv run=13661
+exec asymv run=13662
+exec asymv run=13663
+exec asymv delay=9 run=13663
+exec asymv delay=9 run=13664
+exec asym_av run1=13661 run2=13664
+exec asym_avt
+exec run run=13665
+exec lg_spectra run=13665
+loca
+zone 2 3
+exec asymv delay=9 run=13665
+exec asymv delay=9 run=13668
+exec asymv delay=9 run=13665
+exec asymv delay=9 run=13668
+exec asymv delay=9 run=13669
+exec asymv delay=9 run=13670
+exec asymv delay=9 run=13663
+exec asymv delay=9 run=13664
+exec asym_avt
+exec asymv run=13665
+zone 3 2
+exec asymv run=13666
+zone 2 3
+exec asym_av run1=13665 run2=13666
+exec asym_av run1=13661 run2=13666
+exec asym_avt
+exec asymv run=13668
+exec asymv run=13669
+exec asymv run=13670
+exec asymv run=13671
+exec asym_av run1=13668 run2=13671
+exec asym_avt
+exec asymv run=13672
+exec asymv run=13673
+exec asymv run=13674
+exec asymv run=13675
+exec asym_av run1=13672 run2=13675
+exec asym_avt
+exec asymv run=13676
+exec asymv delay=9 run=13677
+exec asymv delay=9 run=13678
+exec asymv delay=9 run=13679
+exec asym_av run1=13676 run2=13679
+exec asym_avt
+exec asymv delay=9 run=13681
+exec asymv delay=9 run=13682
+exec asymv delay=9 run=13683
+exec asymv delay=9 run=13684
+exec asymv delay=9 run=13685
+exec asym_avt
+exec asym_av run1=13681 run2=13685
+exec asym_av run1=13668 run2=13685
+zone
+exec asym_av run1=13668 run2=13685
+exec asym_avt
+exec asymv delay=9 run=13686
+exec asymv delay=9 run=13687
+exec asymv delay=9 run=13688
+exec asymv delay=9 run=13689
+exec asym_avt
+exec asym_av run1=13686 run2=13689
+exit
+*** End   of history file: Tue Oct 13 18:55:29 2009

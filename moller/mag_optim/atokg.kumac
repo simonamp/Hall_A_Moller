@@ -1,0 +1,48 @@
+MACRO atokg  crn=300.0 q=1
+*** converter current to field for Moller magnets
+* cur - current in A
+* q  - magnet number (1-4 - quads, 5 - dipole)
+
+ cn=[crn]/300.
+   if [q]=1 then
+ gl1=$sigma(.0110605+5.33237*[cn]-.0142794*[cn]**2+.259313*[cn]**3)
+ gln=$sigma([gl1]+0.0058174*[cn]**4-0.831887*[cn]**5)
+ fld=[gln]*10.*5.08/36.5723
+ mess Moller Quad Q1/MQO1H01/LARGE/new/white
+      goto mes
+
+   elseif [q]=2 then
+ gl1=$sigma(0.0196438+5.35443*[cn]+0.0297273*[cn]**2+0.103505*[cn]**3)
+ gln=$sigma([gl1]-0.0449275*[cn]**4-0.211868*[cn]**5)
+ fld=[gln]*10.*5.08/44.76
+ mess Moller Quad Q2/PATSY/MQM1H02/SMALL/RED
+      goto mes
+
+   elseif [q]=3 then
+ gl1=$sigma(0.000632446+5.15178*[cn]-0.00262778*[cn]**2)
+ gl2=$sigma(-0.107635*[cn]**3+0.00209902*[cn]**4)
+ gln=$sigma([gl1]+[gl2]-0.640635*[cn]**5)
+ fld=[gln]*10.*5.08/36.74 
+ mess Moller Quad Q3/TESSA/MQO1H03/LARGE/BLUE
+      goto mes
+
+   elseif [q]=4 then
+ gl1=$sigma(0.0001732+5.2119*[cn]-0.000732518*[cn]**2)
+ gl2=$sigma(-0.133423*[cn]**3+0.000618402*[cn]**4)
+ gln=$sigma([gl1]+[gl2]-0.647082*[cn]**5)
+ glr=[gln]*10.
+ fld=[glr]*5.08/36.50
+ mess Moller Quad Q4/FELICIA/MQO1H03A/LARGE/BLUE
+      goto mes
+   mes:
+   mess Q[q] Current=[crn]A, Field=[fld]kGauss   
+   goto eend
+
+   elseif [q]=5 then
+ fld=$sigma(-0.39026E-04+0.027051*[crn]-0.17799E-08*[crn]**2)
+ mess Moller Dipole LILLY/MMA1H01/Blue
+ mess Dipole Current=[crn]A, Field=[fld]kGauss 
+   endif
+
+ eend:
+RETURN

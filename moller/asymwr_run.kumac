@@ -1,0 +1,14 @@
+MACRO asymwr_run run1=0 run2=0 delay=8
+*
+* ===  Fill the scale ntuples for the fiven run range
+*
+
+ do irun=[run1],[run2]
+
+    exec asymwr delay=[delay] run=[irun]
+
+ enddo
+
+RETURN 
+
+

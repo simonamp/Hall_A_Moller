@@ -1,0 +1,78 @@
+*** Begin of history file: Fri Apr 24 19:00:09 2009
+exec run run=13290
+ve/lis
+exec asymu run=13290
+ve/lis
+ve/pri run_sett
+exec asymu run=13101
+ve/pri run_sett
+exec sett_magp e0=1.245 nq=2
+exec sett_magp e0=1.245 nq=3
+exec sett_magp e0=2.0 nq=3
+exec sett_magp e0=2.5 nq=3
+exec sett_magp e0=2.4 nq=3
+exec sett_magp e0=2.1 nq=3
+exec sett_magp e0=1.245 nq=3
+exec sett_magp e0=1.245 nq=2
+exec run run=13291
+exec lg_spectra run=13291
+exec lg_spectra run=13291 cut=11
+exec lg_spectra run=13291 cut=0
+loca
+exec time run=13291
+exec lg_spectra run=13291 cut=0
+exec asymu run=13291
+exec asymu run=13291 delay=0
+exec lg_spectra run=13291 cut=0
+exec run run=13292
+exec lg_spectra run=13292 cut=0
+loca
+exec lg_spectra run=13292 cut=0 ped=0
+exec lg_spectra run=13292 cut=0 ped=0 icut=100
+exec lg_spectra run=13292 cut=0 ped=1 icut=100
+loca
+loca
+exec lg_spectra run=13292 cut=0 ped=1 icut=0
+loca
+exec time run=13292
+exec asymu run=13292 delay=0
+call prunpri.f(10000,20000)
+call prunpri.f(13291,20000)
+exec lg_spectra run=13293 cut=0 ped=1 icut=0
+exec run run=13293
+exec lg_spectra run=13293 cut=0 ped=1 icut=0
+loca
+exec lg_spectra run=13293 cut=0 ped=1 icut=0
+exec run run=13294
+exec lg_spectra run=13294 cut=0 ped=1 icut=0
+call prunpri.f(13291,20000)
+exec run run=13293
+exec asymu run=13293 delay=0
+exec asymu run=13294 delay=0
+call prunpri.f(13291,20000)
+exec run run=13295
+exec asymu run=13295 delay=0
+exec lg_spectra run=13295 cut=0 ped=1 icut=0
+loca
+call prunpri.f(13291,20000)
+exec run run=13296
+exec asymu run=13296 delay=0
+call prunpri.f(13291,20000)
+exec run run=13297
+exec asymu run=13297 delay=0
+call prunpri.f(13291,20000)
+exec asym_av run1=13293 run2=13296
+exec run run=13298
+exec asymu run=13298 delay=0
+call prunpri.f(13291,20000)
+exec run run=13299
+exec asymu run=13299 delay=0
+exec run run=13300
+exec asymu run=13300 delay=0
+call prunpri.f(13291,20000)
+exec asym_av run1=13297 run2=13300
+exec asym_av run1=13293 run2=13300
+zone 1 1
+exec asym_av run1=13293 run2=13300
+exit
+*** End   of history file: Fri Apr 24 23:47:19 2009

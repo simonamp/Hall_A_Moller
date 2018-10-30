@@ -1,0 +1,35 @@
+MACRO temp_plot_6
+*
+* --- Plots the temperature curves 
+*
+ opt liny
+ opt linx
+ set csiz 0.3
+
+ zone 2 1
+ 
+ next
+ 
+ titl 'Target heating for 50[m]A, on a 1[m]m thick target'  
+
+ exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-20.e-6_v-01/ same=0 zone=1 col=6 log=1 t1=1
+ igset pmci 6
+ gr/hpl/key 0.0002 5. 20 'beam 30[m]m, no radiation'
+ exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ same=1 zone=1 col=2 log=1 t1=1
+ igset pmci 2
+ gr/hpl/key 0.0002 4.  20 'beam 30[m]m, [e]=0.1'
+ exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.006_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ same=1 zone=1 col=4 log=1 t1=1
+ igset pmci 4
+ gr/hpl/key 0.0002 3.2 20 'beam 60[m]m, [e]=0.1'
+ exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-06_v-01/ same=1 zone=1 col=3 log=1 t1=1
+ igset pmci 3
+ gr/hpl/key 0.0002 2.56 20 'beam 30[m]m, d=1mm, [e]=0.1'
+
+
+ exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.006_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ same=0 zone=2 col=4 t1=1
+ igset pmci 4
+ gr/hpl/key -1.2 700 20 'beam  60[m]m, [e]=0.1'
+
+ igset pmci 1
+
+

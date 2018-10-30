@@ -1,0 +1,475 @@
+MACRO scan_sum
+
+ve/re nn,fc,s12253 5_15a_12253.dat
+ve/re nn,fc,s12349 4_15a_12349.dat
+ve/re nn,fc,s12254 5_15a_12254.dat
+ve/re nn,fc,s12352 4_12a_12352.dat
+ve/re nn,fc,s12291 4_7a_12291.dat
+ve/re nn,fc,s12292 4_7a_12292.dat
+ve/re nn,fc,s12351 4_7a_12351.dat
+ve/re nn,fc,s12373 5_12a_12373.dat
+ve/re nn,fc,s12371 5_15a_12371.dat
+ve/re nn,fc,s12372 5_7a_12372.dat
+ve/re nn,fc,s12078 4_15a_12078.dat
+ve/re nn,fc,s12001 4_7a_12001.dat
+ve/re nn,fc,s12002 4_7a_12002.dat
+ve/re nn,fc,s12058 5_15a_12058.dat
+ve/re nn,fc,s12059 5_15a_12059.dat
+ve/re nn,fc,s12060 5_15a_12060.dat
+ve/re nn,fc,s12079 3_15a_12079.dat
+ve/re nn,fc,s12087 2_15a_12087.dat
+ve/re fc,norm2 2_sup30_800g.dat
+ve/re fc,norm3 3_fe14_800g.dat
+ve/re fc,norm4 4_fe10_800g.dat
+ve/re fc,norm5 5_sup07_800g.dat
+
+fort/fil 55 scan_sum.ps
+meta 55 -111
+
+zone 
+opt grid
+opt nbox
+opt ndate
+opt nstat
+sigma fc=array(551,-25.#30.)
+
+******************************************************
+***     Target 2_sup30 8Amp
+******************************************************
+set mtyp 20
+set pmci 4
+mtyp=20
+ve/pl s12087%fc 
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Scan result target 2"-#sup30, 8Amp' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 3.0 5.4 [mtyp] '- run 12087'
+selnt 10
+wait
+******************************************************
+***     Target 2_sup30 Coefficient
+******************************************************
+set mtyp 20
+set pmci 4
+mtyp=20
+sigma kf=vsum(s12087)
+koef=$sigma(kf/551.)
+sigma k2=s12087/[koef]
+null -26. 31. 0.96 1.05
+ve/pl k2%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Coefficients for target 2"-#sup30' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 10.0 16.5 [mtyp] '- scan'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 1
+ve/pl norm2%fc ! s
+selnt 1
+key 10.0 16. [mtyp] '- 800 Oe coef'
+selnt 10
+sigma co2=(norm2+k2)/2.
+set pmci 2
+set mtyp 24
+ve/pl co2%fc ! s
+selnt 1
+key 10.0 17. [mtyp] '- average'
+selnt 10
+ve/write nn,fc,k2 2_coef.dat (3(F10.6,2x))
+ve/write nn,fc,co2 2_co_av.dat (3(F10.6,2x))
+wait
+******************************************************
+***     Target 3_fe14 8Amp
+******************************************************
+set mtyp 20
+set pmci 4
+mtyp=20
+ve/pl s12079%fc 
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Scan result target 3"-#fe14, 8Amp' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 3.0 5.4 [mtyp] '- run 12079'
+selnt 10
+wait
+******************************************************
+***     Target 3_fe14 Coefficient
+******************************************************
+set mtyp 20
+set pmci 4
+mtyp=20
+sigma kf=vsum(s12079)
+koef=$sigma(kf/551.)
+sigma k3=s12079/[koef]
+null -26. 31. 0.92 1.125
+ve/pl k3%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Coefficients for target 3"-#fe14' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 10.0 16.5 [mtyp] '- scan'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 1
+ve/pl norm3%fc ! s
+selnt 1
+key 10.0 16. [mtyp] '- 800 Oe coef'
+selnt 10
+sigma co3=(norm3+k3)/2
+set pmci 2
+set mtyp 24
+ve/pl co3%fc ! s
+selnt 1
+key 10.0 17. [mtyp] '- average'
+selnt 10
+ve/write nn,fc,k3 3_coef.dat (3(F10.6,2x))
+ve/write nn,fc,co3 3_co_av.dat (3(F10.6,2x))
+wait
+******************************************************
+***     Target 4_fe10  8Amp
+******************************************************
+null -27 33.0 18.0 19.1
+sigma kf=vsum(s12078)
+ko078=$sigma(kf/551.)
+sigma kf=vsum(s12349)
+ko349=$sigma(kf/551.)
+koef=[ko349]/[ko078]
+sigma s12078=s12078*[koef]
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+selnt 1
+text 11.0 18.5 'Scan result target 4"-#fe10, 8Amp' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+selnt 10
+set mtyp 31
+mtyp=31
+set pmci 6
+ve/pl s12078%fc  ! s
+selnt 1
+key 3.0 4.6 [mtyp] '- run 12078'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 4
+ve/pl s12349%fc ! s
+selnt 1
+key 3.0 3.8 [mtyp] '- run 12349'
+selnt 10
+sigma r416=((s12078+s12349)/2.)
+set mtyp 20
+set pmci 2
+mtyp=20
+ve/pl r416%fc ! s
+selnt 1
+key 3.0 3.0 [mtyp] '- sum'
+selnt 10
+wait
+******************************************************
+***     Target 4_fe10  4Amp
+******************************************************
+
+sigma kf=vsum(s12291)
+ko291=$sigma(kf/551.)
+sigma kf=vsum(s12351)
+ko351=$sigma(kf/551.)
+koef=[ko351]/[ko291]
+sigma s12291=s12291*[koef]
+sigma kf=vsum(s12292)
+ko292=$sigma(kf/551.)
+koef=[ko351]/[ko292]
+sigma s12292=s12292*[koef]
+sigma kf=vsum(s12001)
+ko001=$sigma(kf/551.)
+koef=[ko351]/[ko001]
+sigma s12001=s12001*[koef]
+sigma kf=vsum(s12002)
+ko002=$sigma(kf/551.)
+koef=[ko351]/[ko002]
+sigma s12002=s12002*[koef]
+
+null -27 33 17.2  18.7
+set mtyp 24
+set pmci 1
+mtyp=24
+ve/pl s12291%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Scan result target 4"-#fe10 4Amp' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 3.0 5.4 [mtyp] '- run 12291'
+selnt 10
+set mtyp 31
+mtyp=31
+set pmci 6
+ve/pl s12001%fc  ! s
+selnt 1
+key 3.0 6.2 [mtyp] '- run 12001'
+selnt 10
+set mtyp 30
+mtyp=30
+set pmci 7
+ve/pl s12002%fc  ! s
+selnt 1
+key 3.0 7.0 [mtyp] '- run 12002'
+selnt 10
+set mtyp 26
+mtyp=26
+set pmci 3
+ve/pl s12292%fc  ! s
+selnt 1
+key 3.0 4.6 [mtyp] '- run 12292'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 4
+ve/pl s12351%fc ! s
+selnt 1
+key 3.0 3.8 [mtyp] '- run 12351'
+selnt 10
+sigma r48=((s12001+s12002+s12291*5.+s12292*3.+s12351*9.)/19.)
+set mtyp 20
+set pmci 2
+mtyp=20
+ve/pl r48%fc ! s
+selnt 1
+key 3.0 3.0 [mtyp] '- sum'
+selnt 10
+wait
+******************************************************
+***     Target 4_fe10   4,6.3, 8 Amp
+******************************************************
+sigma kf=vsum(r416)
+ko416=$sigma(kf/551.)
+sigma kf=vsum(s12352)
+ko352=$sigma(kf/551.)
+koef=[ko416]/[ko352]
+sigma s12352=s12352*[koef]
+sigma kf=vsum(r48)
+ko48=$sigma(kf/551.)
+koef=[ko416]/[ko48]
+sigma r48=r48*[koef]
+
+null -27 33 18.0  19.0
+set mtyp 24
+set pmci 1
+mtyp=24
+ve/pl r48%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Scan result target 4"-#fe10' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 3.0 4.6 [mtyp] '- 4 Amp'
+selnt 10
+set mtyp 26
+mtyp=26
+set pmci 3
+ve/pl s12352%fc  ! s
+selnt 1
+key 3.0 3.8 [mtyp] '- 6.3 Amp'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 4
+ve/pl r416%fc ! s
+selnt 1
+key 3.0 3.0 [mtyp] '- 8 Amp'
+selnt 10
+set mtyp 20
+mtyp=20
+set pmci 2
+sigma sum4=((r416*14.+s12352*9.+r48*19.)/42.)
+ve/pl sum4%fc ! s
+selnt 1
+key 3.0 2.4 [mtyp] '- sum'
+selnt 10
+wait
+******************************************************
+***     Target 4_fe10   Coefficients
+******************************************************
+sigma kf=vsum(sum4)
+koef=$sigma(kf/551.)
+sigma k4=sum4/[koef]
+null -26. 31. 0.985 1.02
+ve/pl k4%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness koefficient, r.u.'
+text 11.0 18.5 'Coefficients for target 4"-#fe10' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 10. 16.5 [mtyp] '- scan coef.'
+selnt 10
+set mtyp 22
+set pmci 1
+mtyp=22 
+ve/pl norm4%fc ! s
+selnt 1
+key 10.0 16. [mtyp] '- 800 Oe coef. '
+selnt 10
+sigma co4=(norm4+k4)/2.
+set pmci 4
+set mtyp 24
+ve/pl co4%fc ! s
+selnt 1
+key 10.0 17. [mtyp] '- average'
+selnt 10
+ve/write nn,fc,k4 4_coef.dat (3(F10.6,2x))
+ve/write nn,fc,co4 4_co_av.dat (3(F10.6,2x))
+wait 
+******************************************************
+***     Target 5_sup07 8Amp
+******************************************************
+sigma kf=vsum(s12371)
+ko371=$sigma(kf/551.)
+sigma kf=vsum(s12058)
+ko058=$sigma(kf/551.)
+koef=[ko371]/[ko058]
+sigma s12058=s12058*[koef]
+sigma kf=vsum(s12059)
+ko059=$sigma(kf/551.)
+koef=[ko371]/[ko059]
+sigma s12059=s12059*[koef]
+sigma kf=vsum(s12253)
+ko253=$sigma(kf/551.)
+koef=[ko371]/[ko253]
+sigma s12253=s12253*[koef]
+sigma kf=vsum(s12254)
+ko254=$sigma(kf/551.)
+koef=[ko371]/[ko254]
+sigma s12254=s12254*[koef]
+
+null -21. 33. 12.5  16.0
+set mtyp 24
+set pmci 1
+mtyp=24
+ve/pl s12371%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 10.0 18.5 'Scan result target 5"-#sup07 8Amp' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 14.0 16.6 [mtyp] '- 12371'
+selnt 10
+set mtyp 26
+mtyp=26
+set pmci 3
+ve/pl s12058%fc  ! s
+selnt 1
+key 14.0 15.8 [mtyp] '- 12058'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 4
+ve/pl s12059%fc ! s
+selnt 1
+key 14.0 15.0 [mtyp] '- 12059'
+selnt 10
+set mtyp 21
+mtyp=29
+set pmci 1
+ve/pl s12254%fc  ! s
+selnt 1
+key 14.0 14.2 [mtyp] '- run 12254'
+selnt 10
+set mtyp 30
+set pmci 6
+mtyp=24
+ve/pl s12253%fc ! s
+selnt 1
+key 14.0 13.6 [mtyp] '- run 12253'
+selnt 10
+selnt 1
+set mtyp 20
+mtyp=20
+set pmci 2
+sigma s516=((s12371*8.+s12058+s12059+s12254+s12253)/12.)
+ve/pl s516%fc ! s
+selnt 1
+key 14.0 17.4 [mtyp] '- sum'
+selnt 10
+wait
+******************************************************
+***     Target 5_sup07   4, 6.3, 8Amp
+******************************************************
+sigma kf=vsum(s516)
+ko516=$sigma(kf/551.)
+sigma kf=vsum(s12373)
+ko373=$sigma(kf/551.)
+koef=[ko516]/[ko373]
+sigma s12373=s12373*[koef]
+sigma kf=vsum(s12372)
+ko372=$sigma(kf/551.)
+koef=[ko516]/[ko372]
+sigma s12372=s12372*[koef]
+
+null -27 33 13.8  15.0
+set mtyp 24
+set pmci 1
+mtyp=24
+ve/pl s12372%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness, r.u.'
+text 11.0 18.5 'Scan result target 5"-#sup07' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 14.0 16.6 [mtyp] '- 4 Amp'
+selnt 10
+set mtyp 26
+mtyp=26
+set pmci 3
+ve/pl s12373%fc  ! s
+selnt 1
+key 14.0 15.8 [mtyp] '- 6.3 Amp'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 4
+ve/pl s516%fc ! s
+selnt 1
+key 14.0 15.0 [mtyp] '- 8 Amp'
+selnt 10
+set mtyp 20
+mtyp=20
+set pmci 2
+sigma s55=((s12373*12.+s12372*7.+s516*13.)/32.)
+ve/pl s55%fc ! s
+selnt 1
+key 14.0 17.4 [mtyp] '- sum'
+selnt 10
+wait
+******************************************************
+***     Target 5_sup07  Coefficients
+******************************************************
+null -26.  31. 0.98 1.025
+*sigma kf=vsum(s55)
+*koef=$sigma(kf/551.)
+ve/cr st55(500) r
+ve/copy s55(50:551) st55(1:500)
+sigma kf=vsum(st55)
+koef=$sigma(kf/501.)
+sigma k5=s55/[koef]
+ve/pl k5%fc ! s
+selnt 1
+atitle 'Target coordinate, mm' 'Target thickness koefficient, r.u.'
+text 11.0 18.5 'Coefficients for target No5' 0.45 0 C
+text 1.0 0.5 '/scan"-#data"' 0.25 0
+key 10. 16.5 [mtyp] '- scan coef'
+selnt 10
+set mtyp 22
+mtyp=22
+set pmci 1
+ve/pl norm5%fc ! s
+selnt 1
+key 10.0 16. [mtyp] '- 800 Oe coef'
+selnt 10
+sigma co5=(norm5+k5)/2.
+set pmci 4
+set mtyp 24
+ve/pl co5%fc ! s
+selnt 1
+key 10.0 17. [mtyp] '- average'
+selnt 10
+ve/write nn,fc,k5 5_coef.dat (3(F10.6,2x))
+ve/write nn,fc,co5 5_co_av.dat (3(F10.6,2x))
+	close 55
+
+RETURN

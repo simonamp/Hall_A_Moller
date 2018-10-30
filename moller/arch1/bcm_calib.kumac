@@ -1,0 +1,44 @@
+MACRO bcm_calib n=3 offset=5000 irate=3 
+*
+* ===  BCM calibration
+* ===  n - number of runs (vector runbcm([n]) contains the run numbers)
+*
+
+  ve/cr bcmr([n]) r
+  ve/cr rate([n]) r
+  ve/cr erate([n]) r 
+
+  bcmmx=0.
+  ratmx=0.
+  do i=1,[n]
+    r=runbcm([i])
+    ir=[r]-[offset]
+    bcm=resrun(5,[ir])
+    rat=resrun([irate],[ir])
+    ncy=resrun(7,[ir])
+    ve/in bcmr([i]) [bcm]
+    ve/in rate([i]) [rat]
+    a=$SIGMA(sqrt([rat]*0.5/[ncy]))
+    ve/in erate([i]) [a]
+    if [bcm]>[bcmmx] then
+      bcmmx=[bcm]
+      ratmx=[rat]
+    endif
+  enddo
+
+  sca=[bcmmx]/[ratmx]
+  mess [bcmmx] [rat] [sca]
+  ve/oper/vsca rate [sca] rate
+
+  ve/cr par(10) r 0. 1.
+  x2=[bcmmx]*1.2
+*  null 0 [x2] 0 [x2] 
+*  gr/hplot/err bcmr rate erate erate [n] 20 0.1
+  ve/fit bcmr rate erate p1 ' ' 2 par 
+  gr/hplot/err bcmr rate erate erate [n] 20 0.1
+
+  ve/wri bcmr,rate,erate bcm_calib_2.dat '3F10.1' OC
+  a=par(1)
+  b=par(2)
+  fu/pl [a]+[b]*x 0 [x2] s
+RETURN

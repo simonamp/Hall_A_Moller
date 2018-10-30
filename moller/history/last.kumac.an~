@@ -1,0 +1,129 @@
+*** Begin of history file: Mon Oct 26 17:43:11 2009
+exec asymv run=13764
+exec asymv run=13764
+exec asymv run=13764
+exec asymv run=13765
+ld //
+exec run_scal clear=1
+ld //
+exec run_scal run=13765
+ld //
+exec run_scalu run=13765
+ld //
+nt/pri //lun52/1
+exec asymv run=13765
+exec asymv run=13799
+exec asymv run=13805
+exec run_scalu clear=1
+exec run_scalu run=13805
+ld //
+nt/scan //lun24/1 nsca>0 100 1 itrig(1) itic(1)
+nt/pri 1
+nt/pri //lun24/1
+nt/scan //lun24/1 nsca>0 100 1 itrig(1) itick
+nt/scan //lun24/1 nsca>0 100 1 itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 ! 100 1 itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 ! 100 1 itrig(1) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 nsca>0 100 1 itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun23/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+ld //
+nt/scan //lun21/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun21/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun21/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+exec run run=12000
+nt/scan //lun25/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun25/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+exec run_scalu run=12000
+nt/pri //lun52/1
+nt/pl //lun52/1.nelem
+nt/pl //lun51/1.nelem
+nt/scan //lun25/1 ! 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun25/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+ld //
+nt/scan //lun24/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) itrig(7) itrig(8) itick
+nt/scan //lun24/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) isca(1) itrig(8) itick
+nt/pri //lun24/1
+nt/pl //lun24/1.iret
+nt/pl //lun24/1.iret
+nt/pl //lun25/1.iret
+nt/pl //lun25/1.iret nsca>0
+nt/pl //lun25/1.iret nsca=0
+nt/pl //lun24/1.iret nsca>0
+nt/pl //lun24/1.iret nsca=0
+exec asymv run=13769
+cd //pawc
+h/li
+zone 2 2
+h/pl 1376900
+h/pl 1376900(1:1000)
+h/pl 1376900(1000:2000)
+h/pl 1376900(1000:1200)
+h/pl 1376901(1000:1200)
+h/pl 1376902(1000:1200)
+h/pl 1376961(1000:1200)
+h/pl 1376961
+h/pl 1376930
+h/pl 1376930(1000:1200)
+h/pl 1376931(1000:1200)
+h/pl 1376933(1000:1200)
+h/pl 1376933(1000:1100)
+h/pl 1376923(1000:1100)
+h/pl 1376943(1000:1100)
+h/pl 1376953(1000:1100)
+h/pl 1376933(1000:1100)
+h/pl 1376963(1000:1100)
+h/pl 1376963
+h/pl 1376963(1:100)
+h/pl 1376983(1:100)
+h/pl 1376933(1000:1100)
+h/pl 1376973(1:100)
+h/pl 1376973
+h/pl 1376993
+h/li
+h/pl 1376915
+h/pl 1376903
+h/pl 1376913
+ld //
+nt/pri //lun53/1
+nt/pri //lun53/1.jcnt(3,1)%izug
+nt/pl //lun53/1.jcnt(3,1)%izug
+nt/pl //lun53/1.jcnt(3,1)%izug jhel(1)=0
+nt/pl //lun53/1.jcnt(3,1)%izug jhel(1)=0
+nt/pl //lun53/1.jcnt(3,1)%izug jhel(1)=1
+nt/pl //lun53/1.nelem
+nt/pl //lun53/1.jcnt(3,1)%izug nelem=4.and.ifzug=0.and.jhel(1)=1
+nt/pl //lun53/1.jcnt(3,2)%izug nelem=4.and.ifzug=0
+nt/pl //lun53/1.jcnt(3,3)%izug nelem=4.and.ifzug=0
+nt/pl //lun53/1.jcnt(3,4)%izug nelem=4.and.ifzug=0
+exec asymt run=13769
+exec asymt run=13769 nosubbg=1
+exec asymt run=13769 nocut=1
+exec asymt run=13769 nosubbg=1 nocut=1
+exec asymt run=13769 nosubbg=1 nocut=1 n1=1000
+exec asymt run=13769 nosubbg=1 nocut=1 n1=2000
+nt/pl //lun53/1.jtic(1)%izug
+nt/pri //lun53/1
+nt/pl //lun53/1.jtick(1)%izug
+nt/pl //lun53/1.jtick(1)%izug
+ld //
+nt/scan //lun26/1 nsca>0 100 1 ! itrig(1) itrig(2) itrig(6) isca(1) itrig(8) itick
+exec run_scalu clear=1
+ld //
+exec run_scalu run=13769
+exec run_scalu run=13774
+nt/pl //lun52/1.jsca(1,1)%izug
+nt/pri //lun52/1
+nt/pl //lun52/1.jcnt(1,1)%izug
+nt/pl //lun52/1.jcnt(1,1)%izug
+nt/pl //lun52/1.jcnt(1,1)%jcnt(2,1)
+nt/pl //lun52/1.jtick(1)%izug
+ld //
+nt/pl //lun51/1.jtick(1)%izug
+nt/pl //lun52/1.jcnt(1,1)%izug
+nt/pl //lun51/1.jcnt(1,1)%izug
+exit
+*** End   of history file: Mon Oct 26 20:32:01 2009

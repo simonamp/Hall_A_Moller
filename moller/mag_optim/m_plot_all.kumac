@@ -1,0 +1,12 @@
+MACRO m_plot_all
+
+ exec m_opt e0=700 de=50 n=150 id=1000 d=opt0 plot0=0 plot=0 fill=1
+ exec m_plot same=0 m0=24 m1=20 m2=22 m3=24 col=1 dxk=0.0 dyk=2 txt='Q1-3 free' 
+
+ exec m_opt e0=700 de=50 n=150 id=1000 d=opt1 plot0=0 plot=0 fill=1
+ exec m_plot same=1 m0=25 m1=25 m2=26 m3=27 col=2 dxk=0.8 dyk=0 txt='Q2 fixed'
+
+ exec m_opt e0=700 de=50 n=150 id=1000 d=opt2 plot0=0 plot=0 fill=1
+ exec m_plot same=1 m0=26 m1=31 m2=27 m3=28 col=4 dxk=1.6 dyk=-2 txt='Q1-2 fixed'
+
+RETURN

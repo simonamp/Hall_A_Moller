@@ -1,0 +1,31 @@
+MACRO calib dcell=8.
+
+*
+* ---    Define initial calibration factors
+* ---    in units of full energy / ADC bin
+*
+
+ ve/cr calib(12) r 
+ 
+ a=0.5/300.
+* dcell=8.
+* --- mean bending angle
+ amean=11./180.*3.1415
+ dmean=271.*[amean]
+ do i=1,8
+  pp=parlg(2,[i])
+  cal=[a]
+  if [pp]>0 then
+    cal=0.5/[pp]
+  endif
+  j=[i]
+  if [j]>4 then
+    j=[j]-4
+  endif
+* --- distance to the middle
+  ddist=([j]-2.5+0.5)*[dcell]
+  b=[cal]*([dmean]-[ddist])/[dmean]
+  ve/in calib([i]) [b]
+ enddo
+
+RETURN

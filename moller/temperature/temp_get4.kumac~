@@ -1,0 +1,95 @@
+MACRO temp_get nx=300 ntim=10000 dir=./ same=0 zone=0 col=2
+*
+* --- Read the output of temp_tar.f - target temperature simulation
+*
+ if [zone]=0 then
+   zone 2 1
+   next
+ elseif [zone]=2 then
+   if [same]=0 then
+     zone 2 1 2 s
+   endif
+ endif 
+ 
+ n=$VDIM(ttim)
+ if [n]<[ntim] then
+   ve/cr ttim([ntim]) r
+   ve/cr ttmp([ntim]) r
+ endif
+ n=$VDIM(ttim)
+ ve/in ttim [n]*0
+ ve/in ttmp [n]*0
+
+ ve/read ttim,ttmp [dir]temper_1.dat
+ tmpmx=$SIGMA(vmax(ttmp)*14/10.)
+
+ if [zone]<>2 then
+   nl=$VLEN(ttim)
+
+   timmx=$SIGMA(vmax(ttim)*11/10.)
+   if [same]=0 then
+     null 0 [timmx] 0 [tmpmx]
+     atit 'Time, sec' 'Temperature rise, K'
+   endif
+   igset pmci [col]
+   gr/hpl/sym ttim ttmp [n] 20 0.05
+   igset pmci 1
+ endif
+
+ if [zone]<>1 then
+   n=$VDIM(txx)
+   if [n]<[nx] then
+     ve/cr txx([nx]) r
+     ve/cr txtmp1([nx]) r
+     ve/cr txtmp2([nx]) r
+     ve/cr txtmp3([nx]) r
+   endif
+   n=$VDIM(txx)
+   ve/in txx [n]*0
+   ve/in txtmp1 [n]*0
+   ve/in txtmp2 [n]*0
+   ve/in txtmp3 [n]*0
+
+   ve/read txx,txtmp1,txtmp2,txtmp3 [dir]temper_2.dat
+   nl=$VLEN(txx)
+
+   xmx=$SIGMA(vmax(txx)*11/10.)
+*   tmpmx=$SIGMA(vmax(txtmp3)*18/10.)
+   if [same]=0 then
+     null -[xmx] [xmx] 0 [tmpmx]
+     atit 'Position along foil, cm' 'Temperature rise, K'
+   endif
+   igset pmci 1
+   gr/hpl/sym txx txtmp1 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp2 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp3 [nl] 20 0.05
+   igset pmci [col]
+
+   n=$VDIM(txx)
+   ve/in txx [n]*0
+   ve/in txtmp1 [n]*0
+   ve/in txtmp2 [n]*0
+   ve/in txtmp3 [n]*0
+
+   ve/read txx,txtmp1,txtmp2,txtmp3 [dir]temper_3.dat
+   nl=$VLEN(txx)
+
+*   xmx=$SIGMA(vmax(txx)*11/10.)
+*   null -[xmx] [xmx] 0 [tmpmx]
+   igset pmci 1
+   gr/hpl/sym txx txtmp1 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp2 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp3 [nl] 20 0.05
+   igset pmci [col]
+ endif
+
+RETURN
+
+
+
+
+

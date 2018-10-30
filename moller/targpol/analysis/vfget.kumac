@@ -1,0 +1,45 @@
+MACRO vfget r=1.e-5 new=1
+*
+* --- Get the results of DFT analysis
+*     New=1 - new format (4 colums for fort.26)
+*
+ve/del vv0
+ve/del vv1
+ve/del vv2
+ve/del vv3
+ve/del vv4
+ve/del vv5
+ve/del ivn4
+ve/del ivp4
+ve/del vv6
+ve/del vv7
+ve/del vv8
+
+ve/read vv0 fort.22
+ve/read vv1 fort.23
+ve/read vv2 fort.24
+ve/read vv3 fort.25
+if [new]=0 then
+  ve/read vv4 fort.26
+else
+  ve/read ivn4,ivp4,vv4,vv5 fort.26
+  ve/read vv6 fort.27
+  ve/read vv7 fort.28
+  ve/read vv8 fort.29
+endif
+
+nl=$VDIM(vv0,1)
+ve/cr vv60([nl]) r
+f=60.
+dt=1.E-4
+af=$SIGMA([f]*([nl]*[dt]))
+kmx=$SIGMA(INT([nl]/[af]))
+mess Base 60 Hz af=[af] max=[kmx]
+do k=1,[kmx]
+  i=$SIGMA(INT([k]*[af]))
+  if [i]>0 .AND. [i]<[nl] then
+    ve/in vv60([i]) [r]
+  endif
+enddo
+RETURN
+      

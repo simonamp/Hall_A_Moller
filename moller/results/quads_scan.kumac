@@ -1,0 +1,150 @@
+MACRO quads_scan
+
+
+*** April 22, 2010, 3T magnetic field in solenoid
+ ve/cr q1fg(12) r   1.97   1.92   1.87   1.82   1.57   1.77   1.67   1.50   1.45   1.40  1.35   1.60
+* Collimator 3.0cm
+ ve/cr q1gc(12) r   1445   9013  17488  25603  56716  34049  49635   16338    499     8     1   58641 
+ ve/cr q1gs(12) r  87088  93103  98771 104043 115450 109648 118933   57635  18405   5346  2714  121540
+*** Collimator 2.5cm
+* ve/cr q1gc(12) r   1215   7251  14091  20878  47570   27518  40276  14922    532     8     1  48199
+* ve/cr q1gs(12) r  72362  77402  81943  86358  96714   91067  98581  49736  15255  4129   2116   101277
+ ve/cr q1fm(12) r  1.97    1.92  1.87    1.82   1.57   1.77   1.67   1.50   1.45   1.40   1.35   1.35
+ ve/cr run1(12) r     0       0     0       0  14381  14382  14383  14384  14385  13386  14387  14388  
+ ve/cr q1mc(12) r     0       0     0       0  17328   4355   9219  23049  27249  28203  12061  11706  
+ ve/cr q1ml(12) r     0       0     0       0 171969 130233 149646 187212 198053 209253 207557 207138 
+ ve/cr q1mr(12) r     0       0     0       0 164065 129789 145540 173093 179258 179082 161527 160550 
+
+ ve/cr q3fg(8) r   0.70  0.65   0.60  0.55   0.5   0.46   0.36   0.26   
+* Q1=1.560
+* ve/cr q3gc(5) r  47037 47570  5225   358
+* ve/cr q3gs(5) r 101320 96714 39607 25088
+* Q1=1.67
+ ve/cr q3gc(8) r  6950  14290  21751 28799  40276  41574  46082   9095   
+ ve/cr q3gs(8) r 78058  82988  87668 91934  98521  99350  91668  43603
+ ve/cr q3fi(5) r  0.463   0.5   0.46   0.36   0.26   
+ ve/cr run2(5) r  14389  14390  14391  14392  14394  
+ ve/cr q3mc(5) r  19353  18912  22426  25102  17084  
+ ve/cr q3ml(5) r 139978 153882 160055 202680 163208 
+ ve/cr q3mr(5) r 134384 149699 153502 191214 132316 
+*** May 08, 2010 0T magnetic field in solenoid
+*** run 14539 Q1 with 3Tl field
+ ve/cr q12fm(10) r  1.75  1.65    1.55   1.50   1.45   1.40   1.35   1.30   1.75   1.75
+ ve/cr run3(10)  r 14530  14531  14532  14533  14534  14535  14536  14537  14538  14541
+ ve/cr q12mc(10) r  2511   5446  10121  12665  15219  17227  15196   4110   2336   2303
+ ve/cr q12ml(10) r 72361  76549  86365  90828  95223  98185  98768  87348  66368  64158
+ ve/cr q12mr(10) r 62146  68023  77352  82059  86628  90649  92411  84503  57589  61400
+ ve/cr bcm12(10) r 53401  49827  49727  49682  49586  49496  49458  49435  49071  49196
+ ve/cr q13fm(3) r   1.75   1.55   1.45
+ ve/cr run4(3)  r  14541  14543  14544
+ ve/cr q13mc(3) r   2303   9671  13846
+ ve/cr q13ml(3) r  64158  82107  92039
+ ve/cr q13mr(3) r  61400  80956  88665
+
+ sigma q1mlc=q1ml*0.35/0.90
+ sigma q1mrc=q1mr*0.42/0.90
+ sigma q3mlc=q3ml*0.35/0.90
+ sigma q3mrc=q3mr*0.39/0.90
+ sigma q1gsc=q1gs/2.
+ sigma q1gcc=q1gc/2.
+ sigma q3gsc=q3gs/1.76
+ sigma q3gcc=q3gc/1.76
+
+ coef1=bcm12(5)
+ sigma coe12=bcm12/[coef1]
+ sigma q12nc=q12mc*coe12*1.7
+ sigma q12nl=q12ml/coe12*0.35/0.91*1.7
+ sigma q12nr=q12mr/coe12*0.41/0.91*1.7
+ sigma q13nc=q13mc*2.1
+ sigma q13nl=q13ml*2.1*0.46
+ sigma q13nr=q13mr*2.1*0.46
+
+* opt logy
+ opt liny
+ opt nbox
+ opt ndat
+
+ fort/fil 56 quad1.ps
+ meta 56 -112
+
+ null 1.25 2.0  10. 90000.
+ atitle 'Magnetic field in Q1, kG' 'Rate, ev/sec'
+ selnt 1
+ text 13.0 20.5 'Quad Q1 Scan. Measurement vs. GEANT' 0.45 0 C
+ selnt 10
+ set mscf 1.5
+ set pmci 1
+ set mtyp 26
+ set txci 1
+ ve/pl q1gsc%q1fg ! s
+ key 1.3 60000 26 'Single GEANT' 0.35
+ set mtyp 24
+ ve/pl q1gcc%q1fg ! s
+ key 1.3 56000 24 'Coins. GEANT' 0.35
+ set mtyp 22
+ set txci 2
+ set pmci 2
+ ve/pl q1mrc%q1fm ! s
+ key 1.3 52000 22 'SingleR meas.3T' 0.35
+ set mtyp 20
+ ve/pl q1mc%q1fm ! s
+ key 1.3 48000 20 'Coins. meas.3T' 0.35
+ set mtyp 23
+ set txci 4
+ set pmci 4
+ ve/pl q12nr%q12fm ! s
+ key 1.3 44000 23 'SingleR meas.0T' 0.35
+ set mtyp 21
+ ve/pl q12nc%q12fm ! s
+ key 1.3 40000 21 'Coins. meas.0T' 0.35
+ set mtyp 31
+ set txci 7
+ set pmci 7
+ ve/pl q13nr%q13fm ! s
+ key 1.3 36000 31 'SingleR meas.3T' 0.4
+ set mtyp 29
+ ve/pl q13nc%q13fm ! s
+ key 1.3 32000 29 'Coins. meas.3T' 0.4
+
+
+
+ set pmci 1
+ set txci 1
+ close 56
+
+ wait
+
+ fort/fil 56 quad3.ps
+ meta 56 -112
+ null 0.24 0.71  0. 80000.
+ atitle 'Magnetic field in Q3, kG' 'Rate, ev/sec'
+ selnt 1
+ text 13.0 20.5 'Quad Q3 Scan. Measurement vs. GEANT' 0.45 0 C
+ selnt 10
+ set mtyp 22
+* set pmci 4
+* set txci 4
+* key 0.55 40000 22 'SingleL meas.' 0.3
+* ve/pl q3mlc(2:5)%q3fi(2:5) ! s
+ set txci 2
+ set pmci 2
+ ve/pl q3mrc(2:5)%q3fi(2:5) ! s
+ key 0.55 36000 22 'SingleR meas.' 0.3
+ set pmci 1
+ set mtyp 20
+ set txci 1
+ ve/pl q3mc(2:5)%q3fi(2:5) ! s
+ key 0.55 32000 20 'Coins. meas.' 0.3
+ set pmci 2
+ set mtyp 26
+ set txci 2
+ ve/pl q3gsc%q3fg ! s
+ key 0.55 28000 26 'Single GEANT' 0.3
+ set pmci 1
+ set mtyp 24
+ set txci 1
+ ve/pl q3gcc%q3fg ! s
+ key 0.55 24000 24 'Coins. GEANT' 0.3
+ close 56
+
+RETURN

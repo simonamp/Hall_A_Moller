@@ -1,0 +1,88 @@
+MACRO calib_fine nlun=0 book=1 fill=1 
+
+*
+* ---    Fine calibration: minimizes the difference of the full
+*        energy from 1
+*
+*
+ if [nlun]=0 then
+   mess Error: nlun is not set
+   exitm
+ endif
+
+ if [fill]<1 .AND. [book]>0 then
+   mess Warning - fill=[fill], book is set to 0
+   book=0
+ endif
+ 
+ titl 'Moller calibration, fine tuning'
+
+ ids=200
+ cut $11 nadc=12.and.ihit(1)>0.and.ihit(2)>0.and.ihit(4)>0.and.ihit(5)>0
+
+ ve/cr corr(8) r
+ ve/cop calib calib_old
+
+ if [book]>0 then
+   ve/cr idd0(1) i [ids]
+   do i=1,4
+     do j=1,4
+       id=[ids]+[i]*10+[j]
+       1dh [id] 'energy' 100 0.5 1.5
+     enddo
+   enddo
+ endif
+
+ do iter=1,3
+   
+   if [fill]>0 then
+     do i=1,4
+       do j=1,4
+         id=[ids]+[i]*10+[j]
+         h/oper/res [id]
+       enddo
+     enddo
+     nt/loop //[nlun]/1 $11.and.calib_f.f(0)>-1.
+   endif
+
+   zone 3 3
+
+   ve/in corr(1:8) 8*1.
+
+   do i=1,4
+     do j=1,4
+       id=[ids]+[i]*10+[j]
+       hmx=$HINFO([id],'MAX')
+       if [hmx]>100. then
+         h/fit [id](41:60) g ' ' 0 par
+
+         peak=par(2)
+         dif=[peak]-1.
+         difa=$SIGMA(ABS([dif]))
+
+         if [difa]>0.005 then
+           cor=1./[peak]
+           dif=[cor]-1.
+           cor=1.+[dif]*0.7
+           mess L,R=[i],[j] cor=[cor]
+           i1=[i]
+           i2=[j]+4
+           c=corr([i1])
+           c=[c]*[cor]
+           ve/in corr([i1]) [c]
+           c=corr([i2])
+           c=[c]*[cor]
+           ve/in corr([i2]) [c]
+         endif
+
+       endif
+
+     enddo
+   enddo
+
+   ve/pri corr
+   ve/oper/vmul calib corr calib
+    
+ enddo
+
+RETURN

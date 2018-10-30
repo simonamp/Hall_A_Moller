@@ -1,0 +1,54 @@
+MACRO hsum id=0 n1=0 n2=0
+*
+* --- Adds the contents of a histogram id between chan= n1 and n2
+*     n?=0 - up to the limit.
+
+  if [id]=0 then
+     mess hsum: error  id=,[id]
+     exitm
+  endif
+
+  if $HEXIST([id])=0 then
+     mess hsum: error  missing id=,[id]
+     exitm
+  endif
+
+  nx=$HINFO([id],'XBINS')
+
+  if [n1]>[nx] .OR. [n2]<1 .OR. [n1]>[n2] then
+     mess hsum: error  id= [id]  wrong limits [n1] [n2] [nx] 
+     exitm
+  endif
+
+  nn1=$SIGMA(MAX(1,[n1]))
+  nn2=$SIGMA(MIN([nx],[n2]))
+  
+*  mess [n1] [n2] [nn1] [nn2]
+  if $VDIM(vyyy,1)<[nx] then
+     ve/cr vyyy([nx]) r
+  endif
+  h/get_vec/con [id] vyyy
+
+  s=0.
+  do i=[nn1],[nn2]
+    a=vyyy([i])
+    s=[s]+[a]
+*    mess [i] [a] [s]
+  enddo 
+
+  mess ID=[id]  sum in [nn1],[nn2] = [s]
+  set htyp 0
+  h/pl [id]
+  set htyp 245
+  h/pl [id]([nn1]:[nn2]) s
+  set htyp 0
+  
+RETURN
+
+
+
+
+
+
+
+

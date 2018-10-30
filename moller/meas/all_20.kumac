@@ -1,0 +1,29 @@
+MACRO all_20
+
+   goto last
+   do i=8116,8123
+     exec run run=[i]
+     exec asymq run=[i] angl=22.5 
+   enddo
+
+   do i=8124,8125
+     exec run run=[i]
+     exec asymq run=[i] angl=90.5 
+   enddo
+
+ last:
+   do i=8126,8131
+     exec run run=[i]
+     exec asymq run=[i] angl=163.5 
+   enddo
+
+
+RETURN
+
+
+
+
+
+
+
+

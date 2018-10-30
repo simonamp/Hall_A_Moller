@@ -1,0 +1,31 @@
+MACRO spin_prec_1
+
+
+titl 'Hall A Moller Spin Precession Measurement' 
+
+np=8
+ve/cr angle([np])  r  -61.6  -106.   24.6   34.8   64.8    119.1    -51.5   -120
+ve/cr asymm([np])  r  -0.386 -0.204 -0.083 -0.015  0.187    0.393   -0.386 -0.122
+ve/cr easymm([np]) r   0.001  0.022  0.002  0.002  0.002    0.0025   0.002  0.022
+
+ve/cr xerr([np]) r
+
+null -180 180 -0.5 0.5
+gr/hpl/err angle asymm xerr easymm [np] 20 0.2
+atit 'Angle ' 'Beam Polarization (preliminary)'
+set dmod 2
+f/pl  sin((x-28.6)/180*3.1415)*0.386 -180 180 s
+* f/pl -sin((x-39)/180*3.1415)*0.386 -180 180 s
+set dmod 3
+line -180 0 180 0
+
+ve/in par(1:2) 0.385 30. 
+set dmod 1
+n1=1
+ve/fit angle([n1]:[np]) asymm([n1]:[np]) easymm([n1]:[np]) wave.f s 2 par
+a=par(1)
+b=par(2)
+f/pl sin((x-[b])/180*3.1415)*[a] -180 180 s
+
+
+RETURN

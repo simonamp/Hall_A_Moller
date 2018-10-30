@@ -1,0 +1,8 @@
+*** Begin of history file: Sat Dec 12 18:36:13 2009
+exec sizes_set
+exec sp_prec
+exec sp_prec
+exec sizes_set
+exec sp_prec
+exit
+*** End   of history file: Sat Dec 12 18:37:46 2009

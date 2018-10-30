@@ -1,0 +1,67 @@
+*** Begin of history file: Sat Jan 24 12:12:12 2009
+exec run run=13096
+exec lg_spectra run=13096
+loca
+exec time run=13096
+loca
+exec lg_spectra run=13096 cut=11
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13096
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13096
+exec time run=13097
+exec run run=13097
+exec lg_spectra run=13097 cut=11
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13097
+exec run run=13098
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13098
+exec run run=13099
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13099
+exec run run=13100
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13100
+exec asym_av run1=13097 run2=13100
+exec run run=13101
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13101
+exec run run=13102
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13102
+exec run run=13103
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13103
+call prunpri.f(10000,20000)
+call prunpri.f(10000,20000)
+exec run run=13104
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13104
+call prunpri.f(10000,20000)
+exec run run=13105
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13105
+call prunpri.f(10000,20000)
+exec run run=13106
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13106
+exec run run=13107
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13107
+exec run run=13107 reload=1
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13107
+exec run run=13108
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13108
+call prunpri.f(10000,20000)
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13102
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13103
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13104
+call prunpri.f(10000,20000)
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13101
+call prunpri.f(10000,20000)
+call prunpri.f(10000,20000)
+exec asym_av run1=13101 run2=13104
+call prunpri.f(10000,20000)
+exec asym_av run1=13105 run2=13108
+exec run run=13109
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13109
+exec run run=13110
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13110
+call prunpri.f(10000,20000)
+exec run run=13111
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13111
+call prunpri.f(10000,20000)
+exec run run=13112
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13112
+exec asym_av run1=13109 run2=13112
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Sat Jan 24 14:54:21 2009

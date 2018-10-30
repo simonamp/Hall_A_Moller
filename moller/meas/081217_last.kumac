@@ -1,0 +1,61 @@
+*** Begin of history file: Wed Dec 17 09:17:48 2008
+exec run run=13015
+exec run run=13036
+exec lg_spectra run=13036 cut=0
+exec lg_spectra run=13036 cut=0
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13036
+exec sett_magp e0=5.902 nq=2
+exec run run=13037
+exec lg_spectra run=13037 cut=0
+loca
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13037
+exec lg_spectra run=13037 cut=0
+exec run run=13039
+exec lg_spectra run=13039 cut=0
+exec lg_spectra run=13039 cut=0
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13039
+exec run run=13040
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13040
+cal prunpri.f(10000,20000)
+cal prunpri.f(10000,20000)
+exec run run=13041
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13041
+call prunpri.f(10000,20000)
+exec run run=13042
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13042
+call prunpri.f(10000,20000)
+exec asym_av run1=13039 run2=13042
+exec run run=13043
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13043
+call prunpri.f(10000,20000)
+exec run run=13044
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13044
+call prunpri.f(10000,20000)
+exec run run=13045
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13045
+call prunpri.f(10000,20000)
+exec run run=13046
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13046
+exec asym_av run1=13043 run2=13046
+exec asym_av run1=13043 run2=13046
+call prunpri.f(10000,20000)
+exec run run=13047
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13047
+call prunpri.f(10000,20000)
+exec run run=13048
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13048
+call prunpri.f(10000,20000)
+exec run run=13049
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13049
+exec run run=13050
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13050
+exec asym_av run1=13047 run2=13050
+exec run run=13051
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13051
+exec run run=13052
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13052
+call prunpri.f(10000,20000)
+exec asym_av run1=13051 run2=13052
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Wed Dec 17 12:10:04 2008

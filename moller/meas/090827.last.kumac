@@ -1,0 +1,83 @@
+*** Begin of history file: Fri Aug 28 11:36:22 2009
+exec run run=12404
+exec lg_spectra run=13404
+exec run run=13404
+exec lg_spectra run=13404
+exec run run=13405
+exec lg_spectra run=13405
+exec run run=13406
+exec lg_spectra run=13406
+exec run run=13408
+exec lg_spectra run=13408
+exec run run=13409
+exec lg_spectra run=13409
+exec run run=13410
+exec lg_spectra run=13410
+exec run run=13413
+exec lg_spectra run=13413
+exec run run=13414
+exec asumu run=13414
+exec asymu run=13414
+exec run run=13415
+exec asymu run=13415
+call prunpri.f(10000,20000)
+exec run run=13416
+exec asymu run=13416
+exec run run=13416
+exec run run=13417
+exec asymu run=13417
+call prunpri.f(10000,20000)
+exec run run=13418
+exec asymu run=13418
+call prunpri.f(10000,20000)
+exec run run=13419
+exec asymu run=13419
+call prunpri.f(10000,20000)
+call asym_av run1=13416 run2=13419
+exec asym_av run1=13416 run2=13419
+exec run run=13421
+exec asymu run=13421
+call prunpri.f(10000,20000)
+exec run run=13425
+exec asymu run=13425
+exec run run=13426
+exec asymu run=13426
+exec run run=13427
+exec asymu run=13427
+exec asym_av run1=13421 run2=13427
+call prunpri.f(10000,20000)
+exec long_scan run=13428
+call prunpri.f(10000,20000)
+exec asym_av run1=13416 run2=13428
+exec run run=13429
+exec asymu run=13429
+exec run run=13430
+exec asymu run=13430
+exec run run=13431
+exec asymu run=13431
+exec run run=13432
+exec asymu run=13432
+call prunpri.f(10000,20000)
+exec run run=13433
+exec asymu run=13433
+call prunpri.f(10000,20000)
+exec asym_av run1=13429 run2=13433
+exec run run=13434
+exec asymu run=13434
+exec run run=13435
+exec asymu run=13435
+exec run run=13436
+exec run run=13437
+exec asymu run=13437
+exec run run=13438
+exec asymu run=13438
+call prunpri.f(10000,20000)
+exec asym_av run1=13434 run2=13438
+exec long_scan run=13439
+call prunpri.f(10000,20000)
+exec long_scan run=13440
+call prunpri.f(10000,20000)
+exec asym_av run1=13439 run2=13440
+exec asym_av run1=13416 run2=13440
+exit
+*** End   of history file: Fri Aug 28 11:48:51 2009

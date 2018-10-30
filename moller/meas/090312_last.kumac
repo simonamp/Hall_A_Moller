@@ -1,0 +1,54 @@
+*** Begin of history file: Thu Mar 12 19:40:37 2009
+exec sett_magp e0=4.727 nq=2 p=3
+exec sett_magp e0=4.727 nq=2 p=1
+exec sett_magp e0=4.727 nq=3 p=3
+exec run run=13267
+exec lg_spectra run=13267
+exec run run=13268
+exec lg_spectra run=13268
+exec asymu delay=0 run=13268
+call prunpri.f(10000,20000)
+exec run run=13269
+exec lg_spectra run=13269
+exec asymu delay=0 run=13269
+call prunpri.f(10000,20000)
+exec asy_av run1=13268 run2=13269
+exec asym_av run1=13268 run2=13269
+exec asym_av run1=13268 run2=13269
+exec run run=13270
+exec asymu delay=0 run=13270
+call prunpri.f(10000,20000)
+exec run run=13271
+exec asymu delay=0 run=13271
+call prunpri.f(10000,20000)
+exec asym_av run1=13268 run2=13271
+exec asym_av run1=13268 run2=13271
+zone 2 2
+zone 2 2
+exec asym_av run1=13268 run2=13271
+zone 2 3
+exec asym_av run1=13268 run2=13271
+zone
+exec asym_av run1=13268 run2=13271
+zone 2 2
+exec run run=13272
+exec asymu delay=0 run=13272
+exec asym_av run1=13268 run2=13271
+exec run run=13273
+exec asymu delay=0 run=13273
+exec asym_av run1=13268 run2=13273
+exec asym_av run1=13272 run2=13273
+call prunpri.f(10000,20000)
+exec run run=13274
+exec run run=13275
+exec asymu delay=0 run=13274
+exec asymu delay=0 run=13275
+call prunpri.f(10000,20000)
+exec asym_av run1=13272 run2=13275
+exec asym_av run1=13268 run2=13275
+zone
+exec asym_av run1=13268 run2=13275
+call prunpri.f(10000,20000)
+shell
+exit
+*** End   of history file: Thu Mar 12 19:50:50 2009

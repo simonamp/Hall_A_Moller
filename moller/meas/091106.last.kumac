@@ -1,0 +1,52 @@
+*** Begin of history file: Mon Nov  9 13:19:18 2009
+exec run run=13831
+exec lg_spectra run=13831
+exec asymv run=13831
+exec asymv run=13832
+exec asymv run=13833
+exec asymv run=13834
+exec asymv run=13835
+exec asym_av run1=13831 run2=13835
+exec asym_avt
+exec asymv run=13836
+exec asymv run=13837
+exec asymv run=13838
+exec asymv run=13839
+exec asym_av run1=13836 run2=13839
+exec asym_avt
+exec asymv run=13840
+exec asymv run=13841
+exec asymv run=13842
+exec asymv run=13843
+exec asym_av run1=13840 run2=13843
+exec asym_avt
+exec asymv run=13844
+exec asymv run=13845
+exec asymv run=13846
+exec asymv run=13847
+exec asym_av run1=13844 run2=13847
+exec asym_avt
+exec asym_av run1=13831 run2=13847
+exec asym_avt
+exec asym_av run1=13831 run2=13839
+exec asymv run=13848
+exec asymv run=13849
+exec asymv run=13850
+exec asymv run=13851
+exec asym_av run1=13848 run2=13851
+exec asym_avt
+exec asymv run=13852
+exec asymv run=13853
+exec asymv run=13854
+shell gedit asymv.kumac &
+exec asymv run=13854
+exec asymv run=13855
+exec asymv run=13856
+exec asymv run=13857
+exec asymv run=13858
+exec asymv run=13859
+exec asym_av run1=13848 run2=13851
+exec asym_av run1=13855 run2=13858
+exec asym_avt
+exit
+*** End   of history file: Mon Nov  9 13:30:41 2009

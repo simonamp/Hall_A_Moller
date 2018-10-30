@@ -1,0 +1,112 @@
+MACRO laser_rf
+
+*
+* --- RF phase of the hall A laser
+*
+
+ np=9
+ ms=2
+ ve/cr phase([np]) r
+ ve/cr rate([np],[ms]) r
+ ve/cr c_rate([np],[ms]) r
+ ve/cr ctalk([np],[ms]) r
+ ve/cr pola_e([np],[ms]) r
+ ve/cr e_pola_e([np],[ms]) r
+ ve/cr pola_c([np],[ms]) r
+ ve/cr e_pola_c([np],[ms]) r
+ ve/cr pola([np],[ms]) r
+ ve/cr e_pola([np],[ms]) r
+ ve/cr rerr([np]) r
+
+ ve/in phase(1:[np]) -11 -14 -17 -20 -23 -26 -29 -32 -35  
+ ve/in rate(1:[np],1) 36900 54270 139000 469000 538000 506000 467000 401300 62500
+ ve/in rate(1:[np],2) 54400 129500 212000 407000 398000 370000 338000 316000 60200
+
+ ve/in c_rate(1:[np],1) 9*1300
+ ve/in c_rate(1:[np],2) 9*745
+
+
+ ve/oper/vdiv c_rate(1:[np],1) rate(1:[np],1) ctalk(1:[np],1) 
+ ve/oper/vdiv c_rate(1:[np],2) rate(1:[np],2) ctalk(1:[np],2) 
+
+ ve/in pola_e(1:[np],1)   59.0 61.4 65.1 66.8 67.1 67.2 67.0 66.6 65.3
+ ve/in e_pola_e(1:[np],1)  0.5  0.4  0.26 0.15 0.12 0.15 0.15 0.15 0.4 
+
+ ve/in pola_e(1:[np],2)   62.3 64.4 66.1 67.4 67.4 67.0 67.3 67.1 66.9 
+ ve/in e_pola_e(1:[np],2)  0.4  0.26 0.20 0.16 0.16 0.17 0.17 0.18 0.4 
+
+ ve/in pola_c(1:[np],1)   9*-50.
+ ve/in e_pola_c(1:[np],1)   9*2.7
+
+ ve/in pola_c(1:[np],2)   9*-43.
+ ve/in e_pola_c(1:[np],2)   9*3.3
+
+ do i=1,[np]
+   do m=1,2
+     p=pola_e([i],[m])
+     ep=e_pola_e([i],[m])
+     p_c=pola_c([i],[m])
+     ep_c=e_pola_c([i],[m])
+     al=ctalk([i],[m])
+     p1=$SIGMA([p]*(1.+[al])-[p_c]*[al])
+     mess [i] [m] [p] [p_c] [al] [p1]
+     ve/in pola([i],[m]) [p1]
+     ve/in e_pola([i],[m]) [ep]
+   enddo
+ enddo
+ a=212000/583000
+ ve/oper/vsca rate(1:3,2) [a] rate(1:3,2)
+
+ zone 3 2
+ titl 'Laser A phase dependence'
+
+ null -40 5 0 600000
+ gr/hpl/err phase rate(1:[np],1) rerr rerr [np] 24 0.1
+ gr/hpl/err phase rate(1:[np],2) rerr rerr [np] 20 0.1
+ atit 'Laser A phase (degree)' 'Coincidence rate'
+ set csiz 0.2
+ gr/hpl/key -18 500000 24 'Atten. 250, slit 17.3'
+ gr/hpl/key -18 450000 20 'Atten. 500,300, slit 16.4'
+ set csiz 0.4
+
+ null -40 5 0 0.04
+ gr/hpl/err phase ctalk(1:[np],1) rerr rerr [np] 24 0.1
+ gr/hpl/err phase ctalk(1:[np],2) rerr rerr [np] 20 0.1
+ atit 'Laser A phase (degree)' 'Cross talk from lasers B,C'
+
+ null -40 5 62. 69.
+ gr/hpl/err phase pola(1:[np],1) rerr e_pola(1:[np],1) [np] 24 0.1
+ gr/hpl/err phase pola(1:[np],2) rerr e_pola(1:[np],2) [np] 20 0.1
+ atit 'Laser A phase (degree)' 'Polarization'
+
+ np=8
+ ve/cr phase1([np]) r -30 -26 -23 -14 -11 -8 -5 0
+ ve/cr bcur1([np])  r 0.89 1.70 1.78 2.2 2.33 0.49 0.2 0.15
+ null -40 5 0 2.5
+ gr/hpl/err phase1 bcur1(1:[np]) rerr rerr [np] 24 0.1
+ atit 'Laser A phase (degree)' 'Beam current'
+ set csiz 0.2
+ gr/hpl/key -18 500000 24 'Atten. 500, slit 17.3'
+ set csiz 0.4
+
+ np=9
+* opt logy
+ ve/cr atten([np]) r 15.0  15.2  15.4  15.6  15.8  16.0  16.2  16.4 17.3
+ ve/cr bcur2([np]) r 0.316 0.350 0.368 0.440 0.580 0.740 0.90  1.11 1.78 
+ ve/cr rbcur2([np]) r
+ do i=1,[np]
+   a=bcur2([i])
+   a=1./[a]
+   ve/in rbcur2([i]) [a]
+ enddo
+ null 14 18 0.2 2
+ gr/hpl/err atten bcur2(1:[np]) rerr rerr [np] 24 0.1
+ atit 'Slit position' 'Beam current [m]A'
+ set csiz 0.2
+ gr/hpl/key -18 500000 24 'Atten. 500 '
+ set csiz 0.4
+ opt liny
+
+RETURN
+
+

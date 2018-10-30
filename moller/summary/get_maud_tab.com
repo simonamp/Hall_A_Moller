@@ -1,0 +1,58 @@
+#! /bin/bash
+#
+# ---  Reads the Maud's table for recesiation etc dates
+#      (for HAPPEX)
+# parameters: the filename for the table
+
+ fil1=$1
+
+ ntot=`cat $fil1 | wc | awk '{print $1}' `
+ n=0
+ moffs=0
+# echo $ntot
+ while n=`expr $n + 1` ; [ $n -le $ntot ]; do
+   lin=`cat $fil1 | head -$n | tail -1`
+#   echo "$lin"
+   m=`echo $lin | awk '{print $1}'`
+   if [ $m = "April" ]; then
+      moffs=0
+      lin1=`echo "$lin" | sed s"/April/     /"` 
+      lin="$lin1"
+   fi
+   if [ $m = "May" ]; then
+      moffs=30
+      lin1=`echo "$lin" | sed s"/May/   /"` 
+      lin="$lin1"
+   fi
+
+#   echo lin="$lin"     
+   d1=`echo $lin | awk '{print $1}'`
+   dr2=`echo $lin | awk '{print $2}'`
+   t=`echo $dr2 | awk ' $1 ~ /a/ {print $1}'`
+#   echo "d1..." $d1 , $dr2 , $t
+   if [ "$t" = "$dr2" ]; then
+     d2=`echo $dr2 | sed s/am// `
+   else
+     d2=`echo $dr2 | sed s/pm// `
+     d2=`expr $d2 + 12 `
+   fi
+   dd2=`echo $d2 | awk '{printf("%2d ",$1)}'` 
+   d2=$dd2
+   d=`expr $d1 + $moffs`
+#   echo "d1,d2..." $d , $d2 
+#   dfin=`echo $d | gawk -v t="$d2" '{printf(" %5.2f ",t)}'`
+   dfin=`echo $d | gawk -v t="$d2" '{printf(" %5.2f ",$1+t/24.)}'`
+#   echo "d2..." $d1 , $d2 , $d , $moffs , $dfin
+
+   event=`echo "$lin" | cut -c 18-32`
+#   echo "$lin" ="$event"
+   lin1=`echo "$dfin" " " "$event"`
+
+#   echo ==== "$lin" ==== "$lin1"
+   echo "$lin1" | grep 'spot'
+   echo "$lin1" | grep 'Cs'
+   echo "$lin1" | grep -i 'laser'
+   echo "$lin1" | grep -i 'heat'
+#   echo "$lin1" | awk '{printf(" %5.2f %10s \n",$1,$2)}'
+#   echo "$lin1" | grep 'spot move' | awk '{printf(" %5.2f %24.24s \n",$1,$2)}'
+ done

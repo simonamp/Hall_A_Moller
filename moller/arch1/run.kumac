@@ -1,0 +1,131 @@
+MACRO run run=0 clear=0 name=moller_data dir=/adaqs3/data4/ rawext=dat 
+* dir=/adaqh2/data1/mollscal/data/
+*  dir=/net/farms0/work1/com98/moller/unpol_01/
+*
+* - attaches a file with a given run number 
+* - starts with lun=21
+
+ nrun=20
+ lun1=21
+ lun2=[lun1]+[nrun]-1
+ if $VDIM(lrun)=0 .OR. $VDIM(mrun)=0 then
+   ve/cr lrun([nrun]) i
+   ve/cr mrun([nrun]) i
+ endif
+ nact=$VDIM(lrun)
+
+ if [clear]>0 then
+   icur=$VLEN(lrun)
+   ve/cr tmp([icur]) i
+   i=0
+   do j=1,[icur]
+     l=lrun([j])
+     if [l]>0 then
+       i=[i]+1
+       ve/in tmp([i]) [l]
+     else
+      k=20+[j]
+      clo [k]
+     endif
+   enddo
+   ve/cop tmp(1:[icur]) lrun(1:[icur])
+   ve/del tmp
+ endif
+
+ if [run]<1 then
+   mess "*** Wrong run number" run=[run]
+   exit
+ endif
+
+ icur=$VLEN(lrun)
+ do j=1,[icur]
+   i=lrun([j])
+   if [i]=[run] then
+     l=mrun([j])
+     mess ' run.kumac:' run=[run] is already attached to lun=[l] 
+     exitm
+   endif
+ enddo
+*
+* --- If there are too many files attached - release the first one
+*
+ if [icur]=[nrun] then
+   lun=mrun(1)
+   r=lrun(1)
+   mess Releasing the run [r] , lun=[lun]
+   clo [lun]
+   do i=2,[icur]
+     i1=[i]-1
+     ve/in lrun([i1]) lrun([i])
+     ve/in mrun([i1]) mrun([i])
+   enddo
+   ve/in lrun([icur]) 0
+   ve/in mrun([icur]) 0
+   icur=[icur]-1
+ endif
+*
+* --- Find an empty LUN in the allowed range
+*
+ icur=$VLEN(lrun)
+ lun=0
+ do l=[lun1],[lun2]
+   find=0
+   do i=1,[icur]
+     l1=mrun([i])
+*     mess loop1 [l1] [l
+     if [l1]=[l] then
+       find=1
+       breakl
+     endif
+   enddo
+*   mess loop2 [find] [l
+   if [find]=0 then
+     lun=[l]
+     breakl
+   endif
+ enddo
+ if [lun]=0 then
+   mess "*** Error: did not find any free LUN"
+   exitm
+ endif
+
+ icur=[icur]+1
+
+ try=0
+
+ mfindfile:
+
+ try=[try]+1
+ nam1=[dir]//[name]//'*'//'_'//[run]//.nt
+ shell ls -1 [nam1] > tmp.nam
+ nam=$SHELL('cat tmp.nam',1)
+ if $INDEX([nam],[name])=0  then
+   if [try]>1 then
+     mess Error: missing file [nam1]
+     exitm
+   else
+*
+* ---   No NTUPLE found: try to process the raw data file
+*
+     nam1=[dir]//[name]//'*'//'_'//[run]//'.'//[rawext]
+     shell ls -1 [nam1] > tmp.nam
+     nam=$SHELL('cat tmp.nam',1)
+*     mess nam=[nam] $INDEX([nam],[name])
+     if $INDEX([nam],[name])>0 then
+* ---    Process the files
+        mess Process the raw file
+*        exitm
+        shell rawrd.com -R [run] -e [rawext] -d [dir]
+     endif
+     goto mfindfile
+   endif
+ endif
+
+
+ h/fil [lun] [nam]
+ ve/in lrun([icur]) [run]
+ ve/in mrun([icur]) [lun]
+ mess Run=[run] is attached to lun=[lun]
+RETURN
+
+

@@ -1,0 +1,61 @@
+Run Number : 4646 
+Date       : Thu Dec 24 04:37:03 EST 1998
+     Moller Detector's Electronics Settings
+
+ Hodoscope Discriminator Lecroy4413 :
+               Left     Right
+slot            21        22
+mask             0         0
+threshold(mV)   -6        -6
+
+  Detector Discriminator OrtecTD8000 :
+slot        1
+width(ns)   15.3
+mask              0    0    0    0    0    0    0    0
+channel           1    2    3    4    5    6    7    8
+threshold(mV)   120  120   83   78   78  993  993  993
+
+  Delay Module Lecroy4518 :
+slot        6
+channel      1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16
+delay(ns)    6   6   2   2   2   2   2   2   2   2   2   2  26  26  26  26
+
+  PLU Module Lecroy2365 :
+slot        11
+ctr         0
+channel  andBits  orBits  compliment       logics input signals
+  1      4105        0       1           NOT((1).AND.(4).AND.(13))
+  2      4114        0       1           NOT((2).AND.(5).AND.(13))
+  3      4123        0       1           NOT((1).AND.(2).AND.(4).AND.(5).AND.(13))
+  4      4306        0       1           NOT((2).AND.(5).AND.(7).AND.(8).AND.(13))
+  5      4128        0       1           NOT((6).AND.(13))
+  6      5120        0       1           NOT((11).AND.(13))
+  7         0        0       1           NOT()
+  8      4098     8192       1           NOT((2).AND.(13)(14))
+
+  EPICS signals (BeamEnergy,BeamPos(mm) X,Y, BeamCurrent(uA),
+                  Q1(Amp), Q2(Amp), Q3(Amp), Dipole(Amp),
+                  TargetLinearPos(sm), TargetRotaryPos(deg),
+                  TargetLinearStatus, TargetRotaryStatus,
+                  TargetTopPosSwitch, TargetBottomPosSwitch, TargetHomePosSwitch)
+MBSY1C_energy   5074.03
+IPM1H01.XPOS    -0
+IPM1H01.YPOS    -0
+hac_bcm_dvm2_current    0.457992
+hac_bcm_dvm1_current    0.45892
+SLD1H03 26.862
+MQM1H02M        44.6276
+MQO1H03M        21.1844
+MQO1H03AM       95.0549
+MMA1H01M        330.388
+HAmol_lin.RBV   48.9791
+HAmol_rot.RBV   75
+HAmol_linSTAT.VAL       Bottom Target in Position
+HAmol_rotSTAT.VAL       Motor at Requested Location
+HAmol_lin.MCCW  0
+HAmol_lin.MCW   1
+HAmol_lin.HMSW  0
+
+End Run Time : Thu Dec 24 04:41:46 EST 1998
+
+End Run Time : Thu Dec 24 04:41:46 EST 1998

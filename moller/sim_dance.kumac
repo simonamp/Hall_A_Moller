@@ -1,0 +1,25 @@
+MACRO sim_dance np=6 a0=0.7 b0=0.
+*
+* - Simulate "spin-dance" accuracy: assume a y(i)=a*sin(x(i)+b)
+*                                   find a and b
+*             input: vector xs([np]): x values
+*
+ drad=$SIGMA(ACOS(0.)/90.)
+
+*  ve/cr xs([np]) r
+ ve/cr ys([np]) r
+ ve/cr eys([np]) r
+ do i=1,[np]
+   x=xs([i])
+   x=[x]*[drad]
+   y=$SIGMA([a0]*SIN([x]+[b0]))
+   ve/in ys([i]) [y]
+   ey=$SIGMA(SQRT(([y]*0.0)**2+0.02**2))
+   ve/in eys([i]) [ey]
+enddo 
+
+ve/cr para(6) r [a0] [b0]
+ve/fit xs ys eys wave.f ! 2 para
+
+
+RETURN

@@ -1,0 +1,53 @@
+MACRO kgtoa  fi=3.0 q=1
+*** converter kGauss to Amp for Moller magnets
+* fi - field in kGauss
+* q  - magnet number (1-4 - quads, 5 - dipole)
+
+   if [q]=1 then
+*      amp=[fi]*46.29
+ c1=$sigma(-0.69321+39.8924*[fi]+0.052471*[fi]**2)
+ c2=$sigma(+0.122924*[fi]**3-0.00259403*[fi]**4)
+ c3=$sigma(-0.00796777*[fi]**5+3.76253E-05*[fi]**6)
+ amp=$sigma([c1]+[c2]+[c3]+0.000182687*[fi]**7)
+ mess Moller Quad Q1/MQO1H01/LARGE/new/white
+      goto mes
+   elseif [q]=2 then
+*      amp=[fi]*50.361
+ c1=$sigma(-0.00362782+0.164711*[fi]-0.000171007*[fi]**2)
+ c2=$sigma(-0.000115519*[fi]**3+6.89622E-06*[fi]**4)
+ c3=$sigma([c1]+[c2]+5.82114E-06*[fi]**5)
+ amp=[c3]*300.
+ mess Moller Quad Q2/PATSY/MQM1H02/SMALL/RED
+      goto mes
+   elseif [q]=3 then
+*      amp=[fi]*48.807
+ c1=$sigma(-0.0584971+41.1403*[fi]+0.0128638*[fi]**2)
+ c2=$sigma(+0.265698*[fi]**3-0.000689828*[fi]**4)
+ c3=$sigma(-0.0150101*[fi]**5+1.04465E-05*[fi]**6)
+ amp=$sigma([c1]+[c2]+[C3]+0.000359483*[fi]**7)
+ mess Moller Quad Q3/TESSA/MQO1H03/LARGE/BLUE
+      goto mes
+   elseif [q]=4 then
+*      amp=[fi]*47.975
+ c1=$sigma(-0.0155039+40.4927*[fi]+0.00363833*[fi]**2)
+ c2=$sigma(0.276528*[fi]**3-0.000200136*[fi]**4)
+ c3=$sigma(-0.0160936*[fi]**5+3.09262E-06*[fi]**6)
+ amp=$sigma([c1]+[c2]+[c3]+0.000377441*[fi]**7) 
+ mess Moller Quad Q4/FELICIA/MQO1H03A/LARGE/BLUE
+      goto mes
+   mes:
+   mess Q[q]  Field=[fi]kGauss  Current=[amp]Amp
+   go to eend
+   elseif [q]=5 then
+       if [fi]>15.2 then
+          mess Field is larger than max. dipole field 15.2kG(1000A)
+          goto eend
+       endif
+      amp=[fi]*36.969
+ amp=$sigma(0.36623E-03+36.968*[fi]+0.39887E-04*[fi]**2)
+ mess Moller Dipole LILLY/MMA1H01/Blue
+ mess Dipole  Field=[fi]kGauss  Current=[amp]Amp
+   endif
+   eend:
+
+RETURN

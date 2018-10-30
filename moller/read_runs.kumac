@@ -1,0 +1,74 @@
+MACRO read_runs run1=0 run2=0 dtab=tab dinfo=Info
+*
+* --- Get all information about the runs in the given range 
+*
+  if [run1] .le. 0 .or. [run2] .lt. [run1] then
+    mess Wrong run range [run1] [run2]
+    exitm
+  endif
+
+* Make a list of files
+  if $FEXIST(rnam.tmp)>0 then
+    shell rm -f rnam.tmp
+  endif
+  if $FEXIST(runs.tab.cur)>0 then
+    shell rm -f runs.tab.cur
+  endif
+  shell ./names_tab.com [run1] [run2] [dtab] > rnam.tmp
+  nf=$SHELL('cat rnam.tmp | wc -l | sed "s^ ^^g"')
+  mess Files found: [nf]
+  IF [nf]=0 then
+    mess No files in the range [run1] [run2]
+    exitm
+  endif
+
+  call pntini.f
+
+  do if=1,[nf]
+    cmnd='head -'//[if]//' rnam.tmp | tail -1'
+    fnam=$SHELL([cmnd])
+    mess File=[fnam]
+    if $FEXIST(runs.tab.cur)>0 then
+      mess Remove runs.tab.cur
+      shell rm -f runs.tab.cur
+    else
+      mess File runs.tab.cur is missing
+      shell ls -alF *.tab.cur
+    endif
+    shell ln -s [fnam] runs.tab.cur
+*
+* ---   Read the polar. data for all the runs in this table
+*
+    exec read_tab
+    nr=mtabfl(2)
+    
+    do jr=1,[nr]
+      call pntevini.f
+      run=mtabrn([jr])
+
+      call run_pol.f([run],[info])
+      
+*
+* ---  Get the Info data for this run
+*
+      exec run_info run1=[run] run2=[run] dir=[dinfo] call=0
+      if $FEXIST(run.info)>0 then
+        call run_info.f
+      endif
+
+      call pntfil.f
+
+    enddo
+  enddo
+
+  call pntclo.f
+   
+RETURN
+
+
+
+
+
+
+
+

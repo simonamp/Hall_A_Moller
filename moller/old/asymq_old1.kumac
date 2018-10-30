@@ -1,0 +1,482 @@
+MACRO asymq id0=-1 nlun=0 run=0 ncha=-1 n1=1 n2=999999 nevadc=10 angl=30. anpow=0.76 ptar=0.076 norm=1 norbcm=1 nocut=0 noff=7000 coil=0 gate=0.033 mxdiff=50 clear=1 delay=-1
+*
+* --- Asymmetry calculation
+*
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- ncha > 0 - number of bins, <0 - automatic = 0 - no hist
+* --- n1,n2 - the range of the scaler cycles to accept
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+* --- angl   - target angle
+* --- anpow  - Moller analysing power
+* --- ptar   - target polarizarion
+* --- norm   - normalization, =0 - scaler, =1 - BCM
+* --- nocut  - make no cuts on the cycles
+* --- noff   - run offset
+* --- coil   - polarity of the Helmholz coil
+* --- gate   - helicity gate length in sec
+* --- mxdiff - max difference between two scalers
+* --- clear  >0 - erase old histograms for a new run
+* --- delay  > =-1 - automatical evaluation, =0 - forced (no delay), =9 - delay
+* 
+*
+
+ opt liny
+* mess delay=[delay]
+
+ if $VDIM(ichis,1)<20 then
+   ve/cr ichis(20) i
+ endif
+ ve/in ichis(1:12) 1 2 3 4 5 6 12 21 22 23 24 25
+ if $VDIM(nnlim,1)<2 then
+   ve/cr nnlim(2) i
+ endif
+ ve/in nnlim [n1] [n2]
+
+ if [run]<1 then
+   mess Error in asymq.kumac : run number [run] is out of range
+   exitm
+ endif
+
+*  Find the coil current
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2a/user/gen/moller/exp/*/*/mon/
+ endif
+ fmon=[dirm]//'mollerrun_'//[run]//'.set'
+ comn='grep Hcoil '//[fmon]
+ hcoil=$SHELL([comn]) 
+* mess hcoil=[hcoil]
+ if $INDEX([hcoil],'grep Hcoil')>0 .OR. $INDEX([hcoil],'Hcoil')<1  then
+   mess *** Error: set file is not found for run=[run]
+   mess         in [fmon]
+ else
+   comn='grep Hcoil '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+   hcoil=$SHELL([comn])
+   if [coil]=0 then
+     coil=$RSIGMA([hcoil])
+   endif
+ endif
+* mess hcoil=[hcoil] coil=[coil]
+
+ if $VDIM(bcmlin)<3 then
+    ve/cr bcmlin(3) r
+ endif
+  
+* BCM linearity (x10)
+* ve/cr bcmlin(3) r 1977. 1.
+* ve/cr bcmlin(3) r 988. 1.
+* New BCM - 09 Oct 98
+* ve/cr bcmlin(3) r 1356 0.78702 0.29969E-5
+* New BCM - 20 Dec 98
+* ve/cr bcmlin(3) r 1821. 0.9606 -0.58E-6
+* New BCM - 21 Jan 99
+* ve/cr bcmlin(3) r -51. 1.073 -0.6E-5
+*    19 Feb 99
+* ve/cr bcmlin(3) r 77. 0.99629 0.
+*    27 Sep 99
+
+* ve/in bcmlin(1:3) 0. 1. 0.
+* ve/in bcmlin(1:3) -12. 1.033 0.
+ ve/in bcmlin(1:3) -10. 1. 0.
+
+ if $VDIM(acuts)<20 then
+   ve/cr acuts(20) r
+ endif
+ ve/in acuts(1) [mxdiff]
+
+ run0=0
+ if $VDIM(irun,1)>0 then
+   run0=irun(1)
+ endif
+ if [nlun]=0 then
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run=irun(1)
+   kty=irty(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   nlun=lun//[lun]
+ else
+   run=[nlun]
+ endif
+ if [id0]=-1 then
+   id0=[run]*1000
+   mess Set id0 to [id0]
+ endif
+*
+*--- Clear the old histograms
+*
+ if [clear]>0 .AND. [run] .NE. [run0] then
+   cd //pawc
+   h/del 0
+ endif   
+
+ tit='Moeller run='//[run]
+ titl [tit]
+
+
+ exec add_v_run irun=[run]
+ nr=$VDIM(krunpnt,1)
+ if [nr]<[run] then
+   mess Error in asymp.kumac : no krunpnt [nr] for run=[run]
+   exitm
+ endif
+ krun=krunpnt([run])
+ if [krun]<1 .OR. $VDIM(resrun,2)<[krun] then
+   mess Error in asymp.kumac : no space in resrun for run=[run]
+   exitm
+ endif
+
+
+ if $VDIM(rlimsca,2)<32 then
+   ve/cr rlimsca(4,32) r
+ endif
+ do i=1,32
+   ve/in rlimsca(1,[i]) 9999999
+   ve/in rlimsca(2,[i]) 0
+   ve/in rlimsca(3,[i]) 9999999
+   ve/in rlimsca(4,[i]) 0
+ enddo
+
+ id=[id0]
+
+*
+* --- Read the ntuple in order to learn the number of helicity cycles
+*
+ id1=99
+ if $HEXIST([id1])>0 then
+    h/del [id1]
+ endif
+ 1dh [id1] '    ' 500 0 500
+
+ nt/pl //[nlun]/1.asymcyc.f([id1])
+  
+*   Get the average tick distance between the scaler events
+ if $VDIM(tmpv)<500 then
+    ve/cr tmpv(500) r
+ endif
+ h/get_vec/con [id1] tmpv
+ tickav=$SIGMA(LVMAX(tmpv)-1)
+* ve/del tmpv
+* h/del [id1]
+ mess Ticks between the scaler events: [tickav]
+
+ if [ncha]<0 then
+   ncha=$HINFO(1000000,'XMAX')
+   ncha=[ncha]+10
+ endif
+
+ mxwind=$SIGMA([ncha]*1.1)
+* ve/del khelwin
+ if $VDIM(khelwin)<[mxwind] then
+   ve/del khelwin
+   ve/del kticwin
+   ve/del kflawin
+   ve/del krecwin
+   ve/del krefwin
+   ve/del ncowin
+   ve/cr  khelwin([mxwind]) i
+   ve/cr  kticwin([mxwind]) i
+   ve/cr  kflawin([mxwind]) i
+   ve/cr  krecwin([mxwind]) i
+   ve/cr  krefwin([mxwind]) i
+   ve/cr  ncowin(4) i
+
+   fnam='inc/v_helw.inc'
+   if $FEXIST([fnam]) then
+     shell rm -f [fnam]
+   endif 
+   fmess 'C == Vectors for helicities window-wise' [fnam]
+   inam='      INTEGER MXHELW'
+   fmess [inam] [fnam]
+   inam='      PARAMETER (MXHELW='//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KHELWIN('//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KTICWIN('//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KFLAWIN('//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KRECWIN('//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KREFWIN('//[mxwind]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR NCOWIN(4)'
+   fmess [inam] [fnam]
+   fmess 'C --- NCOWIN(1) - number of windows' [fnam]
+   fmess 'C ---       (2) - oversampling (typically =1)' [fnam]
+   fmess 'C ---       (3) - =0 - pseudorandom,=1 - toggle' [fnam]
+ else
+   m=$VDIM(khelwin)
+   ve/in  khelwin [m]*0
+   ve/in  kticwin [m]*0
+   ve/in  kflawin [m]*0
+   ve/in  krecwin [m]*0
+   ve/in  krefwin [m]*0
+   ve/in  ncowin 4*0
+ endif
+*
+* --   Analyse the asymmetry sequence
+*
+ nt/loop //[nlun]/1 asymhel.f([tickav])
+ call helrecon.f
+ exitm
+ 
+
+ mxasym=50
+ if $VDIM(casym)<[mxasym] then
+   ve/cr  casym([mxasym]) r
+   ve/cr ecasym([mxasym]) r
+   ve/cr  casymn([mxasym]) r
+   ve/cr ecasymn([mxasym]) r
+   ve/cr  rasym([mxasym]) r
+   ve/cr erasym([mxasym]) r
+   ve/cr  fasym([mxasym]) r
+   ve/cr efasym([mxasym]) r
+   ve/cr  nasym([mxasym]) i
+   ve/cr coasym([mxasym]) r
+
+   fnam='inc/v_asym.inc'
+   if $FEXIST([fnam]) then
+     shell rm -f [fnam]
+   endif 
+   fmess 'C == Vectors of asymmetry and counting rates' [fnam]
+   inam='      INTEGER MXASYMV'
+   fmess [inam] [fnam]
+   inam='      PARAMETER (MXASYMVC='//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR CASYM('//[mxasym]//'),ECASYM('//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR CASYMN('//[mxasym]//'),ECASYMN('//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR RASYM('//[mxasym]//'),ERASYM('//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR FASYM('//[mxasym]//'),EFASYM('//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR NASYM('//[mxasym]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR COASYM('//[mxasym]//')'
+   fmess [inam] [fnam]
+ else
+   ve/in  casym [mxasym]*0
+   ve/in ecasym [mxasym]*0
+   ve/in  casymn [mxasym]*0
+   ve/in ecasymn [mxasym]*0
+   ve/in  rasym [mxasym]*0
+   ve/in erasym [mxasym]*0
+   ve/in  fasym [mxasym]*0
+   ve/in efasym [mxasym]*0
+   ve/in  nasym [mxasym]*0
+   ve/in coasym [mxasym]*0
+ endif
+
+ ve/in coasym(1) [angl]   
+ ve/in coasym(2) [anpow]   
+ ve/in coasym(3) [ptar]   
+ ve/in coasym(4) [norm]   
+ ve/in coasym(5) [norbcm]   
+ ve/in coasym(6) [coil]   
+ ve/in coasym(7) [gate]   
+ ve/in coasym(8) [kty]  
+
+ delay1=[delay]
+ if [delay]=-1 then
+   delay1=0
+ endif
+
+ if $VDIM(naspar,1)<32 then
+   ve/cr naspar(32) i 
+ endif
+
+ pass=0
+
+ ve/in naspar(1:9) [id] [nevadc] [norm] [norbcm] [nocut] [delay1] [kty] [pass] [tickav]
+*
+* --- Read the ntuple: 1-st pass (find the limits for histograms, etc)
+* 
+ nt/loop //[nlun]/1 asymmetq.f([angl],[anpow],[ptar])>0.  
+
+ *  Find the right helicity gate using the Clock (timer) = 100kHz
+ av=casym(12) 
+ gate1=$sigma([av]/92200.)
+ mess Calculated gate=[gate1] sec    Preset gate=[gate] sec
+ if $SIGMA(ABS([gate]-0.033))<0.005 then
+   gate1=0.033
+ elseif $SIGMA(ABS([gate]-0.5))<0.05 then
+   gate1=0.5
+ elseif $SIGMA(ABS([gate]-1.))<0.05 then
+   gate1=1.
+ endif
+ mess Gate used=[gate1] sec 
+ gate=[gate1]
+ ve/in coasym(7) [gate]
+
+
+ tith=[tit]//' raw asymmetry'
+ x2=[ncha]+1
+ if [ncha]>0 then
+   if $HEXIST([id])>0 then
+     h/del [id]
+   endif
+   1dh [id] [tith] [ncha] 1 [x2]
+ endif
+ 
+ id1=[id0]+100
+ tith1=[tit]//' helicity signals'
+ if $HEXIST([id1])>0 then
+    h/del [id1]
+ endif
+ 1dh [id1] [tith1] [ncha] 1 [ncha]
+ id1=[id0]+53
+ tith1=[tit]//' ticks to the previous cycle'
+ if $HEXIST([id1])>0 then
+    h/del [id1]
+ endif
+ 1dh [id1] [tith1] [ncha] 1 [ncha]
+ id1=[id0]+99
+ tith1=[tit]//' jhelcyc'
+ if $HEXIST([id1])>0 then
+    h/del [id1]
+ endif
+ 1dh [id1] [tith1] [ncha] 1 [ncha]
+
+ tith=[tit]//' counting rates'
+ 
+ do i=1,20
+   k=ichis([i])
+   if [k]>0 then
+*---        Get the limits
+*	
+     l1=rlimsca(1,[k])
+     l2=rlimsca(2,[k])
+     xmn=$SIGMA(INT([l1]/200))
+     xmn=[xmn]*200
+     xmx=$SIGMA(INT([l2]/200))     
+     xmx=([xmx]+1)*200
+*      mess chan=[k] nx,xmin,xmax=[nx],[xmn],[xmx]
+
+     do m=1,2
+       m1=([m]-1)*2+1
+       l1=rlimsca([m1],[k])     
+       m1=([m]-1)*2+2
+       l2=rlimsca([m1],[k])
+       if [m]=1 then
+         xmn=$SIGMA(INT([l1]/200))
+         xmn=[xmn]*200
+         xmx=$SIGMA(INT([l2]/200))     
+         xmx=([xmx]+1)*200
+         nx=[xmx]-[xmn]
+         nx=$SIGMA(MIN([nx],3000))
+         nx=$SIGMA(MAX([nx],20))
+       else
+         dx=[l2]-[l1]
+         xmn=$SIGMA([l1]-[dx]*0.1)
+         xmx=$SIGMA([l2]+[dx]*0.1)
+         nx=400
+       endif
+*       mess try [i] [k]
+*       mess chan=[k] nx,xmin,xmax=[nx],[xmn],[xmx]
+*
+       if [m]=1 then
+         tith1=[tith]//' raw '
+       else
+         tith1=[tith]//' corrected '
+       endif
+
+       if [ncha]>0 then
+         id1=$SIGMA([id0]+100+[k]+50*([m]-1))
+         if $HEXIST([id1])>0 then
+           h/del [id1]
+         endif
+         1dh [id1] [tith1] [ncha] 1 [ncha]
+       endif
+
+       do ihel=1,2
+         if [ihel]=1 then
+           tith2=[tith1]//' H+ '
+         else
+           tith2=[tith1]//' H- '
+         endif
+         id1=$SIGMA([id0]+100+[k]+50*([m]-1)+100*[ihel])
+         if $HEXIST([id1])>0 then
+            h/del [id1]
+         endif
+         1dh [id1] [tith2] [nx] [xmn] [xmx]
+       enddo
+     enddo
+
+     if [k]<5 then
+       tith1=[tith]//' Diff of 2 scalers '
+       id1=$SIGMA([id0]+400+[k])
+       if $HEXIST([id1])>0 then
+          h/del [id1]
+       endif
+       1dh [id1] [tith1] 1040 -520. 520.
+     endif
+   endif 
+ enddo
+
+
+ id1=[id0]+50
+ if $HEXIST([id1])>0 then
+   h/del [id1]
+ endif
+ 1dh [id1] 'Ticks between cycles' 100 0. 100. 
+ id1=[id0]+51
+ if $HEXIST([id1])>0 then
+   h/del [id1]
+ endif
+ 1dh [id1] 'Ticks between the last ADC and scalers' 1000 0. 1000. 
+ id1=[id0]+52
+ if $HEXIST([id1])>0 then
+   h/del [id1]
+ endif
+ 1dh [id1] 'Ticks between the 1-st and last ADC' 20 0. 20. 
+
+   
+ delay1=[delay]
+ if [delay]=-1 then
+   delay1=0
+   p=fasym(1)
+   p=$SIGMA(ABS([p]))
+   mess p=[p]
+   if [p]<0.005 then
+     mess *** Try the delayed mode. With non-delayed mode the 1-st arm raw asymmetry is [p]
+     delay1=9
+   else
+     mess *** Use the NON-delayed mode. With non-delayed mode the 1-st arm raw asymmetry is [p]
+   endif
+ endif
+
+ pass=1
+
+ ve/in naspar(1:9) [id] [nevadc] [norm] [norbcm] [nocut] [delay1] [kty] [pass] [tickav]
+ ve/in nasym(1:50) 50*0
+
+ nt/loop //[nlun]/1 asymmetq.f([angl],[anpow],[ptar])>0.  
+
+ h/pl [id](1:[ncha])
+ nfl=$SIGMA([nocut]+[norbcm]*10+[norm]+100+[nevadc]*1000)
+
+** ==    Copy the data to a file
+* mess nadct=[nadct]
+* fun='irput_pol.f('//[run]//','//[gate]//','//[nfl]//',1)'
+* icyc=$ICALL([fun])
+* mess RZ Output record cycle= [icyc]  
+
+ mess ' Cycles lost due to various reasons: '
+ ve/pri nasym(3:14)
+
+ call asym_rend.f([run],1)
+
+
+RETURN
+

@@ -1,0 +1,381 @@
+MACRO spin_prec_6 hall=1 fitpar=2 same=0 plot=3 aver=0 ptran=0 dtang1=0 dtang2=0 w1=-80 w2=80 deadtcor=1.01 targcor=1 rf=0
+
+*
+* ptran=1 - fit the pure transv. polarization (P1-P2)
+*  ** - data before the Hall A Moller polarimeter sign convention was updated
+*
+ 
+opt nsta
+set fcol 2
+set hcol 1
+set pcol 1
+set xcol 1
+set ycol 1
+set csiz 0.3
+
+ve/cr ipwav(1) i
+
+ve/cr ipfit(10) i
+if [fitpar]=3 then
+  ve/in ipfit(2) 1
+endif
+
+if [ptran]>0 then
+  ve/in ipfit(3) [ptran]
+endif
+
+cortarg=1.
+if [targcor]>0 then
+  cortarg=$SIGMA(7.76/7.95)
+endif
+
+if [hall]=1 then
+  haln='Moller A'
+elseif [hall]=2 then
+  haln='Moller B'
+elseif [hall]=3 then
+  haln='Moller C'
+elseif [hall]=4 then
+  haln='Mott'
+elseif [hall]=5 then
+  haln='Compton A'
+endif
+mtxt=[haln]
+
+
+tit=' Spin Precession Measurement, 5.652 GeV' 
+titl [tit]
+
+ve/del asym1
+ve/del easym1
+ve/del atang
+ve/del atang1
+
+np1=0
+if [hall]=1 then
+  np=14
+  np1=4
+  ve/cr angle([np])        r -8.9     55.7    107.      91.2    76.1     36.1    11.5    -8.7    -56.9    -81.6  -106.
+*    corrected values from Joe Grames:
+*  ve/in angle(1:[np])        -8.9     55.7    107.1     91.2    76.1     36.1    11.4    -8.7    -57.0    -81.6  -106.1
+  ve/cr irf([np])          r  0       0       0         0        0       0        0       0        0       0       0      1       1       1       
+  ve/in angle(1:[np])       -10.5     56.9    108.5     93.0    77.5     36.3    10.5   -10.5    -60.0    -84.8  -108.5  -10.5   93.0   -10.5  
+  ve/cr eangle([np])       r  [np]*1.
+**  ve/cr asymm([np])        r  0.7585  0.3702 -0.3258 -0.0956    0.1235   0.6075  0.7476  0.7598  0.4608  0.1332 -0.2443 
+  ve/cr asymm([np])        r  -0.7585  -0.3702 0.3258 0.0956    -0.1235   -0.6075  -0.7476  -0.7598  -0.4608  -0.1332 0.2443 
+  ve/cr easymm([np])       r  0.0014  0.0014  0.0014  0.0014    0.0014   0.0014  0.0014  0.0014  0.0014  0.0014  0.0016
+  ve/cr asym1([np],2,2)    r
+*  ve/in asym1(1:[np],1,1)     0.7681  0.4073 -0.3005 -0.0625    0.1668   0.6444  0.7646  0.7692  0.4407  0.0903 -0.2828
+*  ve/in asym1(1:[np],2,1)     0.7518  0.3351 -0.3518 -0.1281    0.0808   0.5729  0.7246  0.7544  0.4821  0.1760 -0.2071 
+*  ve/in asym1(1:[np],1,2)     0.7558  0.4000 -0.2953 -0.0614    0.1640   0.6324  0.7486  0.7531  0.4331  0.0887 -0.2779 
+*  ve/in asym1(1:[np],2,2)     0.7584  0.3388 -0.3557 -0.1303    0.0883   0.5799  0.7325  0.7627  0.4874  0.1779 -0.2094 
+
+**  ve/in asym1(1:[np],1,1)     0.7681  0.4073 -0.3005 -0.0625    0.1668   0.6444  0.7646  0.7692  0.4407  0.0896 -0.2828  0.7472 -0.0494  0.7540  
+  ve/in asym1(1:[np],1,1)     -0.7681  -0.4073 0.3005 0.0625    -0.1668   -0.6444  -0.7646  -0.7692  -0.4407  -0.0896 0.2828  -0.7472 0.0494  -0.7540 
+**  ve/in asym1(1:[np],2,1)     0.7518  0.3351 -0.3518 -0.1281    0.0808   0.5729  0.7246  0.7544  0.4821  0.1610 -0.2071  0.7234 -0.1177  0.7369
+  ve/in asym1(1:[np],2,1)     -0.7518  -0.3351 0.3518 0.1281    -0.0808   -0.5729  -0.7246  -0.7544  -0.4821  -0.1610 0.2071  -0.7234 0.1177  -0.7369
+**  ve/in asym1(1:[np],1,2)     0.7558  0.4000 -0.2953 -0.0614    0.1640   0.6324  0.7486  0.7531  0.4331  0.0887 -0.2779  0.7348 -0.0485  0.7410
+  ve/in asym1(1:[np],1,2)     -0.7558  -0.4000 0.2953 0.0614    -0.1640   -0.6324  -0.7486  -0.7531  -0.4331  -0.0887 0.2779  -0.7348 0.0485  -0.7410
+**  ve/in asym1(1:[np],2,2)     0.7584  0.3388 -0.3557 -0.1303    0.0883   0.5799  0.7325  0.7627  0.4874  0.1627 -0.2094  0.7323 -0.1197  0.7477
+  ve/in asym1(1:[np],2,2)     -0.7584  -0.3388 0.3557 0.1303    -0.0883   -0.5799  -0.7325  -0.7627  -0.4874  -0.1627 0.2094  -0.7323 0.1197  -0.7477
+  ve/cr easym1([np],2,2) r  
+*  ve/in easym1(1:[np],1,1)    0.0019  0.0019  0.0014  0.0010    0.0015   0.0019  0.0015  0.0015  0.0013  0.0017  0.0017
+*  ve/in easym1(1:[np],2,1)    0.0015  0.0017  0.0014  0.0011    0.0018   0.0014  0.0014  0.0014  0.0014  0.0014  0.0011
+*  ve/in easym1(1:[np],1,2)    0.0019  0.0019  0.0014  0.0010    0.0015   0.0019  0.0015  0.0015  0.0013  0.0017  0.0017
+*  ve/in easym1(1:[np],2,2)    0.0015  0.0017  0.0014  0.0011    0.0018   0.0014  0.0014  0.0014  0.0014  0.0014  0.0011
+  ve/in easym1(1:[np],1,1)    0.0019  0.0019  0.0014  0.0010    0.0015   0.0019  0.0015  0.0015  0.0013  0.0020  0.0017  0.0015  0.0018  0.0013
+  ve/in easym1(1:[np],2,1)    0.0015  0.0017  0.0014  0.0011    0.0018   0.0014  0.0014  0.0014  0.0014  0.0014  0.0011  0.0013  0.0017  0.0012
+  ve/in easym1(1:[np],1,2)    0.0019  0.0019  0.0014  0.0010    0.0015   0.0019  0.0015  0.0015  0.0013  0.0020  0.0017  0.0015  0.0018  0.0013
+  ve/in easym1(1:[np],2,2)    0.0015  0.0017  0.0014  0.0011    0.0018   0.0014  0.0014  0.0014  0.0014  0.0014  0.0011  0.0013  0.0017  0.0012
+  ve/cr atang([np],2,2)  r  
+  ve/in atang(1:[np],1,1)     -23.    -23.    -23.    -23.      -22.5   -22.5   -23.    -23.     -23.    -23.    -23.    -23.    -23.    -23.
+  ve/in atang(1:[np],2,1)      16.5    16.5    16.5    16.5      16.5    16.5    16.5    16.5     16.5    16.5    16.5    16.5    16.5    16.5
+  ve/in atang(1:[np],1,2)     -20.7   -20.4   -20.5   -20.5     -20.0   -19.7   -20.5   -20.5    -20.5   -20.5   -20.5   -20.6   -20.5   -20.5 
+  ve/in atang(1:[np],2,2)      18.1    18.5    18.5    18.5      18.5    18.7    18.5    18.5     18.5    18.5    18.5    18.7    18.5    18.5
+  ve/cr atang1([np],2)  r  
+ 
+  ve/cr tangad(2) r [dtang1] [dtang2]
+  ve/cr tangd([np],3) r
+
+  do i=1,[np]
+    do j=1,2
+      a1=atang([i],1,[j])
+      a2=atang([i],2,[j])
+      a2=[a2]-180
+      dif=$SIGMA([a1]-[a2])
+      ve/in tangd([i],[j]) [dif]
+    enddo
+  enddo
+  ve/oper/vsub tangd(1:[np],2) tangd(1:[np],1) tangd(1:[np],3)
+* == Correction for the dead time and target polarization
+  corfac=$SIGMA([deadtcor]*[cortarg])
+  ve/oper/vsca  asymm [corfac] asymm
+  ve/oper/vsca easymm [corfac] easymm
+  ve/oper/vsca  asym1 [corfac] asym1
+  ve/oper/vsca easym1 [corfac] easym1
+*  1dh 201 '
+elseif [hall]=2 then
+  np=10
+  ve/cr angle([np])  r          55.7    107.1     91.2    76.1     36.1    11.5    -8.7    -56.9    -81.6  -106.1
+  ve/in angle(1:[np])           56.9    108.5     93.0    77.5     36.3    10.5   -10.5    -60.0    -84.8  -108.5
+  ve/cr eangle([np]) r  [np]*1.
+  ve/cr asymm([np])  r        -0.3265  -0.7064  -0.6431 -0.5197  -0.0865  0.2405  0.4340  0.6911  0.6195  0.4519
+  ve/cr easymm([np]) r         0.0102   0.0102   0.0161  0.0091   0.0088  0.0089  0.0099  0.0102  0.0105  0.0099
+elseif [hall]=3 then
+  np=10
+  ve/cr angle([np])  r          55.7    107.      91.2     76.1    36.1    11.5    -8.7    -56.9    -81.6  -106.1
+  ve/in angle(1:[np])           56.9    108.5     93.0    77.5     36.3    10.5   -10.5    -60.0    -84.8  -108.5
+  ve/cr eangle([np]) r  [np]*1.
+  ve/cr asymm([np])  r          0.738   0.4391   0.6016   0.7000   0.6788  0.4976  0.2890 -0.3093 -0.5857 -0.7322
+  ve/cr easymm([np]) r          0.0028  0.0025   0.0021   0.0042   0.0020  0.0040  0.0020  0.0020  0.0022  0.0023
+* ve/cr asymm([np])  r          0.7362  0.4356   0.5980   0.6950   0.6727  0.4937  0.2865 -0.3066 -0.5806 -0.7259
+* ve/cr easymm([np]) r          0.0017  0.0026   0.0027   0.0018   0.0018  0.0020  0.0026  0.0026  0.0022  0.0023
+elseif [hall]=4 then
+* Mott
+  np=11
+  ve/cr angle([np])  r          -8.9     55.7    107.      91.2    76.1     11.5    -8.7   -38.7    -56.9    -81.6  -106.1
+  ve/in angle(1:[np])          -10.5     56.9    108.5     93.0    77.5     10.5   -10.5   -41.0    -60.0    -84.8  -108.5
+  ve/cr eangle([np]) r  [np]*1.
+  ve/cr asymm([np])  r          0.1390 -0.5890 -0.6900 -0.7280 -0.7060 -0.1070  0.1390     0.4800  0.6290  0.7220  0.6800
+  ve/cr easymm([np]) r          0.0020  0.0030  0.0030  0.0030  0.0030  0.0040  0.0040     0.0040  0.0040  0.0020  0.0050
+elseif [hall]=5 then
+* Compton
+  np=9
+  ve/cr angle([np])  r -8.9     -8.9   91.2     76.1     76.1    -8.7    -8.7     -38.7   -38.7
+  ve/in angle(1:[np])  -10.5   -10.5   93.0     77.5     77.5   -10.5   -10.5     -41.0   -41.0
+  ve/cr eangle([np]) r  [np]*1.
+* ve/cr asymm([np])  r  0.7239  0.7082 -0.1023  0.1097  0.1256  0.7378  0.6906  0.5911  0.5753 
+* ve/cr easymm([np]) r  0.0085  0.0079  0.0080  0.0060  0.0074  0.0099  0.0215  0.0065  0.0081
+  ve/cr asymm([np])  r -0.7105 -0.7121  0.1441 -0.1081 -0.1082 -0.7152 -0.7895 -0.5851 -0.5671 
+  ve/cr easymm([np]) r  0.0090  0.0080  0.0130  0.0061  0.0074  0.0187  0.0173  0.0066  0.0079
+  ve/cr easymsy([np]) r 0.0257  0.0246  0.1125  0.1710  0.0555  0.0277  0.0336  0.0252  0.0262  
+  ve/cr easymst([np]) r 0.0127  0.0119  0.0938  0.0560  0.0683  0.0261  0.0219  0.0113  0.0139
+  do i=1,[np]
+    a1=easymst([i])
+    a2=easymsy([i])
+*    a2=0
+    a3=asymm([i])
+    a1=$SIGMA(SQRT([a1]**2+[a2]**2)*ABS([a3]))
+    ve/in easymm([i]) [a1]
+  enddo
+endif
+ve/cr xerr([np]) r
+
+fnam='inc/v_poltr.inc'
+if $FEXIST([fnam]) then
+  shell rm -f [fnam]
+endif
+inam='      INTEGER MXWIEN'
+fmess [inam] [fnam]
+inam='      PARAMETER (MXWIEN='//[np]//')'
+fmess [inam] [fnam]
+inam='      VECTOR ATANG('//[np]//',2,2)'
+fmess [inam] [fnam]
+inam='      VECTOR ATANG1('//[np]//',2)'
+fmess [inam] [fnam]
+inam='      VECTOR ANGLE('//[np]//')'
+fmess [inam] [fnam]
+
+fp1='S'
+fp2='S'
+win1=1
+win2=1
+
+if [plot]=0 then
+  fp1='0'
+  fp2='0'
+  win1=0
+  win2=0
+elseif [plot]=1 then
+  fp1='S'
+  fp2='0'
+  win1=1
+  win2=0
+elseif [plot]=2 then
+  fp1='0'
+  fp2='S'
+  win1=0
+  win2=1
+elseif [plot]=3 then
+  fp1='S'
+  fp2='S'
+  win1=1
+  win2=1
+endif
+
+ymax=1.1
+if [ptran]=2 then
+  ymax=0.1
+endif
+
+if [hall]=1 .AND. [aver]>0 then
+  ja1=[aver]
+  ja2=[aver]
+  if [aver]>2 then
+    ja1=1
+    ja2=2
+  endif
+  do i=1,[np]
+    sa=0
+    jj=0
+    do iang=[ja1],[ja2]
+      jj=[jj]+1
+      do j=1,2
+        at=atang([i],[j],[iang])
+        dt=tangad([j])
+        at1=$SIGMA([at]+[dt])
+        as=asym1([i],[j],[iang])
+        as=$SIGMA([as]*COS([at]*3.14159/180.)/COS([at1]*3.14159/180.))
+        ve/in asym1([i],[j],[iang]) [as]
+        ve/in atang1([i],[j]) [at1]
+      enddo
+      a1=asym1([i],1,[iang])
+      a2=asym1([i],2,[iang])
+      e1=easym1([i],1,[iang])
+      e2=easym1([i],2,[iang])
+      if [ptran]=2 then
+        a=$SIGMA(([a1]-[a2])/2.)
+      else
+        a=$SIGMA(([a1]+[a2])/2.)
+      endif
+      e=$SIGMA(SQRT(([e1]**2+[e2]**2)/2.))
+      sa=$SIGMA([sa]+[a])
+    enddo
+    sa=$SIGMA([sa]/[jj])
+    ve/in asymm([i]) [sa]
+    ve/in easymm([i]) [e]
+  enddo
+endif
+
+mess win: [win1] [win2] [fp1] [fp2]
+if [win1]>0 then
+  if [same]=0 then
+    null -120 120 -[ymax] [ymax]
+    text -100 -0.8 [mtxt] 0.25 0. !
+    atit 'Angle ' 'Beam Polarization (preliminary)'
+    set dmod 3
+    line -120 0 120 0
+    set dmod 1
+  endif
+  gr/hpl/err angle asymm eangle easymm [np] 20 0.1
+endif
+set csiz 0.55
+
+i1=1
+i2=[np]
+
+*  ---  select a given Wien range
+j=0
+do i=1,[np]
+  a=angle([i])
+  if [a]<[w1] .OR. [a]>[w2] then
+     ve/in easymm([i]) 0.1
+  endif
+enddo
+
+*  ---  remove the RF data (unless required) (leave DC only)
+if [rf]=0 then
+  do i=1,[np]
+    a=irf([i])
+    if [a]>0.5 then
+       ve/in easymm([i]) 0.1
+    endif
+  enddo
+endif
+
+set dmod 1
+ve/cr par(10) r 0.7 0. 1.
+ve/in par(1:3) 0.7 0.  1. 
+
+ve/in ipfit(1) 1
+
+set txci 4
+ve/fit angle([i1]:[i2]) asymm([i1]:[i2]) easymm([i1]:[i2]) wave_tr.f [fp1] [fitpar] par
+set txci 1
+a=par(1)
+b=par(2)
+period=par(3)
+b=-[b]
+ve/in ipfit(1) 0
+*mess a,b,c [a] [b] 
+
+if [win1]>0 then
+*  f/pl [a]*cos(([b]+x)/180*3.1415*[period]) -120 120 s
+  f/pl wave_tr.f -120 120 s
+endif
+
+if [win2]=0 then
+  goto eend
+endif
+
+do ip=1,[np]
+  x=angle([ip])
+  x=$RSIGMA([x])
+  ex=eangle([ip])
+  ep0=easymm([ip])
+*  ep=$SIGMA([a]*SIN(([x]+[b])*3.1415/180.*[period])*[ex]*3.1415/180.*[period])
+  cmn='wave_tr.f('//[x]//')'
+  y1=$CALL([cmn])
+  x=$RSIGMA([x]+1.)
+  cmn='wave_tr.f('//[x]//')'
+  y2=$CALL([cmn])
+  ep=$SIGMA([ex]*ABS([y2]-[y1])/1.)
+
+*  mess [a] [b] [ex] [ep] [ep0]
+  ep1=$SIGMA(SQRT([ep]*[ep]+[ep0]*[ep0]))
+*  mess [a] [b] [ex] [ep] [ep0] [ep1] [x]
+  mess [ex] [ep] [ep0] [ep1] [x]
+  ve/in easymm([ip]) [ep1]
+enddo
+
+set csiz 0.3
+  if [same]=0 then
+    null -120 120 -[ymax] [ymax]
+**    atit 'Angle ' 'Beam Polarization (preliminary)'
+    atit 'Angle ' 'Beam Polarization'
+    set dmod 3
+    line -120 0 120 0
+    set dmod 1
+  endif
+  gr/hpl/err angle asymm eangle easymm [np] 20 0.1
+endif
+set csiz 0.55
+
+ve/in par(1:3)  0.7 0. 1.
+
+set dmod 1
+
+ve/in ipfit(1) 1
+set txci 4
+ve/fit angle([i1]:[i2]) asymm([i1]:[i2]) easymm([i1]:[i2]) wave_tr.f [fp2] [fitpar] par
+*a=par(1)
+*b=par(2)
+*period=par(3)
+*b=-[b]
+ve/in ipfit(1) 0
+
+text -100 -0.8 [mtxt] 0.25 0. !
+*  f/pl [a]*cos(([b]+x)/180*3.1415*[period]) -120 120 s
+f/pl wave_tr.f -120 120 s
+
+eend:
+
+opt stat
+set fcol 1
+set txci 1
+set hcol 1
+set pcol 1
+set xcol 1
+set ycol 1
+set csiz 0.4
+
+*selnt 1
+*text 13  0.5 'Figure 4. Results of spin precession measurement with five polarimeters at Eo=5.652 GeV' 0.35 0. C 
+*selnt 10
+
+RETURN
+
+
+
+
+

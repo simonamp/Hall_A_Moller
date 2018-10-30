@@ -1,0 +1,59 @@
+MACRO 11_mag_set e=1. p=2 
+
+*
+* --- prints a table with accelerator magnet settings
+* --- dipole banding angle = 7.3deg
+*
+* e - beam energy, GeV
+* p=1 - settings in GL(kGs) or BdL(kGs cm)
+*  =2 - settings in B(kGs)
+*  =3 - settings in I(Amps)
+
+*read e 'Input beam energy, GeV'
+*read p  'Input p: 1-GL, 2-B, 3-I'
+*read par 'Input par: 1-accel aver, 2-accel max, 3-sett_magp'
+
+e0mi=2.4
+e0ma=11.0
+  if [e]<[e0mi] then
+mess 'Beam energy must be > 2.4 GeV'
+    exitm
+  endif
+
+  if [e]>[e0ma] then
+mess 'Beam energy must be < 11.0 GeV'
+    exitm
+  endif
+
+sigma q1=-1.3867+2.8815*[e]-0.67411*[e]**2+0.034499*[e]**3
+sigma q2=0.10702-0.30604*[e]+0.16891*[e]**2-0.013407*[e]**3
+sigma q3=1.0193-0.38508*[e]+0.15503*[e]**2-0.0074826*[e]**3
+sigma dp=(-0.14253+63.998*[e]-0.042901*[e]**2+0.0027513*[e]**3)*0.0272632*0.73
+
+	if [p]=2 then
+mq1=q1
+mq2=q2
+mq3=q3
+mdp=dp
+mess '                       B(kGs)'
+mess ' GeV        Q1          Q2          Q3         Dipole'
+mess     [e]     [mq1]    [mq2]    [mq3]     [mdp]
+	elseif [p]=1 then
+mq1=q1*183.146/0.0202996
+mq2=q2*179.5/0.022
+mq3=q3*175.239/0.0241587  
+mdp=dp*4478.69/0.0272632
+mess '                   GL(kGs) or BdL(kGs cm)'
+mess ' GeV         Q1           Q2          Q3          Dipole'
+mess   [e]     [mq1]      [mq2]     [mq3]       [mdp] 
+	elseif [p]=3 then
+mq1=q1/0.0202996
+mq2=q2/0.022
+mq3=q3/0.0241587  
+mdp=dp/0.0272632
+mess '                        I(Amps)'
+mess ' GeV        Q1          Q2          Q3          Dipole'
+mess    [e]     [mq1]     [mq2]     [mq3]     [mdp]
+	endif
+
+RETURN

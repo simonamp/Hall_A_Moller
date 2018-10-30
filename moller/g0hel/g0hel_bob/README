@@ -1,0 +1,40 @@
+
+  R. Michaels,  July 29, 2002
+  ============================
+  Here you find codes related to G0 helicity sequence.
+                                ======================
+  There are two codes
+
+      seqgen24.C   -- Generates an output ASCII file f1.txt
+                      with the full sequence of G0 helicity
+                      sequence (16777216 words of 0's and 1's)
+
+     g0helicity.C  -- This is the code to read the text file of
+                      helicity data (like f1.txt produced above, but 
+                      the file name it looks for is "helicity.data") 
+                      and test it by predicting the helicity. 
+                      This is an example of what to do in the
+                      analysis of data.
+
+  Notes:
+
+    Both codes compile with g++ on RedHat Linux and probably
+    elsewhere with g++.  e.g.
+
+         g++ -o seq seqgen24.C
+
+         g++ -o g0h g0helicity.C
+
+    Then do something like this
+          ./seq ;   ln -s f1.txt helicity.data ;  ./g0h
+
+    It is a worthwhile exercise to deliberately modify "helicity.data"
+    and change the helicity a few times to introduce errors, then run 
+    g0helicity.C and observe that it recovers.  This is how the code 
+    would recover from some "glitch" (e.g. deadtime or a false reading
+    of helicity).
+
+
+
+
+    

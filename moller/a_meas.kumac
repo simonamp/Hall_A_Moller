@@ -1,0 +1,160 @@
+MACRO get_meas meas=0 tab=a_meas.tab run1=0 run2=0
+*
+* --- Analyze one measurement, or a set of runs
+*   meas - measurement number, taken from a file tab
+*   if meas=0 - try the run range run1-run2
+*
+*
+*
+*
+ if [meas]<1 then
+   mess No measurement specified. Try the run range [run1] - [run2]
+   if [run1]<1 .OR. [run1]>[run2] then
+      mess No measurement/runs specified. Exiting ...
+      exitm
+   endif
+ else
+   if $FEXIST([tab])=0 then
+     mess The file with a measurement list [tab] is missing. Exiting ...
+     exitm
+   endif
+   run1=0
+   run2=0
+ endif
+
+ if $VDIM(m_runs,1)<20 then
+   ve/cr m_runs(20) i
+ endif
+ ve/in m_runs 20*0
+
+ if $VDIM(m_luns,1)<20 then
+   ve/cr m_luns(20) i
+ endif
+ ve/in m_luns 20*0
+
+ if [meas]>0 then
+   shell 'cat '//[tab]//' | gawk -v t='//[meas]//' '' $1 == t {print}'''//' > tmp.tab'
+   clin=$SHELL('head -1 tmp.tab')
+   nw=$WORDS([clin],' ')
+   if [nw]<5 then
+     mess Wrong/missing measurement entry=[clin]
+     exitm 
+   endif
+
+   targ=$WORD([clin],2,1,' ')
+   sc1=$WORD([clin],3,1,' ')
+   sc2=$WORD([clin],4,1,' ')
+
+   def=0
+   irr=0
+   do iw=5,[nw]
+     ir2=0
+     w=$WORD([clin],[iw],1,' ')
+*   mess iw=[iw] [w]
+     if [w]='-' then
+       def=1
+     else
+       if [def]=0 then
+         ir1=[iw]
+       else
+         ir2=[iw]
+         def=0
+       endif
+       if [iw]=[nw] then
+         ir2=[iw]
+       endif
+     
+       if [ir2]>0 then
+          r1=$WORD([clin],[ir1],1,' ')
+          r2=$WORD([clin],[ir2],1,' ')
+          ir1=0
+          ir2=0
+*          mess r1,r2=[r1] [r2]
+*
+* ---        Fill the vector with run numbers 
+*
+ 	  do r=[r1],[r2]
+            irr=[irr]+1
+	    ve/in m_runs([irr]) [r]          
+          enddo       
+
+       endif
+     endif
+   enddo
+
+ else
+   irr=0
+   do r=[run1],[run2]
+     irr=[irr]+1
+     ve/in m_runs([irr]) [r]          
+   enddo
+   targ=0
+ endif   
+
+ if $VLEN(m_runs,1)<1 then
+   mess No runs defined for meas=[meas], line=[clin]
+   exitm 
+ endif
+*
+* --- Loop over runs
+*
+
+ chain -scan0
+
+ hcoil=0.
+ nr=0
+ do ir=1,$VLEN(m_runs,1)
+   r=m_runs([ir])
+   if [r]>0 then
+
+     exec get_settings run=[r]
+     nl=$VLEN(run_sett,1)
+     if [nl]<1 then
+       mess Setting data have not been found. Exiting...
+       exitm
+     endif  
+
+     itarg=run_sett(101)
+     if targ=0 .OR. [itarg]=[targ] then
+       targ=[itarg]
+       nr=[nr]+1
+       hc=run_sett(79)
+       hcoil=$SIGMA([hcoil]+ABS([hc]))
+       hc=$RSIGMA([hcoil])
+       ydifcm=run_sett(103)
+*
+* ---    Get the scaler files
+*
+       exec run_scal run=[r]
+       exec getrun_scal run=[r]
+       lunc=iluns(1)
+       if [lunc]>0 then
+         chain scan0 //lun[lunc]
+	 ve/in m_luns([ir]) [lunc]
+       else
+         mess Run [ir] is missing
+       endif
+       
+     else
+       mess Run=[r] target=[itarg] instead of [targ]
+     endif
+   endif
+ enddo
+
+ if [nr]>0 then
+   hcoil=$RSIGMA([hcoil]/[nr])
+   mess [hcoil]
+   run=m_runs(1)
+   lunc=m_luns(1)
+
+   exec get_settings run=[run]
+   itarg=run_sett(101)
+   ydifcm=run_sett(103)
+
+   exec get_targpol hcoil=[hcoil] target=[itarg] zcm=[ydifcm] print=0 init=1
+   
+ endif
+
+ exitm
+RETURN
+

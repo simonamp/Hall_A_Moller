@@ -1,0 +1,41 @@
+MACRO all_21
+
+   do i=9837,9845
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=23.  
+   enddo
+   do i=9846,9847
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=90.  
+   enddo
+   do i=9848,9855
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=163.5  
+   enddo
+   do i=9856,9856
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=163.5  
+   enddo
+   do i=9857,9862
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=33.  
+   enddo
+   do i=9863,9868
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=152.5  
+   enddo
+
+   exec asym_av run1=9838 run2=9845
+   exec asym_av run1=9848 run2=9855
+   exec asym_av run1=9857 run2=9862
+   exec asym_av run1=9863 run2=9868
+
+RETURN
+
+
+
+
+
+
+
+

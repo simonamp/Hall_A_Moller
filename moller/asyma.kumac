@@ -1,0 +1,297 @@
+MACRO asyma id0=-1 nlun=0 run=0 ncha=-1 n1=1 n2=999999 nevadc=100 angl=30. anpow=0.76 ptar=0.076 norm=1 norbcm=1 nocut=0 noff=5000 coil=0 gate=0.5 mxdiff=50 clear=1
+* gate=0.033
+*
+* --- Asymmetry calculation
+*
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- ncha > 0 - number of bins, <0 - automatic = 0 - no hist
+* --- n1,n2 - the range of the scaler cycles to accept
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+* --- angl   - target angle
+* --- anpow  - Moller analysing power
+* --- ptar   - target polarizarion
+* --- norm   - normalization, =0 - scaler, =1 - BCM
+* --- nocut  - make no cuts on the cycles
+* --- noff   - run offset
+* --- coil   - polarity of the Helmholz coil
+* --- gate   - helicity gate length in sec
+* --- mxdiff - max difference between two scalers
+* --- clear  >0 - erase old histograms for a new run
+* 
+*
+ ve/cr ichis(10) i 1 2 3 4 5 6 12 15
+ ve/cr nnlim(2) i [n1] [n2]
+
+* BCM linearity (x10)
+* ve/cr bcmlin(3) r 1977. 1.
+* ve/cr bcmlin(3) r 988. 1.
+* New BCM - 09 Oct 98
+* ve/cr bcmlin(3) r 1356 0.78702 0.29969E-5
+* New BCM - 20 Dec 98
+* ve/cr bcmlin(3) r 1821. 0.9606 -0.58E-6
+* New BCM - 21 Jan 99
+ ve/cr bcmlin(3) r -51. 1.073 -0.6E-5
+*    19 Feb 99
+ ve/cr bcmlin(3) r 77. 0.99629 0.
+
+ if $VDIM(acuts)<20 then
+   ve/cr acuts(20) r
+ endif
+ ve/in acuts(1) [mxdiff]
+
+ run0=0
+ if $VDIM(irun,1)>0 then
+   run0=irun(1)
+ endif
+ if [nlun]=0 then
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run=irun(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   nlun=lun//[lun]
+ else
+   run=[nlun]
+ endif
+ if [id0]=-1 then
+   id0=[run]*100
+   mess Set id0 to [id0]
+ endif
+*
+*--- Clear the old histograms
+*
+ if [clear]>0 .AND. [run] .NE. [run0] then
+   cd //pawc
+   h/del 0
+ endif   
+
+ tit='Moeller run='//[run]
+ titl [tit]
+
+* if $VDIM(casym)=0 then
+   ve/cr casym(50) r
+   ve/cr easym(50) r
+   ve/cr nasym(50) i
+* endif
+
+ if $VDIM(parrun)=0 then
+   ve/cr parrun(16,1000) r
+ endif
+ if $VDIM(resrun)=0 then
+   ve/cr resrun(30,1000) r
+ endif
+
+ ve/cr limsca(2,16) i
+  nt/pl //[nlun]/1.isca(11) nsca>0.and.asymlim.f([nocut])>0.
+* nt/pl //[nlun]/1.isca(11) nsca>0
+ 
+  
+ if [ncha]<0 then
+*   ncha=$HINFO(1000000,'XMAX')
+   ncha=$HINFO(1000000,'ENTRIES')
+   ncha=[ncha]+10
+ endif
+
+ id=[id0]
+ tith=[tit]//' raw asymmetry'
+ x2=[ncha]+1
+ if [ncha]>0 then
+   1dh [id] [tith] [ncha] 1 [x2]
+   tith=[tit]//' isca(11) increments'
+   id1=[id0]+20
+*   h/cop [id] [id1] [tith] 
+   tith=[tit]//' adc events'
+   id1=[id0]+21
+*   h/cop [id] [id1] [tith]
+ endif
+
+ nx3=1
+ xmn3=0.
+ xmx3=1.
+ nx5=1
+ xmn5=0.
+ xmx5=1.
+ nx12=1
+ xmn12=0.
+ xmx12=1.
+
+ tith=[tit]//' counting rates'
+ do i=1,10
+   k=ichis([i])
+   if [k]>0 then
+*---        Get the limits
+*	
+     l1=limsca(1,[k])     
+     l2=limsca(2,[k])
+     xmn=$SIGMA(INT([l1]/200))
+     xmn=[xmn]*200
+     xmx=$SIGMA(INT([l2]/200))     
+     xmx=([xmx]+1)*200
+     if [norbcm]>0 then
+       if [k]=5 then
+          a=bcmlin(1)
+          b=bcmlin(2)
+*          xmn=[a]+[xmn]*[b]
+*          xmx=[a]+[xmx]*[b]
+       endif
+     endif
+     nx=[xmx]-[xmn]
+     nx=$SIGMA(MIN([nx],2000))
+     nx=$SIGMA(MAX([nx],20))
+     mess chan=[k] nch,xmin,xmax=[nx],[xmn],[xmx]
+mess try [i]
+     if [k]=3 then
+       nx3=200
+       xmn3=[xmn]
+       xmx3=[xmx]
+     elseif [k]=5 then
+       nx5=200
+       xmn5=[xmn]
+       xmx5=[xmx]
+     elseif [k]=12 then
+       nx12=[nx]
+       xmn12=[xmn]+100
+       xmx12=[xmx]
+     endif
+
+     id1=[id0]+[k]
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     id1=[id0]+[k]+60
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     id1=[id0]+[k]+80
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     if [k]=3 then
+        id1=[id0]+88
+        2dh [id1] 'coin H+ vs coin H-' [nx] [xmn] [xmx] [nx] [xmn] [xmx] 510.
+     endif
+     if [ncha]>0 then
+       id1=[id0]+[k]+30
+       1dh [id1] [tith] [ncha] 1 [ncha]
+       if [i]=1 then
+         id1=[id0]+30
+         tith1=[tit]//' helicity signals'
+         1dh [id1] [tith1] [ncha] 1 [ncha]
+         id1=[id0]+53
+         tith1=[tit]//' ticks to the previous cycle'
+         1dh [id1] [tith1] [ncha] 1 [ncha]
+	 id1=[id0]+99
+         tith1=[tit]//' jhelcyc'
+         1dh [id1] [tith1] [ncha] 1 [ncha]
+       endif
+     endif 
+   endif 
+ enddo
+
+
+ id1=[id0]+25
+ 2dh [id1] 'Coinc. vs BCM  ' [nx5] [xmn5] [xmx5] [nx3] [xmn3] [xmx3] 1024.
+ id1=[id0]+26
+ 2dh [id1] 'Coinc. vs clock' [nx12] [xmn12] [xmx12] [nx3] [xmn3] [xmx3] 1024.
+
+ id1=[id0]+50
+ 1dh [id1] 'Ticks between cycles' 100 0. 100. 
+ id1=[id0]+51
+ 1dh [id1] 'Ticks between the last ADC and scalers' 1000 0. 1000. 
+ id1=[id0]+52
+ 1dh [id1] 'Ticks between the 1-st and last ADC' 20 0. 20. 
+
+ do i=1,6
+   id1=$SIGMA([id0]+53+[i])
+   ttn='Diff of 2 scalers, chan '//[i]
+   1dh [id1] [ttn] 200 -1000. 1000. 0.
+ enddo
+ 
+ nt/loop //[nlun]/1 asymmeta.f([id],[nevadc],[angl],[anpow],[ptar],[norm],[norbcm],[nocut])>0.  
+ ve/in nasym(1:50) 50*0
+ nt/loop //[nlun]/1 asymmeta.f([id],[nevadc],[angl],[anpow],[ptar],[norm],[norbcm],[nocut])>0.  
+
+ h/pl [id](1:[ncha])
+
+ if [run]<3000 then
+   noff=2000
+ endif
+ drun=[run]-[noff]
+ ve/in resrun(17:19,[drun]) [angl] [anpow] [ptar]
+ av=nasym(1)
+ ev=nasym(2)
+ mess ' Finished. Full number of cycles=' [av] ' useful cycles=' [ev]
+ ve/in resrun(7,[drun]) [ev]
+ av=nasym(16)
+ ev=nasym(17)
+ mess ' H+ cycles' [av] ' H- cycles=' [ev]
+ av=nasym(18)
+ ev=nasym(19)
+ mess ' H+ BCM' [av] ' H- BCM=' [ev]
+ mess ' Cycles lost due to various reasons: '
+ ve/pri nasym(3:14)
+ av=casym(21)
+ ev=easym(21)
+ mess 'Asymmetry=' [av] '+/-' [ev]
+ ve/in resrun(11:12,[drun]) [av] [ev]
+ av=casym(22)
+ ev=easym(22)
+ ve/in resrun(13:14,[drun]) [av] [ev]
+ mess 'Polarization=' [av] '+/-' [ev]
+ av=casym(23)
+ ev=easym(23)
+ ve/in resrun(21:22,[drun]) [av] [ev]
+ mess 'Polarization Left  arm=' [av] '+/-' [ev]
+ av=casym(24)
+ ev=easym(24)
+ ve/in resrun(23:24,[drun]) [av] [ev]
+ mess 'Polarization Right arm=' [av] '+/-' [ev]
+ av=casym(27)
+ ev=easym(27)
+ ve/in resrun(27:28,[drun]) [av] [ev] 
+ mess 'Asymmetry BCM=' [av] '+/-' [ev]
+ av=casym(1)
+ ev=easym(1)
+ aa=[av]/[gate]
+ mess 'Left =' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(1,[drun]) [aa] 
+ av=casym(2)
+ ev=easym(2)
+ aa=[av]/[gate]
+ mess 'Right=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(2,[drun]) [aa] 
+ av=casym(3)
+ ev=easym(3)
+ aa=[av]/[gate]
+ mess 'Coinc=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(3,[drun]) [aa] 
+ av=casym(4)
+ ev=easym(4)
+ aa=[av]/[gate]
+ mess 'Accid=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(4,[drun]) [aa]
+ av=casym(5)
+ ev=easym(5)
+ aa=[av]/[gate]
+ mess 'BCM=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(5,[drun]) [aa]
+ av=casym(6)
+ ev=easym(6)
+ aa=[av]/[gate]
+ mess 'Timer=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(6,[drun]) [aa] 
+
+ av=casym(7)
+ ev=easym(7)
+ aa=[av]/[gate]
+ if [aa]>0.01 then
+   mess 'LED pulses=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+   ve/in resrun(8,[drun]) [aa]
+   av=resrun(3,[drun])
+   aa=$SIGMA(([aa]-[av])/[aa])
+   mess 'Dead time=' [aa]
+ endif 
+
+ ve/in resrun(29,[drun]) [coil]
+
+RETURN
+

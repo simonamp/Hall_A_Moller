@@ -1,0 +1,37 @@
+MACRO dead_time_1 n=1
+*
+* -- Dead time analysis, needs the LED dt, polarization and the L/R rates
+* -- n=1 - runs 6458-6498 18 may 1999 HAPPEX
+*         bcu - beam current
+*         dld - dead time from LED
+*         ppo - polarization
+*         epo - polarization error
+*         rlr - average of the L/R rates
+*
+ np=0
+ if [n]=1 then
+   np=4
+   ve/cr bcu([np]) r 0.2   0.4   1.0   2.0
+   ve/cr dld([np]) r 0.013 0.026 0.067 0.128
+   ve/cr ppo([np]) r 0.684 0.682 0.673 0.653
+   ve/cr epo([np]) r 0.002 0.002 0.002 0.002
+   ve/cr rlr([np]) r 2.0e5 4.2e5 1.0e6 1.9e6 
+   x2=2.5
+ endif
+  
+ if [np]=0 then
+   mess Measuremnet n=[n] is no defined
+   exitm
+ endif
+
+ x1=0 
+ y1=0 
+ ve/cr exx([np]) r 
+
+ zone 2 2
+ y2=$SIGMA(VMAX(dld)*1.1)
+* null [x1] [x2] [y1] [y2]
+ ve/fit bcu dld exx p1 w
+ gr/hpl/err bcu dld exx exx [np] 24 0.2
+
+RETURN

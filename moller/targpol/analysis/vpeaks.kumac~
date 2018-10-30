@@ -1,0 +1,168 @@
+MACRO vclean cut=1. ncha=10 err=1.E-4 fill=1 auto=1000 serr=5.
+*
+* ---  Fro magnetic measurements: ADC spectra analysis
+* --- Process the vtmp 1-dim vector, find single channels that are more than [cut] sigmas away from
+* --- the average over ncha channels 
+*
+
+ if [fill]=0 then
+   nfix=1
+   goto plot
+ endif
+
+ nl=$VDIM(vtmp)
+ if [ncha]<3 then
+    mess vclean.kumac ncha=[ncha] is too short. Cleaning skipped.
+    exitm
+ endif
+ IF [nl]<[ncha] then
+    mess vclean.kumac - vtmp length is [nl]<[ncha] . Cleaning skipped
+    exitm
+ endif
+
+ if $VDIM(vtmpp,1)<>[ncha] then
+   if $VDIM(vtmpp,1)>0 then
+     ve/del vtmpp
+   endif
+   ve/cr vtmpp([ncha]) r
+   ve/cr vtmppe([ncha]) r
+   ve/cr vtmppe1([ncha]) r
+   SIGMA vtmppx=array([ncha],1#[ncha])
+   ve/cr vtmppf([ncha]) r
+   ve/cr vtmppd([ncha]) r
+   ve/cr vtmppch([ncha]) r
+ endif
+
+ if [auto]>1 then
+   ve/plot vtmp(1:[auto])
+   sig=$HINFO(12345,'RMS')
+   err=$SIGMA([sig]*[serr])
+   mess Error redefined to [err]
+ endif
+
+ ve/in vtmppe [ncha]*[err]
+ err1=$SIGMA([err]*1000.)
+
+ if $VDIM(par,1)<10 then
+   ve/cr par(10) r
+ endif
+ if $VDIM(epar,1)<10 then
+   ve/cr epar(10) r
+ endif
+
+ if $VDIM(vtmp1,1)<>[nl] then
+   ve/cr vtmp1([nl] r
+ endif
+ ve/in vtmp1 [nl]*0
+
+ n1=1
+ n2=[n1]+[ncha]-1
+
+ nstep=[nl]
+ nfix=0
+
+
+ do ist=1,[nstep]
+
+*   mess [n1] [n2]
+   ve/cop vtmp([n1]:[n2]) vtmpp
+   ve/in par(1:3) vtmpp(1) 0. 0.
+   ve/fit vtmppx vtmpp vtmppe p2 0Q 3 par
+   a0=par(1) 
+   a1=par(2) 
+   a2=par(3)
+   SIGMA  vtmppf=[a0]+[a1]*vtmppx+[a2]*vtmppx**2
+   SIGMA  vtmppd=(vtmpp-vtmppf)**2/vtmppe**2
+   chi2=$SIGMA(MAX(vsum(vtmppd)/([ncha]-3.),1.E-4))
+*   mess chi2=[chi2]
+   dmx=$SIGMA(SQRT(vmax(vtmppd)))
+*   mess chi2=[chi2] dmx=[dmx]
+
+   if [dmx]>[cut] then
+*if [n1]=25051 then
+*      ve/wri vtmppd,vtmp([n1]:[n2]) ! 2F11.5
+*   ve/fit vtmppx vtmpp vtmppe p2 ! 3 par
+*endif
+*
+*---  Remove the channels one by one and find the lowest chi2
+*
+     do i=1,[ncha]
+
+*      i=$SIGMA(lvmax(vtmppd))
+
+       ve/in vtmppe1 [ncha]*[err]
+       ve/in vtmppe1([i]) [err1]
+       ve/fit vtmppx vtmpp vtmppe1 p2 0Q 3 par
+*       ve/fit vtmppx vtmpp vtmppe1 p2 ' ' 3 par
+       a0=par(1) 
+       a1=par(2) 
+       a2=par(3)
+       SIGMA  vtmppf=[a0]+[a1]*vtmppx+[a2]*vtmppx**2
+       SIGMA  vtmppd=(vtmpp-vtmppf)**2/vtmppe1**2
+       chi21=$SIGMA(MAX(vsum(vtmppd)/([ncha]-3),1.E-4))
+       ve/in vtmppch([i]) [chi21]
+*       mess i=[i]
+*       ve/wri vtmpp,vtmppe1 ! 2F11.5
+       dmx1=$SIGMA(SQRT(vmax(vtmppd)))
+     enddo
+     i=$SIGMA(lvmin(vtmppch))
+*      mess TRY AGAIN
+     j=[n1]+[i]-1
+     b1=vtmp([j])
+     mess [j] [n1] [n2] chi2=[chi2] dmx=[dmx] [b1]
+*                                              chi21=[chi21] dmx1=[dmx1] 
+     b2=0.
+     n=0
+     j1=[j]-1
+     j2=[j]+1
+     do jj=[j1],[j2]
+       if [jj]>0 .AND. [jj]<=[nl] .AND. [jj]<>[j] then
+          a=vtmp([jj])
+*          mess b=[b]
+          b2=$SIGMA([b2]+[a])
+          n=[n]+1
+       endif
+     enddo
+     b2=$SIGMA([b2]/[n])
+     bd=$SIGMA([b1]-[b2])
+     ve/in vtmp1([j]) [bd]
+     ve/in vtmp([j]) [b2]
+     nfix=[nfix]+1
+     mess Reject the point [j] [b1] [b2]
+*     exitm   
+*     if [dmx1]>[cut] then
+*        
+*        ve/wri vtmp([j]),vtmppf([i]) ! 2F10.5
+*        b1=vtmp([j])
+*        b2=vtmppf([i])
+*        bd=$SIGMA([b1]-[b2])
+*        ve/in vtmp1([j]) [bd]
+*      endif
+   endif
+ 
+
+   n1=[n1]+[ncha]
+   n2=[n1]+[ncha]-1
+   if [n1]>[nl] then
+     goto endloop
+   endif
+   if [n2]>[nl] then
+     n2=[nl]
+     n1=[n2]-[ncha]+1
+   endif
+ enddo
+ endloop:  
+
+ plot:
+
+ if [nfix]>0 then
+   mess ---- [nfix] points fixed 
+   set hcol 4
+   ve/draw vtmp !
+   set hcol 2
+   ve/draw vtmp1 ! s
+   set hcol 1
+ endif
+* ve/del vtmp1
+   
+RETURN

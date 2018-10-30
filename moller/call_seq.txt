@@ -1,0 +1,55 @@
+# scheme of calling sequnces macros(kumac) and functions (.f) from "asymu.kumac"
+# Feb 11, 2010, R.P.
+
+MACRO asymu id0=-1 nlun=0 run=0 ncha=-1 n1=1 n2=999999 nevadc=-1 angl=20.5  _
+	    anpow=0.7674 ptar=0.0795 norm=1 norbcm=1 nocut=0 _
+            coil=0 gate=0.033 mxdiff=50 clear=1 delay=-1 heladc=0 nococut=0 nosubbg=0 tauto=1 pr=5
+	    1
+	    1
+	    exec get_settings_2009 run=[run]
+	    1
+	    1
+	    exec run_scalu run=[run]
+	    .	 2 -->exec run run=[run] 
+	    .	 2 -->exec asymwr run=[run] delay=[delay]
+	    .	 .          MACRO asymwr nlun=0 run=0 coil=0 angl=20.5 nevadc=-1 delay=8 
+	    .	 .		 helfla=10 dtick=4. ltmp=2 lout=3 nev=99999999 lenzug=0 
+	    .	 .		 scalcopy=1 ptar=2
+	    .	 .	   3 -->exec get_settings_2009 run=[run]
+	    .	 .	   3 -->if [ptar]>1. then
+	    .	 .	   .	   exec get_targpol hcoil=[hcoil] target=[itarg] 
+	    .	 .	   .		            zcm=[ydifcm] print=2
+	    .    .         3 -->if [nlun]=0 then
+	    .	 .	   .        exec getrun run=[run] lun=[lun]
+	    . 	 .         3 --> nt/loop //[nlun]/1 zugtofile.f([delay],[helfla],[nevadc],
+	    .	 .	   .	           [lenzug],[dtick],[angl],[coil],[ltmp1])>-1. [nev] 1
+	    .	 .  
+	    .	 2 -->nt/pl //lun[lun]/1.(a_tpos.f(2,0)) ifzug=0
+  	    1
+	    1
+	     nt/pl //lun[lunn]/1.(a_tpos.f(2,0)) ifzug=0
+ 	    1
+	    1
+            exec get_targpol hcoil=[hcoil] target=[itarg] zcm=[ydifcm] pr=[pr] angl=[angl]
+ 	    1
+	    1
+	    if [nlun]=0 then
+	        exec getrun run=[run] lun=[lun]
+ 	    1
+	    1
+	    exec add_v_run irun=[run]
+	    1
+	    1
+	     nt/pl //[nlun]/1.asymcyc.f(0) 
+	    1
+	    1
+	     nt/loop //[nlun]/1 asymmets.f([angl],[anpow],[ptar],[heladc],[nococut])>0.  
+	    1
+	    1
+	     nt/loop //[nlun]/1 asymmets.f([angl],[anpow],[ptar],[heladc],[nococut])>0.  
+	    1
+	    1
+	    call asym_rend.f([run],1)
+exitm
+
+  

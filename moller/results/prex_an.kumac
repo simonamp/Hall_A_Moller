@@ -1,0 +1,157 @@
+MACRO prex_an
+
+ nm=6
+ ve/cr m0403(4) r 85.22  86.05  86.75  86.40
+ ve/cr e0403(4) r  0.20   0.17   0.22   0.18
+ ve/cr m0417(4) r 88.36  89.00  89.73  89.86
+ ve/cr e0417(4) r  0.28   0.24   0.27   0.31
+ ve/cr m0422(4) r 90.21  90.32  91.38  91.51
+ ve/cr e0422(4) r  0.28   0.32   0.31   0.31
+ ve/cr m0428(4) r 89.60  89.29  90.29  91.15 
+ ve/cr e0428(4) r  0.20   0.27   0.17   0.25 
+ ve/cr m0505(4) r 90.28   0.0   90.71  92.69
+ ve/cr e0505(4) r  0.28   0.0    0.21   0.24
+ ve/cr m0508(4) r 90.56  89.89  91.36  92.06 
+ ve/cr e0508(4) r  0.29   0.28   0.24   0.27
+ 
+
+ sigma tgt=array(4,1#4)
+ sigma ert=array(4,0.01#0.01)
+
+ fort/fil 56 asym_vs_targ.ps
+ meta 56 -112
+ opt nbox 
+ opt ndat
+ zone
+ null 0.8 4.2  84.5  92.5 
+ gr/hpl/err tgt m0403  ert e0403 4 20 0.3
+ atitle 'Targets'   'Beam Polarization, "Y#'
+ selnt 1
+ text 13.0 20.5 'Beam Polarization vs. Moller Target' 0.4 0 C
+ selnt 10
+ gr/hpl/key 1.2 92.0   20 'April 3 (Wien=-59deg)'
+ set pmci 2
+ set txci 2
+ gr/hpl/err tgt m0417  ert e0417 4 21 0.3
+ gr/hpl/key 1.2 91.5  21 'April 17'
+ set pmci 4
+ set txci 4
+ gr/hpl/err tgt m0422  ert e0422 4 23 0.3
+ gr/hpl/key 1.2 91.0  20 'April 22' 
+ set pmci 6
+ set txci 6
+ gr/hpl/err tgt m0428  ert e0428 4 24 0.3
+ gr/hpl/key 1.2 90.5  24 'April 28' 
+ set pmci 7
+ set txci 7
+ gr/hpl/err tgt m0505  ert e0505 4 22 0.3
+ gr/hpl/key 1.2 90.0  22 'May 5' 
+ set pmci 1
+ set txci 1
+ gr/hpl/err tgt m0508  ert e0508 4 25 0.3
+ gr/hpl/key 1.2 89.5  25 'May 8' 
+ set pmci 1
+ set txci 1
+ close 56
+ wait
+*****
+ nk=[nm]-1
+* ve/cr targ1([nm]) r 85.22 88.36 90.21 89.60 90.28 90.56
+* ve/cr et1([nm])   r  0.20  0.28  0.28  0.20  0.28  0.29
+* ve/cr tar21([nm]) r 86.05 89.00 90.32 89.29  0.0  89.89
+* ve/cr et21([nm])  r  0.17  0.24  0.32  0.27  0.0   0.28
+* ve/cr tar22([nk]) r 86.05 89.00 90.32 89.29  89.89
+* ve/cr et22([nk])  r  0.17  0.24  0.32  0.27   0.28
+* ve/cr targ3([nm]) r 86.75 89.73 91.38 90.29 90.71 91.36
+* ve/cr et3([nm])   r  0.22  0.27  0.31  0.17  0.21  0.24
+* ve/cr targ4([nm]) r 86.40 89.86 91.51 91.15 92.69 92.06
+* ve/cr et4([nm])   r  0.18  0.31  0.31  0.25  0.24  0.27
+
+ ve/cr targ1([nm]) r 87.52 88.36 90.21 89.60 90.28 90.56
+ ve/cr et1([nm])   r  0.20  0.28  0.28  0.20  0.28  0.29
+ ve/cr tar21([nm]) r 88.37 89.00 90.32 89.29  0.0  89.89
+ ve/cr et21([nm])  r  0.17  0.24  0.32  0.27  0.0   0.28
+ ve/cr tar22([nk]) r 88.37 89.00 90.32 89.29  89.89
+ ve/cr et22([nk])  r  0.17  0.24  0.32  0.27   0.28
+ ve/cr targ3([nm]) r 89.09 89.73 91.38 90.29 90.71 91.36
+ ve/cr et3([nm])   r  0.22  0.27  0.31  0.17  0.21  0.24
+ ve/cr targ4([nm]) r 88.73 89.86 91.51 91.15 92.69 92.06
+ ve/cr et4([nm])   r  0.18  0.31  0.31  0.25  0.24  0.27
+
+ sigma nnm=array([nm],1#[nm])
+ rn=[nm]+1.5
+ ve/cr parv(5) r
+ ve/cr erpar(5) r
+ ve/cr tav(4) r
+ ve/cr eav(4) r
+ sigma targ2=tar22
+ sigma et2=et22
+ set fit 1111
+   do i=1,4
+     ve/fit nnm targ[i] et[i]  p0 ! 1 parv ! ! ! erpar
+     a=parv(1)
+     b=erpar(1)
+     mess par=[a] error=[b]
+     ve/input tav([i]) [a]
+     ve/input eav([i]) [b]
+* wait
+   enddo
+ ve/cr mci(4) i 4 2 6 1
+ sigma ern=array([nm],0.01#0.01)
+ sigma targ2=tar21
+ sigma et2=et21
+ ys=88.5 
+ na=[nm]+1
+ sigma era=array(1,0.01#0.01)
+ sigma na=array(1,[na]#[na]) 
+ ve/cr targa(1) r
+ ve/cr eta(1) r
+
+ fort/fil 56 pol_vs_targ.ps
+ meta 56 -112
+ null 0.5 [rn] 86.0 93.2
+ atitle 'Moller measurements'   'Beam Polarization, "Y#'
+ selnt 1
+ text 13.0 20.5 'Beam Polarization vs. Moller Target' 0.4 0 C
+ selnt 10
+   do  k=1,4
+     ki=19+[k]
+     col=mci([k])
+     set mtyp [ki]
+     set pmci [col]
+     set txci [col]
+     gr/hpl/err nnm targ[k]  ern et[k] [nm] [ki] 0.3
+     yss=[ys]-[k]*0.4
+     ata=tav([k])
+     eata=eav([k])
+     ve/input targa(1) [ata]
+     ve/input eta(1) [eata]    
+     gr/hpl/key 2.4 [yss]  [ki] 'Target'//[k]=//[ata] 0.3  
+     gr/hpl/err na targa era eta 1 [ki] 0.33
+   enddo
+   text [na] 87.0 'AVERAGE' 0.4 90
+   close 56
+ wait
+ fort/fil 56 all_targ.ps
+ meta 56 -112
+ zone 3 2
+ opt stat
+ ve/pl m0403
+ ve/pl m0417
+ ve/pl m0422
+ ve/pl m0428
+ ve/pl m0508
+ selnt 1
+ text 13.0 20.5 'Beam Asymmetry for different Moller Targets' 0.4 0 C
+ text 20.0 8.5 'Day     Mean   RMS' 0.4 0
+ text 20.0 7.5 '04/03  86.11   0.57' 0.4 0
+ text 20.0 6.5 '04/17  89.24   0.60' 0.4 0
+ text 20.0 5.5 '04/22  90.85   0.59' 0.4 0
+ text 20.0 4.5 '04/28  90.08   0.71' 0.4 0
+ text 20.0 3.5 '05/08  90.96   0.82' 0.4 0
+ selnt 10
+ close 56
+
+zone
+
+RETURN

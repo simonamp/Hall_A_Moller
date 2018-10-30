@@ -1,0 +1,85 @@
+MACRO vpeaks drop=0.6 auto=1000
+*
+* ---  Find 2 peaks produced by the foil edges
+*
+
+* zone 2 2
+
+ nl=$VDIM(vtmp)
+ IF [nl]<1000 then
+    mess vpeaks.kumac - vtmp length is [nl]<1000 . Peak search skipped
+    exitm
+ endif
+
+ err=1.E-4
+ if [auto]>1 then
+   ve/plot vtmp(1:[auto])
+   err=$HINFO(12345,'RMS')
+   mess Error=[err]
+ endif
+
+ if $VDIM(par,1)<10 then
+   ve/cr par(10) r
+ endif
+ if $VDIM(epar,1)<10 then
+   ve/cr epar(10) r
+ endif
+
+ if $VDIM(vtmppk,1)<>2 .OR. $VDIM(vtmppk,2)<>2 then
+   ve/cr vtmppk(2,2) r
+ endif
+
+ do ipeak=1,2
+   if [ipeak]=1 then
+     iext=$SIGMA(lvmin(vtmp))
+     f=-1.
+   else
+     iext=$SIGMA(lvmax(vtmp))
+     f=1.
+   endif
+   aext=vtmp([iext])
+   ax=$SIGMA([aext]*[f]*[drop])
+   i=[iext]
+   loop1:
+     i=[i]-1
+     a=vtmp([i])
+     a=$SIGMA([a]*[f])
+     if [a]>[ax] then
+       goto loop1
+     endif
+   i1=[i]
+   i2=$SIGMA(2*[iext]-[i1])
+   nx=$SIGMA([i2]-[i1]+1)
+   if $VDIM(vtmpp,1)>0 then
+     ve/del vtmpp
+   endif
+   ve/cop vtmp([i1]:[i2]) vtmpp
+   if $VDIM(vtmppx,1)>0 then
+     ve/del vtmppx
+   endif
+   SIGMA vtmppx=array([nx],1#[nx])
+   if $VDIM(vtmppe,1)>0 then
+     ve/del vtmppe
+   endif
+   ve/cr vtmppe([nx]) r
+   ve/in vtmppe [nx]*[err]
+
+   a=$SIGMA([iext]-[i1]+1)
+
+   ve/in par(1) [aext]
+   ve/in par(2) [a]
+   ve/in par(3) 20.
+   ve/fit vtmppx vtmpp vtmppe g 0 3 par ! ! ! epar
+   gr/hpl/err vtmppx vtmpp vtmppe vtmppe [nx] 20 0.1 
+   av=par(2) 
+   er=epar(2)
+   av=$SIGMA([i1]+[av]-1.)
+   sg=par(3)
+   sg=$SIGMA(ABS([sg])) 
+   mess Start=[iext] Fit=[av] +/- [sg]
+   ve/in vtmppk(1,[ipeak]) [av] 
+   ve/in vtmppk(2,[ipeak]) [sg] 
+ enddo
+
+* zone 1 2   
+RETURN

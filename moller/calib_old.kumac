@@ -1,0 +1,71 @@
+MACRO calib dcell=8. nlun=0
+
+*
+* ---    Define initial calibration factors
+* ---    in units of full energy / ADC bin
+*
+ if [nlun]=0 then
+   mess Error: nlun is not set
+   exitm
+ endif
+
+ ve/cr calib(12) r 
+ 
+* dcell=8.
+* --- mean bending angle
+ amean=11./180.*3.1415
+ dmean=271.*[amean]
+ do i=1,8
+  peak=parlg(2,[i])
+  if [peak]<1 then
+    mess Error: wrong peak=[peak] for i=[i]
+    exitm
+  endif
+  j=[i]
+  if [j]>4 then
+    j=[j]-4
+  endif
+* --- distance to the middle
+  ddist=([j]-2.5)*[dcell]
+  en=0.5*([dmean]-[dcell]*.4)/([dmean]+[ddist])
+  b=[en]/[peak]
+  ve/in calib([i]) [b]
+ enddo
+
+ cut $11 nadc>0.and.ihit(1)*ihit(2)*ihit(4)*ihit(5)>0.and.iadc(9)>200.and.iadc(10)>200
+ do iter=1,3
+ do arm=1,2
+   i1=1
+   if [arm]=2 then
+     i1=5
+   endif
+   i2=[i1]+3
+   do i=[i1],[i2]
+     id=100+[iter]*10+[i]
+     1dh [id] 'energy' 100 0 1.
+     nt/pl //[nlun]/1.getenerg.f([i1],[i2]) $11.and.iadc([i])>200. -[id] 
+
+     h/fit [id] g ' ' 0 par
+     peak=par(2)
+     b=calib([i])
+     j=[i]
+     if [j]>4 then
+       j=[j]-4
+     endif
+* --- distance to the middle
+     ddist=([j]-2.5)*[dcell]
+     en=0.5*([dmean]-[dcell]*.4)/([dmean]+[ddist])
+*     ddist=([j]-2.5+0.5)*[dcell]
+*     en=0.5*([dmean]-[ddist])/[dmean]
+     c=[en]/[peak]*[b]
+     mess i=[i] c=[c]
+     ve/in calib([i]) [c]
+   enddo
+ enddo
+ enddo
+RETURN
+
+
+
+
+

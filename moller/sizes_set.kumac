@@ -1,0 +1,33 @@
+MACRO sizes_set type=0
+*
+* Sizes: type=0 - projector
+*
+
+if [type]=0 then
+*   Projector
+  graph/set hwid 4
+  graph/set bwid 4
+  graph/set pwid 2
+  graph/set fwid 4
+  graph/set xwid 2
+  graph/set ywid 2
+*  graph/set vfon -40
+*  graph/set lfon -40
+  graph/set cfon -40
+  graph/set tfon -40
+
+  graph/set csiz 0.42
+  graph/set asiz 0.42
+  graph/set vsiz 0.42
+
+  graph/set pass 8
+  graph/set cshi 0.01
+  graph/set xlab 1.4
+  graph/set ylab 0.8
+
+elseif [type]=0 then
+endif
+
+ mess sizes_set done
+
+RETURN

@@ -1,0 +1,56 @@
+MACRO hwave
+*
+* ==  BCM asymmetry: 1/2 wave rotation test
+* 
+ titl '1/2 wave plate dependence on the BCM asymmetry'
+
+ n=16
+
+ ve/cr tang([n]) r  0      24     40     48     72     96     120    144    168    192    216    240    264    288    312    336    
+ ve/cr tbcm([n]) r -0.370 -0.280 -0.147 -0.095 -0.187 -0.285 -0.355 -0.266 -0.155 -0.285 -0.350 -0.170 -0.105 -0.260 -0.300 -0.17  
+ ve/cr ebcm([n]) r  0.02   0.04   0.02   0.014  0.014  0.015  0.02   0.02   0.02   0.02   0.02   0.02   0.02   0.02   0.02   0.02   
+ ve/cr eang([n]) r 
+
+ n1=4
+ ve/cr tang1([n1]) r  48    96   120      120
+ ve/cr tbcm1([n1]) r -0.29 -0.160 -0.120 -0.180
+ ve/cr ebcm1([n1]) r  0.02   0.02   0.02  0.03
+
+* ve/oper/vsca ebcm 2. ebcm
+
+ null -20 360 -0.5 0.1
+ gr/hpl/err tang tbcm eang ebcm [n] 20 0.2
+ gr/hpl/err tang1 tbcm1 eang ebcm1 [n1] 24 0.2
+
+ ve/cr parw(6) r 0.112 31.45 -0.230 3.58
+ ve/cr eparw(6) r 
+* n=12
+ ve/cr jfit(2) i 0 0
+ set dmod 0
+ ve/fit tang(1:[n]) tbcm(1:[n]) ebcm(1:[n]) wave_ofs.f n 4 parw ! ! ! eparw
+ ve/cr jfit(2) i 1
+  
+ fu/pl wave_ofs.f -20 360 s
+* gr/hpl/err tang tbcm eang ebcm [n] 20 0.2
+ atit '1/2 wave angle' 'BCM asymmetry'
+ do i=1,4
+   x=100.
+   y=-0.03*[i]+0.1
+   aa=parw([i])
+   aa=$FORMAT([aa],E10.3)
+   bb=eparw([i])
+   bb=$FORMAT([bb],E10.3)
+   if [i]=1 then
+      cc=Ampli
+   elseif [i]=2 then
+      cc=Phase
+   elseif [i]=3 then
+      cc=Shift
+   elseif [i]=4 then
+      cc=Frequ
+   endif
+   txt=[cc]//' '//[aa]//'+/-'//[bb]
+   text [x] [y] [txt] 0.25 0.
+ enddo
+
+RETURN

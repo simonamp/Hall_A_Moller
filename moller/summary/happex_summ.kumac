@@ -1,0 +1,148 @@
+MACRO happex_summ
+*
+*--  Summary for HAPPEX Apr, 1999 -
+*
+
+* goto eend
+ np1=24
+ ve/cr dat1([np1]) r
+ ve/cr ida1([np1]) i
+ ve/cr ida2([np1]) i
+ ve/cr ida3([np1]) i
+ ve/cr pol1([np1]) r
+ ve/cr apol1([np1]) r
+ ve/cr epol1([np1]) r
+ ve/cr atten([np1]) r
+
+ ve/cr errv([np1]) r
+
+ shell grep -v 1-st happex_1_sum_3.tab > tmp.tab
+ ve/read ida1,ida2,ida3,pol1,epol1,atten 'tmp.tab' '(3(2X,I2),3X,5X,34X,2X,F6.2,4X,F5.2,38X,F7.2)'
+ ve/wri ida1,ida2,ida3,pol1,epol1,atten ! '(3I5,3F12.3)'
+*
+ sca=$SIGMA(7.6/7.95*1.01)
+ ve/oper/vsca pol1 [sca] polcor 
+ ve/oper/vsca epol1 [sca] epolcor 
+*
+ mess 
+ ve/wri ida1,ida2,ida3,polcor,epolcor,atten ! '(3I5,3F12.3)'
+*
+ do i=1,[np1] 
+   kk=0
+   a1=ida1([i])
+   a2=ida2([i])
+   a3=ida3([i])
+   add=0
+   if [a1]=5 then
+      add=30
+   elseif [a1]=6 then
+      add=61
+   endif
+   d=$SIGMA([add]+[a2]+[a3]/24.)
+   ve/in dat1([i]) [d]
+ enddo
+   
+ ve/cr  dmotv(50) r 6.5   14.5   26.5   29.5   1.5   4.5   6.5   15.5   18.5   21.5
+ ve/oper/vbias     dmotv(5:10) 30. dmotv(5:10)
+ ve/cr  pmotv(50) r 70.8   71.   71.    72.3  68.5  76.0  73.0   67.0   71.1   69.1  
+ ve/cr epmotv(50) r  0.9  0.9    0.3    0.3   0.9    0.3   0.3    0.9    0.2    0.2
+
+ titl 'HAPPEX beam polarization summary'
+ x1=$SIGMA(vmin(dat1))
+ x1=[x1]-2
+ x2=$SIGMA(vmax(dat1))
+ x2=[x2]+2
+ y1=64
+ y2=77
+ set csiz 0.28
+ null [x1] [x2] [y1] [y2]
+ atit 'Days, from Apr,1' 'Beam polarization, "Y#'
+
+ k1=0
+ k2=0
+ xk=2.
+ yk=76.3
+ dyk=$SIGMA(([y2]-[y1])*0.03)
+ do i=1,[np1] 
+   kk=0
+   igset pmci 4
+   set   hcol 4
+   at=atten([i])
+   sym=22
+   p=pol1([i])
+   ap=$SIGMA(ABS([p]))
+   ve/in apol1([i]) [ap]   
+   if [p]>0. then
+    sym=20
+     cm=2
+     k1=[k1]+1
+     if [k1]=1 then
+       kk=1
+       txt='Moller, beam helicity +'
+     endif
+   else
+     m=22
+     cm=2
+     k2=[k2]+1
+     if [k2]=1 then
+       kk=1
+       txt='Moller, beam helicity -'
+     endif
+   endif
+   if [at]<0.5 then
+     sym=[sym]+4
+   endif
+
+   igset pmci [cm]
+   set   hcol [cm]
+   gr/hpl/err dat1([i]) apol1([i]) errv epol1([i]) 1 [sym] 0.2
+
+ enddo
+
+ set csiz 0.28
+ gr/hpl/key [xk] [yk] 20 'Moller, beam helicity +'
+ yk=[yk]-[dyk]
+ gr/hpl/key [xk] [yk] 22 'Moller, beam helicity -'
+ yk=[yk]-[dyk]
+ gr/hpl/key [xk] [yk] 24 'Moller, beam helicity +, rejected'
+ yk=[yk]-[dyk]
+ gr/hpl/key [xk] [yk] 26 'Moller, beam helicity -, rejected' 
+ set csiz 0.4
+
+ nmo=$VLEN(dmotv,1)
+ igset pmci 4
+ set   hcol 4
+ gr/hpl/err dmotv pmotv errv epmotv [nmo] 21 0.2
+ set csiz 0.28
+ yk=[yk]-[dyk]*2
+ gr/hpl/key [xk] [yk] 21 'Mott' 
+ set csiz 0.4
+
+ igset pmci 1
+ set   hcol 1
+
+ eend:
+ shell ./get_maud_tab.com maud_inj.tab > tmp 
+ nl=$SHELL('wc -l tmp | awk ''{print $1}''')
+ mess nl=[nl]
+ do i=1,[nl]
+   cmn='head -'//[i]//' tmp | tail -1 | awk ''{print $1}'''
+   xx=$SHELL([cmn])
+   cmn='head -'//[i]//' tmp | tail -1 | awk ''{print $2" "$3}'''
+   txt=$SHELL([cmn])
+   mess [xx] [txt]
+   yy1=[y1]+2
+   yy2=[y2]-3
+   igset plci 3
+   igset txci 3
+*   mess [xx] [yy1] [yy2]
+   gr/prim/line [xx] [yy1] [xx] [yy2]
+   xxx=[xx]
+   yy1=[y1]+0.2
+   text [xxx] [yy1] [txt] 0.2 90.
+ enddo
+ igset plci 1
+ igset txci 1
+   
+RETURN
+

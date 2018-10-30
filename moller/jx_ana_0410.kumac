@@ -1,0 +1,10 @@
+MACRO jx_ana_0410 anpow=0.754 run1=15304 run2=15335
+
+     do i=[run1],[run2]
+	exec asym11 anpow=[anpow]  run=[i] 
+     enddo
+
+RETURN
+
+
+

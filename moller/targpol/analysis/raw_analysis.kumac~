@@ -1,0 +1,13 @@
+MACRO raw_analysis foil=0
+*
+* Analyze all data for the foil #foil
+*
+  if [foil]<2 then
+    mess The foil=[foil] is not defined. The defined foils are:
+    mess 2 : s30_04 - 29.4 micron Supermendur   
+    mess 3 : f14_04 - 14.3 micron iron
+    mess 4 - f10_04 -  9.3 micron iron
+    mess 5 - s07_04 -  6.8 micron Supermendur   
+    exitm
+  endif
+RETURN

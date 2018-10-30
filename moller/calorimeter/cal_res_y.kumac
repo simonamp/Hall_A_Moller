@@ -1,0 +1,155 @@
+MACRO cal_res_y lun=lun00 id=300 fill=2 ip=1 txt=
+*
+* ---  Measure the Y-resolution
+*
+  n=16
+  n1=[n]+1
+  nh=300
+  x1=-6.
+  x2=6.
+
+  tit='Y-resolution of the central modules '//[txt]
+  titl [tit]
+
+  if [fill]=0 then
+    goto plot
+  elseif [fill]=1 then
+    goto fit
+  endif
+  ve/cr para(20) r
+  ve/cr epara(20) r
+  
+  2dh [id] 'LG - H' [nh] [x1] [x2] [n] 1 [n1] 
+  
+  do i=1,[n]
+    id1=[id]+[i]
+    tit='LG Y-coordinate for hodoscope='//[i]
+    1dh [id1] [tit] [nh] [x1] [x2]
+  enddo  
+
+  cut $45 nadc>0.and.cal_hmul.f(1,16,180,210)=1.and.cal_adcsum.f(4,13,6,2,2,1,0)>1.2
+
+  nt/pl //[lun]/1.cal_hclu.f(180,210,1,1,1,99)+0.001%(2.5-cal_xypos.f(4,13,1,2))*4 $45 -[id]
+
+  ve/cr vtmp([nh],[n]) r
+  ve/cr vtmp1([nh]) r
+  h/get_vec/con [id] vtmp
+
+  do i=1,[n]
+   id1=[id]+[i]
+   ve/op/vbias vtmp(1:[nh],[i]) 0. vtmp1(1:[nh])
+   h/put_vec/con [id1] vtmp1    
+  enddo
+
+*  do i=1,[n]
+*   
+*   id1=[id]+[i]
+*   nt/pl //[lun]/1.(2.5-cal_xypos.f(4,13,1,2))*4 $45.and.cal_hmul.f([i],[i],180,210)>0 -[id1]
+*
+*  enddo
+   
+  fit:
+  xc=$SIGMA(([x1]+[x2])/2.)
+
+  ve/cr  yho([n]) r 
+  ve/cr eyho([n]) r 
+  if $VDIM(yho,1)<16 then 
+    ve/cr  ylg([n],8) r 
+    ve/cr eylg([n],8) r 
+    ve/cr  wlg([n],8) r 
+    ve/cr ewlg([n],8) r 
+  endif
+
+  ve/cr  erco([nh]) r
+  ve/cr  erhi([nh]) r
+  ve/cr  erfu([nh]) r
+
+  ve/cr pstep(10) r 1. 0.01 0.005 
+  ve/cr pmin(10) r  1. -5.   0.05
+  ve/cr pmax(10) r 1.E5 5.   2.
+
+  do i=1,[n]
+
+   a=$SIGMA(([i]-8.5)*0.5)   
+   ve/in  yho([i]) [a]
+   ve/in eyho([i]) 0.144
+
+   id1=[id]+[i]
+
+   h/get_vec/con [id1] erco
+   do j=1,[nh]
+     a=erco([j])
+     if [a]>0 then
+       a=$SIGMA(sqrt([a]))
+     else
+       a=0.1
+     endif
+     ve/in erhi([j]) [a]
+   enddo
+   h/put_vec/err [id1] erhi(1:[nh])
+
+   a=$HINFO([id1],'MAX')
+   ve/in para(1) [a]
+   a=$HINFO([id1],'MEAN')
+   a=$SIGMA(([a]+8.*[xc])/9.)
+   ve/in para(2) [a]
+   ve/in para(3) 0.5
+   h/fit [id1] g L 3 para pstep pmin pmax epara
+
+   do iter=1,2
+     h/get_vec/fun [id1] erfu
+     do j=1,[nh]
+       b=erco([j])
+       if [b]<4 then
+        b=erfu([j])
+       endif
+       a=0.
+       if [b]>0.5 then
+         a=$SIGMA(sqrt([b]))
+       endif
+       ve/in erhi([j]) [a]
+     enddo
+     h/put_vec/err [id1] erhi
+     h/fit [id1] g ! 3 para ! ! ! epara
+   enddo
+
+   y=para(2)
+   ey=epara(2)
+   r=para(3)
+   er=epara(3)
+   
+   ve/in  ylg([i],[ip]) [y]
+   ve/in eylg([i],[ip]) [ey]
+   ve/in  wlg([i],[ip]) [r]
+   ve/in ewlg([i],[ip]) [er]
+
+  enddo
+
+  plot:
+
+  zone 2 2
+  null -5. 5. -5. 5.
+  atit 'Hodoscope cm' 'Y LG cm'
+  gr/hpl/err yho(1:[n]) ylg(1:[n],[ip]) eyho(1:[n]) eylg(1:[n],[ip]) [n] 20 0.1
+  set dmod 2
+  fu/pl x -5 5 s
+  set dmod 0
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(a)' 0.25
+  opt tic
+ 
+  null -5. 5. 0. 1.
+  atit 'Hodoscope cm' 'Y LG Resolution cm'
+  gr/hpl/err yho(1:[n]) wlg(1:[n],[ip]) eyho(1:[n]) ewlg(1:[n],[ip]) [n] 20 0.1
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(b)' 0.25
+  opt tic
+ 
+ 
+RETURN
+
+
+
+

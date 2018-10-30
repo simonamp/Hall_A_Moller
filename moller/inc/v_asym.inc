@@ -1,0 +1,8 @@
+C == Vectors of asymmetry and counting rates
+      INTEGER MXASYMV
+      PARAMETER (MXASYMVC=50)
+      VECTOR CASYM(50),ECASYM(50)
+      VECTOR RASYM(50),ERASYM(50)
+      VECTOR FASYM(50),EFASYM(50)
+      VECTOR NASYM(50)
+      VECTOR COASYM(50)

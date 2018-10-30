@@ -1,0 +1,129 @@
+MACRO temp_get5 ntim=10000 dir=./ same=0 zone=0 col=2 xmx=999. xcolmn=3 log=0 t1=4
+*
+* --- Read the output of temp_tar.f - target temperature simulation
+*
+ if [zone]=0 then
+   zone 2 1
+   next
+ elseif [zone]=2 then
+   if [same]=0 then
+     zone 2 1 2 s
+   endif
+ endif 
+ 
+ if $VDIM(ntmp,1)>0 then
+   ve/del ntmp
+ endif
+ if $VDIM(ttim,1)>0 then
+   ve/del ttim
+ endif
+ if $VDIM(ttmp,1)>0 then
+   ve/del ttmp
+ endif
+
+ ve/read ntmp,ttim,ttmp [dir]temper_[t1].dat
+ n=$VDIM(ttim,1)
+* tmpmx=$SIGMA(vmax(ttmp)*14/10.)
+ tmpmx=$SIGMA(vmax(ttmp)*11/10.)
+
+ if [zone]<>2 then
+   nl=$VLEN(ttim)
+
+   timmx=$SIGMA(vmax(ttim)*11/10.)
+   timmn=0
+   if [same]=0 then
+     if [log]>0 then
+       opt logx
+       opt logy
+       if $VDIM(vtmpv,1)>0 then
+          ve/del vtmpv
+       endif
+       ve/cop ttim(2:[nl]) vtmpv
+       timmn=$SIGMA(vmin(vtmpv)/2.)
+       ve/del vtmpv
+     endif
+     mess [timmn] [timmx]
+     null [timmn] [timmx] 0 [tmpmx]
+     atit 'Time, sec' 'Maximum temperature rise, K'
+   endif
+   igset pmci [col]
+   gr/hpl/sym ttim ttmp [n] 20 0.05
+   igset pmci 1
+   if [log]>0 then
+     opt linx
+     opt liny
+   endif
+ endif
+
+ if [zone]<>1 then
+   if $VDIM(txx,1)>0 then
+     ve/del txx
+   endif
+   if $VDIM(txtmp1,1)>0 then
+     ve/del txtmp1
+   endif
+   if $VDIM(txtmp2,1)>0 then
+     ve/del txtmp2
+   endif
+   if $VDIM(txtmp3,1)>0 then
+     ve/del txtmp3
+   endif
+
+   ve/read txx,txtmp1,txtmp2,txtmp3 [dir]temper_2.dat
+   nl=$VLEN(txx)
+
+   n=$VDIM(txx)
+   xmx=$SIGMA(MIN(vmax(txx)*11/10.,[xmx]))
+*   tmpmx=$SIGMA(vmax(txtmp3)*18/10.)
+   if [same]=0 then
+     null -[xmx] [xmx] 0 [tmpmx]
+     atit 'Position along foil, cm' 'Final temperature rise, K'
+   endif
+   igset pmci 1
+   gr/hpl/sym txx txtmp1 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp2 [nl] 20 0.05
+   igset pmci [col]
+   gr/hpl/sym txx txtmp3 [nl] 20 0.05
+   igset pmci [col]
+
+   if $VDIM(txx,1)>0 then
+     ve/del txx
+   endif
+   if $VDIM(txtmp1,1)>0 then
+     ve/del txtmp1
+   endif
+   if $VDIM(txtmp2,1)>0 then
+     ve/del txtmp2
+   endif
+   if $VDIM(txtmp3,1)>0 then
+     ve/del txtmp3
+   endif
+
+   ve/read txx,txtmp1,txtmp2,txtmp3 [dir]temper_3.dat
+   nl=$VLEN(txx)
+   n=$VDIM(txx)
+   ve/cr terr([nl]) r
+   ve/in terr [nl]*0
+
+*   xmx=$SIGMA(vmax(txx)*11/10.)
+*   null -[xmx] [xmx] 0 [tmpmx]
+   if [xcolmn]>2 then
+     igset pmci 1
+     gr/hpl/sym txx txtmp1 [nl] 20 0.05
+   endif
+   if [xcolmn]>1 then
+     igset pmci [col]
+     gr/hpl/sym txx txtmp2 [nl] 20 0.05
+   endif
+   igset pmci [col]
+   gr/hpl/sym txx txtmp3 [nl] 20 0.05
+   igset pmci [col]
+ endif
+
+RETURN
+
+
+
+
+

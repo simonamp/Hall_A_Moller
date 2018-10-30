@@ -1,0 +1,87 @@
+MACRO cal_ini2  attach=1
+
+*
+* Initialize data for calorimeter calibration:
+*    20 Feb, 2000 - 16 modules, no optical coupling
+*
+*  collim 6mm 
+
+dir=/data2a/user/gen/moller/exp/2000/02.20.01/dat/
+
+* the range of the hodoscope counters to each LG row
+
+ ve/cr ichlim(2,5) i 
+ ve/cr ilglim(2,5) i 
+
+ ve/in ichlim(1:2,1) -8 -2  
+ ve/in ichlim(1:2,2)  1  5   
+ ve/in ichlim(1:2,3)  7 12 
+ ve/in ichlim(1:2,4) 14 16  
+
+ ve/in ilglim(1:2,1)  1  4 
+ ve/in ilglim(1:2,2)  5  8 
+ ve/in ilglim(1:2,3)  9 12 
+ ve/in ilglim(1:2,4) 13 16 
+
+if [attach]=0 then
+  goto eend
+else
+  clo 0
+  ve/del lrun
+  ve/del mrun
+endif
+
+chain -centr
+*  col 4
+r=8253
+do i=1,4
+  exec run run=[r] dir=[dir]
+  exec getrun run=[r]
+  lun=ilun(1)
+  if [lun]>0 then
+    chain centr //lun[lun]
+  endif
+  r=[r]+1
+enddo
+
+*  col 3
+r=8261
+do i=1,4
+  exec run run=[r] dir=[dir]
+  exec getrun run=[r]
+  lun=ilun(1)
+  if [lun]>0 then
+    chain centr //lun[lun]
+  endif
+  r=[r]+1
+enddo
+
+*  col 2
+r=8274
+do i=1,4
+  exec run run=[r] dir=[dir]
+  exec getrun run=[r]
+  lun=ilun(1)
+  if [lun]>0 then
+    chain centr //lun[lun]
+  endif
+  r=[r]+1
+enddo
+
+*  col 1
+r=8282
+do i=1,4
+  exec run run=[r] dir=[dir]
+  exec getrun run=[r]
+  lun=ilun(1)
+  if [lun]>0 then
+    chain centr //lun[lun]
+  endif
+  r=[r]+1
+enddo
+
+eend:
+
+RETURN
+
+

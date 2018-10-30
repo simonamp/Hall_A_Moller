@@ -1,0 +1,26 @@
+MACRO all_7
+
+   clo 0
+   ve/del lrun
+   cd //pawc
+   h/del 0
+
+   n=0
+   do i=4072,4080
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=25.5 ptar=0.076  
+     n=[n]+1
+     if [n]=5 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+   enddo
+
+
+
+RETURN
+
+

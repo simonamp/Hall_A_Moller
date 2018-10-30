@@ -1,0 +1,413 @@
+C LIST
+C Moller Polarimeter Setup
+C Detectors: sets      GSET      - shares the definitions in with the next level file
+C Volumes:             GVOL      - shares the definitions in with the next level file
+C Rotation:           <RMATR20   - shares the definitions in with the next level file
+C Material:            GPARMAT   - shares the definitions in with the next level file
+C Medium:              GPARMED   - shares the definitions in with the next level file
+C 
+C ---   Coordinate system: Beam along Z
+C
+DIRDET  3  
+C
+C ------------------------------------------------------------------------
+C
+C --    Rotation matrix: the number of the card (last 2 digits) is the number 
+C                        of the matrix
+C
+RMATR01  90.  90.   0.   0.  90.    0.     I is along Y,II along Z,III along X
+RMATR02   0.   0.  90.   0.  90.   90.     I is along Z,II along X,III along Y
+RMATR03  90.   0.   0.   0.  90.  270.  Z  I is along X,II along Z,III oppos Y
+RMATR04  90.   0.  90. 270. 180.    0.     I is along X,II oppos Y,III oppos Z
+RMATR05  90.   0. 180.   0.  90.   90.  nZ I is along X,II oppos Z,III along Y
+RMATR06   0.   0.  90. 270.  90.    0.     I is along Z,II oppos Y,III along X
+C      
+RMATR07  90.   0.  80.  90.  10.  270.     Moller detector
+RMATR08  90.   0.  20.  90.  70.  270.     Moller target
+C
+RMATR09  90. 270.   0.   0.  90.  180.     I is oppos Y,II along Z,III oppos X
+C
+RMATR10  90.   0.  85.  90.   5.  270.     Hodoscope
+C
+C -- New materials: the number of the card is arbitrary (used to distinguish
+C                                                        the cards)
+C            #       name               A    Z    g/cm3        RLcm   Int.len cm
+C
+GPARMAT01   20 'Silicon$            '  28.  14.   2.33         9.36   45.5   0
+GPARMAT02   21 'Glass borosilic.$   '  19.  10.   2.23        12.7    44.    0
+GPARMAT03   22 'G10           $     '  16.   8.   1.7         19.4    53.0   0
+GPARMAT04   23 'Fiberglass 65%glass$'  17.   9.   1.82        17.     52.0   0
+GPARMAT05   25 'Plastic, scint$     '  12.   6.   1.032       42.4    80.0   0
+GPARMAT06   27 'Vacuum$             '  12.   6.   1.E-11       3.E12   1.E12 0
+GPARMAT07   41 'Lead glass SF57$    ' 150.  60.   5.51         1.546  26.9   0
+GPARMAT08   58 'Argon$              '  40.  18.   0.00178  11000.  10000.0   0
+GPARMAT09   59 'Titanium$           '  48.  22.   4.54         3.56   27.5   0
+C
+C -- New materials: mixtures
+C            #       name            g/cm3    Nmat    A1  Z1  W1    A2  Z2  W2  
+C
+GPARMXT01   50 'Mylar$              ' 1.39     -3     12.  6.  5.    1.  1.  4.   16.  8.  2.
+GPARMXT02   60 'Straw kapton+fibers$' 1.70     -3     12.  6.  5.    1.  1.  4.   16.  8.  2.
+GPARMXT03   26 'Ar CO2 80/20$       ' 0.00182  -3     40. 18.  8.   12.  6.  2.   16.  8.  4.
+C GPARMAT04   27 'Vacuum, water $     ' 1.8E-3   -2     16.  8.  1.    1.  1.  2.
+C
+C
+C -- Media definition: 
+C          Convention: (not binding, but just to keep some order)  
+C                   med=med0 + field*200 + sens*400
+C                   where 0<med0<200
+C                   HALL contains the medium #1, (air with or without the field)
+C                   Fan,Dmul,Elo and st are calculated automatically if AUTO>0 (default)
+C                                           or if the given value is negative.
+AUTO    0    semiautomatic media definitions
+C                                                  
+C           #       name             mat sen F Fmx Fan stmx  Elo epsi st(mu,lo)  user words
+C
+GPARMED01    1 'Air,   mf$          '  15  0  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED02    2 'Air,  nmf$          '  15  0  0 30. -1. -1.   -1.   0.1    -1. 
+GPARMED03    3 'Vacuum,   nmf$      '  16  0  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED04  203 'Vacuum,    mf$      '  16  0  1 30. -1.  5.   -1.   0.1    -1. 
+C  GPARMED04  203 'Vacuum,    mf$      '  27  0  1 30. 20.  5.  0.25   0.1    10. 
+GPARMED05    6 'Liquid H2, nmf$     '   1  0  0  0. -1. -1.   -1.   0.02   -1. 
+GPARMED06    7 'Silicon, no mf, $   '  20  0  0  0. -1. -1.   -1.   0.05   -1. 
+GPARMED07  407 'Silicon, no mf, sn$ '  20  1  0  0. -1. -1.   -1.   0.0002 -1. 
+GPARMED08  607 'Silicon,    mf, sn$ '  20  1  1 30. -1. -1.   -1.   0.0002 -1. 
+GPARMED09   17 'MSGC glass nmf, sn$ '  21  1  1 30. -1. -1.   -1.   0.02   -1.  
+GPARMED10  217 'MSGC glass  mf, sn$ '  21  1  1 30. -1. -1.   -1.   0.02   -1.  
+GPARMED11   23 'Glass nmf$          '  21  0  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED12  223 'Glass mf$           '  21  0  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED13   24 'Plastic nmf$        '  25  0  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED14  224 'Plastic  mf$        '  25  0  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED15  425 'Scintillator nmf$   '  25  1  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED16  625 'Scintillator  mf$   '  25  1  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED17   31 'Copper  nmf$        '  11  0  0  0. -1. -1.   -1.   0.002  -1. 
+GPARMED18  231 'Copper   mf$        '  11  0  0  0. -1. -1.   -1.   0.002  -1. 
+GPARMED19   35 'Alum, nmf$          '   9  0  0  0. -1. -1.   -1.   0.2    -1. 
+GPARMED20  235 'Alum,  mf$          '   9  0  1 30. -1. -1.   -1.   0.2    -1. 
+GPARMED21   50 'Mylar   nmf$        '  50  0  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED22  250 'Mylar    mf$        '  50  0  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED23   54 'Lead glass SF57  $  '  41  0  0  0. -1. -1.   -1.   0.2    -1. 
+GPARMED24  454 'Lead glass   sn$    '  41  1  0  0. -1. -1.   -1.   0.2    -1. 
+GPARMED25   55 'Lead glass (abs)$   '  41  0  0  0. -1. -1.   -1.   0.2    -1. 
+GPARMED26   58 'ArgonCO2 8/2 nmf$   '  58  0  0  0. -1. -1.   -1.   0.1    -1. 
+GPARMED27  258 'ArgonCO2 8/2 nmf$   '  58  0  1 30. -1. -1.   -1.   0.1    -1. 
+GPARMED28  458 'ArgonCO2 8/2 nmf sn$'  58  1  0  0. -1. -1.   -1.   0.02   -1. 
+GPARMED29  658 'ArgonCO2 8/2  mf sn$'  58  1  1 30. -1. -1.   -1.   0.02   -1. 
+GPARMED30   59 'Titanium  nmf$      '  59  0  0  0. -1. -1.   -1.   0.001  -1.
+GPARMED31   60 'Lead  nmf$          '  13  0  0  0. -1. -1.   -1.   0.1    -1.
+GPARMED32  260 'Lead   mf$          '  13  0  1 30. -1. -1.   -1.   0.1    -1.
+GPARMED33   95 'Steel nmf$          '  10  0  0  0. -1. -1.   -1.   0.2    -1.
+GPARMED34  295 'Steel  mf$          '  10  0  1 30. -1. -1.   -1.   0.2    -1.
+GPARMED35   96 'Steel nmf$          '  10  0  0  0. -1. -1.   -1.   0.2    -1.
+GPARMED36  296 'Steel  mf$          '  10  0  1 30. -1. -1.   -1.   0.2    -1.
+GPARMED37   97 'Absorber$           '  10  0  0  0. -1. -1.   -1.   1.     -1. 
+GPARMED38   98 'Escape area$        '  15  0  0  0. -1. -1.   -1.   1.     -1. 
+GPARMED39   99 'Dead absorber$      '  10  0  0  0. -1. -1.   -1.   1.     -1. 
+C
+C
+C --                       Areas
+C
+C            start       up to ...
+C --   Attention: areas should be a bit wider than the mag. fields
+C          
+MEDAREA       1      1      1      1
+MAGAREA       0     -1      0      0
+XMNAREA      50.    50.    50.    50.
+YMXAREA      50.    50.   150.   150.
+ZMXAREA     -50.   -30.   520.  1400.
+C
+C ---              Define magnet positions
+C        !!!       If you move the magnet - update the values:
+C                  AREA ...
+C                  MAGNET ...
+C                  magnet volume positions
+C
+C         type  mother  Xcen   Ycen   Zcen   rot Xsiz/2 Ysiz/2 Zsiz/2  field   flag1 flag2 
+MAGNET01   1    'HALL'    0.     0.  100.0     0   5.08   5.08  22.525  0.680   0     0 
+MAGNET02   1    'HALL'    0.     0.  208.5     0   5.08   5.08  18.11   1.435   0     0 
+MAGNET03   1    'HALL'    0.     0.  274.5     0   5.08   5.08  18.11   1.413   0     0 
+MAGNET04   2    'HALL'    0.     0.  422.8     0   8.00   30.0  82.25   7.168   0     0 
+C
+C --               ======        Volumes     =======
+C =====================================================================================
+C      The volume for the world is called HALL. It is a box of sizes taken from the AREA
+C      cards. (With the current definitions it is 8000,1000,1000cm**3 full size)
+C --   All this GENERAL part of the setup is placed directly into HALL.
+C
+C --   All the general setup is split into several blocks. Some of these blocks
+C      serve only for simplification of moving different objects. 
+C      The names of these artificial volumes start with A.
+C
+C --   If the MRS is changed - move these volumes and also the MAGNET5.
+C
+C --   Do NOT put little pieces to HALL directly !! 
+C      If something is moved they may be forgotten. Try to use the existing blocks.
+C =====================================================================================
+C          name   med  mother    X     Y     Z   rot  shape npar  par.....
+C
+C --     Target chamber
+C
+GPARVOL10  'BPIT' 235  'HALL'    0.    0.    0.   0  'TUBE'  3   0.     5.08   70.   
+GPARVOL11  'BPVT' 203  'BPIT'    0.    0.    0.   0  'TUBE'  3   0.     4.78   70.   
+C
+C --     Helmholtz coils
+C
+GPARVOL15  'HLMZ' 231  'HALL'    0.    0.   -5.7  0  'TUBE'  3   5.10  15.0     5.   
+GVOLPOS01  'HLMZ'      'HALL'    0.    0.   19.5  0  
+C
+C --     Target
+C
+GPARVOL20  'MTAT' 295  'BPVT'    0.    0.    6.9  8  'BOX '  3   1.5   5.0    0.00034   
+C
+C --     Beam pipe
+C
+GPARVOL30  'BPI1' 235  'HALL'    0.    0.  185.   0  'TUBE'  3   0.     5.08  115.   
+GPARVOL31  'BPV1' 203  'BPI1'    0.    0.    0.   0  'TUBE'  3   0.     4.78  115.   
+GPARVOL32  'BPI2' 235  'HALL'    0.    0.  312.15 0  'TUBE'  3   0.     5.08  12.15
+GPARVOL33  'BPV2' 203  'BPI2'    0.    0.    0.   0  'TUBE'  3   0.     4.78  12.15
+CGPARVOL34  'BPI3' 235  'HALL'    0.    0.  726.08 0  'TUBE'  3   0.     5.08 158.5  !!!***
+CGPARVOL35  'BPV3' 203  'BPI3'    0.    0.    0.   0  'TUBE'  3   0.     4.78 158.5  !!!***
+GPARVOL34  'BPI3' 235  'HALL'    0.    0.  726.08 0  'TUBE'  3   0.     3.177 158.5
+GPARVOL35  'BPV3' 203  'BPI3'    0.    0.    0.   0  'TUBE'  3   0.     3.000 158.5
+GPARVOL36  'BPF3'  95  'BPV3'    0.    0.  157.0  0  'TUBE'  3   1.905  4.78   1.5
+GPARVOL37  'BPF4'  95  'BPV3'    0.    0. -157.0  0  'TUBE'  3   3.000  4.78   1.5
+GPARVOL38  'BPI4'  95  'HALL'    0.    0. 1084.58 0  'TUBE'  3   0.     1.905 200.
+GPARVOL39  'BPV4'   3  'BPI4'    0.    0.    0.   0  'TUBE'  3   0.     1.800 200.
+GPARVOL40  'BPE4'  95  'HALL'    0.    0.  940.   0  'TUBE'  3   2.2    8.0    20.
+GPARVOL41  'BPI5' 235  'HALL'    0.    0.  545.08 0  'TUBE'  3   0.0    3.175  22.5
+GPARVOL42  'BPV5' 203  'BPI5'    0.    0.    0.   0  'TUBE'  3   0.0    3.000  22.5
+
+C---     Dipole vacuum box
+C
+GPARVOL45  'DBI1' 295  'HALL'    0.   -9.  422.8  0  'BOX '  3   6.0   16.5   98.5
+GPARVOL46  'DBV1' 203  'DBI1'    0.    0.    0.   0  'BOX '  3   5.295 16.0   98.5
+GPARVOL47  'DBW1' 295  'HALL'    0.   -9.  521.94 0  'BOX '  3  11.66  21.4    0.64
+GPARVOL48  'DBW2' 203  'DBW1'    0.    9.    0.   0  'TUBE'  3   0.     3.0    0.64
+GPARVOL49  'DBW3'   1  'DBW1'   -4.13 -7.0   0.   0  'BOX '  3   1.18   8.0    0.64
+GPARVOL50  'DBW4'   1  'DBW1'    4.13 -7.0   0.   0  'BOX '  3   1.18   8.0    0.64
+GPARVOL51  'DBT3'  59  'DBW3'    0.    0.    0.   0  'BOX '  3   1.18   8.0    0.005
+GPARVOL52  'DBT4'  59  'DBW4'    0.    0.    0.   0  'BOX '  3   1.18   8.0    0.005
+GPARVOL53  'DMS1' 295  'DBV1'    0.    0.    0.   0  'BOX '  3   3.    15.    96.2   
+GPARVOL54  'DMBH'   3  'DMS1'    0.    9.    0.   0  'TUBE'  3   0.     2.    96.2   
+GPARVOL55  'DMFR'  95  'DMBH'    0.    0.  -87.2  0  'TUBE'  3   1.27   2.     9.0   
+C
+C --     Collimator
+C
+GPARVOL60  'DCOL' 260  'DBV1'   -4.1   9.  -92.   0  'BOX '  3   1.    4.00    3.0   
+GPARVOL61  'DSLO' 203  'DCOL'    0.    0.    0.   0  'BOX '  3   1.    1.50    3.0  
+GVOLPOS02  'DCOL'      'DBV1'    4.1   9.  -92.   0  
+C
+C --     Magnets
+C
+GPARVOL70  'MQ1 ' 295  'HALL'    0.    0.  100.   0  'TUBE'  3   5.08 20.     22.525   
+GPARVOL71  'MQ2 ' 295  'HALL'    0.    0.  208.5  0  'TUBE'  3   5.08 20.     18.11   
+GPARVOL72  'MQ3 ' 295  'HALL'    0.    0.  274.2  0  'TUBE'  3   5.08 20.     18.11   
+C
+GPARVOL73  'MDP1' 295  'HALL'  -16.   -9.  422.8  0  'BOX '  3  10.   40.     76.0   
+GPARVOL74  'MDP2' 295  'HALL'   16.   -9.  422.8  0  'BOX '  3  10.   40.     76.0   
+C
+C --     Detector box
+C
+CGPARVOL80  'MDBX'  60  'HALL'   0.  -57.1 724.0  0  'BOX '  3  37.0  47.1    61.2   !!!***
+GPARVOL80  'MDBX'  60  'HALL'    0.  -47.1 724.0  0  'BOX '  3  37.0  47.1    61.2
+GPARVOL81  'MDBA'   2  'MDBX'    0.    1.1   1.8  0  'BOX '  3  18.5  29.8    40.0  
+GPARVOL82  'MDBW'   2  'MDBX'    0.    8.0 -49.7  0  'BOX '  3   7.5  16.5    11.5   
+C
+C --     Detector
+C
+GPARVOL90  'MDET'   2  'MDBA'    0.    0.    0.   7  'BOX '  3   9.0  17.0    34.0   
+C
+GPARVOL91  'DLGB'  35  'MDET'    0.    0.  -11.   0  'BOX '  3   8.2  16.2    20.1 
+C
+GPARVOL101 'HOD1'   2  'MDET'    0.    0.  -32.0  0  'BOX '  3   8.0  12.0     0.5   
+GPARVOL102 'HOD2'  35  'DLGB'    0.    0.    0.   0  'BOX '  3   8.2  16.2    20.1   
+GPARVOL103 'HOD3' 425  'MDET'    0.    0.  -33.5  0  'BOX '  3   9.0  17.0     0.1   
+C
+C --     Shielding
+C
+GPARVOL120 'S1LD'  60  'HALL'    0.  -29.  537.   0  'BOX '  3  30.   25.     14.0   
+GPARVOL121 'S1H1'   2  'S1LD'   -4.1   9.5   0.   9  'PARA'  6   10.5 14. 1.6 10. 0. 0.
+GPARVOL122 'S1H2'   2  'S1LD'    4.1   9.5   0.   9  'PARA'  6   10.5 14. 1.6 10. 0. 0.
+GPARVOL123 'S2LD'  60  'HALL'    0.   -8.9 610.   0  'BOX '  3  17.    3.5    50.0   
+CGPARVOL124 'S21B'  35  'HALL'   0.  -14.3 569.6  0  'BOX '  3  31.    1.9    3.8   !!!***
+GPARVOL124 'S21B'  35  'HALL'    0.  -14.3 620.0  0  'BOX '  3  31.    1.9    3.8
+GPARVOL125 'S21H'   2  'S21B'    0.   -0.5   0.   0  'BOX '  3  31.    1.4    3.3   
+CGPARVOL126 'S3LD'  60  'HALL'   0.   -7.5 723.   0  'BOX '  3  20.    2.0    57.0  !!!***
+GPARVOL126 'S3LD'  60  'HALL'    0.   -7.5 830.   0  'BOX '  3  20.    2.0    7.0 
+C
+C --     Hodoscope
+C
+C!!!***GPARVOL130 'HODM'   1  'HALL'    0. -27.5  572.  10  'BOX '  3   5.5   8.    0.25  
+C
+C ------------   Detectors
+C
+C
+C --     MSGC
+C
+C PARVOL130 'MSBX'   2  'HALL'   0.  -26.3  566.5   7  'BOX '  3   8.0   9.0    11.0   
+C
+C---          Hodoscope 1: Apperture left,right
+C
+HOD1SLATS        2
+HOD1MEDIUM     425
+HOD1MOTHER   'HOD1'
+HOD1GATE        30.
+HOD1SIZE1        2. 12. 0.5
+HOD1TYPE        2*1
+C
+C --         
+HOD1POSX    4.1  -4.1
+HOD1POSY    0.    0.
+HOD1POSZ    0.    0.
+C
+C---          Hodoscope 2: LG
+C
+HOD2SLATS        8
+HOD2MEDIUM     454
+HOD2MOTHER   'HOD2'
+HOD2IDTYPE      46
+HOD2GATE       100.
+HOD2SIZE1        4.  4.  20.
+HOD2TYPE        8*1
+C
+C --         
+HOD2POSX    4.1    4.1    4.1    4.1   -4.1   -4.1   -4.1   -4.1
+HOD2POSY   12.1    4.05  -4.05 -12.1   12.1    4.05  -4.05 -12.1    
+HOD2POSZ    8*0.
+C
+C---          Hodoscope 3: artificial - a plate in front of the apperture counters
+C
+HOD3SLATS        1
+HOD3MEDIUM     425
+HOD3MOTHER   'HOD3'
+HOD3GATE       100.
+HOD3SIZE1        9. 17. 0.1
+HOD3TYPE         1
+C
+C --         
+HOD3POSX   0.
+HOD3POSY   0.
+HOD3POSZ   0.
+C
+C
+C---          Hodoscope 4: 32 (in fact 30) - channel hodoscope
+C
+HOD4SLATS       32
+HOD4MEDIUM     425
+HOD4MOTHER   'HODM'
+HOD4IDTYPE      41
+HOD4GATE        20.
+HOD4SIZE1       5.5  0.25  0.25
+HOD4TYPE        32*1
+C
+C --         
+HOD4POSX   32*0.
+HOD4POSY   7.75  7.25  6.75  6.25  5.75  5.25  4.75  4.25  3.75  3.25
+           2.75  2.25  1.75  1.25  0.75  0.25  
+          -0.25 -0.75 -1.25 -1.75 -2.25 -2.75 -3.25 -3.75 -4.25 -4.75
+          -5.25 -5.75 -6.25 -6.75 -7.25 -7.75
+HOD4POSZ   32*0.
+C
+C ------------------------------------------------------------------------
+C
+C
+C ---            Detector set "MG1 " - MSGC 
+C
+GSET01NAME      'MG1 '
+GSET01TYPE      26            type (MSGC)
+GSET01UNITS      0            number of units
+GSET01GATE      80.           effective gate length (ns)
+C
+C                              posit                      1/2 size
+C              med moth rot  X   Y   Z    shape  npar   X     Y     Z
+GSET01VOL1PAR   17  3    0   0.  0.  0.3  'BOX '  3     2.    8.   0.015 
+GSET01VOL2PAR   23  3    0   0.  0. -0.3  'BOX '  3     3.    9.   0.015 
+GSET01VOL3PAR    2  0    0   0.  0. -0.3  'BOX '  3     3.    9.   0.4 
+C
+C --                       Planes
+C             #wires  pitch     angle  wir1-orig  flag
+GSET01PLA1PAR   640   0.0250     90.   -8.        0
+C
+C ----            Units
+C
+GSET01UNIMOTH    'HALL' 'HALL' 'HALL' 'HALL'   
+GSET01UNIROTM     4*0
+GSET01UNICENX     -4.0    4.0   -4.0    4.0   
+GSET01UNICENY     -25.   -25.   -28.5   -28.5
+GSET01UNICENZ     556.   556.   576.   576. 
+C GSET01UNIMOTH    'MSBX' 'MSBX' 'MSBX' 'MSBX'   
+C GSET01UNIROTM     4*0
+C GSET01UNICENX     -4.0   4.0  -4.0   4.0   
+C GSET01UNICENY      0.    0.    0.    0.
+C GSET01UNICENZ    -10.  -10.   10.   10.
+C
+C
+C  All planes:
+C      The value of coordinates are ignored (the unit is centered on the X)
+C                 if >1.E5
+GSET01DETEFFI      4*1.
+GSET01DETBACK      4*0.
+C
+C
+C ------------------------------------------------------------------------
+C
+C ---                   Time 0 point
+C
+XYZTIME0     -9. 0. 0.
+C
+C
+C ---  Absorbers
+C
+MEDABSORB1 97 1 2 3 4 7 8     all but muons and geantino
+C
+C ------------------------------------------------------------------------
+C
+C ---                   Beam 
+C
+BEAMPART       3                particle  e neg
+BEAMOMLIM     4.045  4.0450001  momentum limits
+BEAMDISPE     0.0001            momentum sigma
+BEAMSPECT     0   15*1.         momentum spectrum
+BEAMXREFR     -9.             X of the YZ plane of the profile reference
+C   Beam spot reference limits
+C                 Y           Z         SlopeY          SlopeZ
+BEAMYZLIM    -0.01 0.01  -0.01 0.01  -0.000  0.000   -0.000  0.000 
+C
+C      SlopeY=A0+A1*Y, + sigma(Gauss)
+C               A0          A1          sigma
+C BEAMSLOPCOR   1.441E-3    0.698E-3     0.75E-4     Y Slope correlation
+C               0.759E-3    0.592E-3     0.12E-3     Z Slope correlation
+BEAMSLOPCOR   0            0             0.          Y Slope correlation
+              0            0.            0.          Z Slope correlation
+C
+C BEAMDIMY      15                  dimension for Y
+C BEAMDIMZ      10                  dimension for Z
+C BEAMDIMY      .1                  dimension for Y
+C BEAMDIMZ      .1                  dimension for Z
+C BEAMDISTY    0.3 0.8 11*1. 0.8 0.3     Y profile
+C BEAMDISTZ    0.8 9*1. 0.8              Z profile
+C
+C
+C ------------------------------------------------------------------------
+C                      Pileup
+C       flux/sec  +/-ns   part.type
+C PILEUP  4.E7      150.     3
+C
+C
+C
+C ---                  Define the target volumes and the target area
+C
+C   --- this is not really correct! has to be updated! 
+TRGVOL    'MTAT'
+TRGPROB   0.01
+TRGLIM    -1. 1. -1. 1.  3.  11.
+C
+C ------------------------------------------------------------------------
+C
+C ===   This detector is defined here, since it is the same for all configurations,
+C ===   but it should be positioned in the data files to follow
+C
+C ------------------------------------------------------------------------ 
+END
+
+

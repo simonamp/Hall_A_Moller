@@ -1,0 +1,14 @@
+Genja, ja vosstanovil FSD (ubral peremychki).
+Ispol'zuja Sashin kumac s parametrami:
+/u/home/moller/paw/analysis/targpol/point_p.kumac bop=16 foil_coor=0.
+
+poluchilis' sleduyushie poljarizacii targets (v centre 0.0):
+
+runs 11740,11745,11746:  target #5 - 7.965% (SM 6.8um)
+runs 11747-11749: target #2 - 8.212% (SM 29.4 um)
+runs 11750,11751  target #1 - 7.95% (old SM 13um)
+runs 11752-11754  target #4 - 7.426% (Fe 9.3um)
+runs 11755,11756  target #3 - is not available
+ 
+
+Roman.

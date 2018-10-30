@@ -1,0 +1,36 @@
+*** Begin of history file: Sun Oct 11 10:03:21 2009
+exec run run=13634
+exec lg_spectra run=13634
+zone 2 3
+exec asymv run=13634
+exec asymv run=13635
+exec asymv run=13636
+exec asymv run=13637
+exec asym_av run1=13634 run2=13637
+exec asym_avt
+exec asymv run=13638
+exec asymv run=13639 delay=9
+exec asymv delay=9 run=13640
+exec asymv delay=9 run=13641
+exec asym_av run1=13638 run2=13641
+exec asymv delay=9 run=13642
+exec asymv delay=9 run=13643
+exec asymv delay=9 run=13644
+exec asymv delay=9 run=13645
+exec asym_av run1=13642 run2=13645
+exec asymv delay=9 run=13646
+exec asymv delay=9 run=13647
+exec asymv delay=9 run=13648
+exec asymv delay=9 run=13649
+exec asym_av run1=13646 run2=13649
+exec asymv delay=9 run=13650
+exec asymv delay=9 run=13651
+exec asym_av run1=13650 run2=13651
+exec asym_av run1=13634 run2=13651
+exec asymv delay=9 run=13652
+exec asymv delay=9 run=13653
+exec asymv delay=9 run=13654
+exec asymv delay=9 run=13655
+exec asym_av run1=13652 run2=13655
+exit
+*** End   of history file: Sun Oct 11 13:13:42 2009

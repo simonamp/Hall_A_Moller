@@ -1,0 +1,1460 @@
+******       Version with Foil-Empty coil Subtraction     ****
+fort/fil 55 test.ps
+meta 55 -111
+* Basic data:  fcl=foil-air   
+*     foil - integral value with foil "in"
+*     air  - integral value with foil "out" 
+*     fcl  - mean value for ~60 (foil-air) values
+ve/cr fcl(64) r 0.7994E-04 0.1077E-03 0.1202E-03 0.1286E-03_
+                0.1335E-03 0.1376E-03 0.1406E-03 0.1431E-03_
+                0.1468E-03 0.1497E-03 0.1508E-03 0.1518E-03_
+                0.1533E-03 0.1536E-03 0.1549E-03 0.1556E-03_
+                0.1560E-03 0.1570E-03 0.1567E-03 0.1580E-03_
+                0.1579E-03 0.1586E-03 0.1585E-03 0.1575E-03_
+                0.1557E-03 0.1559E-03 0.1582E-03 0.1591E-03_
+                0.1588E-03 0.1596E-03 0.1585E-03 0.1581E-03_
+                0.1604E-03 0.1594E-03 0.1588E-03 0.1611E-03_
+                0.1601E-03 0.1597E-03 0.1609E-03 0.1601E-03_
+                0.1597E-03 0.1612E-03 0.1602E-03 0.1599E-03_
+                0.1606E-03 0.1605E-03 0.1600E-03 0.1603E-03_
+                0.1609E-03 0.1607E-03 0.1610E-03 0.1609E-03_
+                0.1600E-03 0.1607E-03 0.1620E-03 0.1607E-03_
+                0.1607E-03 0.1627E-03 0.1602E-03 0.1617E-03_
+                0.1604E-03 0.1617E-03 0.1599E-03 0.1618E-03
+* Basic data:  fcle -  rms for ~60 (foil-air) values  
+ve/cr fcle(64) r 0.5548E-06 0.4446E-06 0.6083E-06 0.5509E-06_
+                 0.5650E-06 0.5423E-06 0.5001E-06 0.6788E-06_
+                 0.6844E-06 0.5972E-06 0.5227E-06 0.5756E-06_
+                 0.6218E-06 0.5532E-06 0.5176E-06 0.7312E-06_
+                 0.6356E-06 0.7411E-06 0.6513E-06 0.4029E-06_
+                 0.6889E-06 0.5749E-06 0.6980E-06 0.7022E-06_
+                 0.7085E-06 0.6247E-06 0.7710E-06 0.7254E-06_
+                 0.1216E-05 0.8303E-06 0.6162E-06 0.9062E-06_
+                 0.7165E-06 0.7892E-06 0.7985E-06 0.1037E-05_
+                 0.5049E-06 0.5992E-06 0.8811E-06 0.6378E-06_
+                 0.5254E-06 0.6120E-06 0.6423E-06 0.5767E-06_
+                 0.6430E-06 0.6971E-06 0.6615E-06 0.1690E-05_
+                 0.7087E-06 0.8347E-06 0.1402E-05 0.9299E-06_
+                 0.7567E-06 0.8121E-06 0.6529E-06 0.1001E-05_
+                 0.7660E-06 0.7379E-06 0.6119E-06 0.7820E-06_
+                 0.8558E-06 0.7143E-06 0.6909E-06 0.1035E-05  
+* Test data (are not used in this plot)
+* this is air coils ratio rat=v1a/v2a
+ve/cr rat(64) r 1.101 1.246 1.296 1.310 1.329 1.340 1.348 1.351_
+                1.358 1.363 1.372 1.372 1.375 1.375 1.376 1.379_
+                1.380 1.378 1.381 1.381 1.381 1.381 1.384 1.386_
+                1.393 1.394 1.388 1.386 1.388 1.388 1.389 1.386_
+                1.387 1.388 1.387 1.387 1.387 1.387 1.387 1.387_
+                1.388 1.386 1.387 1.387 1.387 1.386 1.387 1.390_
+                1.388 1.388 1.388 1.388 1.388 1.387 1.386 1.388_
+                1.386 1.386 1.388 1.386 1.387 1.387 1.387 1.387
+* Test data (are not used in this plot)
+ve/cr rate(64) r 0.6032E-01 0.2811E-01 0.2381E-01 0.1282E-01_
+                 0.1176E-01 0.9847E-02 0.9549E-02 0.9078E-02_
+                 0.6498E-02 0.6683E-02 0.5960E-02 0.4991E-02_
+                 0.4570E-02 0.3976E-02 0.3898E-02 0.3697E-02_
+                 0.3694E-02 0.3680E-02 0.3173E-02 0.2828E-02_
+                 0.3363E-02 0.2523E-02 0.2824E-02 0.2517E-02_
+                 0.2417E-02 0.2401E-02 0.2736E-02 0.3428E-02_
+                 0.4971E-02 0.2572E-02 0.2670E-02 0.1988E-02_
+                 0.2538E-02 0.1955E-02 0.2646E-02 0.3385E-02_
+                 0.1242E-02 0.1880E-02 0.1940E-02 0.1649E-02_
+                 0.1583E-02 0.1665E-02 0.1506E-02 0.1421E-02_
+                 0.1982E-02 0.1644E-02 0.1327E-02 0.2325E-02_
+                 0.1343E-02 0.1545E-02 0.1905E-02 0.1255E-02_
+                 0.1348E-02 0.1540E-02 0.1246E-02 0.1404E-02_
+                 0.1534E-02 0.1237E-02 0.1198E-02 0.1276E-02_
+                 0.1221E-02 0.1102E-02 0.8171E-03 0.1321E-02 
+* Test data (are not used in this plot)
+* this is for air=v1a-v3/3712.
+ve/cr air(64) r -0.2451E-05 -0.2184E-05 -0.1909E-05 -0.1992E-05_
+                -0.1750E-05 -0.1612E-05 -0.1545E-05 -0.1384E-05_
+                -0.1240E-05 -0.9945E-06 -0.3673E-06 -0.2313E-06_
+                 0.2086E-06  0.5076E-06  0.2013E-06  0.1169E-05_
+                 0.1088E-05  0.8112E-06  0.1120E-05  0.6821E-06_
+                 0.1050E-05  0.9704E-06  0.1918E-05  0.3624E-05_
+                 0.5801E-05  0.6100E-05  0.4066E-05  0.3303E-05_
+                 0.3446E-05  0.3220E-05  0.4484E-05  0.3223E-05_
+                 0.4756E-05  0.3579E-05  0.3619E-05  0.5047E-05_
+                 0.3737E-05  0.4140E-05  0.5677E-05  0.2637E-05_
+                 0.3037E-05  0.3831E-05  0.2828E-05  0.3413E-05_
+                 0.4712E-05  0.2809E-05  0.3586E-05  0.7314E-05_
+                 0.3622E-05  0.4393E-05  0.6091E-05  0.3916E-05_
+                 0.5239E-05  0.6574E-05  0.2790E-05  0.5170E-05_
+                 0.6304E-05  0.3078E-05  0.5373E-05  0.3453E-05_
+                 0.5361E-05  0.3907E-05  0.5463E-05  0.3541E-05
+* Test data (are not used in this plot)
+ve/cr aire(64) r 0.5341E-06 0.3357E-06 0.4242E-06 0.2772E-06_
+                 0.4335E-06 0.3496E-06 0.3681E-06 0.4092E-06_
+                 0.5248E-06 0.3688E-06 0.4300E-06 0.4428E-06_
+                 0.4121E-06 0.3964E-06 0.4140E-06 0.4472E-06_
+                 0.4618E-06 0.4754E-06 0.4531E-06 0.3784E-06_
+                 0.4788E-06 0.3637E-06 0.4806E-06 0.4406E-06_
+                 0.4680E-06 0.4302E-06 0.5615E-06 0.6348E-06_
+                 0.1018E-05 0.6489E-06 0.4830E-06 0.5149E-06_
+                 0.6254E-06 0.4597E-06 0.6077E-06 0.8821E-06_
+                 0.3827E-06 0.5141E-06 0.5340E-06 0.4716E-06_
+                 0.4903E-06 0.5396E-06 0.4948E-06 0.4134E-06_
+                 0.7105E-06 0.5510E-06 0.4468E-06 0.1595E-05_
+                 0.5032E-06 0.6349E-06 0.7183E-06 0.5530E-06_
+                 0.6122E-06 0.6399E-06 0.5389E-06 0.6157E-06_
+                 0.7061E-06 0.5703E-06 0.6211E-06 0.6191E-06_
+                 0.6343E-06 0.6948E-06 0.4636E-06 0.7271E-06   
+* Test data (are not used in this plot)
+* this is for air=v1a-v3a/3712.
+ve/cr aira(64) r -0.2457E-05 -0.2195E-05 -0.1963E-05 -0.2001E-05_
+                 -0.1720E-05 -0.1635E-05 -0.1622E-05 -0.1407E-05_
+                 -0.1470E-05 -0.1029E-05 -0.4557E-06 -0.3620E-06_
+                  0.7633E-07  0.4622E-06  0.2239E-06  0.8845E-06_
+                  0.8825E-06  0.7271E-06  0.1129E-05  0.6707E-06_
+                  0.8398E-06  0.9817E-06  0.1948E-05  0.3668E-05_
+                  0.5827E-05  0.6126E-05  0.3997E-05  0.3257E-05_
+                  0.3996E-05  0.3148E-05  0.4522E-05  0.2975E-05_
+                  0.3512E-05  0.3535E-05  0.3303E-05  0.3687E-05_
+                  0.3698E-05  0.3779E-05  0.4158E-05  0.2472E-05_
+                  0.2639E-05  0.2151E-05  0.2782E-05  0.3002E-05_
+                  0.2941E-05  0.2709E-05  0.3087E-05  0.7414E-05_
+                  0.3545E-05  0.4374E-05  0.4008E-05  0.3818E-05_
+                  0.4611E-05  0.4293E-05  0.3565E-05  0.4482E-05_
+                  0.3880E-05  0.3950E-05  0.4462E-05  0.4100E-05_
+                  0.4220E-05  0.4666E-05  0.4205E-05  0.4127E-05 
+* Test data (are not used in this plot)
+ve/cr airae(64) r 0.5339E-06 0.3364E-06 0.4276E-06 0.2794E-06_
+                  0.4396E-06 0.3530E-06 0.3659E-06 0.4245E-06_
+                  0.3399E-06 0.3729E-06 0.4353E-06 0.4450E-06_
+                  0.4134E-06 0.3875E-06 0.4174E-06 0.4449E-06_
+                  0.4365E-06 0.4736E-06 0.4497E-06 0.3747E-06_
+                  0.4783E-06 0.3830E-06 0.5006E-06 0.4453E-06_
+                  0.4640E-06 0.4316E-06 0.5549E-06 0.6382E-06_
+                  0.1010E-05 0.6439E-06 0.4950e-06 0.4400E-06_
+                  0.6229E-06 0.4617E-06 0.6314E-06 0.8755E-06_
+                  0.4023E-06 0.5313E-06 0.5412E-06 0.4593E-06_
+                  0.4716E-06 0.5483E-06 0.4960e-06 0.4387E-06_
+                  0.6961E-06 0.5490E-06 0.4653E-06 0.1596E-05_
+                  0.5168E-06 0.6292E-06 0.7241E-06 0.5219E-06_
+                  0.6101E-06 0.6301E-06 0.5704E-06 0.6206E-06_
+                  0.7140E-06 0.5604E-06 0.5874E-06 0.6437E-06_
+                  0.6110E-06 0.6875E-06 0.4706E-06 0.7561E-06
+* Test data (are not used in this plot)
+* this is a2=v2a-v3a/3712./1.3835 i.e. absolute unlinearuty of v2a
+ve/cr a2(64) r 0.1396E-05 0.1183E-05 0.1140E-05 0.1373E-05_
+               0.1274E-05 0.1297E-05 0.1078E-05 0.1417E-05_
+               0.1341E-05 0.1542E-05 0.1111E-05 0.1302E-05_
+               0.1285E-05 0.1655E-05 0.1460E-05 0.1504E-05_
+               0.1282E-05 0.1634E-05 0.1395E-05 0.1172E-05_
+               0.1160E-05 0.1333E-05 0.1301E-05 0.1479E-05_
+               0.1514E-05 0.1494E-05 0.1618E-05 0.1486E-05_
+               0.1045E-05 0.9618E-06 0.1406E-05 0.1174E-05_
+               0.1383E-05 0.9044E-06 0.1193E-05 0.1143E-05_
+               0.1126E-05 0.1325E-05 0.1406E-05 -0.6206E-06_
+              -0.1920E-06 0.2771E-06 0.5951E-07 0.8100E-07_
+               0.2401E-06 0.5271E-06 0.2024E-06 0.1344E-05_
+               0.4226E-07 0.2235E-06 0.1383E-06 0.1477E-06_
+               0.2053E-06 0.5240E-06 0.7436E-06 0.9918E-07_
+               0.1147E-05 0.9721E-06 -0.7736E-07 0.9833E-05_
+               0.1941E-06 0.5855E-06 0.1032E-06 0.2898E-06
+* Test data (are not used in this plot)
+ve/cr a2e(64) r 0.4245E-06 0.3706E-06 0.4275E-06 0.3160E-06_
+                0.4183E-06 0.3176E-06 0.3811E-06 0.3891E-06_
+                0.3715E-06 0.3685E-06 0.4498E-06 0.3853E-06_
+                0.4105E-06 0.3909E-06 0.4079E-06 0.4003E-06_
+                0.4483E-06 0.4479E-06 0.3959E-06 0.3953E-06_
+                0.4757E-06 0.3667E-06 0.4064E-06 0.3963E-06_
+                0.3743E-06 0.4153E-06 0.4591E-06 0.7254E-06_
+                0.9342E-06 0.5292E-06 0.5664E-06 0.4049E-06_
+                0.5549E-06 0.4234E-06 0.6061E-06 0.8165E-06_
+                0.2761E-06 0.4769E-06 0.5269E-06 0.4861E-06_
+                0.4484E-06 0.4977E-06 0.4548E-06 0.4707E-06_
+                0.6018E-06 0.5544E-06 0.4695E-06 0.1934E-06_
+                0.4828E-06 0.5493E-06 0.7502e-06 0.4557E-06_
+                0.5182E-06 0.6190E-06 0.5293E-06 0.5991E-06_
+                0.6605E-06 0.5471E-06 0.5154E-06 0.5831E-06_
+                0.5986E-06 0.4875E-06 0.4530E-06 0.6847E-06
+* Test data (are not used in this plot)
+* this is a3=a2/v2a, i.e. the relative unlinearity of v2a
+ve/cr a3(64) r 0.8965E-01 0.4244E-01 0.2818E-01 0.2587E-01_
+               0.1942E-01 0.1659E-01 0.1191E-01 0.1370E-01_
+               0.1044E-01 0.1003E-01 0.5461E-02 0.6807E-02_
+               0.6117E-02 0.7259E-02 0.5885E-02 0.5540E-02_
+               0.4587E-02 0.5598E-02 0.4583E-02 0.3884E+02_
+               0.3513E-02 0.3883E-02 0.3669E-02 0.4011E-02_
+               0.3976E-02 0.3793E-02 0.3982E-02 0.3536E-02_
+               0.2420E-02 0.2167E-02 0.3090E-02 0.2439E-02_
+               0.2764E-02 0.1743E-02 0.2191E-02 0.2024E-02_
+               0.1935E-02 0.2179E-02 0.2244E-02 -0.8262E-04_
+              -0.2866E-03 0.4009E-03 0.8360E-04 0.1098E-03_
+               0.3170E-03 0.6819E-03 0.2532E-03 0.1631E-02_
+               0.4979E-04 0.2609E-03 0.1555E-03 0.1635E-03_
+               0.2227E-03 0.5559E-03 0.7736E-03 0.9960E-04_
+               0.1140E-02 0.5345E-03 -0.7354E-04 0.9050E-03_
+               0.1760E-03 0.5095E-03 0.8821E-04 0.2394E-03
+* Test data (are not used in this plot)
+ve/cr a3e(64) r 0.2490E-01 0.1281E-01 0.1029E-01 0.5832E-02_
+                0.6243E-02 0.4019E-02 0.4117E-02 0.3705E-02_
+                0.2869E-02 0.2367E-02 0.2595E-02 0.2006E-02_
+                0.1946E-02 0.1696E-02 0.1636E-02 0.1492E-02_
+                0.1597E-02 0.1525E-02 0.1293E-02 0.1238E-02_
+                0.1431E-02 0.1066E-02 0.1137E-02 0.1072E-02_
+                0.9793E-03 0.1051E-02 0.1126E-02 0.1724E-02_
+                0.2163E-02 0.1189E-02 0.1233E-02 0.8407E-03_
+                0.1109E-02 0.8135E-03 0.1108E-02 0.1447E-02_
+                0.4730E-03 0.7843E-03 0.8401E-03 0.7522E-03_
+                0.6690E-03 0.7214E-03 0.6429E-03 0.6422E-03_
+                0.8000E-03 0.7176E-03 0.5892E-03 0.2361E-02_
+                0.5795E-03 0.6394E-03 0.8543E-03 0.5304E-03_
+                0.5615E-03 0.6580E-03 0.5515E-03 0.6090E-03_
+                0.6583E-03 0.5345E-03 0.4928E-03 0.5365E-03_
+                0.5384E-03 0.4245E-03 0.3862E-03 0.5655E-03
+* this is a4=d1/v1a, i.e. the relative unlinearity of v1a 
+ve/cr a4(64) r -0.1460     -0.6363E-01 -0.3769E-01 -0.2882E-01_
+               -0.2092E-01 -0.1561E-01 -0.1330E-01 -0.1010E-01_
+               -0.8438E-02 -0.4916E-02 -0.1927E-02 -0.1386E-02_
+                0.2603E-03  0.1464E-02  0.6516E-03  0.2405E-02_
+                0.2291E-02  0.1813E-02  0.2683E-02  0.1627E-02_
+                0.1839E-02  0.2071E-02  0.3958E-02  0.7175E-02_
+                0.1098E-01  0.1117E-01  0.7087E-02  0.5610E-02_
+                0.5672E-02  0.5117E-02  0.7133E-02  0.4460E-02_
+                0.5058E-02  0.4911E-02  0.4378E-02  0.4718E-02_
+                0.4583E-02  0.4489E-02  0.4785E-02  0.2764E-02_
+                0.2839E-02  0.2252E-02  0.2833E-02  0.2952E-02_
+                0.2820E-02  0.2534E-02  0.2797E-02  0.6483E-02_
+                0.3066E-02  0.3669E-02  0.3289E-02  0.3069E-02_
+                0.3604E-02  0.3287E-02  0.2681E-02  0.3280E-02_
+                0.2786E-02  0.2794E-02  0.3069E-02  0.2725E-02_
+                0.2740E-02  0.2930E-02  0.2584E-02  0.2458E-02    
+* Test data (are not used in this plot)
+ve/cr a4e(64) r 0.3723E-01 0.1030E-01 0.8512E-02 0.4113E-02_
+                0.5166E-02 0.3415E-02 0.3044E-02 0.3075E-02_
+                0.1964E-02 0.1791E-02 0.1842E-02 0.1694E-02_
+                0.1428E-02 0.1229E-02 0.1224E-02 0.1210E-02_
+                0.1132E-02 0.1178E-02 0.1068E-02 0.8539E-03_
+                0.1045E-02 0.8064E-03 0.1012E-02 0.8647E-03_
+                0.8631E-03 0.7775E-03 0.9778E-03 0.1092E-02_
+                0.1680E-02 0.1040E-02 0.7759E-03 0.6568E-03_
+                0.8934E-03 0.6391E-03 0.8653E-03 0.1117E-02_
+                0.4966E-03 0.6286E-03 0.6188E-03 0.5128E-03_
+                0.5061E-03 0.5727E-03 0.5032E-03 0.4299E-03_
+                0.6655E-03 0.5123E-03 0.4203E-03 0.1387E-02_
+                0.4465E-03 0.5256E-02 0.5915E-03 0.4180E-03_
+                0.4750E-03 0.4797E-03 0.4275E-03 0.4530E-03_
+                0.5118E-03 0.3945E-03 0.4032E-03 0.4270E-03_
+                0.3954E-03 0.4306E-03 0.2885E-03 0.4496E-03
+* k=1.3869 
+ve/cr da(64) r -0.4439E-05 -0.3929E-05 -0.3678E-05 -0.4083E-05_
+               -0.3806E-05 -0.3693E-05 -0.3421E-05 -0.3720E-05_
+               -0.3763E-05 -0.3684E-05 -0.2580E-05 -0.2814E-05_
+               -0.2416E-05 -0.2620E-05 -0.2640E-05 -0.2102E-05_
+               -0.1841E-05 -0.2526E-05 -0.1838E-05 -0.2034E-05_
+               -0.1891E-05 -0.2028E-05 -0.1061E-05  0.3700E-06_
+                0.2436E-05  0.2721E-05  0.3713E-06 -0.2272E-06_
+                0.4828E-06  0.3072E-06  0.1024E-05 -0.2882E-06_
+                0.1049E-06  0.5203E-06 -0.2012E-06  0.1961E-06_
+                0.1643E-06 -0.1198E-06  0.8183E-07  0.3525E-06_
+                0.6258E-06 -0.5740E-06  0.2923E-06  0.3943E-06_
+                0.4919E-07 -0.6399E-06  0.1006E-06  0.2759E-05_
+                0.6544E-06  0.1145E-05  0.9240E-06  0.5663E-06_
+                0.1193E-05  0.3687E-06 -0.7282E-06  0.1003E-05_
+               -0.1125E-05 -0.8598E-06  0.1014E-05 -0.9471E-06_
+                0.1772E-06 -0.4539E-07  0.7535E-07 -0.3899E-06               
+* Test data (are not used in this plot)
+ve/cr dae(64) r 0.1048E-05 0.8331E-06 0.9941E-06 0.7030E-06_
+                0.7907E-06 0.7838E-06 0.8809E-06 0.9505E-06_
+                0.8465E-06 0.8689E-06 0.1033E-05 0.9590E-06_
+                0.9693E-06 0.9167E-06 0.9687E-06 0.9874E-06_
+                0.1038E-05 0.1079E-05 0.9678E-06 0.9012E-06_
+                0.1114E-05 0.8671E-06 0.1003E-05 0.9269E-06_
+                0.9188E-06 0.9431E-06 0.1112E-05 0.1431E-05_
+                0.2146E-05 0.1140E-05 0.1216E-05 0.9553E-06_
+                0.1272E-05 0.1013E-05 0.1443E-05 0.1901E-05_
+                0.7218E-06 0.1140E-05 0.1213E-05 0.1065E-05_
+                0.1062E-05 0.1149E-05 0.1066E-05 0.1040E-05_
+                0.1489E-05 0.1269E-05 0.1056E-05 0.1904E-05_
+                0.1119E-05 0.1323E-05 0.1674E-05 0.1124E-05_
+                0.1242E-05 0.1452E-05 0.1195E-05 0.1382E-05_
+                0.1543E-05 0.1264E-05 0.1252E-05 0.1384E-05_
+                0.1355E-05 0.1261E-05 0.9587E-06 0.1604E-05
+* Basic data: BOP current values = 1/2 real current in Ampers
+ve/cr cur(64) r 0.1  0.2  0.3  0.4  0.5  0.6  0.7  0.8 1.0  1.2_
+                1.35 1.5  1.65 1.8  1.95 2.1  2.2  2.3 2.4  2.5_
+                2.6  2.7  2.8  2.9  3.0  3.1  3.2  3.3 3.4  3.5_
+                3.6  3.8  3.95 4.1  4.3  4.45 4.6  4.8 4.95 5.1_
+                5.3  5.45 5.6  5.8  5.95 6.1  6.3  6.5 6.6  6.8_
+                6.95 7.1  7.3  7.45 7.6  7.8  7.95 8.1 8.3  8.6_
+                8.8  9.1  9.3  9.6
+* Basic data: current error value
+ve/cr cure(64) r 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01_
+                 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01
+* Recalculation: Current to Magnetic Field
+sigma cur1=cur/8.0*818.1
+zone 1 1
+*zone 1 2
+* Recalculation: Integral Value to Polarization (source - Roman) 
+sigma pol=fcl/147.*6.99228E+06
+* Correction on used real foil width relatively ideal foil form
+sigma pol=pol*1.041
+*sigma pol1=(fcl-1.374*da)/147.*6.99228E+06
+* Correction on used real foil width relatively ideal foil form
+sigma pole=fcle/147.*6.99228E+06*1.041
+opt grid
+* Plot for Saturation Curve
+
+*null 0. 1000.  2.5 9.0
+set xmgl 4
+set ymgu 5
+set asiz 0.35
+opt fit
+opt ndat
+null 0. 1100.  7 8.1
+
+Atitle 'H, Gs' 'Polarization, "Y#' 
+*KEY 550.5 5.7 20 'Sup1+Air1, without demagnetiz.' 0.15 ! S
+text 0. 9.7 'Measured 05/05/00' 0.3
+text 300.0 1.5 'Supermendure, Closed Geometry.' 0.3
+*text 300.0 1.5 'a)Supermendure, Closed Geometry.' 0.3
+GRAPHICS/HPLOT/AERRORS cur1 pol cure cure pole pole 64 20 0.1 ! 
+
+if $VDIM(par,1)<3 then
+  ve/cr par(10) r
+endif
+if $VDIM(epar,1)<3 then
+  ve/cr epar(10) r
+endif
+ve/in par(1:3) 7.7 0.06 0.
+ve/fit cur1(4:64) pol(4:64) pole(4:64) f_foilm.f s 3 par ! ! ! epar
+po=par(1)
+po=$FORMAT([po],'F5.3')
+epo=epar(1)
+epo=$FORMAT([epo],'F5.3')
+txt='H=240 Gs  P='//[po]//'"a#'//[epo]//'(stat)"Y#'
+igset txci 4
+text 500 7.5 [txt] 0.4
+igset txci 1
+text 500 7.4 'Fit with"j# p1*atan(p2*(H-p3))' 0.3
+
+yy1=[po]-0.15
+igset plci 2
+gr/prim/arrow 240 240 [yy1] [po] 0.4 
+igset plci 1
+
+set xmgl 2
+set ymgu 2
+set asiz 0.28
+opt date
+
+exitm
+
+* Plot for Air Unlinearity
+null 0. 1000.  -0.2  0.02
+GRAPHICS/HPLOT/AERRORS cur1 a4 cure cure a4e a4e 64 20 0.1 ! S
+Atitle 'H, Gs' 'DeltaI/I' 0.3
+text 200. -0.24 'b)Unlinearity of Main Coil Integral versus Current Integral.' 0.3
+text 155. -0.14 'DeltaI / I = ( Iair - k * Icoil ) / Iair' 0.4
+
+zone
+wait
+* Reading data file, foil-air subtraction and plots of needed values
+*                      for all 64 measurements
+zone 2 2
+ve/read v1,v2,v3 pf01a05h
+ve/read v1a,v2a,v3a pa01a05h
+*sigma f01=v1-v1a
+*sigma f01=v2a-v3a/3712./1.3835
+sigma f01=v1a-v3a/3712.
+sigma f01=f01/v1a
+sigma d01=v1a/v2a
+*sigma d01=v1a-1.3869*v2a
+sigma v01=v3
+ve/plot f01
+*ve/plot d01
+*ve/plot v01
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 1 2
+ve/read v1,v2,v3 pf02a05h
+ve/read v1a,v2a,v3a pa02a05h
+*sigma f02=v1-v1a
+*sigma f02=v2a-v3a/3712./1.3835
+sigma f02=v1a-v3a/3712.
+sigma f02=f02/v1a
+sigma d02=v1a/v2a
+*sigma d02=v1a-1.3869*v2a
+sigma v02=v3
+ve/plot f02
+*ve/plot d02
+*ve/plot v02
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf03a05h
+ve/read v1a,v2a,v3a pa03a05h
+*sigma f03=v1-v1a
+sigma f03=v2a-v3a
+*sigma f03=v2a-v3a/3712./1.3835
+sigma f03=v1a-v3a/3712.
+sigma f03=f03/v1a
+sigma d03=v1a/v2a
+*sigma d03=v1a-1.3869*v2a
+sigma v03=v3
+ve/plot f03
+*ve/plot d03
+*ve/plot v03
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone
+ve/read v1,v2,v3 pf04a05h
+ve/read v1a,v2a,v3a pa04a05h
+*sigma f04=v1-v1a
+*sigma f04=v2a-v3a/3712./1.3835
+sigma f04=v1a-v3a/3712.
+sigma f04=f04/v1a
+sigma d04=v1a/v2a
+*sigma d04=v1a-1.3869*v2a
+sigma v04=v3
+ve/plot f04
+*ve/plot d04
+*ve/plot v04
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf05a05h
+ve/read v1a,v2a,v3a pa05a05h
+*sigma f05=v1-v1a
+*sigma f05=v2a-v3a/3712./1.3835
+sigma f05=v1a-v3a/3712.
+sigma f05=f05/v1a
+sigma d05=v1a/v2a
+*sigma d05=v1a-1.3869*v2a
+sigma v05=v3
+ve/plot f05
+*ve/plot d05
+*ve/plot v05
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf06a05h
+ve/read v1a,v2a,v3a pa06a05h
+*sigma f06=v1-v1a
+*sigma f06=v2a-v3a/3712./1.3835
+sigma f06=v1a-v3a/3712.
+sigma f06=f06/v1a
+sigma d06=v1a/v2a
+*sigma d06=v1a-1.3869*v2a
+sigma v06=v3
+ve/plot f06
+*ve/plot d06
+*ve/plot v06
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf07a05h
+ve/read v1a,v2a,v3a pa07a05h
+*sigma f07=v1-v1a
+*sigma f07=v2a-v3a/3712./1.3835
+sigma f07=v1a-v3a/3712.
+sigma f07=f07/v1a
+sigma d07=v1a/v2a
+*sigma d07=v1a-1.3869*v2a
+sigma v07=v3
+ve/plot f07
+*ve/plot d07
+*ve/plot v07
+*ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone
+ve/read v1,v2,v3 pf08a05h
+ve/read v1a,v2a,v3a pa08a05h
+*sigma f08=v1-v1a
+*sigma f08=v2a-v3a/3712./1.3835
+sigma f08=v1a-v3a/3712.
+sigma f08=f08/v1a
+sigma d08=v1a/v2a
+*sigma d08=v1a-1.3869*v2a
+sigma v08=v3
+ve/plot f08
+*ve/plot d08
+*ve/plot v08
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf10a05h
+ve/read v1a,v2a,v3a pa10a05h
+*sigma f10=v1-v1a
+*sigma f10=v2a-v3a/3712./1.3835
+sigma f10=v1a-v3a/3712.
+sigma f10=f10/v1a
+sigma d10=v1a/v2a
+*sigma d10=v1a-1.3869*v2a
+sigma v10=v3
+ve/plot f10
+*ve/plot d10
+*ve/plot v10
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf12a05h
+ve/read v1a,v2a,v3a pa12a05h
+*sigma f12=v1-v1a
+*sigma f12=v2a-v3a/3712./1.3835
+sigma f12=v1a-v3a/3712.
+sigma f12=f12/v1a
+sigma d12=v1a/v2a
+*sigma d12=v1a-1.3869*v2a
+sigma v12=v3
+ve/plot f12
+*ve/plot d12
+*ve/plot v12
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf135a05h
+ve/read v1a,v2a,v3a pa135a05h
+*sigma f135=v1-v1a
+*sigma f135=v2a-v3a/3712./1.3835
+sigma f135=v1a-v3a/3712.
+sigma f135=f135/v1a
+sigma d135=v1a/v2a
+*sigma d135=v1a-1.3869*v2a
+sigma v135=v3
+ve/plot f135
+*ve/plot d135
+*ve/plot v135
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf15a05h
+ve/read v1a,v2a,v3a pa15a05h
+*sigma f15=v1-v1a
+*sigma f15=v2a-v3a/3712./1.3835
+sigma f15=v1a-v3a/3712.
+sigma f15=f15/v1a
+sigma d15=v1a/v2a
+*sigma d15=v1a-1.3869*v2a
+sigma v15=v3
+ve/plot f15
+*ve/plot d15
+*ve/plot v15
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf165a05h
+ve/read v1a,v2a,v3a pa165a05h
+*sigma f165=v1-v1a
+*sigma f165=v2a-v3a/3712./1.3835
+sigma f165=v1a-v3a/3712.
+sigma f165=f165/v1a
+sigma d165=v1a/v2a
+*sigma d165=v1a-1.3869*v2a
+sigma v165=v3
+ve/plot f165
+*ve/plot d165
+*ve/plot v165
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf18a05h
+ve/read v1a,v2a,v3a pa18a05h
+*sigma f18=v1-v1a
+*sigma f18=v2a-v3a/3712./1.3835
+sigma f18=v1a-v3a/3712.
+sigma f18=f18/v1a
+sigma d18=v1a/v2a
+*sigma d18=v1a-1.3869*v2a
+sigma v18=v3
+ve/plot f18
+*ve/plot d18
+*ve/plot v18
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf195a05h
+ve/read v1a,v2a,v3a pa195a05h
+*sigma f195=v1-v1a
+*sigma f195=v2a-v3a/3712./1.3835
+sigma f195=v1a-v3a/3712.
+sigma f195=f195/v1a
+sigma d195=v1a/v2a
+*sigma d195=v1a-1.3869*v2a
+sigma v195=v3
+ve/plot f195
+*ve/plot d195
+*ve/plot v195
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf21a05h
+ve/read v1a,v2a,v3a pa21a05h
+*sigma f21=v1-v1a
+*sigma f21=v2a-v3a/3712./1.3835
+sigma f21=v1a-v3a/3712.
+sigma f21=f21/v1a
+sigma d21=v1a/v2a
+*sigma d21=v1a-1.3869*v2a
+sigma v21=v3
+ve/plot f21
+*ve/plot d21
+*ve/plot v21
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf22a05h
+ve/read v1a,v2a,v3a pa22a05h
+*sigma f22=v1-v1a
+*sigma f22=v2a-v3a/3712./1.3835
+sigma f22=v1a-v3a/3712.
+sigma f22=f22/v1a
+sigma d22=v1a/v2a
+*sigma d22=v1a-1.3869*v2a
+sigma v22=v3
+ve/plot f22
+*ve/plot d22
+*ve/plot v22
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf23a05h
+ve/read v1a,v2a,v3a pa23a05h
+*sigma f23=v1-v1a
+*sigma f23=v2a-v3a/3712./1.3835
+sigma f23=v1a-v3a/3712.
+sigma f23=f23/v1a
+sigma d23=v1a/v2a
+*sigma d23=v1a-1.3869*v2a
+sigma v23=v3
+ve/plot f23
+*ve/plot d23
+*ve/plot v23
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone
+ve/read v1,v2,v3 pf24a05h
+ve/read v1a,v2a,v3a pa24a05h
+*sigma f24=v1-v1a
+*sigma f24=v2a-v3a/3712./1.3835
+sigma f24=v1a-v3a/3712.
+sigma f24=f24/v1a
+sigma d24=v1a/v2a
+*sigma d24=v1a-1.3869*v2a
+sigma v24=v3
+ve/plot f24
+*ve/plot d24
+*ve/plot v24
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf25a05h
+ve/read v1a,v2a,v3a pa25a05h
+*sigma f25=v1-v1a
+*sigma f25=v2a-v3a/3712./1.3835
+sigma f25=v1a-v3a/3712.
+sigma f25=f25/v1a
+sigma d25=v1a/v2a
+*sigma d25=v1a-1.3869*v2a
+sigma v25=v3
+ve/plot f25
+*ve/plot d25
+*ve/plot v25
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf26a05h
+ve/read v1a,v2a,v3a pa26a05h
+*sigma f26=v1-v1a
+*sigma f26=v2a-v3a/3712./1.3835
+sigma f26=v1a-v3a/3712.
+sigma f26=f26/v1a
+sigma d26=v1a/v2a
+*sigma d26=v1a-1.3869*v2a
+sigma v26=v3
+ve/plot f26
+*ve/plot d26
+*ve/plot v26
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf27a05h
+ve/read v1a,v2a,v3a pa27a05h
+*sigma f27=v1-v1a
+*sigma f27=v2a-v3a/3712./1.3835
+sigma f27=v1a-v3a/3712.
+sigma f27=f27/v1a
+sigma d27=v1a/v2a
+*sigma d27=v1a-1.3869*v2a
+sigma v27=v3
+ve/plot f27
+*ve/plot d27
+*ve/plot v27
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf28a05h
+ve/read v1a,v2a,v3a pa28a05h
+*sigma f28=v1-v1a
+*sigma f28=v2a-v3a/3712./1.3835
+sigma f28=v1a-v3a/3712.
+sigma f28=f28/v1a
+sigma d28=v1a/v2a
+*sigma d28=v1a-1.3869*v2a
+sigma v28=v3
+ve/plot f28
+*ve/plot d28
+*ve/plot v28
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf29a05h
+ve/read v1a,v2a,v3a pa29a05h
+*sigma f29=v1-v1a
+*sigma f29=v2a-v3a/3712./1.3835
+sigma f29=v1a-v3a/3712.
+sigma f29=f29/v1a
+sigma d29=v1a/v2a
+*sigma d29=v1a-1.3869*v2a
+sigma v29=v3
+ve/plot f29
+*ve/plot d29
+*ve/plot v29
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf30a05h
+ve/read v1a,v2a,v3a pa30a05h
+*sigma f30=v1-v1a
+*sigma f30=v2a-v3a/3712./1.3835
+sigma f30=v1a-v3a/3712.
+sigma f30=f30/v1a
+sigma d30=v1a/v2a
+*sigma d30=v1a-1.3869*v2a
+sigma v30=v3
+ve/plot f30
+*ve/plot d30
+*ve/plot v30
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf31a05h
+ve/read v1a,v2a,v3a pa31a05h
+*sigma f31=v1-v1a
+*sigma f31=v2a-v3a/3712./1.3835
+sigma f31=v1a-v3a/3712.
+sigma f31=f31/v1a
+sigma d31=v1a/v2a
+*sigma d31=v1a-1.3869*v2a
+sigma v31=v3
+ve/plot f31
+*ve/plot d31
+*ve/plot v31
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf32a05h
+ve/read v1a,v2a,v3a pa32a05h
+*sigma f32=v1-v1a
+*sigma f32=v2a-v3a/3712./1.3835
+sigma f32=v1a-v3a/3712.
+sigma f32=f32/v1a
+sigma d32=v1a/v2a
+*sigma d32=v1a-1.3869*v2a
+sigma v32=v3
+ve/plot f32
+*ve/plot d32
+*ve/plot v32
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone
+ve/read v1,v2,v3 pf33a05h
+ve/read v1a,v2a,v3a pa33a05h
+*sigma f33=v1-v1a
+*sigma f33=v2a-v3a/3712./1.3835
+sigma f33=v1a-v3a/3712.
+sigma f33=f33/v1a
+sigma d33=v1a/v2a
+*sigma d33=v1a-1.3869*v2a
+sigma v33=v3
+ve/plot f33
+*ve/plot d33
+*ve/plot v33
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf34a05h
+ve/read v1a,v2a,v3a pa34a05h
+*sigma f34=v1-v1a
+*sigma f34=v2a-v3a/3712./1.3835
+sigma f34=v1a-v3a/3712.
+sigma f34=f34/v1a
+sigma d34=v1a/v2a
+*sigma d34=v1a-1.3869*v2a
+sigma v34=v3
+ve/plot f34
+*ve/plot d34
+*ve/plot v34
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone
+ve/read v1,v2,v3 pf35a05h
+ve/read v1a,v2a,v3a pa35a05h
+*sigma f35=v1-v1a
+*sigma f35=v2a-v3a/3712./1.3835
+sigma f35=v1a-v3a/3712.
+sigma f35=f35/v1a
+sigma d35=v1a/v2a
+*sigma d35=v1a-1.3869*v2a
+sigma v35=v3
+ve/plot f35
+*ve/plot d35
+*ve/plot v35
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf36a05h
+ve/read v1a,v2a,v3a pa36a05h
+*sigma f36=v1-v1a
+*sigma f36=v2a-v3a/3712./1.3835
+sigma f36=v1a-v3a/3712.
+sigma f36=f36/v1a
+sigma d36=v1a/v2a
+*sigma d36=v1a-1.3869*v2a
+sigma v36=v3
+ve/plot f36
+*ve/plot d36
+*ve/plot v36
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf38a05h
+ve/read v1a,v2a,v3a pa38a05h
+*sigma f38=v1-v1a
+*sigma f38=v2a-v3a/3712./1.3835
+sigma f38=v1a-v3a/3712.
+sigma f38=f38/v1a
+sigma d38=v1a/v2a
+*sigma d38=v1a-1.3869*v2a
+sigma v38=v3
+ve/plot f38
+*ve/plot d38
+*ve/plot v38
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf395a05h
+ve/read v1a,v2a,v3a pa395a05h
+*sigma f395=v1-v1a
+*sigma f395=v2a-v3a/3712./1.3835
+sigma f395=v1a-v3a/3712.
+sigma f395=f395/v1a
+sigma d395=v1a/v2a
+*sigma d395=v1a-1.3869*v2a
+sigma v395=v3
+ve/plot f395
+*ve/plot d395
+*ve/plot v395
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone  
+ve/read v1,v2,v3 pf41a05h
+ve/read v1a,v2a,v3a pa41a05h
+*sigma f41=v1-v1a
+*sigma f41=v2a-v3a/3712./1.3835
+sigma f41=v1a-v3a/3712.
+sigma f41=f41/v1a
+sigma d41=v1a/v2a
+*sigma d41=v1a-1.3869*v2a
+sigma v41=v3
+ve/plot f41
+*ve/plot d41
+*ve/plot v41
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf43a05h
+ve/read v1a,v2a,v3a pa43a05h
+*sigma f43=v1-v1a
+*sigma f43=v2a-v3a/3712./1.3835
+sigma f43=v1a-v3a/3712.
+sigma f43=f43/v1a
+sigma d43=v1a/v2a
+*sigma d43=v1a-1.3869*v2a
+sigma v43=v3
+ve/plot f43
+*ve/plot d43
+*ve/plot v43
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf445a05h
+ve/read v1a,v2a,v3a pa445a05h
+*sigma f445=v1-v1a
+*sigma f445=v2a-v3a/3712./1.3835
+sigma f445=v1a-v3a/3712.
+sigma f445=f445/v1a
+sigma d445=v1a/v2a
+*sigma d445=v1a-1.3869*v2a
+sigma v445=v3
+ve/plot f445
+*ve/plot d445
+*ve/plot v445
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf46a05h
+ve/read v1a,v2a,v3a pa46a05h
+sigma f46=v1-v1a
+*sigma f46=v2a-v3a/3712./1.3835
+sigma f46=v1a-v3a/3712.
+sigma f46=f46/v1a
+sigma d46=v1a/v2a
+*sigma d46=v1a-1.3869*v2a
+sigma v46=v3
+ve/plot f46
+*ve/plot d46
+*ve/plot v46
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone
+ve/read v1,v2,v3 pf48a05h
+ve/read v1a,v2a,v3a pa48a05h
+*sigma f48=v1-v1a
+*sigma f48=v2a-v3a/3712./1.3835
+sigma f48=v1a-v3a/3712.
+sigma f48=f48/v1a
+sigma d48=v1a/v2a
+*sigma d48=v1a-1.3869*v2a
+sigma v48=v3
+ve/plot f48
+*ve/plot d48
+*ve/plot v48
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf495a05h
+ve/read v1a,v2a,v3a pa495a05h
+*sigma f495=v1-v1a
+*sigma f495=v2a-v3a/3712./1.3835
+sigma f495=v1a-v3a/3712.
+sigma f495=f495/v1a
+sigma d495=v1a/v2a
+*sigma d495=v1a-1.3869*v2a
+sigma v495=v3
+ve/plot f495
+*ve/plot d495
+*ve/plot v495
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf51a05h
+ve/read v1a,v2a,v3a pa51a05h
+*sigma f51=v1-v1a
+*sigma f51=v2a-v3a/3712./1.3835
+sigma f51=v1a-v3a/3712.
+sigma f51=f51/v1a
+sigma d51=v1a/v2a
+*sigma d51=v1a-1.3869*v2a
+sigma v51=v3
+ve/plot f51
+*ve/plot d51
+*ve/plot v51
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf53a05h
+ve/read v1a,v2a,v3a pa53a05h
+*sigma f53=v1-v1a
+*sigma f53=v2a-v3a/3712./1.3835
+sigma f53=v1a-v3a/3712.
+sigma f53=f53/v1a
+sigma d53=v1a/v2a
+*sigma d53=v1a-1.3869*v2a
+sigma v53=v3
+ve/plot f53
+*ve/plot d53
+*ve/plot v53
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf545a05h
+ve/read v1a,v2a,v3a pa545a05h
+*sigma f545=v1-v1a
+*sigma f545=v2a-v3a/3712./1.3835
+sigma f545=v1a-v3a/3712.
+sigma f545=f545/v1a
+sigma d545=v1a/v2a
+*sigma d545=v1a-1.3869*v2a
+sigma v545=v3
+ve/plot f545
+*ve/plot d545
+*ve/plot v545
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf56a05h
+ve/read v1a,v2a,v3a pa56a05h
+*sigma f56=v1-v1a
+*sigma f56=v2a-v3a/3712./1.3835
+sigma f56=v1a-v3a/3712.
+sigma f56=f56/v1a
+sigma d56=v1a/v2a
+*sigma d56=v1a-1.3869*v2a
+sigma v56=v3
+ve/plot f56
+*ve/plot d56
+*ve/plot v56
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone  
+ve/read v1,v2,v3 pf58a05h
+ve/read v1a,v2a,v3a pa58a05h
+*sigma f58=v1-v1a
+*sigma f58=v2a-v3a/3712./1.3835
+sigma f58=v1a-v3a/3712.
+sigma f58=f58/v1a
+sigma d58=v1a/v2a
+*sigma d58=v1a-1.3869*v2a
+sigma v58=v3
+ve/plot f58
+*ve/plot d58
+*ve/plot v58
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf595a05h
+ve/read v1a,v2a,v3a pa595a05h
+*sigma f595=v1-v1a
+*sigma f595=v2a-v3a/3712./1.3835
+sigma f595=v1a-v3a/3712.
+sigma f595=f595/v1a
+sigma d595=v1a/v2a
+*sigma d595=v1a-1.3869*v2a
+sigma v595=v3
+ve/plot f595
+*ve/plot d595
+*ve/plot v595
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone  
+ve/read v1,v2,v3 pf61a05h
+ve/read v1a,v2a,v3a pa61a05h
+*sigma f61=v1-v1a
+*sigma f61=v2a-v3a/3712./1.3835
+sigma f61=v1a-v3a/3712.
+sigma f61=f61/v1a
+sigma d61=v1a/v2a
+*sigma d61=v1a-1.3869*v2a
+sigma v61=v3
+ve/plot f61
+*ve/plot d61
+*ve/plot v61
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf63a05h
+ve/read v1a,v2a,v3a pa63a05h
+*sigma f63=v1-v1a
+*sigma f63=v2a-v3a/3712./1.3835
+sigma f63=v1a-v3a/3712.
+sigma f63=f63/v1a
+sigma d63=v1a/v2a
+*sigma d63=v1a-1.3869*v2a
+sigma v63=v3
+ve/plot f63
+*ve/plot d63
+*ve/plot v63
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf65a05h
+ve/read v1a,v2a,v3a pa65a05h
+*sigma f65=v1-v1a
+*sigma f65=v2a-v3a/3712./1.3835
+sigma f65=v1a-v3a/3712.
+sigma f65=f65/v1a
+sigma d65=v1a/v2a
+*sigma d65=v1a-1.3869*v2a
+sigma v65=v3
+ve/plot f65
+*ve/plot d65
+*ve/plot v65
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2 
+ve/read v1,v2,v3 pf66a05h
+ve/read v1a,v2a,v3a pa66a05h
+*sigma f66=v1-v1a
+*sigma f66=v2a-v3a/3712./1.3835
+sigma f66=v1a-v3a/3712.
+sigma f66=f66/v1a
+sigma d66=v1a/v2a
+*sigma d66=v1a-1.3869*v2a
+sigma v66=v3
+ve/plot f66
+*ve/plot d66
+*ve/plot v66
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf68a05h
+ve/read v1a,v2a,v3a pa68a05h
+*sigma f68=v1-v1a
+*sigma f68=v2a-v3a/3712./1.3835
+sigma f68=v1a-v3a/3712.
+sigma f68=f68/v1a
+sigma d68=v1a/v2a
+*sigma d68=v1a-1.3869*v2a
+sigma v68=v3
+ve/plot f68
+*ve/plot d68
+*ve/plot v68
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf695a05h
+ve/read v1a,v2a,v3a pa695a05h
+*sigma f695=v1-v1a
+*sigma f695=v2a-v3a/3712./1.3836
+sigma f695=v1a-v3a/3712.
+sigma f695=f695/v1a
+sigma d695=v1a/v2a
+*sigma d695=v1a-1.3869*v2a
+sigma v695=v3
+ve/plot f695
+*ve/plot d695
+*ve/plot v695
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf71a05h
+ve/read v1a,v2a,v3a pa71a05h
+*sigma f71=v1-v1a
+*sigma f71=v2a-v3a/3712./1.3835
+sigma f71=v1a-v3a/3712.
+sigma f71=f71/v1a
+sigma d71=v1a/v2a
+*sigma d71=v1a-1.3869*v2a
+sigma v71=v3
+ve/plot f71
+*ve/plot d71
+*ve/plot v71
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf73a05h
+ve/read v1a,v2a,v3a pa73a05h
+*sigma f73=v1-v1a
+*sigma f73=v2a-v3a/3712./1.3835
+sigma f73=v1a-v3a/3712.
+sigma f73=f73/v1a
+sigma d73=v1a/v2a
+*sigma d73=v1a-1.3869*v2a
+sigma v73=v3
+ve/plot f73
+*ve/plot d73
+*ve/plot v73
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf745a05h
+ve/read v1a,v2a,v3a pa745a05h
+*sigma f745=v1-v1a
+*sigma f745=v2a-v3a/3712./1.3835
+sigma f745=v1a-v3a/3712.
+sigma f745=f745/v1a
+sigma d745=v1a/v2a
+*sigma d745=v1a-1.3869*v2a
+sigma v745=v3
+ve/plot f745
+*ve/plot d745
+*ve/plot v745
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone
+ve/read v1,v2,v3 pf76a05h
+ve/read v1a,v2a,v3a pa76a05h
+*sigma f76=v1-v1a
+*sigma f76=v2a-v3a/3712./1.3835
+sigma f76=v1a-v3a/3712.
+sigma f76=f76/v1a
+sigma d76=v1a/v2a
+*sigma d76=v1a-1.3869*v2a
+sigma v76=v3
+ve/plot f76
+*ve/plot d76
+*ve/plot v76
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf78a05h
+ve/read v1a,v2a,v3a pa78a05h
+*sigma f78=v1-v1a
+*sigma f78=v2a-v3a/3712./1.3835
+sigma f78=v1a-v3a/3712.
+sigma f78=f78/v1a
+sigma d78=v1a/v2a
+*sigma d78=v1a-1.3869*v2a
+sigma v78=v3
+ve/plot f78
+*ve/plot d78
+*ve/plot v78
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf795a05h
+ve/read v1a,v2a,v3a pa795a05h
+*sigma f795=v1-v1a
+*sigma f795=v2a-v3a/3712./1.3835
+sigma f795=v1a-v3a/3712.
+sigma f795=f795/v1a
+sigma d795=v1a/v2a
+*sigma d795=v1a-1.3869*v2a
+sigma v795=v3
+ve/plot f795
+*ve/plot d795
+*ve/plot v795
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf81a05h
+ve/read v1a,v2a,v3a pa81a05h
+*sigma f81=v1-v1a
+*sigma f81=v2a-v3a/3712./1.3835
+sigma f81=v1a-v3a/3712.
+sigma f81=f81/v1a
+sigma d81=v1a/v2a
+*sigma d81=v1a-1.3869*v2a
+sigma v81=v3
+ve/plot f81
+*ve/plot d81
+*ve/plot v81
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf83a05h
+ve/read v1a,v2a,v3a pa83a05h
+*sigma f83=v1-v1a
+*sigma f83=v2a-v3a/3712./1.3835
+sigma f83=v1a-v3a/3712.
+sigma f83=f83/v1a
+sigma d83=v1a/v2a
+*sigma d83=v1a-1.3869*v2a
+sigma v83=v3
+ve/plot f83
+*ve/plot d83
+*ve/plot v83
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait 
+*zone 
+ve/read v1,v2,v3 pf86a05h
+ve/read v1a,v2a,v3a pa86a05h
+*sigma f86=v1-v1a
+*sigma f86=v2a-v3a/3712./1.3835
+sigma f86=v1a-v3a/3712.
+sigma f86=f86/v1a
+sigma d86=v1a/v2a
+*sigma d86=v1a-1.3869*v2a
+sigma v86=v3
+ve/plot f86
+*ve/plot d86
+*ve/plot v86
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+wait
+zone 2 2
+ve/read v1,v2,v3 pf88a05h
+ve/read v1a,v2a,v3a pa88a05h
+*sigma f88=v1-v1a
+*sigma f88=v2a-v3a/3712./1.3835
+sigma f88=v1a-v3a/3712.
+sigma f88=f88/v1a
+sigma d88=v1a/v2a
+*sigma d88=v1a-1.3869*v2a
+sigma v88=v3
+ve/plot f88
+*ve/plot d88
+*ve/plot v88
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf91a05h
+ve/read v1a,v2a,v3a pa91a05h
+*sigma f91=v1-v1a
+*sigma f91=v2a-v3a/3712./1.3835
+sigma f91=v1a-v3a/3712.
+sigma f91=f91/v1a
+sigma d91=v1a/v2a
+*sigma d91=v1a-1.3869*v2a
+sigma v91=v3
+ve/plot f91
+*ve/plot d91
+*ve/plot v91
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+wait
+*zone 
+ve/read v1,v2,v3 pf93a05h
+ve/read v1a,v2a,v3a pa93a05h
+*sigma f93=v1-v1a
+*sigma f93=v2a-v3a/3712./1.3835
+sigma f93=v1a-v3a/3712.
+sigma f93=f93/v1a
+sigma d93=v1a/v2a
+*sigma d93=v1a-1.3869*v2a
+sigma v93=v3
+ve/plot f93
+*ve/plot d93
+*ve/plot v93
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+*zone
+*wait
+*zone 
+ve/read v1,v2,v3 pf96a05h
+ve/read v1a,v2a,v3a pa96a05h
+*sigma f96=v1-v1a
+*sigma f96=v2a-v3a/3712./1.3835
+sigma f96=v1a-v3a/3712.
+sigma f96=f96/v1a
+sigma d96=v1a/v2a
+*sigma d96=v1a-1.3869*v2a
+sigma v96=v3
+ve/plot f96
+*ve/plot d96
+*ve/plot v96
+ve/delete v1,v2,v3
+ve/delete v1a,v2a,v3a
+zone
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+*** Begin of history file: Fri Oct 23 12:52:39 2009
+exec run run=13697
+exec lg_spectra run=13697
+exec asymv run=13697
+exec run run=13698
+exec lg_spectra run=13698
+exec asymv run=13698
+exec run run=13699
+exec lg_spectra run=13699
+exec asymv run=13699
+exec run run=13700
+exec lg_spectra run=13700
+exec asymv run=13700
+exec run run=13701
+exec asymv run=13701
+exec asymv run=13702
+zone
+exec asym_av run1=13699 run2=13703
+exec asym_avt
+zone 2 3
+exec asymv run=13703
+exec asymv run=13704
+exec asymv run=13705
+exec asymv run=13706
+exec asym_av run1=13703 run2=13706
+exec asym_avt
+exec asymv run=13707
+exec asymv run=13708
+exec asymv run=13709
+exec asymv run=13710
+exec asym_avt
+exec asym_av run1=13707 run2=13710
+exec asymv run=13711
+exec asymv run=13712
+exec asymv run=13713
+exec asymv run=13714
+exec asym_av run1=13711 run2=13714
+exec asym_avt
+exec asymv run=13715
+exec asymv run=13716
+exec asymv run=13717
+exec asymv run=13718
+exec asym_av run1=13715 run2=13718
+exec asym_avt
+exec asym_avt
+exec asym_av run1=13703 run2=13718
+exec asym_avt
+exec long_scan run=13719
+exec asymv run=13720
+exec asymv run=13721
+exec asymv run=13722
+exec asymv run=13723
+exec asym_av run1=13720 run2=13723
+exec asym_avt
+exec asym_avt
+exec asym_avt
+exec asymv run=13724
+exec asymv run=13725
+exec asymv run=13726
+exec asymv run=13728
+exec asymv run=13729
+exec asymv run=13730
+exec asym_av run1=13724 run2=13730
+exec asym_avt
+exec asym_av run1=13724 run2=13729
+exec asymv run=13731
+exec asymv run=13732
+exec asymv run=13733
+exec asymv run=13734
+exec asymv run=13735
+exec asymv run=13736
+exec asymv run=13737
+exec asymv run=13738
+exec asymv run=13739
+exec asymv run=13740
+exec asymv run=13741
+exec asymv run=13742
+exec asymv run=13743
+exec asymv run=13744
+exec asymv run=13745
+exec asymv run=13746
+exec asymv run=13746
+exec asymv run=13747
+exec asymv run=13748
+exec asymv run=13749
+exec asymv run=13750
+exec asymv run=13751
+exec asymv run=13752
+exec asymv run=13753
+exec asymv run=13754
+exec asymv run=13755
+exec asymv run=13756
+exec asymv run=13757
+exec asymv run=13758
+exec asymv run=13759
+exec asymv run=13760
+exec asymv run=13761
+exec asymv run=13762
+exec asymv run=13763
+exec asymv run=13764
+exec asymv run=13765
+exec asym_av run1=13762 run2=13765
+exec asym_avt
+exec asym_avt
+exec asymv run=13766
+exec asymv run=13767
+exec asymv run=13768
+exec asymv run=13769
+exec asymv run=13770
+exec asym_avt
+exit
+*** End   of history file: Sat Oct 24 20:14:52 2009

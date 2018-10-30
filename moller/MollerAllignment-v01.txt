@@ -1,0 +1,174 @@
+In[1]:= 2*2
+
+Out[1]= 4
+
+In[2]:= /* ap1   ->    \[CapitalDelta]Xp/\[Delta]X
+/* ap2   ->    \[CapitalDelta]Xp/\[Delta]Y
+/* ap3   ->    \[CapitalDelta]Xp/\[Delta]\[Alpha]
+/* ap4    ->    \[CapitalDelta]Xp/\[Delta]\[Beta]
+
+In[2]:= /* am1   ->    \[CapitalDelta]Xm/\[Delta]X 
+/* am2   ->    \[CapitalDelta]Xm/\[Delta]Y
+/* am3   ->    \[CapitalDelta]Xm/\[Delta]\[Alpha]
+/* am4    ->    \[CapitalDelta]Xm/\[Delta]\[Beta]
+
+In[2]:= 
+/* bp1   ->    \[CapitalDelta]Yp/\[Delta]X
+/* bp2   ->    \[CapitalDelta]Yp/\[Delta]Y
+/* bp3   ->    \[CapitalDelta]Yp/\[Delta]\[Alpha]
+/* bp4    ->    \[CapitalDelta]Yp/\[Delta]\[Beta]
+
+
+In[2]:= /* bm1   ->    \[CapitalDelta]Ym/\[Delta]X
+/* bm2   ->    \[CapitalDelta]Ym/\[Delta]Y
+/* bm3   ->    \[CapitalDelta]Ym/\[Delta]\[Alpha]
+/* bm4    ->    \[CapitalDelta]Ym/\[Delta]\[Beta]
+
+In[2]:= am1[bpm_] := ap1[bpm]
+am2[bpm_] := -ap2[bpm]
+am3[bpm_] := ap3[bpm]
+am4[bpm_] := -ap4[bpm]
+
+In[6]:= bm1[bpm_] := -bp1[bpm]
+bm2[bpm_] := bp2[bpm]
+bm3[bpm_] := -bp3[bpm]
+bm4[bpm_] := bp4[bpm]
+
+In[10]:= \[CapitalDelta]Xp[
+  bpm_] := \[Delta]X ap1[bpm] + \[Delta]Y ap2[bpm] + \[Delta]\[Alpha] ap3[
+    bpm] + \[Delta]\[Beta] ap4[bpm]
+\[CapitalDelta]Xm[
+  bpm_] := \[Delta]X am1[bpm] + \[Delta]Y am2[bpm] + \[Delta]\[Alpha] am3[
+    bpm] + \[Delta]\[Beta] am4[bpm]
+
+In[12]:= \[CapitalDelta]Yp[
+  bpm_] := \[Delta]X bp1[bpm] + \[Delta]Y bp2[bpm] + \[Delta]\[Alpha] bp3[
+    bpm] + \[Delta]\[Beta] bp4[bpm]
+\[CapitalDelta]Ym[
+  bpm_] := \[Delta]X bm1[bpm] + \[Delta]Y bm2[bpm] + \[Delta]\[Alpha] bm3[
+    bpm] + \[Delta]\[Beta] bm4[bpm]
+
+In[14]:= XS[bpm_] := \[CapitalDelta]Xp[bpm] + \[CapitalDelta]Xm[bpm]
+XM[bpm_] := \[CapitalDelta]Xp[bpm] - \[CapitalDelta]Xm[bpm]
+
+In[16]:= YS[bpm_] := \[CapitalDelta]Yp[bpm] + \[CapitalDelta]Ym[bpm]
+YM[bpm_] := \[CapitalDelta]Yp[bpm] - \[CapitalDelta]Ym[bpm]
+
+In[18]:= Solve[{XS[1] == \[CapitalDelta]xp[1] + \[CapitalDelta]xm[1], 
+  XM[1] == \[CapitalDelta]xp[1] - \[CapitalDelta]xm[1], 
+  YS[1] == \[CapitalDelta]yp[1] + \[CapitalDelta]ym[1], 
+  YM[1] == \[CapitalDelta]yp[1] - \[CapitalDelta]ym[1],
+  XS[2] == \[CapitalDelta]xp[2] + \[CapitalDelta]xm[2], 
+  XM[2] == \[CapitalDelta]xp[2] - \[CapitalDelta]xm[2],
+  YS[2] == \[CapitalDelta]yp[2] + \[CapitalDelta]ym[2], 
+  YM[2] == \[CapitalDelta]yp[2] - \[CapitalDelta]ym[2]},
+ {\[Delta]X, \[Delta]Y, \[Delta]\[Alpha], \[Delta]\[Beta]}]
+
+Out[18]= {}
+
+In[19]:= Solve[{XS[1] == \[CapitalDelta]xp[1] + \[CapitalDelta]xm[1], 
+  XM[1] == \[CapitalDelta]xp[1] - \[CapitalDelta]xm[1], 
+  YS[1] == \[CapitalDelta]yp[1] + \[CapitalDelta]ym[1], 
+  YM[1] == \[CapitalDelta]yp[1] - \[CapitalDelta]ym[1]},
+ {\[Delta]X, \[Delta]Y, \[Delta]\[Alpha], \[Delta]\[Beta]}]
+
+Out[19]= {{
+\[Delta]X -> (-bp3[1] \[CapitalDelta]xm[1] - bp3[1] \[CapitalDelta]xp[1] - 
+    ap3[1] \[CapitalDelta]ym[1] + ap3[1] \[CapitalDelta]yp[1])/(
+   2 (ap3[1] bp1[1] - 
+      ap1[1] bp3[1])), 
+\[Delta]\[Alpha] -> -((-bp1[1] \[CapitalDelta]xm[1] - 
+     bp1[1] \[CapitalDelta]xp[1] - ap1[1] \[CapitalDelta]ym[1] + 
+     ap1[1] \[CapitalDelta]yp[1])/(
+    2 (ap3[1] bp1[1] - 
+       ap1[1] bp3[1]))), 
+\[Delta]Y -> -((-bp4[1] \[CapitalDelta]xm[1] + 
+     bp4[1] \[CapitalDelta]xp[1] - ap4[1] \[CapitalDelta]ym[1] - 
+     ap4[1] \[CapitalDelta]yp[1])/(
+    2 (ap4[1] bp2[1] - ap2[1] bp4[1]))), 
+\[Delta]\[Beta] -> -((
+    bp2[1] \[CapitalDelta]xm[1] - bp2[1] \[CapitalDelta]xp[1] + 
+     ap2[1] \[CapitalDelta]ym[1] + ap2[1] \[CapitalDelta]yp[1])/(
+    2 (ap4[1] bp2[1] - ap2[1] bp4[1])))}}
+
+In[20]:= Solve[{XS[2] == \[CapitalDelta]xp[2] + \[CapitalDelta]xm[2], 
+  XM[2] == \[CapitalDelta]xp[2] - \[CapitalDelta]xm[2], 
+  YS[2] == \[CapitalDelta]yp[2] + \[CapitalDelta]ym[2], 
+  YM[2] == \[CapitalDelta]yp[2] - \[CapitalDelta]ym[2]},
+ {\[Delta]X, \[Delta]Y, \[Delta]\[Alpha], \[Delta]\[Beta]}]
+
+Out[20]= {{\[Delta]X -> (-bp3[2] \[CapitalDelta]xm[2] - bp3[2] \[CapitalDelta]xp[2] - 
+    ap3[2] \[CapitalDelta]ym[2] + ap3[2] \[CapitalDelta]yp[2])/(
+   2 (ap3[2] bp1[2] - 
+      ap1[2] bp3[2])), \[Delta]\[Alpha] -> -((-bp1[2] \[CapitalDelta]xm[2] - 
+     bp1[2] \[CapitalDelta]xp[2] - ap1[2] \[CapitalDelta]ym[2] + 
+     ap1[2] \[CapitalDelta]yp[2])/(
+    2 (ap3[2] bp1[2] - 
+       ap1[2] bp3[2]))), \[Delta]Y -> -((-bp4[2] \[CapitalDelta]xm[2] + 
+     bp4[2] \[CapitalDelta]xp[2] - ap4[2] \[CapitalDelta]ym[2] - 
+     ap4[2] \[CapitalDelta]yp[2])/(
+    2 (ap4[2] bp2[2] - ap2[2] bp4[2]))), \[Delta]\[Beta] -> -((
+    bp2[2] \[CapitalDelta]xm[2] - bp2[2] \[CapitalDelta]xp[2] + 
+     ap2[2] \[CapitalDelta]ym[2] + ap2[2] \[CapitalDelta]yp[2])/(
+    2 (ap4[2] bp2[2] - ap2[2] bp4[2])))}}
+
+In[21]:= FortranForm[
+ dX = (-bp3[1] \[CapitalDelta]xm[1] - bp3[1] \[CapitalDelta]xp[1] - 
+   ap3[1] \[CapitalDelta]ym[1] + ap3[1] \[CapitalDelta]yp[1])/(
+  2 (ap3[1] bp1[1] - ap1[1] bp3[1]))]
+
+Out[21]//FortranForm=
+        (-(bp3(1)*\[CapitalDelta]xm(1)) - bp3(1)*\[CapitalDelta]xp(1) - ap3(1)*\[CapitalDelta]ym(1) + ap3(1)*\[CapitalDelta]yp(1))/
+     -  (2.*(ap3(1)*bp1(1) - ap1(1)*bp3(1)))
+
+In[22]:= FortranForm[
+ dY = -((-bp1[1] \[CapitalDelta]xm[1] - bp1[1] \[CapitalDelta]xp[1] - 
+    ap1[1] \[CapitalDelta]ym[1] + ap1[1] \[CapitalDelta]yp[1])/(
+   2 (ap3[1] bp1[1] - ap1[1] bp3[1])))]
+
+Out[22]//FortranForm=
+        -(-(bp1(1)*\[CapitalDelta]xm(1)) - bp1(1)*\[CapitalDelta]xp(1) - ap1(1)*\[CapitalDelta]ym(1) + ap1(1)*\[CapitalDelta]yp(1))/
+     -  (2.*(ap3(1)*bp1(1) - ap1(1)*bp3(1)))
+
+In[23]:= FortranForm[
+ dAlpha = (-bp4[1] \[CapitalDelta]xm[1] + bp4[1] \[CapitalDelta]xp[1] - 
+    ap4[1] \[CapitalDelta]ym[1] - ap4[1] \[CapitalDelta]yp[1])/(
+   2 (ap4[1] bp2[1] - ap2[1] bp4[1]))*(-1)]
+
+Out[23]//FortranForm=
+        -(-(bp4(1)*\[CapitalDelta]xm(1)) + bp4(1)*\[CapitalDelta]xp(1) - ap4(1)*\[CapitalDelta]ym(1) - ap4(1)*\[CapitalDelta]yp(1))/
+     -  (2.*(ap4(1)*bp2(1) - ap2(1)*bp4(1)))
+
+In[24]:= FortranForm[
+ dBeta = -((
+   bp2[1] \[CapitalDelta]xm[1] - bp2[1] \[CapitalDelta]xp[1] + 
+    ap2[1] \[CapitalDelta]ym[1] + ap2[1] \[CapitalDelta]yp[1])/(
+   2 (ap4[1] bp2[1] - ap2[1] bp4[1])))]
+
+Out[24]//FortranForm=
+        -(bp2(1)*\[CapitalDelta]xm(1) - bp2(1)*\[CapitalDelta]xp(1) + ap2(1)*\[CapitalDelta]ym(1) + ap2(1)*\[CapitalDelta]yp(1))/
+     -  (2.*(ap4(1)*bp2(1) - ap2(1)*bp4(1)))
+
+In[25]:= ap1[1] := 0.5
+
+In[26]:= ap2[1] := 0.1
+
+In[27]:= ap3[1] := 0.1
+
+In[28]:= ap4[1] := 1.4
+
+In[29]:= bp1[1] := -0.1
+
+In[30]:= bp2[1] := 0.5
+
+In[31]:= bp3[1] := -1.4
+
+In[32]:= bp4[1] := 0.1
+
+In[33]:= \[CapitalDelta]xp[1] := 2.1
+
+In[34]:= \[CapitalDelta]xm[1] := -0.9
+
+In[35]:= \[CapitalDelta]yp[1] := -0.9
+
+In[36]:= \[CapitalDelta]ym[1] := 2.1

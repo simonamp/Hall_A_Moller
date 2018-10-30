@@ -1,0 +1,215 @@
+MACRO cal_res lun=lun00 id=300 x1=1. x2=3. fill=2 ip=1 txt=
+*
+* ---  Measure the amplitude/resolution of LG depending on the hodoscope hit
+*
+  n=16
+  nh=200
+  tit='Resolution of the central modules '//[txt]
+  titl [tit]
+
+  if [fill]=0 then
+    goto plot
+  elseif [fill]=1 then
+    goto fit
+  endif
+  ve/cr para(20) r
+  ve/cr epara(20) r
+
+  n1=[n]+1
+  2dh [id] 'LG - H' [nh] [x1] [x2] [n] 1 [n1] 
+  
+  do i=1,[n]
+    id1=[id]+[i]
+    tit='LG energy for hodoscope='//[i]
+    1dh [id1] [tit] [nh] [x1] [x2]
+  enddo  
+
+  cut $45 nadc>0.and.cal_hmul.f(1,16,180,210)=1
+
+  nt/pl //[lun]/1.cal_hclu.f(180,210,1,1,1,99)+0.001%cal_adcsum.f(4,13,1,4,4,1,0) $45 -[id]
+
+  ve/cr vtmp([nh],[n]) r
+  ve/cr vtmp1([nh]) r
+  h/get_vec/con [id] vtmp
+
+  nent=$HINFO([id],'ENTRIES')
+  if [nent]=0 then
+    mess ' No entries - stop the kumac'
+    exitm
+  endif
+
+  do i=1,[n]
+   id1=[id]+[i]
+   ve/op/vbias vtmp(1:[nh],[i]) 0. vtmp1(1:[nh])
+   h/put_vec/con [id1] vtmp1    
+  enddo
+
+%  do i=1,[n]
+%   
+%   id1=[id]+[i]
+%   nt/pl //[lun]/1.cal_adcsum.f(4,13,1,4,4,1,0) $45.and.cal_hmul.f([i],[i],180,210)>0 -[id1]
+%
+%  enddo
+   
+  fit:
+  xc=$SIGMA(([x1]+[x2])/2.)
+
+  ve/cr  hod([n]) r 
+  if $VDIM(pres,1)<16 then 
+    ve/cr  enr([n],8) r 
+    ve/cr eenr([n],8) r 
+    ve/cr  res([n],8) r 
+    ve/cr eres([n],8) r 
+
+    ve/cr  pres([n],8) r 
+    ve/cr  epres([n],8) r 
+    ve/cr  presn([n],8) r 
+    ve/cr  epresn([n],8) r 
+    ve/cr  penr([n],8) r 
+    ve/cr  peenr([n],8) r
+  endif
+
+  ve/cr  erco([nh]) r
+  ve/cr  erhi([nh]) r
+  ve/cr  erfu([nh]) r
+
+  ve/cr pstep(10) r 1. 0.01 0.005 
+  ve/cr pmin(10) r  1. 1.   0.02
+  ve/cr pmax(10) r 1.E5 3.  0.2
+
+  do i=1,[n]
+   
+   ve/in hod([i]) [i]
+
+   id1=[id]+[i]
+
+   h/get_vec/con [id1] erco
+   do j=1,[nh]
+     a=erco([j])
+     if [a]>0 then
+       a=$SIGMA(sqrt([a]))
+     else
+       a=0.1
+     endif
+     ve/in erhi([j]) [a]
+   enddo
+   h/put_vec/err [id1] erhi(1:[nh])
+
+   a=$HINFO([id1],'MAX')
+   ve/in para(1) [a]
+   a=$HINFO([id1],'MEAN')
+   a=$SIGMA(([a]+8.*[xc])/9.)
+   ve/in para(2) [a]
+   ve/in para(3) 0.15
+   h/fit [id1] g L 3 para pstep pmin pmax epara
+
+   do iter=1,2
+     h/get_vec/fun [id1] erfu
+     do j=1,[nh]
+       b=erco([j])
+       if [b]<4 then
+        b=erfu([j])
+       endif
+       a=0.
+       if [b]>0.5 then
+         a=$SIGMA(sqrt([b]))
+       endif
+       ve/in erhi([j]) [a]
+     enddo
+     h/put_vec/err [id1] erhi
+     h/fit [id1] g ! 3 para ! ! ! epara
+   enddo
+
+   e=para(2)
+   ee=epara(2)
+   r=para(3)
+   er=epara(3)
+   
+   ve/in enr([i],[ip]) [e]
+   ve/in eenr([i],[ip]) [ee]
+   ve/in res([i],[ip]) [r]
+   ve/in eres([i],[ip]) [er]
+
+   b=$SIGMA([r]/[e])
+   ve/in pres([i],[ip]) [b]
+   b=$SIGMA([er]/[e])
+   ve/in epres([i],[ip]) [b]
+
+   b=$SIGMA([r]/sqrt([e]))
+   ve/in presn([i],[ip]) [b]
+   b=$SIGMA([er]/sqrt([e]))
+   ve/in epresn([i],[ip]) [b]
+
+   b=$SIGMA(1./sqrt([e]))
+   ve/in penr([i],[ip]) [b]
+   b=$SIGMA(1./sqrt([ee]))
+*   ve/in peenr([i],[ip]) [b]
+  enddo
+
+  plot:
+
+  zone 2 2
+  y2=$SIGMA(VMAX(pres))
+  y2=[y2]+0.005
+  null 0 1 0.0 [y2]
+  atit '1./sqrt(E) GeV^-0.5!' 'Resolution [s]E/E'
+  gr/hpl/err penr(1:[n],[ip]) pres(1:[n],[ip]) peenr(1:[n],[ip]) epres(1:[n],[ip]) [n] 20 0.1
+  set dmod 2
+  fu/pl 0+0.05*x 0 1 s
+  set dmod 3
+  fu/pl 0+0.06*x 0 1 s
+  set dmod 0
+  text 0.7 0.01  '0+0.05/sqrt(E)' 0.25
+  text 0.7 0.014 '0+0.06/sqrt(E)' 0.25
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(a)' 0.25
+  opt tic
+ 
+
+  y2=$SIGMA(VMAX(pres))
+  y2=[y2]+0.005
+  null 0.6 0.8 0.03 [y2]
+  atit '1./sqrt(E) GeV^-0.5!' ' '
+  gr/hpl/err penr(1:[n],[ip]) pres(1:[n],[ip]) peenr(1:[n],[ip]) epres(1:[n],[ip]) [n] 20 0.2
+  ve/in para(1) 0.06
+  ve/fit     penr(1:[n],[ip]) pres(1:[n],[ip]) epres(1:[n],[ip]) fun_lin.f 0 1 para ! ! ! epara
+  a=para(1)
+  e=epara(1)
+  set dmod 2
+  fu/pl [a]*x 0.6 0.8 s
+  set dmod 0
+  b=$FORMAT([a],F5.4)
+  c=$FORMAT([e],F5.4)
+  tit='0+'//[b]//'"A#'//[c]//'/sqrt(E)'
+  text 0.7 0.035 [tit] 0.25
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(b)' 0.25
+  opt tic
+ 
+  null 0.6 0.8 0.03 0.09
+  atit '1./sqrt(E) GeV^-0.5!' 'Resolution [s]E/E*sqrt(E) GeV^0.5!'
+  gr/hpl/err penr(1:[n],[ip]) presn(1:[n],[ip]) peenr(1:[n],[ip]) epresn(1:[n],[ip]) [n] 20 0.2
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(c)' 0.25
+  opt tic
+ 
+  null 1 17 1.8 2.6
+  atit 'Hodoscope channel' 'Mean energy in LG, GeV'
+  gr/hpl/err hod enr(1:[n],[ip]) peenr(1:[n],[ip]) eenr(1:[n],[ip]) [n] 20 0.1
+  set dmod 2
+  fu/pl 26.8/(26.8-(x-7)*0.5)*2.05 1 17 s
+  text 7 1.9 '26.8/(26.8-(x-7)*0.5)*2.05' 0.25
+  set dmod 0
+  opt ntic
+  null 0 1 0 1 sab
+  text 0.05 0.9 '(d)' 0.25
+  opt tic
+ 
+RETURN
+
+
+
+

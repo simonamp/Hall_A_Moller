@@ -1,0 +1,161 @@
+MACRO point_p target=1 bop=20.0 foil_coor=0.0
+*read target ' Input target number (0-6)'
+	if [target]=6 then
+mess  Target 6 = empty position (Right Limit)
+	goto eend
+	elseif [target]=5 then
+mess  Target 5:  6.8mkm Supermendure foil
+mess  Supermendure made in Germany, rolled and annealed in Kharkov
+	file=sup07
+	thik=6.8
+	elseif [target]=4 then
+mess  Target 4:  9.3mkm pure Iron foil
+mess  Iron made in Germany, rolled and annealed in Kharkov
+	file=fe10
+	thik=9.3
+	elseif [target]=3 then
+**mess  Target polarization information temporary is not available
+**	goto eend
+mess  Target 3:  14.3mkm pure Iron foil
+mess  Iron made in Germany, rolled and annealed in Kharkov
+	file=fe14
+	thik=14.3
+	elseif [target]=2 then
+mess  Target 2:  29.4mkm Supermendure foil   
+mess  Supermendure delivered from SLAC E-158 
+	file=sup30
+	thik=29.4
+	elseif [target]=1 then
+mess  Target 1: 13 mkm Old Supermendur foil (short)
+mess  Polarization=7.95%
+	goto eend
+	elseif [target]=0 then
+mess  Target 0: 16.5mkm Aluminum foil (Left Limit)
+	goto eend
+	endif
+ve/re p1,p2,p3,p4,p5,p6 [target]_[file]fc.dat ! ! -/*/
+set * 
+opt nstat
+opt ndate
+opt grid
+opt nbox
+sigma nc=nco(p1)
+cc=nc
+ve/cr res([cc]) r
+** coordinate along the foil, relatively to the center, mm 
+sigma coor=array([cc],-25.0#30.0)
+ve/input coor(251) 0.0
+** calculation of the foil polarization for input BOP parameter
+inpc:
+	if [bop]<15.08 then
+mess Input current must be more than 15.08Amp
+read bop ' Input POB current, Amps' 
+	goto inpc
+	elseif [bop]<16.87 then
+	bopmin=15.08
+	sigma polmin=p5
+	bopmax=16.86
+	sigma polmax=p4
+	goto calc
+	elseif [bop]<18.72 then
+	bopmin=16.86
+	sigma polmin=p4
+	bopmax=18.71
+	sigma polmax=p3
+	goto calc
+	elseif [bop]<20.01 then
+	bopmin=18.71
+	sigma polmin=p3
+	bopmax=20.00
+	sigma polmax=p2
+	goto calc
+	elseif [bop]>20.0 then
+mess Input current must be less than 20.0Amp
+read bop ' Input POB current, Amps' 
+	goto inpc
+	endif
+	calc:
+rc=([bopmax]-[bop])/([bop]-[bopmin])
+sigma pres=([rc]*polmin+polmax)/(1+[rc])
+** magnetic field calculation
+** coordinate along the foil, mm
+ve/cr pos(9) r -40.543 -30.407 -20.271 -10.136 0. 10.136 20.271 30.407 40.543
+** field along the foil at BOP=10Amp, Gauss
+ve/cr mac(9) r 225.68 209.56 197.23 188.29 182.57 182.26 190.13 201.71 215.19
+** field along the foil at BOP=20Amp, Gauss
+ve/cr m6c(9)  r 475.87 443.08 414.78 393.11 380.58 379.30 394.39 420.33 444.01
+sigma cs20=cos(3.141592/9.)
+css20=cs20
+** cos20 correction (field along the foil)
+sigma m6cc=m6c*cs20
+sigma macc=mac*cs20
+fild=-13.6521+19.6226*[bop]
+fildc=[fild]*[css20]
+mess Input current              = [bop] Amp
+mess Input field in foil center = [fild] Gauss (z-component)
+mess Input field in foil center = [fildc] Gauss (along the foil)
+** coefficients for fit are taken from hall_a_field.kumac
+sigma fil1=172.429-0.182861*coor+0.0215181*coor**2-(4.15327E-5)*coor**3
+sigma fil2=359.981-0.481066*coor+0.045383*coor**2+(7.78626E-5)*coor**3 
+r1=fil1(251)
+r2=fil2(251)
+rc=([r2]-[fildc])/([fildc]-[r1])
+sigma fres=([rc]*fil1+fil2)/(1+[rc])
+** magnetic field correction along the foil
+	do i=1,[cc]
+	fres1=fres([i])
+	if [fres1]<298.0 then
+	fmin=265.0
+	polmin=p5([i])
+	fmax=298.0
+	polmax=p4([i])
+	goto calc1
+	elseif [fres1]<332.0 then
+	fmin=265.0
+	polmin=p4([i])
+	fmax=332.0
+	polmax=p3([i])
+	goto calc1
+	elseif [fres1]<354.0 then
+	fmin=332.0
+	polmin=p3([i])
+	fmax=354.0
+	polmax=p2([i])
+	goto calc1
+	elseif [fres1]<597.0 then
+	fmin=354.0
+	polmin=p2([i])
+	fmax=597.0
+	polmax=p1([i])
+	endif
+calc1:
+rc=([fmax]-[fres1])/([fres1]-[fmin])
+sigma resf=([rc]*[polmin]+[polmax])/(1+[rc])
+ve/input res([i]) resf
+	enddo
+fc:
+	if [foil_coor]<-25.0 then
+mess Wrong foil coordinate. Must be -25.0 : +30.0
+read foil_coor 'Input foil coordinate to calculate polarization (-25.0 : +30.0mm)' 
+	goto fc
+	endif
+	if [foil_coor]>33.0 then
+mess Wrong foil coordinate. Must be -25.0 : +30.0
+read foil_coor 'Input foil coordinate to calculate polarization (-25.0 : +30.0mm)' 
+	goto fc
+	endif
+	do i=1,[cc]
+	rr=coor([i])
+	if [foil_coor]=[rr] then
+	rrr=res([i])
+	goto enc
+	endif
+	enddo
+	enc:
+mess Coordinate along the foil: [foil_coor]mm
+mess Effective Foil Polarization: [rrr]%
+	if [ps]=1 then
+	close 56
+	endif
+eend:
+RETURN

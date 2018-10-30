@@ -1,0 +1,31 @@
+*** Q1 (MQO1H01) New Moller quad
+*** From Ken Bagget (2013)
+***  I(A)    R(cm)   BL(kG*cm)   B(kG)    Leff(cm) 
+*** 299.962  4.035   188.369     5.149    36.58
+*** Maximal Field at pole: B=5.149/4.035*5.08=6.48kG
+*** GL=BL/R=46.684(kG*cm/cm)
+*** Converting factors:  GL=B(kG)*7204 Amp=B(kG)*46.29
+
+*** Q2=PATSY=MQM1H02 
+*** From Ken Baggett (2012)
+***  I(A)    R(cm)  BL(kG*cm)    B(kG)     Leff(cm)
+*** 298.99   4.85   253.5147     5.6684    44.76
+*** Maximal Field at pole: B=5.6684/4.85*5.08=5.937kG
+*** GL=BL/R=52.271(kG*cm/cm)
+*** Converting factors: GL=B(kG)*8804  Amp=B(kG)*50.361
+
+*** Q3=TESSA=MQO1H03
+*** Old data
+*** I(A)    R(cm)   BL(kG*cm)   B(kG)    Leff(cm)
+*** 299.04  5.00    219.90      6.0295   36.74
+*** Maximal Field at pole: B=6.0295/5.0*5.08=6.126kG
+*** GL=BL/R=43.980(kG*cm/cm)
+*** Converting factors: GL=B(kG)*7179.2  Amp=B(kG)*48.807
+
+*** Q4=FELICIA=MQO1H03A
+*** Old data
+*** I(A)    R(cm)   BL(kG*cm)   B(kG)    Leff(cm)
+*** 299.03  5.00    221.20      6.135    36.50
+*** Maximal Field at pole: B=6.135/5.0*5.08=6.233kG
+*** GL=BL/R=44.240(kG*cm/cm)
+*** Converting factors: GL=B(kG)*7097.7  Amp=B(kG)*47.975

@@ -1,0 +1,35 @@
+*** Begin of history file: Wed May 26 11:00:59 2010
+exec testa run1=14561 run2=14620
+exec testa run1=14561 run2=14620
+exec testa run1=14561 run2=14620
+ve/re run,gauss,tl filter.dat
+zone 1 2
+set mtyp 20
+ve/pl gauss%run
+ve/pl tl%run
+zone
+sigma gau=gauss*4.365
+ve/pl tl%run
+opt nbox
+ve/pl tl%run
+set mtyp 22
+set pmci 2
+ve/pl gau%run ! s
+null 14559 14621
+null 14559 14621 1.9 4.0
+set mtyp 20
+set pmci 1
+ve/pl tl%run ! s
+set mtyp 22
+set pmci 2
+ve/pl gau%run ! s
+exec gauss_tl
+exec gauss_tl
+exec gauss_tl
+exec gauss_tl
+ve/de *
+exec gauss_tl
+exec gauss_tl
+exec asym10 run=14590
+q
+*** End   of history file: Tue Jun  1 09:18:36 2010

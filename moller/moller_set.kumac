@@ -1,0 +1,273 @@
+MACRO moller_set set1=1 set2=4 pict=1 ps=0 
+
+*
+* MACRO for moller setting calculation
+*
+* set[n] = 1 - three quads qetting
+*        = 2 - gen two quads setting from sett_magp.kumac nq=2
+*        = 3 - accelerator avereged setting
+*        = 4 - accelerator maximal setting
+* pict = 0 - no picture
+*      = 1 - picture plot
+*   ps = 0 - no postscript file
+*      > 0 - postscitp file crating
+* q[n]av - averaged quads settings from accelerator, Amps: mollerrun_[run].set
+* q[n]ma - maximal quads settings from accelarator, Amps: mollerrun_[run].set
+
+ve/de *
+
+n1=9
+n2=30
+n3=14
+ve/cr eba([n1])  r 1.1494 1.5432 2.1370 2.2359 2.8492 3.3241 3.7818 4.2169 4.4153
+ve/cr q1av([n1]) r 86.678 99.611 112.38 113.81 119.12 114.93 104.97 95.648 87.956
+ve/cr q2av([n1]) r 1.2198 1.1296 1.3190 1.0833 1.2645 1.2375 0.9235 1.1619 1.4278
+ve/cr q3av([n1]) r 18.695 27.867 42.047 44.928 61.365 73.994 88.488 101.44 107.67 
+ve/cr q1ma([n1]) r 88.2   101.1  113.8  114.8  120.6  116.0  105.7  96.9   89.0
+ve/cr q2ma([n1]) r 2.4    2.1    2.6    4.4    2.3    1.7    1.5    2.6    2.3
+ve/cr q3ma([n1]) r 20.5   29.8   43.4   46.6   62.9   75.0   89.5   103.4  109.5
+ve/cr dipa([n1]) r 73.4   98.6   136.4  142.9  181.7  212.4  241.2  269.3  282.0
+
+ve/cr ebgen([n2]) r  0.8   1.0   1.25  1.5   1.75   2.0    2.25   2.5    2.75   3.0    3.25   3.5    3.75 _
+   4.0   4.25  4.5   4.75  5.0   5.25  5.5   5.75   6.0    6.25   6.5    6.75   7.0    7.25   7.5    7.75   8.0
+ve/cr q1gen([n2]) r 66.4  74.6  83.7  91.4  97.8  102.9  106.6  109.0  110.1  109.8  108.2  105.2  101.0  _ 
+  95.4  88.4  80.1  70.5  59.6  47.3  33.7  18.7    2.4  -15.2  -34.2  -54.5  -76.1  -99.1 -123.4 -149.0 -175.9
+ve/cr q2gen([n2]) r  0.0   0.0   0.0   0.0   0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0 _  
+   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+ve/cr q3gen([n2]) r 10.8  15.1  20.5  26.1  31.8   37.7   43.7   49.0   56.2   62.7   69.3   76.1   83.0 _ 
+  90.0  97.2 104.6 112.1 119.7 127.5 135.5 143.5  151.8  160.2  168.7  177.4   186.2 195.2  204.3  213.6  222.9
+
+ve/cr eb_3([n3]) r  0.8  1.0  1.5   2.0   2.5   3.0   3.5   4.0   4.5   5.0   5.5   6.0   7.0    8.0
+ve/cr q1_3([n3]) r  68.6 76.8 92.9 102.6 105.9 102.7  93.1  77.1  54.6  25.8  -9.5 -46.5 -86.6 -106.6
+ve/cr q2_3([n3]) r   0.0  0.0  0.0   0.0   7.7  15.5  23.2  30.9  38.6  46.4  54.1  61.8  77.3   92.7
+ve/cr q3_3([n3]) r   8.5 14.2 25.6  33.2  37.7  43.8  51.5  60.9  71.9  84.5  98.7 110.7 116.0  110.1
+ve/cr dip3([n3]) r  51.1 63.8 95.7 127.6 159.6 191.8 223.4 255.3 287.2 319.1 351.0 382.9 446.7  510.5
+
+sigma erac=array([n1],0.001#0.001)
+sigma ergen=array([n2],0.001#0.001)
+
+   if [ps] > 0 then
+   fort/fil 55 moller_set.ps
+   meta 55 -111
+   endif
+
+   if [pict]=1 then
+
+opt grid
+opt nstat
+opt nbox
+zone
+
+null 0.7 8.0 -175. 125.
+atitle 'Beam energy, MeV' 'Quad. current, Amps'
+selnt 1
+text 13.0 20. 'First Moller quad settings' 0.4 0 C
+selnt 10
+set mtyp 20
+mt=20
+igset txci 2
+igset pmci 2
+igset plci 2
+*ve/pl q1av%eba ! S
+gr/hpl/err eba q1av erac erac [n1] [mt] 0.12 ! S
+selnt 1
+key 3. 13. [mt] '- ac aver.'
+selnt 10
+
+   ve/cr par1av(5) r 26.451 66.154 -12.239 0.93994E-01 0.0
+*   ve/fit  eba q1av erac p3 s 3 par1av  S
+   a1av=par1av(1)
+   b1av=par1av(2)
+   c1av=-par1av(3)
+   d1av=par1av(4)
+   fu/pl [a1av]+[b1av]*x-[c1av]*x**2+[d1av]*x**3 0.7 8.0  S
+
+set mtyp 29
+mt=29
+igset txci 6
+igset pmci 6
+igset plci 6
+ve/pl q1ma%eba ! S
+selnt 1
+key 3. 12. [mt] '- ac max.'
+selnt 10
+
+   ve/cr par1ma(5) r 27.775 66.603 -12.536 0.13555 0.0
+*   ve/fit  eba q1ma erac p3 s 3 par1ma  S
+   a1ma=par1ma(1)
+   b1ma=par1ma(2)
+   c1ma=-par1ma(3)
+   d1ma=par1ma(4)
+   fu/pl [a1ma]+[b1ma]*x-[c1ma]*x**2+[d1ma]*x**3 0.7 8.0  S
+    
+set mtyp 22
+mt=22
+igset txci 4
+igset pmci 4
+igset plci 4
+ve/pl q1gen%ebgen ! S
+selnt 1
+key 3. 11. [mt] '- gen'
+selnt 10
+
+   ve/cr par1gen(5) r 24.961 60.328 -10.683 0.37126E-03 0.0
+*   ve/fit  ebgen q1gen ergen p3 s 3 par1gen  S
+   a1gen=par1gen(1)
+   b1gen=par1gen(2)
+   c1gen=-par1gen(3)
+   d1gen=par1gen(4)
+   fu/pl [a1gen]+[b1gen]*x-[c1gen]*x**2+[d1gen]*x**3 0.7 8.0  S
+   
+set mtyp 24
+mt=24
+igset txci 1
+igset pmci 1
+ve/pl q1_3%eb_3 ! S
+selnt 1
+key 3. 10. [mt] '- 3-quads'
+selnt 10
+wait
+
+null 0.7 8.0 -10. 100.
+atitle 'Beam energy, MeV' 'Quad. current, Amps'
+selnt 1
+text 13.0 20.0 'Second Moller quad settings' 0.4 0 C
+selnt 10
+set mtyp 20
+mt=20
+igset txci 2
+igset pmci 2
+*ve/pl q2av%eba ! S
+gr/hpl/err eba q2av erac erac [n1] [mt] 0.12 ! S
+selnt 1
+key 3. 13. [mt] '- ac aver.'
+selnt 10
+set mtyp 29
+mt=29
+igset txci 6
+igset pmci 6
+ve/pl q2ma%eba ! S
+selnt 1
+key 3. 12. [mt] '- ac max.'
+selnt 10
+set mtyp 22
+mt=22
+igset txci 4
+igset pmci 4
+ve/pl q2gen%ebgen ! S
+selnt 1
+key 3. 11. [mt] '- gen'
+selnt 10
+set mtyp 24
+mt=24
+igset txci 1
+igset pmci 1
+ve/pl q2_3%eb_3 ! S
+selnt 1
+key 3. 10. [mt] '- 3-quads'
+selnt 10
+wait 
+
+null 0.7 8.0 10. 225.
+atitle 'Beam energy, MeV' 'Quad. current, Amps'
+selnt 1
+text 13.0 20.0 'Third Moller quad settings' 0.4 0 C
+selnt 10
+set mtyp 20
+mt=20
+igset txci 2
+igset pmci 2
+*ve/pl q3av%eba ! S
+gr/hpl/err eba q3av erac erac [n1] [mt] 0.12 ! S
+selnt 1
+key 3. 13. [mt] '- ac aver.'
+selnt 10
+
+   ve/cr par3av(5) r -4.4955 18.201 1.8045 -0.38393E-01 0.0
+*   ve/fit  eba q3av erac p3 s 3 par3av  S
+   a3av=-par3av(1)
+   b3av=par3av(2)
+   c3av=par3av(3)
+   d3av=-par3av(4)
+   fu/pl -[a3av]+[b3av]*x+[c3av]*x**2-[d3av]*x**3 0.7 8.0  S
+
+set mtyp 29
+mt=29
+igset txci 6
+igset pmci 6
+ve/pl q3ma%eba ! S
+selnt 1
+key 3. 12. [mt] '- ac max.'
+selnt 10
+
+   ve/cr par3ma(5) r -4.3851 21.073 0.36725 0.16148 0.0
+*   ve/fit  eba q3ma erac p3 s 3 par3ma  S
+   a3ma=-par3ma(1)
+   b3ma=par3ma(2)
+   c3ma=par3ma(3)
+   d3ma=par3ma(4)
+   fu/pl -[a3ma]+[b3ma]*x+[c3ma]*x**2+[d3ma]*x**3 0.7 8.0  S
+
+set mtyp 22
+mt=22
+igset txci 4
+igset pmci 4
+ve/pl q3gen%ebgen ! S
+selnt 1
+key 3. 11. [mt] '- gen'
+selnt 10
+
+   ve/cr par3gen(5) r -5.0298 18.849 1.2452 -0.49479E-02  0.0
+*   ve/fit  ebgen q3gen ergen p3 s 3 par3gen  S
+   a3gen=-par3gen(1)
+   b3gen=par3gen(2)
+   c3gen=par3gen(3)
+   d3gen=-par3gen(4)
+   fu/pl -[a3gen]+[b3gen]*x+[c3gen]*x**2-[d3gen]*x**3 0.7 8.0  S
+
+set mtyp 24
+mt=24
+igset txci 1
+igset pmci 1
+ve/pl q3_3%eb_3 ! S
+selnt 1
+key 3. 10. [mt] '- 3-quads'
+selnt 10
+wait 
+
+null 0.7 8.0 50. 520.
+atitle 'Beam energy, MeV' 'Dipole current, Amps'
+selnt 1
+text 13.0 20.0 'Moller dipole settings' 0.4 0 C
+selnt 10
+set mtyp 20
+mt=20
+igset txci 2
+igset pmci 2
+ve/pl dipa%eba ! S
+selnt 1
+key 3. 15. [mt] '- accel.'
+selnt 10
+set mtyp 24
+mt=24
+igset txci 1
+igset pmci 1
+ve/pl dip3%eb_3 ! S
+selnt 1
+key 3. 14. [mt] '- 3 quads'
+selnt 10
+
+   ve/cr pardip(5) r -0.14253 63.998 -0.42901E-01 0.27513E-02 0.0
+*   ve/fit  ebgen dip3 ergen p3 s 3 pardip  S
+   adip=-pardip(1)
+   bdip=pardip(2)
+   cdip=-pardip(3)
+   ddip=pardip(4)
+   fu/pl -[adip]+[bdip]*x-[cdip]*x**2+[ddip]*x**3 0.7 8.0  S
+   endif
+
+   if [ps] > 0 then
+   close 55
+   endif
+
+RETURN

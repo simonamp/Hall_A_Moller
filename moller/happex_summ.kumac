@@ -1,0 +1,215 @@
+MACRO happex_summ
+*
+*--  Summary for HAPPEX Apr, 1999 -
+*
+ nt=100
+ ve/cr datev([nt]) r 
+ ve/cr enerv([nt]) r 
+ ve/cr polav([nt]) r 
+ ve/cr epolav([nt]) r 
+ ve/cr sigpv([nt])  r
+ ve/cr errv([nt]) r 
+
+ ve/in datev(1:10) 2.6 7.5 10.5 16.7 19.7 21.8 23.5 26.7 30.3 30.8   
+*  ve/oper/vbias datev(3:12) 30. datev(3:12)
+ ve/in enerv(1:10) 10*1.72                                 4.234  3*3.400           1.72 
+ ve/in  polav(1:12) 69.5 68.1 68.0 68.0 67.5  67.8  68.1  69.7  71.7  71.7  72.6   73.1
+ ve/in epolav(1:12)  0.2  0.2  2.0  0.3  0.2   0.4   0.4   0.4   0.2   0.2   0.2    0.2
+ ve/in  sigpv(1:12)  3*-1.          9*1.                                 
+
+
+ ve/in datev(13:16)  6.7   9.3  13.3  23.3
+ ve/oper/vbias datev(13:16) 61. datev(13:16)
+ ve/in enerv(13:16)  3*4.255         0.862
+ ve/in  polav(13:16) 73.1 72.9  72.1  73.6
+ ve/in epolav(13:16)  0.2  0.2   0.2   0.3
+ ve/in  sigpv(13:16) 3*-1.             1*1.
+
+ ve/in datev(17:26)   2.4   4.5   9.5   9.9  13.6  15.9  19.7  20.9  22.7  24.2  
+ ve/oper/vbias datev(17:26) 91. datev(17:26)
+ ve/in enerv(17:26)  5*2.590                     5*5.071      
+ ve/in  polav(17:26) 70.2  70.8  70.6  71.0  72.3  73.0  71.4  73.2  71.3  72.4  
+ ve/in epolav(17:26)  0.2   0.2   0.2   0.2   0.2   0.2   0.2   0.2   0.2   0.2  
+ ve/in  sigpv(17:26) 3*-1.              2*1.       5*-1.
+
+ ve/cr  dmotv(50) r 25.  35.  37.  47.   51.   66.   84.    90.0  105.  108.
+ ve/cr  pmotv(50) r 71.9 72.1 73.2 71.0  71.6  73.3  72.06  73.8  74.1  72.4
+ ve/cr epmotv(50) r  0.6  0.6  0.9  0.6   0.4   0.6   1.0    0.9   1.3   0.5
+
+
+ nm=$VLEN(datev)
+ nen=1
+ ve/cr envv(50) r
+ ve/cr endv(50) r
+ ve/cr dendv(50) r
+ ve/cr pendv(50) r
+ ve/cr ependv(50) r
+ ve/cr iendv(2,50) i
+ ve/in envv(1) enerv(1)
+ e=envv(1)
+ x=datev(1)
+ x=[x]-1. 
+ ve/in iendv(1,1) 1
+
+ 
+ do i=2,[nm]
+   e1=enerv([i])
+*   mess [i] [e] [e1]
+   if [e1] .NE. [e] then
+     nen=[nen]+1
+     ve/in envv([nen]) [e1]
+     ve/in envv([nen]) [e1]
+     e=[e1]
+     x1=datev([i])
+     xx=$SIGMA(([x]+[x1])/2.)
+     ve/in endv([nen]) [xx]
+*     mess x=[x] [x1] [xx]
+     x=[x1]
+     ve/in iendv(1,[nen]) [i]
+     ve/in iendv(2,[nen]) [i]
+   else
+     ve/in iendv(2,[nen]) [i]
+   endif
+   x=datev([i])
+ enddo
+
+ do i=1,[nen]
+   i1=iendv(1,[i])
+   i2=iendv(2,[i])
+   x1=datev([i1])
+   x2=datev([i2])
+   x=$SIGMA(([x1]+[x2])/2.)
+   ve/in dendv([i]) [x]
+   a=0.
+   w=0.
+   n=[i2]-[i1]+1
+   do j=[i1],[i2]
+     q=polav([j])
+     eq=epolav([j])
+     eq2=[eq]*[eq]
+     wq=$SIGMA([q]/[eq2])
+     a=$SIGMA([a]+[wq])
+     w=$SIGMA([w]+1./[eq2])
+   enddo
+   a=$SIGMA([a]/[w])
+   ea=$SIGMA(SQRT(1./[w]))
+   s=0.
+   do j=[i1],[i2]
+     q=polav([j])
+     eq=epolav([j])
+     eq2=[eq]*[eq]
+     s=$SIGMA([s]+([q]-[a])**2/[eq2])
+   enddo
+   s1=0.
+   s2=1.
+   if [n]>1 then
+     s1=$SIGMA([s]/([n]-1.))
+     s2=$SIGMA(SQRT([s1])) 
+     es=$SIGMA([s2]*[ea]) 
+   endif
+   ve/in pendv([i]) [a]
+   ve/in ependv([i]) [es]
+   mess [i] [a] [ea] [s] [s1] [s2] [es]  
+ enddo  
+
+ x1=24
+ x2=120
+ y1=65
+ y2=75
+ null [x1] [x2] [y1] [y2]
+ atit 'Days' 'Beam polarization'
+
+* gr/hpl/err datev polav errv epolav [nm] 24 0.2
+
+ k1=0
+ k2=0
+ xk=63.5
+ yk=68.
+ dyk=$SIGMA(([y2]-[y1])*0.03)
+ do i=1,[nm]
+   
+   kk=0
+   s=sigpv([i])
+   if [s]>0. then
+     m=24
+     cm=2
+     k1=[k1]+1
+     if [k1]=1 then
+       kk=1
+       txt='beam helicity +'
+     endif
+   else
+     m=26
+     cm=4
+     k2=[k2]+1
+     if [k2]=1 then
+       kk=1
+       txt='beam helicity -'
+     endif
+   endif
+   igset pmci [cm]
+   set   hcol [cm]
+   gr/hpl/err datev([i]) polav([i]) errv([i]) epolav([i]) 1 [m] 0.2
+   if [kk]>0 then
+     set csiz 0.28
+     gr/hpl/key [xk] [yk] [m] [txt] 
+     set csiz 0.4
+     yk=[yk]-[dyk]
+   endif
+   igset pmci 1
+   set   hcol 1
+ enddo  
+
+
+ k1=0
+ do i=1,[nen]
+   x=endv([i])
+   if [i]>1 then
+     line [x] [y1] [x] [y2]
+   endif
+   e=envv([i])
+   x=dendv([i])
+   x=$SIGMA([x]+([x2]-[x1])*0.005)
+   y=$SIGMA([y1]*0.95+[y2]*0.05)
+   t=[e]GeV
+   text [x] [y] [t] 0.3 90. 'L' 
+   i1=iendv(1,[i])
+   i2=iendv(2,[i])
+   n=[i2]-[i1]+1
+   igset pmci 2
+   set   hcol 2
+   if [n]>1 then
+      gr/hpl/err dendv([i]) pendv([i]) errv(1) ependv([i]) 1 20 0.3
+      k1=[k1]+1
+      if [k1]=1 then
+        set csiz 0.28
+        gr/hpl/key [xk] [yk] 20 'Average per period' 
+        set csiz 0.4
+        yk=[yk]-[dyk]
+      endif
+   endif
+   igset pmci 1
+   set   hcol 1
+ enddo  
+
+ 
+ nmo=$VLEN(dmotv,1)
+ igset pmci 3
+ set   hcol 3
+ gr/hpl/err dmotv pmotv errv epmotv [nmo] 21 0.3
+ set csiz 0.28
+ gr/hpl/key [xk] [yk] 21 'Mott' 
+ set csiz 0.4
+ yk=[yk]-[dyk]
+ igset pmci 1
+ set   hcol 1
+ 
+RETURN
+
+
+
+
+
+
+
+

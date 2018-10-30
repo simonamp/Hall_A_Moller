@@ -1,0 +1,52 @@
+MACRO cal_lucite_ini
+
+*
+* --- Initializing of the lucite files from Aug,20 1999
+*
+  ve/del *
+  clo 0
+
+  exec ini
+
+  ve/cr   xhit(10,2) r
+  ve/cr  exhit(10,2) r 10*1.
+  ve/cr  ahit1(10,2) r
+  ve/cr eahit1(10,2) r
+  ve/cr  ahit2(10,2) r
+  ve/cr eahit2(10,2) r
+
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.01/dat/ run=7562
+  ve/in xhit(1,1) 5.
+  chain -pos1
+  chain  pos1 //lun21
+
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7581
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7582
+  ve/in xhit(2,1) 14.
+  chain -pos2
+  chain  pos2 //lun22 //lun23
+
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7583
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7584
+  ve/in xhit(3,1) 18.
+  chain -pos3
+  chain  pos3 //lun24 //lun25
+
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7591
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7592
+  ve/in xhit(4,1) 30.
+  chain -pos4
+  chain  pos4 //lun26 //lun27
+
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7595
+  exec run dir=/data2a/user/gen/moller/exp/1999/08.21.02/dat/ run=7596
+  ve/in xhit(5,1) 34.
+  chain -pos5
+  chain  pos5 //lun28 //lun29
+
+RETURN
+  
+
+
+  
+

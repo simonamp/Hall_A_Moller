@@ -1,0 +1,63 @@
+*** Beam polarization vs. Beam current
+***
+fort/fil 55 current.ps
+meta 55 -111
+set *
+opt *
+opt nbox
+opt ndate
+opt nstat
+opt grid
+*** Target 3
+ve/cr t31cr(2) r 0.32   0.13  
+ve/cr t31po(2) r 82.87  83.03 
+ve/cr t31er(2) r 0.24   0.27  
+ve/cr t32cr(3) r 0.3    0.66   1.2  
+ve/cr t32po(3) r 82.85  82.05  80.45
+ve/cr t32er(3) r 0.43   0.40   0.30
+ve/cr t33cr(2) r 0.53   0.77
+ve/cr t33po(2) r 84.52  83.37
+ve/cr t33er(2) r 0.22   0.18
+ve/cr t34cr(2) r 0.52   0.25  
+ve/cr t34po(2) r 84.60  85.03 
+ve/cr t34er(2) r 0.20   0.29
+*** Target 5
+ve/cr t51cr(2) r 0.35   0.6  
+ve/cr t51po(2) r 84.59  84.76 
+ve/cr t51er(2) r 0.31   0.24 
+ve/cr t52cr(2) r 0.53   0.77
+ve/cr t52po(2) r 86.71  85.34
+ve/cr t52er(2) r 0.15   0.20
+
+
+null 0.0 1.3 80.0 87.0
+set pmci 1
+mtyp=20
+	DO k=1,4
+sigma nn=nco(t[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t3[k]cr t3[k]po err err t3[k]er t3[k]er [nm] [mtyp] 0.25 !
+mtyp=[mtyp]+1
+	ENDDO
+set pmci 2
+mtyp=25
+	DO k=1,2
+sigma nn=nco(t[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t5[k]cr t5[k]po err err t5[k]er t5[k]er [nm] [mtyp] 0.25 !
+mtyp=[mtyp]+1
+	ENDDO
+selnt 1
+text 10.0 18.5 'Beam Polarization vs. Beam current' 0.45 0 C
+atitle 'Beam current, [m]Amp' 'Beam polarization, "Y#'
+selnt 10
+set pmci 2
+key 1.0 82.0 25 '- 5-Sup7'
+set pmci 1
+key 1.0 82.5 20 '- 3-Fe14'
+set pmci 
+
+
+close 55

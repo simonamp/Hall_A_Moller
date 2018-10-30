@@ -1,0 +1,9 @@
+MACRO scan_help
+
+ do k=630,830,50
+ fild=[k]/100.
+ exec kgtoa  fi=[fild] q=5
+ enddo
+
+
+RETURN

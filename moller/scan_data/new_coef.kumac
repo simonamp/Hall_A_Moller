@@ -1,0 +1,33 @@
+file2='sup30'
+file3='fe14'
+file4='fe10'
+file5='sup07'
+     do i=2,5
+mess file=[file[i]]
+mess data=[i]_[file[i]]fc.dat
+wait	
+ve/re p1,p2,p3,p4,p5,p6,p7,p8 [i]_[file[i]]fc.dat
+*ve/re nn,coor,scan [i]_coef.dat
+ve/re nn,coor,scan [i]_co_av.dat
+ve/re nc,coef [i]_[file[i]]_800g.dat
+opt grid
+	do k=1,8
+*	sigma sc[k]=p[k]*coef/scan
+	sigma sc[k]=p[k]*coef
+set pmci 2
+        ve/pl sc[k]%nn
+set pmci 1
+        ve/pl p[k]%nn ! s
+	enddo
+*** scan3 - coefficient with integral over 3mm length along the foil
+*ve/write sc1,sc2,sc3,sc4,sc5,sc6,sc7,sc8 [i]_[file[i]]scan3.dat (8(F10.5))
+*** av - coefficient=(scan3+stand)/2.
+*ve/write sc1,sc2,sc3,sc4,sc5,sc6,sc7,sc8 [i]_[file[i]]av.dat (8(F10.5))
+*** nc - no coefficient, raw stand data without normalization on 800 Oe
+ve/write sc1,sc2,sc3,sc4,sc5,sc6,sc7,sc8 [i]_[file[i]]nc.dat (8(F10.5))
+*mess coefficient for target [i] [file[i]] is stored in file [i]_[file[i]]scan3.dat
+*mess coefficient for target [i] [file[i]] is stored in file [i]_[file[i]]av.dat
+mess coefficient for target [i] [file[i]] is stored in file [i]_[file[i]]nc.dat
+wait
+
+     enddo

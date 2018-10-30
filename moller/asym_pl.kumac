@@ -1,0 +1,11 @@
+MACRO asym_pl k1=0 k2=0 symb=20
+*
+* ===  plots asymmetries (after asym_av)
+*
+
+
+ gr/hpl/err xx([k1]:[k2]) as1([k1]:[k2]) ex([k1]:[k2]) es1([k1]:[k2]) 100 [symb] 0.25 
+
+RETURN 
+
+

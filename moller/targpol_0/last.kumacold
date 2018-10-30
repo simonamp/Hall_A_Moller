@@ -1,0 +1,24 @@
+*** Begin of history file: Wed Aug 10 16:49:50 2005
+exec pol_cor
+exec pol_cor
+exec pol_cor
+ls
+exec pol_cor
+exec point_p
+exec point_p bop=19.8 target=4
+exec point_p bop=19.8 target=4 coor=-10
+exec point_p bop=19.8 target=4 coors=-10
+exec point_p bop=19.8 target=4 coord=-10
+shell
+exec point_p bop=19.8 target=4 foil_coor=-10
+exec point_p bop=19.8 target=4 foil_coor=10
+exec point_p bop=19.8 target=4 foil_coor=10
+exec point_p bop=19.8 target=4 foil_coor=20
+exec point_p bop=19.8 target=4 foil_coor=-10
+exec point_p bop=16.0 target=4 foil_coor=-20
+exec point_p bop=19.4 target=4 foil_coor=20
+exec point_p bop=19. target=4 foil_coor=20
+exec point_p bop=19. target=4 foil_coor=0
+exec point_p bop=19. target=4 foil_coor=20
+q
+*** End   of history file: Wed Aug 10 17:10:49 2005

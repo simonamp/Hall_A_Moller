@@ -1,0 +1,342 @@
+
+MACRO pol_cor target=1 ps=0 all=0 bop=20.0 save=0 foil_coor=0.0
+**********************************************************************************
+****  Aug 16,2005 R.P.: modified for low fields <265Gauss (15.08 Amps in Helmholtz Coils)
+****
+****  !!! I use cooefficient for low field calculation: 
+****      0.0569(A/Gauss)=( 15.08Amp/265Gauss)
+****   There is some nonlinearity between Field and Current in Hcoils:
+****   20.0Amp/356Gauss = 0.0562
+****   15.08Amp/265Gauss = 0.0569
+********************************************************************************
+read target ' Input target number (0-6)'
+	if [target]=6 then
+mess * Target 6 = empty position (Right Limit)
+	goto eend
+	elseif [target]=5 then
+mess * Target 5:  6.8mkm Supermendure foil
+mess * Supermendure made in Germany, rolled and annealed in Kharkov
+mess * Full information in /data2/users/moller/stand/motor/newtar/s07_04s/
+	file=sup07
+	thik=6.8
+	elseif [target]=4 then
+mess * Target 4:  9.3mkm pure Iron foil
+mess * Iron made in Germany, rolled and annealed in Kharkov
+mess * Full information in /data2/users/moller/stand/motor/newtar/f10_04s/
+	file=fe10
+	thik=9.3
+	elseif [target]=3 then
+**mess * Target polarization information temporary is not available
+**	goto eend
+mess * Target 3:  14.3mkm pure Iron foil
+mess * Iron made in Germany, rolled and annealed in Kharkov
+mess * Full information in /data2/users/moller/stand/motor/newtar/f14_04s/
+	file=fe14
+	thik=14.3
+	elseif [target]=2 then
+mess * Target 2:  29.4mkm Supermendure foil   
+mess * Supermendure delivered from SLAC E-158 
+mess * Full information in /data2/users/moller/stand/motor/newtar/s30_04s/
+	file=sup30
+	thik=29.4
+	elseif [target]=1 then
+mess * Target 1: 13 mkm Old Supermendur foil (short)
+mess * Polarization=7.95%
+	goto eend
+	elseif [target]=0 then
+mess * Target 0: 16.5mkm Aluminum foil (Left Limit)
+	goto eend
+	endif
+inpc:
+read bop ' Input POB current, Amps' 
+*** 15-Aug-2005
+	if [bop]<5.69 then
+mess Input current must be more than 5.69Amp
+***	if [bop]<15.08 then
+*** mess Input current must be more than 15.08Amp	
+	goto inpc
+	elseif [bop]>20.0 then
+mess Input current must be less than 20.0Amp
+	goto inpc
+	endif
+read ps  Create file pol_cor_[target]_[file]_[bop]a.ps? (1-Yes, 0-No)
+read all ' Show all pictures? (1-Yes, 0-No)'
+*ve/de *
+** file [file]fc.dat was created in [file]fc.kumac
+**** add vectors: p7,p8 with foil polarization data for low(166Gs,100Gs) fields
+
+***ve/re p1,p2,p3,p4,p5,p6,p7,p8 [target]_[file]fc.dat ! ! -/*/
+
+ve/re p1,p2,p3,p4,p5,p6,p7,p8 [target]_[file]scan.dat ! ! -/*/
+mess file=[file]
+fort/fil 55 pol_cor_[target]_[file].ps
+meta 55 -111
+
+
+* set * 
+opt nstat
+opt ndate
+opt grid
+opt nbox
+sigma nc=nco(p1)
+cc=nc
+** coordinate along the foil, relatively to the center, mm 
+sigma coor=array([cc],-250.0#300.0)
+ve/input coor(251) 0.0
+sigma coor=coor/10.
+	if [all]=1 then
+** foil region from low to top limit in working magnetic fields
+** coordinate relative to the beam center
+sigma tl=vmax(p2)
+sigma ll=vmin(p8)
+ctl=tl*1.005
+cll=ll*0.995
+null  -25.0 30.0  [cll]  [ctl]
+Atitle 'Relative Foil Coordinate, mm' 'Foil Polarization, "Y#'
+selnt 1
+text  7.0 19.0 [target]"-#[file]   0.4
+text 10.0 19.0 [thik][m]m 0.4
+text  0.5 0.5 moller/targpol/pol_cor.kumac 0.15
+text 13.0 5.9 '356Gs=20.00Amp' 0.3
+igset txci 2
+text 13.0 5.4 '332Gs=18.71Amp' 0.3
+igset txci 3
+text 13.0 4.9 '298Gs=16.86Amp' 0.3
+igset txci 4
+text 13.0 4.4 '265Gs=15.08Amp' 0.3
+
+*** 16-Aug-2005
+igset txci 5
+text 13.0 3.9 '232Gs=13.20Amp' 0.3
+igset txci 6
+text 13.0 3.4 '166Gs=9.45Amp' 0.3
+igset txci 7
+text 13.0 2.9 '100Gs=5.69Amp' 0.3
+
+igset txci 1
+text  5.0 17.0 '"7#Low limit (back to motor) "B#  Top limit"5#' 0.35
+text  9.0  2.5 '"8#' 0.5
+text  8.0  3.5 'Foil center (beam)' 0.35
+selnt 10
+        do j=2,8
+	km=[j]-1
+	igset pmci [km]
+	igset plci [km]
+        ve/pl p[j]%coor ! sl 
+        enddo
+	igset pmci 1
+	igset plci 1
+	wait
+	endif
+
+
+close 55
+
+if [ps]=1 then
+	fort/fil 56 pol_cor_[target]_[file]_[bop]a.ps
+	meta 56 -111
+endif
+
+
+** calculation of the foil polarization for input BOP parameter
+***inpc:
+***read bop ' Input POB current, Amps' 
+***	if [bop]<15.08 then
+***mess Input current must be more than 15.08Amp
+***	goto inpc
+***	elseif [bop]<16.87 then
+****  15-Aug-2005
+	if [bop]<9.45 then
+	bopmin=5.69
+	sigma polmin=p8
+	bopmax=9.45
+	sigma polmax=p7
+	goto calc
+
+	elseif [bop]<13.20 then
+	bopmin=9.45
+	sigma polmin=p7
+	bopmax=13.20
+	sigma polmax=p6
+	goto calc
+
+	elseif [bop]<15.08 then
+	bopmin=13.20
+	sigma polmin=p6
+	bopmax=15.08
+	sigma polmax=p5
+	goto calc
+**** 
+****	if [bop]<16.87 then
+	elseif [bop]<16.87 then
+	bopmin=15.08
+	sigma polmin=p5
+	bopmax=16.86
+	sigma polmax=p4
+	goto calc
+	elseif [bop]<18.72 then
+	bopmin=16.86
+	sigma polmin=p4
+	bopmax=18.71
+	sigma polmax=p3
+	goto calc
+	elseif [bop]<20.01 then
+	bopmin=18.71
+	sigma polmin=p3
+	bopmax=20.00
+	sigma polmax=p2
+	goto calc
+***	elseif [bop]>20.0 then
+***mess Input current must be less than 20.0Amp
+***	goto inpc
+	endif
+	calc:
+rc=([bopmax]-[bop])/([bop]-[bopmin])
+sigma pres=([rc]*polmin+polmax)/(1+[rc])
+	if [all]=1 then
+sigma tl=vmax(pres)
+sigma ll=vmin(pres)
+ctl=tl*1.001
+cll=ll*0.999
+null  -25.0 30.0  [cll]  [ctl]
+ve/pl pres%coor ! sl
+Atitle 'Relative Foil Coordinate, mm' 'Foil Polarization, "Y#'
+selnt 1
+text  7.0 19.0 [target]"-#[file]   0.4
+text 10.0 19.0 [thik][m]m 0.4
+text 14.0 19.0 [bop]Amp 0.4
+text  0.5 0.5 moller/targpol/pol_cor.kumac 0.15
+text    5.0 17.0 '"7#Low limit (back to motor) "B#  Top limit"5#' 0.35
+text    9.0  2.5 '"8#' 0.5
+text    8.0  3.5 'Foil center (beam)' 0.35
+selnt 10
+wait
+	endif
+** magnetic field calculation
+** coordinate along the foil, mm
+ve/cr pos(9) r -40.543 -30.407 -20.271 -10.136 0. 10.136 20.271 30.407 40.543
+** field along the foil at BOP=10Amp, Gauss
+ve/cr mac(9) r 225.68 209.56 197.23 188.29 182.57 182.26 190.13 201.71 215.19
+** field along the foil at BOP=20Amp, Gauss
+ve/cr m6c(9)  r 475.87 443.08 414.78 393.11 380.58 379.30 394.39 420.33 444.01
+sigma cs20=cos(3.141592/9.)
+css20=cs20
+** cos20 correction (field along the foil)
+sigma m6cc=m6c*cs20
+sigma macc=mac*cs20
+fild=-13.6521+19.6226*[bop]
+fildc=[fild]*[css20]
+mess Input current              = [bop] Amp
+mess Input field in foil center = [fild] Gauss (z-component)
+mess Input field in foil center = [fildc] Gauss (along the foil)
+** coefficients for fit are taken from hall_a_field.kumac
+sigma fil1=172.429-0.182861*coor+0.0215181*coor**2-(4.15327E-5)*coor**3
+sigma fil2=359.981-0.481066*coor+0.045383*coor**2+(7.78626E-5)*coor**3 
+r1=fil1(251)
+r2=fil2(251)
+rc=([r2]-[fildc])/([fildc]-[r1])
+sigma fres=([rc]*fil1+fil2)/(1+[rc])
+	if [all]=1 then
+ve/pl fres%coor
+Atitle 'Coordinate along foil, mm' 'Magnetic field along foil, Gauss'
+selnt 1
+text 5.0 19.0 'MAGNETIC FIELD ALONG FOIL' 0.35
+text 5.0 16.0 '"7#Low limit (back to motor)  "B#   Top limit"5#' 0.35
+selnt 10
+wait
+	endif
+** magnetic field correction along the foil
+ve/cr res([cc]) r
+
+do i=1,[cc]
+   fres1=fres([i])
+**** 15-Aug_2005
+   if [fres1]<166.0 then
+      fmin=100.0
+      polmin=p8([i])
+      fmax=166.0
+      polmax=p7([i])
+   elseif [fres1]<232.0 then
+      fmin=166.0
+      polmin=p7([i])
+      fmax=232.0
+      polmax=p6([i])
+   elseif [fres1]<265.0 then
+      fmin=232.0
+      polmin=p6([i])
+      fmax=265.0
+      polmax=p5([i])
+   elseif [fres1]<298.0 then
+      fmin=265.0
+      polmin=p5([i])
+      fmax=298.0
+      polmax=p4([i])
+   elseif [fres1]<332.0 then
+      fmin=265.0
+      polmin=p4([i])
+      fmax=332.0
+      polmax=p3([i])
+   elseif [fres1]<354.0 then
+      fmin=332.0
+      polmin=p3([i])
+      fmax=354.0
+      polmax=p2([i])
+   elseif [fres1]<597.0 then
+      fmin=354.0
+      polmin=p2([i])
+      fmax=597.0
+      polmax=p1([i])
+   endif
+
+   rc=([fmax]-[fres1])/([fres1]-[fmin])
+   sigma resf=([rc]*[polmin]+[polmax])/(1+[rc])
+   ve/input res([i]) resf
+enddo
+
+sigma tl=vmax(res)
+sigma ll=vmin(res)
+ctl=tl*1.001
+cll=ll*0.999
+null  -25.0 30.0  [cll]  [ctl]
+ve/pl res%coor ! sl
+Atitle 'Relative Foil Coordinate, mm' 'Corrected Foil Polarization, "Y#'
+selnt 1
+text  4.0 19.0 [target]"-#[file]   0.4
+text  7.0 19.0 [thik][m]m 0.4
+text 11.0 19.0 [bop]Amp=[fildc]Gauss 0.35
+text  0.5 0.5 moller/targpol/pol_cor.kumac 0.15
+text  5.0 17.0 '"7#Low limit (back to motor) "B#  Top limit"5#' 0.35
+text  5.0 16.5 'Polarization with field correction along the foil' 0.3
+text  9.0  2.5 '"8#' 0.5
+text  8.0  3.5 'Foil center (beam)' 0.35
+selnt 10
+read save  Save result to file [target]_[file]_[bop]a.dat? (1-Yes, 0-No)
+	if [save]=1 then
+ve/write coor,res [target]_[file]_[bop]a.dat (F8.3,3x,F9.5)
+mess Curve Polarization vs. Coordinate was stored to [target]_[file]_[bop]a.dat
+	endif
+fc:
+read foil_coor 'Input foil coordinate to calculate polarization (-25.0 : +30.0mm)' 
+	if [foil_coor]<-25.0 then
+mess Wrong foil coordinate. Must be -25.0 : +30.0
+	goto fc
+	endif
+	if [foil_coor]>33.0 then
+mess Wrong foil coordinate. Must be -25.0 : +30.0
+	goto fc
+	endif
+	do i=1,[cc]
+	rr=coor([i])
+	if [foil_coor]=[rr] then
+	rrr=res([i])
+	goto enc
+	endif
+	enddo
+	enc:
+mess Coordinate along the foil: [foil_coor]mm
+mess Effective Foil Polarization: [rrr]%
+	if [ps]=1 then
+	close 56
+	endif
+eend:
+RETURN

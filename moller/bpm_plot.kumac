@@ -1,0 +1,161 @@
+MACRO bpm_plot run1=10626 run2=10626 minx=-0.5 maxx=0.5 miny=-0.5 maxy=0.5
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo/
+ endif
+ if $INDEX([host],'jlabl')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+ elseif $INDEX([host],'jlabs')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp/*/*/mon/
+ endif
+
+ve/de *
+read run1 'Input first run number'
+read run2 'Input second run number'
+ ve/cr x(3)   r
+ ve/cr y(3)   r
+ ve/cr bpm(3) r 0.0 11.126 17.364
+ elem=5
+ ve/cr qmin([elem]) r 1.1 1.9214 3.0567 3.7137 4.5566
+ ve/cr qmax([elem]) r 1.2 2.3786 3.4133 4.0703 6.1994
+ 
+   do run=[run1],[run2] 
+ fmon=[dirm]//'mollerrun_'//[run]//'.set'
+ 
+ if $FEXIST([fmon])=0 then
+  mess No file [fmon]
+  goto eend
+ endif
+
+ mess Run Number=[run]
+ 
+ day='fgrep Date '//[fmon]
+ dayt=$SHELL([day])
+ mess [dayt]
+
+ enr='fgrep "Beam energy, MeV Hall A " '//[fmon]//' | awk ''{printf"%.3f\n",$NF}'''
+ ener=$SHELL([enr])
+ mess Hall A Energy=[ener] MeV
+ 
+   if [run]<10561 then 
+   goto 2x
+   elseif [run]>10560 .and. [run]<10608 then 
+   goto 1x
+   elseif [run]>10607 .and. [run]<10612 then 
+   goto 2x
+   elseif [run]>10611 .and. [run]<10615 then 
+   goto 1x
+   elseif [run]>10614 .and. [run]<10616 then 
+   goto 2x
+   elseif [run]<10622 .and. [run]>11160 then 
+   goto 1x 
+   else 
+   goto 2x
+   endif   
+ 1x:
+ xp='fgrep "Beam Position BPM01 X" ' //[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ goto endx
+ 2x:
+ xp='fgrep "Beam Position BPM01  X" ' //[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ endx:
+ xpp=$SHELL([xp])
+ ve/in x(1) [xpp]
+ 
+   if [run]<10561 then 
+   goto 2y
+   elseif [run]>10560 .and. [run]<10608 then 
+   goto 1y
+   elseif [run]>10607 .and. [run]<10612 then 
+   goto 2y
+   elseif [run]>10611 .and. [run]<10615 then 
+   goto 1y
+   elseif [run]>10614 .and. [run]<10616 then 
+   goto 2y
+   elseif [run]<10622  then 
+   goto 1y 
+   else 
+   goto 2y
+   endif 
+ 1y:
+ yp='fgrep "Beam Position BPM01 Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+   goto endy
+ 2y:
+ yp='fgrep "Beam Position BPM01  Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+   endy:
+ ypp=$SHELL([yp])
+ ve/in y(1) [ypp] 
+ mess x1=[xpp]mm,     y1=[ypp]mm
+
+ xp='fgrep "Beam Position BPM03A X" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ xpp=$SHELL([xp])
+ ve/in x(2) [xpp]
+
+ yp='fgrep "Beam Position BPM03A Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ ypp=$SHELL([yp])
+ ve/in y(2) [ypp]
+ mess x2=[xpp]mm,     y2=[ypp]mm
+
+ xp='fgrep "Beam Position BPM04A X" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ xpp=$SHELL([xp])
+ ve/in x(3) [xpp]
+
+ yp='fgrep "Beam Position BPM04A Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ ypp=$SHELL([yp])
+ ve/in y(3) [ypp]
+ mess x3=[xpp]mm,     y3=[ypp]mm
+
+eend:
+
+set *
+zone 1 2
+opt grid
+opt nbox
+
+   do kc=1,2
+igset plci 1
+      if [kc]=1 then
+null -0.1 18.0 [minx] [maxx]
+t1=[maxx]+0.2
+t2=[maxx]+0.6
+      else
+null -0.1 18.0 [miny] [maxy]
+t1=[maxy]+0.2
+t2=[maxy]+0.6
+      endif
+line -0.1 0.0 18.0 0.0
+set mtyp 20
+igset pmci 2
+*igset txci 2
+atitle 'Hall A Beam line, m' 'Beam deviation, mm' 
+text 10. 0.2 'BPM03' 0.3 0 
+text 16. 0.2 'BPM04' 0.3 0   
+
+      do k=1,[elem]
+   a1=qmin([k])
+   a2=qmax([k])
+set fais 0
+box  [a1] [a2] [miny] [maxy]
+set fais 3
+set fasi 256
+box [a1] [a2] [miny] [maxy]
+   enddo
+   
+     	 if [kc]=1 then
+      igset plci 1
+text 9. [t2] [dayt]  0.35  0 C
+text 9. [t1] 'Beam position X (horizontal)' 0.35 0 C 
+igset plci 4
+ve/pl x%bpm ! Sl
+   else
+   igset plci 1
+text 1. [t1] Run=[run] 0.35 0
+text 9. [t1] 'Beam position Y (vertical)' 0.35 0 C
+igset plci 4
+ve/pl y%bpm ! Sl
+   	 endif
+      enddo
+   enddo
+RETURN

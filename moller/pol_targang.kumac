@@ -1,0 +1,259 @@
+MACRO pol_targang v=1 pz=0 bt=0 dt=0 npar=2 wn=0 wien=-24.5 el=0.56789 npass=4 wn1=-100 wn2=20 deadt=0.015
+
+*
+* --- Fits the beam polarization and the beam spin angle to a measurement
+* ---   at different target angles
+*
+ opt nsta
+ set dmod 1
+
+ if [wn]>1 then
+   go to wien
+ endif 
+
+ nm=12
+ np=10
+ if [v]>[nm] then
+   mess Error: v=[v] < nm=[nm]
+   exitm
+ endif
+
+ ve/cr  err([np]) r
+ ve/cr  tang([np],[nm]) r
+ ve/cr  tang([np],[nm]) r
+ ve/cr  polm([np],[nm]) r
+ ve/cr epolm([np],[nm]) r
+ ve/cr  asyp([np]) r
+ ve/cr easyp([np]) r
+ ve/in  tang(1:7,1)    23.0  163.5  158.0  153.0   41.0   32.0   23.0 
+ ve/in  polm(1:7,1)   -62.6  -58.0  -57.8  -56.5  -66.6  -64.5  -61.94    
+ ve/in epolm(1:7,1)     0.18   0.17   0.23   0.23   0.50   0.30   0.23
+ ve/in  tang(1:7,2)    22.8  160.9  156.5  150.0   40.9   31.8   22.5 
+* ve/in  tang(1:7,2)    21.0  160.9  156.5  150.0   39.0   30.0   21.0 
+ ve/in  polm(1:7,2)   -62.6  -58.0  -57.8  -56.5  -66.6  -64.5  -61.94    
+ ve/in epolm(1:7,2)     0.18   0.17   0.23   0.23   0.50   0.30   0.23
+ ve/in  tang(1:4,3)    23.5  38.5   163.5   147.
+ ve/in  polm(1:4,3)    69.75  72.57  66.67  65.89
+ ve/in epolm(1:4,3)     0.20   0.30   0.20   0.27
+ ve/in  tang(1:4,4)    22.3  37.5   162.9   146.5
+ ve/in  polm(1:4,4)    69.40  71.59  67.25  66.27
+ ve/in epolm(1:4,4)     0.20   0.30   0.20   0.27
+ ve/in  tang(1:4,5)    23.5  163.5  147.0    39.0
+ ve/in  polm(1:4,5)   -68.57 -65.35 -65.03 -70.89
+ ve/in epolm(1:4,5)     0.21   0.17   0.26   0.30
+ ve/in  tang(1:4,6)    22.5  162.3  146.9    38.8
+ ve/in  polm(1:4,6)   -68.32 -65.87 -65.10 -70.34
+ ve/in epolm(1:4,6)     0.21   0.17   0.26   0.30
+* ve/in  tang(1:4,7)    23.5   43.0  148.0    163.5
+ ve/in  tang(1:4,7)    21.4   43.2  150.5    163.2
+ ve/in  polm(1:4,7)   -67.2  -62.9  -74.8  -72.6 
+ ve/in epolm(1:4,7)     0.2    0.4    0.3    0.2 
+ ve/in  tang(1:4,8)    19.3   37.6  150.5    160.0
+ ve/in  polm(1:4,8)   -78.4  -80.3  -75.0  -75.9 
+ ve/in epolm(1:4,8)     0.2    0.4    0.3    0.2 
+ ve/in  tang(1:4,9)    16.9   34.5  146.9    156.5
+ ve/in  polm(1:4,9)   -79.2  -81.5  -75.6  -77.0 
+ ve/in epolm(1:4,9)     0.2    0.5    0.4    0.2
+* 29 aug 2001 
+ ve/in  tang(1:3,10)   18.7   36.6   160.2 
+ ve/in  polm(1:3,10)  -81.7  -79.33  -83.4
+ ve/in epolm(1:3,10)    0.2    0.3     0.2
+ 
+* 07sep 2001 
+* ve/in  tang(1:4,11)   23.0   33.    152.5   163.5 
+* ve/in  polm(1:4,11)   84.92  84.53   81.56   83.33
+ ve/in  tang(1:4,11)   19.0   29.5   150.6   160.5 
+ ve/in  polm(1:4,11)   82.73  81.56   83.11   83.11
+ ve/in epolm(1:4,11)    0.2    0.3     0.3    0.2
+ 
+  16sep 2001 
+ ve/in  tang(1:4,12)   19.1   30.35  150.7   160.5
+ ve/in  polm(1:4,12)  -62.46 -60.47  -65.97  -63.72
+* ve/in  tang(1:4,12)   23.0   33.5   153.0   160.5
+* ve/in  polm(1:4,12)  -62.46 -60.47  -65.97  -63.72
+ ve/in epolm(1:4,12)    0.21   0.22    0.20   0.22
+ 
+ ve/cop tang(1:[np],[v]) vtmp
+ np1=$VLEN(vtmp,1)
+ ve/del vtmp
+
+ ve/del tang1
+ ve/cop tang(1:[np1],[v]) tang1
+ do i=1,[np1]
+   a=tang1([i])
+   if [a]>89. then
+     a=[a]-180
+   endif 
+   a=$SIGMA(-1.*[a])
+   ve/in tang1([i]) [a]
+   c=$SIGMA(COS([a]*3.1415/180.))
+   a=polm([i],[v])
+   a=$SIGMA([a]*[c])
+   ve/in asyp([i]) [a]
+   a=epolm([i],[v])
+   a=$SIGMA([a]*[c])
+   ve/in easyp([i]) [a]
+ enddo
+
+ ve/cop  polm(1:[np1],[v]) polm1
+ ve/cop epolm(1:[np1],[v]) epolm1
+* ve/cop asyp(1:[np1]) polm1
+ pmn=$SIGMA(VMIN(polm1))
+ pmx=$SIGMA(VMAX(polm1))
+ dp=[pmx]-[pmn]
+ ymn=$SIGMA([pmn]-[dp]*0.15)
+ ymx=$SIGMA([pmx]+[dp]*0.15)
+ xmn=-50 
+ xmx=50
+
+ null [xmn] [xmx] [ymn] [ymx]
+ atit 'Target angle, ^o!' 'Measured polarization, "Y#'
+ gr/hpl/err tang1(1:[np1]) polm1(1:[np1]) err(1:[np1]) epolm1(1:[np1]) [np1] 20 0.15 
+
+ ve/cr par(10) r
+ ve/cr epar(12) r
+ ve/in par(1:3) [pmn] 40. [deadt]
+ ve/cr ipfit(10) i
+ ve/in ipfit(2) [pz]
+ ve/in ipfit(3) [bt]
+ ve/in ipfit(4) [dt]
+ ve/in ipfit(5) [npar]
+
+*
+* Comis routine to fit the superposition of the longitudinal and transverse polarizations
+* to the data. 
+*
+ Application COMIS quit
+      REAL FUNCTION POLZX(X)
+C
+C---    Superposition of the the longitudinal and transverse polarizations
+C---    X - taget angle in degrees
+C---    IPFIT(2)=0 : PAR(1) - full beam polarization
+C---            =1 :          Pz
+C
+      IMPLICIT NONE
+      REAL X
+      COMMON/PAWPAR/ PARA(10)
+      VECTOR PAR(10)
+      VECTOR IPFIT(10)
+C
+      INTEGER i
+      REAL rdeg,thb,tht,p1,p2,p3,tpolf,tht0,deadt
+C
+      rdeg=3.1415/180. 
+      tht=X*rdeg
+      p1=PARA(1)
+      p2=PAR(2)
+      p3=PAR(3)
+      IF(IPFIT(5).GE.2) p2=PARA(2)
+      IF(IPFIT(5).GE.3) p3=PARA(3)
+      IF(IPFIT(1).NE.0) THEN
+        p1=PAR(1)
+        p2=PAR(2)
+        p3=PAR(3)
+      ENDIF
+      thb=p2*rdeg
+      IF(IPFIT(2).NE.0) THEN
+         p1=p1/COS(thb)
+      ENDIF
+      tpolf=1.
+      IF(IPFIT(3).NE.0) THEN
+C---         Magnetization correction
+         tht0=20.*rdeg
+         tpolf=1.+(0.2/7.8)/(100./260.)*(COS(tht)/COS(tht0)-1.)
+      ENDIF
+      deadt=1.
+      IF(IPFIT(4).NE.0) THEN
+C---         Dead time correction
+         tht0=20.*rdeg
+C         IF(p3.NE.0.11) write(6,*) 'p1-3=',p1,p2,p3,p3,(PARA(i),i=1,3)
+         deadt=1.-p3*ABS(SIN(tht0)/SIN(tht))
+      ENDIF
+      POLZX=p1*tpolf*deadt*(COS(thb)+1./7.*SIN(thb)*TAN(tht))
+C
+      END
+ Quit
+*
+
+ve/pri par
+ve/fit tang1(1:[np1]) polm1(1:[np1]) epolm1(1:[np1]) polzx 0 [npar] par ! ! ! epar
+
+ve/in ipfit(1) 1
+fu/pl polzx [xmn] -10  s  
+fu/pl polzx [xmx]  10  s  
+
+* --- calculate chi2
+ch2=0.
+do i=1,[np1]
+  t=tang1([i])
+  t=$RSIGMA([t])
+  a=polm1([i])
+  e=epolm1([i])
+  cmd='polzx('//[t]//')'
+  b=$CALL([cmd])
+  ch2=$SIGMA([ch2]+(([b]-[a])/[e])**2)
+enddo
+ch2=$SIGMA([ch2]/([np1]-[npar]))
+*ch2=$SIGMA([ch2]/([np1]-2))
+p1=par(1)
+p2=par(2)
+p1=$FORMAT([p1],F7.2)
+p2=$FORMAT([p2],F7.2)
+e1=epar(1)
+e2=epar(2)
+e1=$FORMAT([e1],F4.2)
+e2=$FORMAT([e2],F4.2)
+ch2=$FORMAT([ch2],F7.1)
+
+mess ch2=[ch2]
+x1=$SIGMA([xmn]*0.5+[xmx]*0.5)
+y1=$SIGMA([ymn]*0.5+[ymx]*0.5)
+text [x1] [y1] 'Beam polarization' 0.3 0.
+y1=$SIGMA([y1]-([ymx]-[ymn])*0.1)
+txt='[v]^2!/ndf='//[ch2]
+text [x1] [y1] [txt] 0.3 0.
+y1=$SIGMA([y1]-([ymx]-[ymn])*0.1)
+cp='P?TOT!='
+if [pz]>0 then 
+  cp='P?Z!='
+endif
+txt=[cp]//[p1]//'"a#'//[e1]//"Y#
+text [x1] [y1] [txt] 0.3 0.
+y1=$SIGMA([y1]-([ymx]-[ymn])*0.1)
+txt='[q]?SPIN!='//[p2]//'"a#'//[e2]//'^o!'
+text [x1] [y1] [txt] 0.3 0.
+y1=$SIGMA([y1]-([ymx]-[ymn])*0.1)
+if [dt]>0 then
+  d=par(3)
+  d=[d]*100
+  d=$FORMAT([d],F3.1)
+  txt='DT corr(20^o!)='//[d]//"Y#
+  text [x1] [y1] [txt] 0.3 0.
+endif  
+
+wien:
+if [wn]>0 then
+  ve/cr vprec(8) r
+  ve/in vprec(1:3) [el] 1 [npass]
+  fu/pl spinpred.f [wn1] [wn2]
+  atit 'Wien angle [q]?WIEN!, ^o!' 'Predicted Z-projection'
+  y1=$GRAFINFO('WNYMIN')
+  y2=$GRAFINFO('WNYMAX')
+  set ltyp 8
+  gr/prim/arrow [wien] [wien] [y2] [y1] 0.3
+  set ltyp 1
+  w=$RSIGMA([wien])
+  cmn='spinpred.f('//[w]//')'
+  p=$CALL([cmn])
+  p=$FORMAT([p],F6.3)
+  x1=$SIGMA([wn1]*0.9+[wn2]*0.1)
+  y1=$SIGMA([y1]*0.1+[y2]*0.9)
+  txt='COS([q]?WIEN!)='//[p]
+  text [x1] [y1] [txt] 0.3 0.
+endif 
+opt stat
+set dmod 0
+RETURN
+
+
+

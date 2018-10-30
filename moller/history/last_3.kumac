@@ -1,0 +1,112 @@
+*** Begin of history file: Thu Jun 23 18:08:39 2005
+exec run run=11756
+exec run run=11755
+exec run run=11750
+exec run run=11751
+exec run run=11747
+exec run run=11748
+exec run run=11749
+exec run run=11752
+exec run run=11753
+exec run run=11754
+exec run run=11745
+exec run run=11746
+exec run run=11190
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965
+zone 2 2
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965 nosubbg=1
+exec asyms run=11745 angl=20.0 delay=0 ptar=0.07965
+exec asyms run=11745 angl=20.0 delay=0 ptar=0.07965 nosubbg=1
+call prunpri.f(11000,12000)
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965 nosubbg=1
+call prunpri.f(11000,12000)
+exec asyms run=11745 angl=20.0 delay=0 ptar=0.07965 nosubbg=1 norm=0
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965 nosubbg=1 norm=0
+call prunpri.f(11000,12000)
+exec asyms run=11752 angl=20.0 delay=0 ptar=0.07426 nosubbg=1
+exec asyms run=11753 angl=20.0 delay=0 ptar=0.07426 nosubbg=1
+exec asyms run=11754 angl=20.0 delay=0 ptar=0.07426 nosubbg=1
+call prunpri.f(11000,12000)
+cd //pawc
+h/li
+h/pl 1175400
+h/pl 1175401
+h/pl 1175401
+h/pl 1175402
+h/pl 1175403
+h/pl 1175404
+h/pl 1175405
+h/pl 1175406
+h/pl 1175410
+h/pl 1175411
+h/pl 1175412
+h/pl 1175413
+h/pl 1175414
+h/pl 1175430
+h/pl 1175430(1:30)
+h/pl 1175430(1:60)
+h/pl 1175430(21:30)
+h/pl 1175431(21:30)
+h/pl 1175431
+h/pl 1175421
+h/pl 1175422
+h/pl 1175424
+h/pl 1175432
+h/pl 1175433
+h/pl 1175434
+h/pl 1175440
+h/pl 1175441
+h/pl 1175442
+h/pl 1175443
+h/pl 1175444
+h/pl 1175450
+h/pl 1175451
+h/pl 1175452
+h/pl 1175453
+h/pl 1175454
+h/pl 1175455
+h/pl 1175454
+h/pl 1175452
+h/pl 1175454
+h/pl 1175455
+h/pl 1175456
+h/pl 1175457
+h/pl 1175458
+h/pl 1175454
+h/pl 1175460
+h/pl 1175461
+h/pl 1175462
+h/pl 1175463
+h/pl 1175464
+h/pl 1175465
+h/pl 1175473
+h/pl 1175483
+h/pl 1175463
+h/pl 1175482
+h/pl 1175462
+exec asyms run=11753 angl=20.0 delay=0 ptar=0.07426 nosubbg=1 clear=0
+h/pl 1175463
+h/pl 1175463
+h/pl 1175463
+h/pl 1175563
+h/pl 1175363
+h/pl 1175583
+h/pl 1175483
+h/pl 1175383
+h/fit 1175363 g
+h/fit 1175463 g
+h/fit 1175383 g
+h/fit 1175363 g
+h/fit 1175363 g
+h/fit 1175463 g
+h/fit 1175383 g
+h/fit 1175483 g
+call prunpri.f(11000,12000)
+exec asyms run=11753 angl=20.0 delay=0 ptar=0.07426 nosubbg=1 clear=1
+exec asyms run=11754 angl=20.0 delay=0 ptar=0.07426 nosubbg=1 clear=0
+h/fit 1175363 g
+h/fit 1175463 g
+h/fit 1175383 g
+h/fit 1175483 g
+call prunpri.f(11000,12000)
+*** End   of history file: Fri Jun 24 10:40:16 2005

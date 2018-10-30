@@ -1,0 +1,47 @@
+MACRO targ_angl run1=0 run2=0 runn1=0 runn2=0 iofs=8000 i=3
+*
+* ===  Target angle calculation for run1-run2, if 
+*      runn1-runn2 are taken at 90 degrees
+*
+
+ r1=[run1]-[iofs]
+ r2=[run2]-[iofs]
+
+ co1=0.
+ co2=0.
+
+ r1=[run1]-[iofs]
+ r2=[run2]-[iofs]
+ k=0
+ do r=[r1],[r2]
+    a=resrun([i],[r])
+    b=resrun(5,[r])
+    if [a]>1000 then
+*      b=1.
+      k=[k]+1
+      co1=$SIGMA([co1]+[a]/[b])
+    endif
+ enddo
+ co1=[co1]/[k]
+ mess [co1],[k]
+
+ r1=[runn1]-[iofs]
+ r2=[runn2]-[iofs]
+ k=0
+ do r=[r1],[r2]
+    a=resrun([i],[r])
+    b=resrun(5,[r])
+    if [a]>1000 then
+*    b=1.
+      co2=[co2]+[a]/[b]
+      k=[k]+1
+    endif
+ enddo
+ co2=[co2]/[k]
+ mess [co2]
+
+ ang=$SIGMA(ASIN([co2]/[co1])*180./3.1415)
+ mess The target angle = [ang]
+RETURN 
+
+

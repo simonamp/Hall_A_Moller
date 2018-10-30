@@ -1,0 +1,148 @@
+MACRO hv_tune fill=1 ener=3.484 plothv=1
+
+ nhv=3
+
+ ve/cr hv(8,3) r
+* ve/in hv(1:8,1) 1680 1650 1665 1583 1614 1644 1681 1634
+* ve/in hv(1:8,2) 1730 1700 1715 1633 1664 1694 1731 1684
+* ve/in hv(1:8,3) 1780 1750 1765 1683 1714 1744 1781 1734
+ ve/in hv(1:8,1) 1505  1600  1820  1700  1559  1461  1550  1620
+ ve/in hv(1:8,2) 1466  1560  1780  1640  1525  1460  1520  1605  
+ ve/in hv(1:8,3) 1466  1560  1780  1640  1531  1401  1520  1540
+
+
+* ve/cr jhvrun(3) i 1091 1089 1090
+ ve/cr jhvrun(3) i 13588 13545 13649 
+
+ ve/cr par(20) r
+
+ if [fill]=0 goto plot
+
+ ve/cr peak(3,8) r
+
+ ve/cr iicut(3) i 100 120 200
+ ve/cr iichw(3) i   4   8   8 
+ ve/cr iicha(3) i 150 120 100 
+ ve/read pedes,pedcut pedes_3.dat
+* opt pto
+
+ do ir=1,3
+   run=jhvrun([ir])
+   id0=[run]*1000
+   iiicut=iicut([ir])
+   iiichw=iichw([ir])
+   iiicha=iicha([ir])
+   exec lg_spectra id0=[id0] run=[run] fill=1 fit=0 icut=[iiicut] chw=[iiichw] ncha=[iiicha]
+   exec lg_spectra id0=[id0] run=[run] fill=0 fit=1 icut=[iiicut] chw=[iiichw] ncha=[iiicha]
+   do i=1,8
+     a=parlg(2,[i])
+     ve/in peak([ir],[i]) [a]
+   enddo
+ enddo
+
+ opt npto
+
+ plot:
+
+ zone 1 1
+
+
+ ve/cr err(20) r
+ ve/cop peak amp
+ ve/cop peak lamp
+ ve/cop peak lhv
+
+ do i=1,3
+   do j=1,8
+     a=amp([i],[j])
+     b=$SIGMA(LOG10([a]))
+     ve/in lamp([i],[j]) [b]
+     a=hv([j],[i])
+     b=$SIGMA(LOG10([a]))
+     ve/in lhv([i],[j]) [b]
+   enddo
+ enddo
+
+* admean=300
+  admean=250
+ nener=6
+ ve/cr energ([nener]) r [ener] 0.845 1.645 2.445 3.484 4.045 
+ ve/cr ladcmg([nener]) r
+ ve/cr xxg([nener]) r
+ ve/cr hhv([nener],8) r
+ do m=1,[nener]
+   ener=energ([m])
+   adcm=[admean]*3.484/[ener]
+   ladcm=$SIGMA(LOG10([adcm]))
+   mess adcm=[adcm] [ladcm]
+   ve/in ladcmg([m]) [ladcm]
+ enddo
+
+ tit='Moller LG HV curves at 3.484 GeV, HV tuned to '//[admean]//' chan'
+
+ titl [tit]
+
+ opt liny
+ opt linx
+ opt nfit
+
+ y1=2.0
+ null 3.19 3.26 [y1] 3.0  
+ atit 'LOG10(HV)' 'LOG10(ADC)'
+ do i=1,8
+    a=amp(1,[i])
+*    if [a]=1000. then
+*      b1=lamp(2,[i])
+*      b2=lamp(1,[i])
+*      a=([b1]-[b2])+[b1]
+*      ve/in lamp(3,[i]) [a]
+*    endif
+    is=19+[i]
+    gr/hpl/err lhv(1:3,[i]) lamp(1:3,[i]) err err 3 [is]
+    ve/fit lhv(1:3,[i]) lamp(1:3,[i]) err p1 wsQ 0 par
+    aa=par(1)
+    bb=par(2)
+    fun/pl [aa]+[bb]*x 3.2 3.3 s
+
+    yy=[y1]+9*0.02-0.02*[i]
+    x=3.193
+    y=[yy]
+    chan='LG '//[i]
+    gr/hpl/key  [x] [y] [is] [chan]  
+
+    x=3.230
+    chan='LG '//[i]
+    if [plothv]>0 then
+      text  [x] [y] [chan] 0.2  
+    endif
+
+    do m=1,[nener]
+      ladcm=ladcmg([m])
+      xx=([ladcm]-[aa])/[bb]
+      h=$SIGMA(10**[xx])
+      h=$SIGMA(INT([h]+0.5))
+      ve/in hhv([m],[i]) [h]
+      mess chan=[i]  HV=[h]
+      thv=[h]
+      x=[x]+0.004
+      if [plothv]>0 then
+        text  [x] [y] [thv] 0.2
+      endif
+      ve/in xxg([m]) [x]
+    enddo
+ enddo
+ y=[y1]+9*0.02
+ do m=1,[nener]
+   x=xxg([m])
+   ener=energ([m])
+   if [plothv]>0 then
+     text  [x] [y] [ener] 0.2
+   endif
+ enddo
+
+RETURN
+
+
+
+
+

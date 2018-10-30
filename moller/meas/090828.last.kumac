@@ -1,0 +1,115 @@
+*** Begin of history file: Mon Aug 31 10:28:57 2009
+exec run run=13443
+exec lg_spectra run-13443
+exec lg_spectra run=13443
+exec asymu run=13443
+exec run_scalu run=13443
+nt/pl //lun51/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13444
+exec asymu run=13444
+nt/pl //lun52/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13445
+exec run_scalu run=13444
+exec asymu run=13445
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+call prunpri.f(11000,14000)
+exec run run=13446
+exec asymu run=13446
+exec run_scalu run=13446
+nt/pl //lun54/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+call prunpri.f(11000,14000)
+exec long_scan run=13447
+exec run run=13448
+exec asymu run=13448
+call prunpri.f(11000,14000)
+ld //
+nt/pl //lun56/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+exec run run=13449
+exec asymu run=13448
+call prunpri.f(11000,14000)
+nt/pl //lun57/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ld //
+exec run_scalu run=13446
+exec run_scalu run=13447
+exec run_scalu run=13448
+nt/pl //lun56/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13449
+exec asymu run=13449
+call prunpri.f(11000,14000)
+nt/pl //lun57/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+exec run run=13450
+exec asymu run=13450
+nt/pl //lun58/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+exec run run=13451
+exec asymu run=13451
+nt/pl //lun59/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec long_scan run=13452
+exec run run=13453
+exec asymu run=13453
+ld //
+nt/pl //lun51/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13454
+exec asymu run=13454
+nt/pl //lun52/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13455
+exec asymu run=13455
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13456
+exec asymu run=13456
+nt/pl //lun54/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13457
+exec asymu run=13457
+nt/pl //lun55/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec long_scan run=13458
+exec asym_av run1=13443
+exec asym_av run1=13443 run2=13446
+exec asym_av run1=13448 run2=13451
+exec asym_av run1=13453 run2=13451
+exec asym_av run1=13453 run2=13457
+exec run run=13459
+exec asymu run=13459
+ld //
+nt/pl //lun57/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13460
+exec asymu run=13460
+nt/pl //lun58/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13461
+exec asymu run=13461
+nt/pl //lun59/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec run run=13462
+exec asymu run=13462
+nt/pl //lun60/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4.and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+h/fit 101 g ! 0 par5
+call prunpri.f(11000,14000)
+exec asym_av run1=13459 run2=13462
+exec long_scan run=13463
+exec asym_avt
+exit
+*** End   of history file: Mon Aug 31 10:51:15 2009

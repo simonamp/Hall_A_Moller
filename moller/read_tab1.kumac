@@ -1,0 +1,229 @@
+MACRO read_tab1 fill=2 run1=0 run2=0
+*
+* ---      Fill the vectors with summary data from (run range run1-run2): 
+*                        runs.tab.... : from subdirectory tab/
+*                        mollerrun_????.set files (if fill>1)
+*
+  if [run2]<1 then
+    mess *** Wrong run2=[run2]
+    exitm
+  endif
+
+  host=$SHELL('hostname')
+  if $INDEX([host],'adaq')>0 .OR. $INDEX([host],'jlab')>0 then
+    dirm=/home/moller/daq/coda2/RunInfo/
+    dirt=/home/moller/daq/public_html/tab/
+    fhtml=/home/moller/public_html/raw_results.html
+  elseif $INDEX([host],'haplix')>0 then
+    dirm=/data2a/user/gen/moller/exp/
+    dirt=tab/
+    fhtml=raw_results.html
+  endif
+
+  comn='cat '//[dirt]//'run.tab.* | grep ''^.[0-9]'' | awk '' $1 >= '//[run1]//' && $1 <= '//[run2]//''' > tmp1'
+*  mess [comn]
+  shell [comn]
+  shell 'cat tmp1 | sed "s/\*\*\*\*\*\*\*/ 0.0   /g" > runs.tab.cur'
+
+  nl=$SHELL('wc -l runs.tab.cur | awk ''{print $1}''')
+  nl=[nl]+10
+  nn=$VDIM(resrun,2)
+  if [nn]<[nl] then
+     exec book_v_run nbeg=[nl]
+  endif  
+  nn=$VDIM(resrun,2)
+
+  mp=40
+  if $VDIM(runset,2)<[nn] .OR. $VDIM(runset,2)<[mp] then
+    ve/cr runset([mp],[nn]) r
+    fnam='inc/v_runset.inc'
+    if $FEXIST([fnam]) then
+      shell rm -f [fnam]
+    endif 
+    fmess 'C == Run info from the .set files, see also vector resrun' [fnam]
+    inam='      INTEGER MXRSET,MXSPAR'
+    fmess [inam] [fnam]
+    inam='      PARAMETER (MXRSET='//[nn]//',MXSPAR='//[mp]//')'
+    fmess [inam] [fnam]
+    inam='      VECTOR RUNSET('//[mp]//','//[nn]//')'
+    fmess [inam] [fnam]
+  else
+    n=[mp]*[nn]
+    ve/in runset(1:[mp],1:[nn]) [n]*0
+  endif
+
+  shell 'cat runs.tab.cur | cut  -c1-69  > runs.tab.cur.1'
+  shell 'cat runs.tab.cur | cut -c70-160 > runs.tab.cur.2'
+
+*
+* ---   Read the mollerrun_????.set files and prepare a file cur.tmp
+*
+  if $FEXIST('cur.tmp')=0 then
+    fill=2
+  endif
+  if [fill]>1 then
+     shell ./read_tab1_1.com [dirm]
+  endif
+*
+* --- Read the files and fill the vectors
+*
+  call read_tab1.f
+
+*
+* --- Check if 1-arm polarizations are too large
+*
+*
+* Get the run numbers from the raw_results.html
+
+
+  comn='cat '//[fhtml]//' | grep -B 3 ''<tr align="right"> <td> Average'' > tmp1'
+  shell [comn]
+  shell 'cat tmp1 | awk ''$1 !~ /--/ {print $4 " " $6 }'' | sed "s/-/ /g" | sed "s/Average/0 0 0./g" > tmp2'
+  nml=$SHELL('wc -l tmp2 | awk ''{print $1}''')
+  mess nml=[nml]
+ 
+ mnm=$SIGMA(INT([nml]/4)+5)
+ if $VDIM(rmea,2)<>[nml] .OR. $VDIM(polm,1)<[mnm] then
+   ve/cr rmea(3,[nml]) r
+   ve/cr polm([mnm],4) r
+   ve/cr epolm([mnm],4) r
+   ve/cr datm([mnm]) r
+   ve/cr dat1m(4,[mnm]) r
+   ve/cr krunm([mnm]) i
+   ve/cr krejm([mnm]) i
+   fnam='inc/v_runmea.inc'
+   if $FEXIST([fnam]) then
+      shell rm -f [fnam]
+   endif 
+   fmess 'C == Run info from the .set files, see also vector resrun' [fnam]
+   inam='      INTEGER MXRMAL,MXRMEA'
+   fmess [inam] [fnam]
+   inam='      PARAMETER (MXRMAL='//[nml]//', MXRMEA='//[mnm]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR RMEA(3,'//[nml]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR POLM('//[mnm]//',4),EPOLM('//[mnm]//',4)'
+   fmess [inam] [fnam]
+   inam='      VECTOR DATM('//[mnm]//'),DAT1M(4,'//[mnm]//')'
+   fmess [inam] [fnam]
+   inam='      VECTOR KRUNM('//[mnm]//'),KREJM('//[mnm]//')'
+   fmess [inam] [fnam]
+ else
+   ve/in krunm [mnm]*0
+ endif
+ ve/read rmea tmp2
+
+*  Process each measurement
+
+ rmin=1
+ rmax=$VLEN(krunpnt)
+ do i=1,[rmax]
+   r=krunpnt([i])
+   if [r]>0 then
+      rmin=[i]
+      goto end1
+   endif
+ enddo
+ end1:
+ mess rmin,rmax=[rmin] [rmax]
+
+ if $VDIM(vprec,1)<8 then
+   ve/cr vprec(8) r
+ endif
+
+ nm=0
+ nrej=0
+ k=0
+ s=0.
+ es2=0.
+
+
+ do mt=1,[nml] 
+   r1=rmea(1,[mt])
+   r2=rmea(2,[mt])
+   an=rmea(3,[mt])
+   if [r1]>0 then
+     if [r1]>=[rmin] .AND. [r1]<=[rmax] .AND. [r2]>=[rmin] .AND. [r2]<=[rmax] then 
+       an1=$SIGMA(ABS([an]-90.))
+       kp=krunpnt([r1])
+ *      mess r1=[r1] kp=[kp] [k] [an] [an1] 
+       if [kp]>0 then
+         trg=runset(25,[kp])
+         an2=runset(27,[kp])
+         an2=$SIGMA(22.5+[an2]*141./79.)
+         if $SIGMA(ABS([an2]-[an]))>6. then
+           txt='Error: target angle mismatch, run='//[r1]//', '//[an]//' and '//[an2]
+           fmess [txt] log.tmp
+         endif
+
+         if [an1]>3. .AND. [trg]=1 then
+           k=[k]+1
+           mess --- Asymmetry for run1=[r1] run2=[r2]
+           exec asym_av run1=[r1] run2=[r2] chan=3
+           pol=para(1)
+           epol=epara(1)
+           s=$SIGMA([s]+[pol]/[epol]/[epol])
+           es2=$SIGMA([es2]+1./[epol]/[epol])
+           m=1
+           if [an]>150. then
+             m=2
+           endif
+           i=[nm]+1
+           ve/in polm([i],[m]) [pol]
+           ve/in epolm([i],[m]) [epol]
+
+           if [k]=1 then
+             d=runset(7,[kp])
+             mess DATE=[d]
+             ve/in datm([i]) [d]
+             do j=1,4
+               j1=[j]+2
+               d=runset([j1],[kp])
+               ve/in dat1m([j],[i]) [d]
+             enddo
+             r01=[r1]
+           endif
+
+           a1=runset(10,[kp])
+           a2=runset(9,[kp])
+*           ve/in vprec(1:3) runset(10,[kp]) 1 runset(9,[kp])
+           ve/in vprec(1:3) [a1] 1 [a2]
+           wan=runset(12,[kp])
+           wan=$RSIGMA([wan])
+           comnd='spinpred.f('//[wan]//')'
+           cosw=$CALL([comnd])
+           ve/in runset(29,[kp]) [cosw]
+           mess Angles: [r1] [a1] [a2] [wan] [cosw]
+
+         endif
+       endif
+     endif
+   else
+
+     if [k]=2 then
+       pol=$SIGMA([s]/[es2])
+       pol1=$SIGMA(ABS([pol]))
+       if [pol1]>0.55 then
+         nm=[nm]+1
+         epol=$SIGMA(1./SQRT([es2]))
+         ve/in polm([nm],3) [pol]
+         ve/in epolm([nm],3) [epol]
+         ve/in polm([nm],4) [pol1]
+         ve/in epolm([nm],4) [epol]
+         ve/in krunm([i]) [r01]
+         mess Meas=[nm] Date=[d] Pol=[pol] +/- [epol]
+       else
+         nrej=[nrej]+1
+         ve/in krejm([nrej]) [r01]
+       endif
+     endif
+
+     k=0
+     s=0.
+     es2=0.
+   endif
+ enddo 
+
+RETURN
+
+

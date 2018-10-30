@@ -1,0 +1,12 @@
+MACRO analyze_run run1=0 run2=0 angl=20.
+
+  do ir=[run1],[run2]
+    clo 0
+    ve/del lrun
+    exec run run=[ir]
+    exec asymn run=[ir] ncha=0 angl=[angl]
+  enddo
+  
+  call prunpri.f([run1],[run2],2000)
+
+RETURN

@@ -1,0 +1,79 @@
+MACRO read_tab 
+*
+* --- Read runs.tab.cur and fill the resrun vector
+* 
+
+  if $VDIM(ktab,1)<25 then
+    ve/cr ktab(25) i
+  endif
+  ve/in ktab(1:19) 0 1 2 3 4 5 6 11 12 13 14 17 18 19 21 23 27 28 29 
+
+  if $VDIM(mtabfl,1)<10 then
+    ve/cr mtabfl(10) i
+  else
+    ve/in mtabfl 10*0
+  endif
+
+  nam=runs.tab.cur
+  cmnd='cat '//[nam]//' | wc -l | awk ''{print $1}'''
+  nr=$SHELL([cmnd])
+*  nr=$SHELL('cat runs.tab.cur | wc -l | awk ''{print $1}''')
+  nam1=tmp.tab  
+  nam2=tmp1.tab
+  shell ./read_tab.com 0 [nam] > [nam1]
+  cmnd='tail -1 '//[nam1]//' | wc -w | awk ''{print $1}'''
+  ncol=$SHELL([cmnd])
+  cmnd='cat '//[nam1]//' | wc -l | awk ''{print $1}'''
+  nrow=$SHELL([cmnd])
+
+  if [nrow]<1 then
+    mess Empty file [nam]
+    goto eend
+  endif
+
+  if $VDIM(rtmp,1)<[nrow] then
+    ve/cr rtmp([nrow]) r
+  else
+    ve/in rtmp(1:[nrow]) [nrow]*0
+  endif
+  if $VDIM(mtabrn,1)<[nrow] then
+    ve/cr mtabrn([nrow]) r
+  else
+    nr=$VDIM(mtabrn,1)
+    ve/in mtabrn(1:[nr]) [nr]*0
+  endif
+
+  do i=1,[ncol]
+    shell ./read_tab.com [i] [nam1] > [nam2]
+    ve/in rtmp(1:[nrow]) [nrow]*0
+    if [i]=1 then
+      ve/read mtabrn [nam2]
+      nr=$VLEN(mtabrn)
+      do j=1,[nr]
+        r=mtabrn([j])
+        exec add_v_run irun=[r]
+        istat=krustat(2)
+        if [istat]>0 then
+          mess Error in read_tab.kumac : can not add the run=[r]
+          exitm
+        endif
+      enddo
+      ve/in mtabfl(2) [nr]
+    else
+      ve/read rtmp [nam2]
+      do j=1,[nr]
+        r=mtabrn([j])
+        ir=krunpnt([r])
+        if [ir]>0 then
+          k=ktab([i])
+          if [k]>0 then
+            ve/in resrun([k],[ir]) rtmp([j])
+          endif
+        endif
+      enddo
+    endif
+  enddo
+
+  eend:   
+RETURN
+

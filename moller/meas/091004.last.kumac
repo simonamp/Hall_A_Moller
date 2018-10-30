@@ -1,0 +1,104 @@
+*** Begin of history file: Sun Oct  4 10:25:05 2009
+exec run run=13588
+exec lg_spectra run=13588
+exec run run=13589
+exec lg_spectra run=13589
+exec run run=13590
+exec lg_spectra run=13590
+exec run run=13591
+exec lg_spectra run=13591
+exec run run=13592
+exec lg_spectra run=13592
+exec run run=13593
+exec lg_spectra run=13593
+exec run run=13594
+exec lg_spectra run=13594
+exec run run=13595
+exec lg_spectra run=13596
+exec lg_spectra run=13595
+exec run run=13596
+exec lg_spectra run=13596
+exec run run=13597
+exec lg_spectra run=13597
+exec run run=13598
+exec lg_spectra run=13598
+exec run run=13599
+exec lg_spectra run=13599
+exec lg_spectra run=13599 ped=0
+zone 2 3
+nt/pl //lun22/1.iadc(1) nadc>0
+nt/pl //lun22/1.iadc(2) nadc>0
+nt/pl //lun22/1.iadc(9) nadc>0
+nt/pl //lun22/1.iadc(10) nadc>0
+exec lg_spectra run=13599 ped=0 cut=50
+exec lg_spectra run=13599 ped=0 icut=50
+exec run run=13600
+exec lg_spectra run=13600
+exec run run=13601
+exec lg_spectra run=13601
+exec run run=13602
+exec lg_spectra run=13602
+exec asymv run=13588
+zone 2 3
+exec asymv run=13589
+exec asymv run=13590
+exec asymv run=13591
+exec asymv run=13592
+exec asymv run=13593
+exec asymv run=13594
+exec asymv run=13595
+ve/pr resv
+exec asymv run=13596
+
+zone 2 3
+exec asymv run=13596
+exec asymv run=13597
+exec asymv run=13598
+exec asymv run=13599
+exec asymv run=13600
+exec asymv run=13601
+exec asymv run=13602
+ve/pr resv
+zone
+exec asym_avt
+zone 2 3
+exec asymv run=13603
+exec asymv run=13604
+exec asymv run=13605
+exec asymv run=13606
+exec asym_av run1=13603 run2=13606
+exec asymv run=13607
+exec asymv run=13608
+exec asymv run=13609
+exec asymv run=13610
+exec asym_av run1=13607 run2=13610
+exec asymv run=13611
+exec asymv run=13612
+exec asymv run=13613
+exec asymv run=13614
+exec asym_av run1=13611 run2=13614
+exec asymv run=13616
+exec asymv run=13617
+exec asymv run=13618
+exec asymv run=13619
+exec asymv run=13620
+exec asymv run=13621
+ve/pr resv
+exec asym_av run1=13617 run2=13621
+exec asymv run=13622
+exec asymv run=13623
+exec asym_av run1=13622 run2=13623
+exec asymv run=13625
+exec asymv run=13629
+exec asymv run=13630
+exec asymv run=13631
+exec asymv run=13632
+exec asym_av run1=13629 run2=13632
+exec asym_av run1=13603 run2=13623
+zone
+exec asym_av run1=13603 run2=13623
+exec olpla
+exec asym_av run1=13603 run2=13623
+exec cllops
+exit
+*** End   of history file: Sun Oct  4 14:20:26 2009

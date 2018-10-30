@@ -1,0 +1,32 @@
+MACRO bcm_distr run1=0 run2=0 i=28 
+*
+* ===  Get the BCM sigmas/average and sigma_aver/aver from the histograms
+* ===   and store is to RESRUN
+*
+
+ r1=[run1]-[iofs]
+ r2=[run2]-[iofs]
+
+ 
+ do run=[run1],[run2]
+    r=krunpnt([run])
+    if $VDIM(krunpnt,1) .GE. [run] .AND. [r]>0 then 
+      id=[run]*100+65
+      a1=$HINFO([id],'MEAN')
+      b1=$HINFO([id],'RMS')
+      nen=$HINFO([id],'ENTRIES')
+      if [nen]>2 then
+        av1=[b1]/[av1]
+        sav=$SIGMA([b1]/SQRT([nen]))
+        av2=[sav]/[av1]
+        j=[i]
+        ve/in resrun([j],[r]) [av1]
+        j=[i]+1
+        ve/in resrun([j],[r]) [av2]
+      endif
+    endif
+ enddo
+
+RETURN 
+
+

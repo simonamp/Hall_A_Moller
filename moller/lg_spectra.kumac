@@ -1,0 +1,185 @@
+MACRO lg_spectra id0=-1 nlun=0 run=0 fill=1 chw=4 ncha=256 icut=0 fit=0 cut=0 ped=1 clear=1
+*
+* --- Fills and fits the LG spectra with pedestal subtraction
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- fill = 0 - only fit
+* --- chw   - channel width
+* --- ncha  - number of channels
+* --- icut - additional cut on the channel number
+* --- chw  - histogram: bin width in ADC channels
+* --- ncha - histogram: number of bins
+* --- fit  - fit the plots
+* --- cut  - =0 - no additional cut, =b use cut $[n] to fill the plots
+* --- ped  - =0 - do not subtract the pedestals
+* --- clear  >0 - erase all histograms at the very beginning for a new run
+
+ if $VDIM(parlg,1)<3 then
+   ve/cr parlg(3,12)
+ endif
+
+ exe run run=[run] 
+
+ run0=0
+ if $VDIM(irun,1)>0 then
+   run0=irun(1)
+ endif
+ if [run]>0 then
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run=irun(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   nlun=lun//[lun]
+ endif
+ if [id0]=-1 then
+   id0=[run]*1000 
+   mess Set id0 to [id0]
+ endif
+
+*
+*--- Clear the old histograms
+*
+ if [clear]>0 .AND. [run] .NE. [run0] then
+   cd //pawc
+   h/del 0
+ endif   
+
+ tit='Moeller run='//[run]//' ADC spectra - pedestals' 
+ titl [tit]
+
+* -- Get pedestals
+ if [ped]>0 then
+   if [run]<10268 then
+     ve/read pedes,pedcut pedes.dat
+   elseif [run]<12500 then
+     ve/read pedes,pedcut pedes_1.dat
+   elseif [run]<12699 then
+     ve/read pedes,pedcut pedes_2.dat
+   elseif [run]<13400 then
+     ve/read pedes,pedcut pedes_3.dat
+   elseif [run]<14737 then
+     ve/read pedes,pedcut pedes_14355.dat
+   elseif [run]<15863 then
+     ve/read pedes,pedcut pedes_14754.dat
+   else
+     ve/read pedes,pedcut pedes_15863.dat
+  
+  endif
+ endif
+
+ if $VDIM(zord,1)<12 then
+   ve/cre zord(12) i
+ endif
+ i=0
+ do k=1,3
+   do j=1,4
+     i=[i]+1
+     m=[k]+3*([j]-1) 
+     ve/in zord([i]) [m]
+   enddo
+ enddo
+
+ opt fit
+ set csiz 0.45
+
+ mess Start
+ next
+ zone 3 4
+ do i=1,12
+   id=[id0]+120+[i]
+   if [fill]>0 then
+     if [ped]>0 then
+       pd=pedes([i])
+       pc=pedcut([i])
+       tit='ADC '//[i]//' spectrum, pedestal subtracted '
+     else
+       pd=0.
+       pc=0.
+       tit='ADC '//[i]//' spectrum'
+     endif
+     pc=[pc]-[pd]+0.5+[icut]
+     x1=$SIGMA(int([pc]))
+     x2=[x1]+[chw]*[ncha]
+*      mess [pd] [pc] [x1] [x2]
+     1dh [id] [tit] [ncha] [x1] [x2]
+   endif
+   m=zord([i])
+   if [i]>1 then
+      zone 3 4 [m] s
+   endif
+
+      
+*    zone 3 4 [m] s
+   if [fill]>0 then
+     if [cut] .LE. 0 then
+       nt/pl //[nlun]/1.iadc([i])-[pd] nadc>11 -[id]
+     else
+       nt/pl //[nlun]/1.iadc([i])-[pd] nadc>11.and.$[cut] -[id]
+     endif
+   else
+     if [fit]=0 then
+       h/pl [id]
+     else
+       nx=$HINFO([id],'XBINS')
+       xh1=$HINFO([id],'XMIN')
+       xh2=$HINFO([id],'XMAX')
+       xb=([xh2]-[xh1])/[nx]
+       if $VDIM(tmp)<[nx] then
+         ve/cr tmp([nx]) r
+       endif
+       h/get_vec/con [id] tmp
+       imx=0
+       bmx=-9.
+       x=[xh1]-[xb]/2.
+       lft=1
+       b=9999999.
+       do j=1,[nx]
+         a=tmp([j])
+         x=[x]+[xb]
+         if [a]>[b] then
+           lft=0
+         endif
+         b=[a]
+         if [a]>[bmx] .AND. [lft]=0  then
+           bmx=[a]
+           imx=[x]
+         endif
+       enddo
+       bme=[imx]
+       asig=30.
+       bg=[bmx]/5.
+       ve/in par(1:5) [bmx] [bme] [asig] [bg] 0.
+       x1=([bme]-[asig]*4-[xh1])/[xb]
+       x2=([bme]+[asig]*4-[xh1])/[xb]
+       x1=$SIGMA(INT([x1]))
+       x2=$SIGMA(INT([x2]))
+       h/fit [id]([x1]:[x2]) g+p1 'w0n' 5 par 
+       asig=par(3)
+       asig=$SIGMA(ABS([asig]))
+       ve/in par(3) [asig]
+       h/fit [id]([x1]:[x2]) g+p1 '0n' 5 par 
+       bmx=par(1)
+       bme=par(2)
+       asig=par(3)
+       asig=$SIGMA(ABS([asig]))
+       x1=([bme]-[asig]*5-[xh1])/[xb]
+       x2=([bme]+[asig]*5-[xh1])/[xb]
+       x1=$SIGMA(INT([x1]))
+       x2=$SIGMA(INT([x2]))
+       ve/in par(3) [asig]
+       h/fit [id]([x1]:[x2]) g+p1 ' ' 5 par 
+       ve/cop par(1:3) parlg(1:3,[i])
+     endif
+   endif
+ enddo
+
+
+
+RETURN
+
+

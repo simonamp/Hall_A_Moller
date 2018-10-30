@@ -1,0 +1,3 @@
+#/home/adaq/bin/prtpost -L -P80 -Fixed "runs.tab" < runs.tab | lp -d cha2hp
+/adaqfs/home/adaq/bin/prtpost -L -P80 -Fixed "runs.tab" < runs.tab | lp -d cha2hp
+

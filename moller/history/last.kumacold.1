@@ -1,0 +1,92 @@
+*** Begin of history file: Sun Mar  5 00:47:47 2006
+shell cat last.kumac
+shell cat last.kumacold
+exec run_slac run=12251
+exec run_scal run=12251
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0)
+zone 2 2
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) ifzug=0
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%izug ifzug=0
+nt/pl //lun51/1.a_tpos.f(1,0)%izug ifzug>-1
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0)%izug ifzug>-1
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) ifzug>-1.and.izug<2000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.izug<2000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.izug>2000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.izug<4000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.izug>4000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.2000<izug<3000
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1000<izug<2000
+h/cr/prof 201 ' ' 100 -2 2 30 100
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1000<izug<2000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1000<izug<2000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.2000<izug<3000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1000<izug<2000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1000<izug<2000 -201 s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1<izug<1000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1<izug<1000 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.1001<izug<2000 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.2001<izug<3000 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.3001<izug<4000 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.4001<izug<5000 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.5001<izug<6000 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.5001<izug<6000 ! ! !
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999 ! ! !
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999 -201
+nt/pl //lun51/1.a_signal.f(2,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999 -201
+nt/pl //lun51/1.a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(3,1,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(3,1,0,0,0,0,0)/%a_tpos.f(1,0) a_signal.f(3,0,0,0,0,0,0)>2.and.abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,1,0,0,0,0,0)/a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) a_signal.f(3,0,0,0,0,0,0)>2.and.abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,1,0,0,0,0,0)/a_signal.f(3,1,0,0,0,0,0)%a_tpos.f(1,0) a_signal.f(3,0,0,0,0,0,0)>2.and.abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,1,0,0,0,0,0)/a_signal.f(1,1,0,0,0,0,0)%a_tpos.f(1,0) a_signal.f(3,0,0,0,0,0,0)>2.and.abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,0,0,0,0,0,0)/a_signal.f(1,0,0,0,0,0,0)%a_tpos.f(1,0) a_signal.f(3,0,0,0,0,0,0)>2.and.abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+nt/pl //lun51/1.a_signal.f(2,0,0,0,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<2.and.ifzug>-1.and.0<izug<99999
+exec run_scal run=12252
+usage chain
+help chain
+chain scan1 //lun51
+chain scan1 //lun52
+ld //
+chain
+help scan
+help chain
+ld //chain
+nt/pl //lun51/1.a_asymm.f(3,4,1,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<1.and.ifzug=0
+nt/pl //lun51/1.a_asymm.f(3,4,1,0,0,0)%a_tpos.f(1,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2
+nt/pl //lun51/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2
+1dh 101 ' ' 150 -0.15 0.15
+nt/pl //lun51/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -101
+h/fit 101 g
+nt/pl //lun52/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -101
+h/fit 101 g
+mess $sigma()
+mess $sigma((0.50647E-01+0.50273E-01)/2)
+mess $sigma((0.50647E-01+0.50273E-01)/2/0.0797/0.76/cos(20*3.1416/180.))
+exec run_scal run=12230
+exec run_scal run=12231
+exec run_scal run=12232
+exec run_scal run=12233
+nt/pl //lun53/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -101
+h/fit 101 g
+h/cop 101 102
+h/cop 101 102
+h/cop 101 103
+h/cop 101 104
+nt/pl //lun54/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -102
+h/fit 102 g
+nt/pl //lun55/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -103
+h/fit 103 g
+nt/pl //lun56/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -104
+h/fit 104 g
+mess $sigma((0.50647E-01+0.50273E-01)/2/0.0797/0.76/cos(20*3.1416/180.))
+chain scan2 //lun53
+chain scan2 //lun54
+chain scan2 //lun55
+chain scan2 //lun56
+h/cop 101 105
+nt/pl //scan2/1.a_asymm.f(3,4,1,0,0,0) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -105
+nt/pri //lun53/1
+nt/pl //scan2/1.a_asymm.f(3,4,1,0,0,0)*helmh/abs(helmh) abs(a_tpos.f(1,0))<1.and.ifzug=0.and.a_signal.f(3,1,0,0,0,0,0)>2 -105
+*** End   of history file: Mon Mar  6 00:36:23 2006

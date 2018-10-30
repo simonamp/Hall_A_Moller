@@ -1,0 +1,52 @@
+*** Begin of history file: Fri May 21 14:52:42 1999
+exe polarization
+opt stat
+v/plot compton
+v/list
+exe polarization
+opt stat
+v/plot compton
+exe polarization
+sh emacs &
+v/pri compt
+v/pri compt(1:10)
+v/pri dcompton(1:10)
+v/plot compt(1:7)
+opt stat
+v/plot compt(1:7)
+v/fit dcompton(1:7) compt ecompt p0
+v/fit dcompton(1:7) compt ecompt p0 M
+opt stat
+opt fit
+set fit 1111
+v/fit dcompton(1:7) compt ecompt p0
+opt nstat
+v/fit dcompton(1:7) compt ecompt p0
+v/pri dcompton(8:20)
+v/fit dcompton(8:17) compt ecompt p0
+v/pri dcompton(18:30)
+v/fit dcompton(18:27) compt ecompt p0
+v/fit dcompton(18:27) compt(18:27) ecompt(18:27) p0
+v/fit dcompton(8:17) compt(8:17) ecompt(8:17) p0
+v/fit dcompton(1:7) compt(1:7) ecompt(1:7) p0
+v/pri dcompton(28:40)
+v/fit dcompton(28:34) compt(28:34) ecompt(28:34) p0
+v/pri dcompton(28:40)
+v/fit dcompton(35:38) compt(35:38) ecompt(35:38) p0
+v/pri dcompton(39:50)
+v/fit dcompton(39:48) compt(39:48) ecompt(39:48) p0
+v/pri dcompton(49:60)
+v/fit dcompton(49:50) compt(49:50) ecompt(49:50) p0
+v/pri dcompton(49:60)
+v/fit dcompton(51:53) compt(51:53) ecompt(51:53) p0
+v/pri dcompton(49:60)
+v/fit dcompton(54:54) compt(54:54) ecompt(54:54) p0
+v/pri dcompton(55:70)
+v/fit dcompton(55:63) compt(55:63) ecompt(55:63) p0
+v/pri dcompton(64:80)
+v/fit dcompton(64:73) compt(64:73) ecompt(64:73) p0
+v/pri dcompton(74:90)
+v/fit dcompton(74:84) compt(74:84) ecompt(74:84) p0
+v/pri dcompton(84:100)
+v/fit dcompton(85:97) compt(85:97) ecompt(85:97) p0
+*** End   of history file: Fri May 21 15:19:44 1999

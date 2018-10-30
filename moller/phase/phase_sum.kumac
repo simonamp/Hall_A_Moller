@@ -1,0 +1,206 @@
+MACRO phase
+ ve/de *
+ ve/re run,phase,bcur,rate,bp1,bp2,er,fl          phase.dat
+ ve/re run2,phase2,bcur2,rate2,bp12,bp22,er2,fl2  phase2.dat
+ ve/re run3,phase3,bcur3                          phase31.dat
+ ve/re run4,phase4,bcur4,rate4,bp41,bp42,er4,fl4  phase32.dat
+
+* fort/fil 56 phase_sum1.ps
+* meta 56 -112
+
+ zone 2 2
+* zone 1 2
+ opt nbox
+ opt nstat
+ nr=$sigma(NCO(run))
+ nr2=$sigma(NCO(run2))
+ nr3=$sigma(NCO(run3))
+ nr4=$sigma(NCO(run4))
+ sigma err=array([nr],0.1#0.1)
+ sigma err2=array([nr2],0.1#0.1)
+ sigma err3=array([nr3],0.1#0.1)
+ sigma err4=array([nr4],0.1#0.1)
+
+ set mtyp 20
+ set pmci 1
+ set txci 1
+* null -185. -133. 300. 80000.
+ null -181. -140. 300. 60000.
+ ve/pl rate%phase  ! s 
+ set pmci 2
+ set txci 2
+* ve/pl rate2%phase2 ! s
+* itx -182. 70000. 'Att=165 Slit=15.45'
+ set pmci 4
+ set txci 4
+* ve/pl rate4%phase4 ! s
+* itx -182. 65000. 'Att=100 Slit=23.7'
+ set txci 1
+ set pmci 1
+ set xlab 1.65
+ atitle 'Laser Phase, deg' 'Coincidence Rate'
+ itx -162. 30000. 'regular'
+ itx -175. 10000. 'Att=165 Slit=14.6'
+ itx -176. 55000. 'a)'
+ arrow -163.8 -163.8 20000. 47000 0.11 
+ selnt 1
+ text 10. 18.5 'Laser phase dependence' 0.4 0 C 
+ selnt 10
+
+ null -181. -140. -0.01 0.7
+ set xlab 1.4
+ ve/pl bcur%phase ! s
+ itx -182. 5.0 'Att=165 Slit=14.6'
+ itx -176. 0.65 'b)'
+ set pmci 2
+ set txci 2
+ itx -178.0 0.36 '".#' 
+ itx -167.5 0.62 '".#'
+ itx -148.0 0.29 '".#'
+* ve/pl bcur2%phase2 ! s
+* itx -185. 0.15 'Att=165 Slit=15.45'
+ set pmci 4
+ set txci 4
+* ve/pl bcur3%phase3 ! s
+* itx -182. 4.0 'Att=100 Slit=23.7'
+ set pmci 1
+ set txci
+ atitle 'Laser Phase, deg' 'Beam Current, uAmp' 
+ itx -163. 0.5 'regular'
+ arrow -163.8 -163.8 0.4 0.6 0.11 
+
+* null -185. -133. 72. 98.
+ null -182. -140. 82. 96.
+ gr/hpl/err  phase bp2  err er [nr] 20 0.2 
+ atitle 'Laser Phase, deg' 'Beam Polarization, "Y#'
+ itx -162. 94. 'regular'
+ itx -180. 83. 'Att=165 Slit=14.6'
+ itx -176. 95. 'c)'
+ arrow -163.8 -163.8 94.  90.2 0.11
+ set pmci 2
+* gr/hpl/err  phase2 bp22  err2 er2 [nr2] 24 0.2
+ set txci 2
+ itx -178.0 89.6 '".#' 
+ itx -167.5 89.5 '".#'
+ itx -148.0 89.8 '".#'
+* itx -180. 77. 'Att=165 Slit=15.45'
+ set pmci 4
+ set txci 4
+* gr/hpl/err phase4 bp42  err4 er4 [nr4] 22 0.2
+* itx -180. 75. 'Att=100 Slit=23.7'
+ set pmci 1
+ set txci 1
+
+zone
+fort/fil 56 attenuator.ps
+meta 56 -112
+*** Slit vs. Beam current Attenuator=100
+ve/cr slit(12) r  50   45   40   35   30   28  26  24  22  20  18  16
+ve/cr bcur(12) r 10.5 10.5 10.5 10.3  9.1 8.4 7.3 6.2 4.9 3.2 1.8  0.4
+set mtyp 20
+
+ve/pl bcur%slit
+* itx 21. 10. 'd)'
+set lwid 2.0
+ arrow 24.5 24.5 3.0 6.0   0.11
+ text 24.7 4.0 'Moller max. slit=24.0' 0.4
+
+ selnt 1
+* text 10. 19.2 'Laser Phase Dependence' 0.4 0 C 
+ text 10. 18.2 'Slit vs. Beam Current' 0.5 0 C 
+ set pass 1
+ selnt 10
+ atitle 'Slit' 'Beam Current, uAmp'
+ close 56
+
+ wait
+ fort/fil 56 phase_sum2.ps
+ meta 56 -112
+ ve/cr bps(3)   r  89.72   89.80   89.68   
+ ve/cr ebp(3)   r   0.23    0.23    0.24
+ ve/cr att(3)   r  165.00 120.00  121.00
+ ve/cr slit(3)  r  14.68   15.94   15.84
+
+ ve/cr bps1(3)  r   88.91   88.95   89.17   
+ ve/cr ebp1(3)  r    0.36    0.26    0.29
+ ve/cr att1(3)  r  165.00  166.00  101.00
+ ve/cr slit1(3) r   15.70   15.45   23.70
+
+ ve/cr bps2(2)  r   88.60   89.10
+ ve/cr ebp2(2)  r    0.28    0.25
+ ve/cr att2(2)  r  165.00   82.00
+ ve/cr slit2(2) r   14.20   16.2
+
+ ve/cr bps3(2)  r   90.16   89.58
+ ve/cr ebp3(2)  r    0.24    0.30
+ ve/cr att3(2)  r  156.00  100.00
+ ve/cr slit3(2) r   15.00   17.60
+
+ ve/cr bps4(2)  r   86.79   86.44
+ ve/cr ebp4(2)  r    0.24    0.22
+ ve/cr att4(2)  r   60.00   68.00
+ ve/cr slit4(2) r   19.30   17.80
+
+ ve/cr bps5(2)  r   87.25   87.03
+ ve/cr ebp5(2)  r    0.18    0.19
+ ve/cr att5(2)  r   73.00   120.00
+ ve/cr slit5(2) r   17.35    16.25
+
+ sigma err1=array(3,0.1#0.1)
+ sigma err2=array(2,0.1#0.1)
+
+ zone 1 2
+
+ null 58.  170. 86.0  90.5
+ gr/hpl/err  att bps  err1 ebp 3 20 0.3 
+ itx -165. 90.25 'd)'
+ atitle 'Attenuator' 'Beam Polarization, "Y#'
+ itx -140. 89. 'Phase 163.8'
+ set pmci 2
+ gr/hpl/err  att1 bps1  err1 ebp1 3 22 0.3 
+ set pmci 4
+ gr/hpl/err  att2 bps2  err2 ebp2 2 24 0.3 
+ set pmci 3
+ gr/hpl/err  att3 bps3  err2 ebp3 2 26 0.3 
+ set pmci 6
+ gr/hpl/err  att4 bps4  err2 ebp4 2 23 0.3 
+ set pmci 1
+ gr/hpl/err  att5 bps5  err2 ebp5 2 29 0.3 
+ set pmci 1
+ selnt 1
+ text 10. 19.2 'Laser Phase Dependence' 0.4 0 C 
+ text 10. 18.2 'Slit vs. Attenuator' 0.4 0 C 
+ selnt 10
+ null 14.  25. 86.0  90.5
+ gr/hpl/err  slit bps  err1 ebp 3 20 0.3 
+ itx -165. 90.25 'd)'
+ atitle 'Slit' 'Beam Polarization, "Y#'
+ itx -140. 89. 'Phase 163.8'
+ set pmci 2
+ gr/hpl/err  slit1 bps1  err1 ebp1 3 22 0.3 
+ set pmci 4
+ gr/hpl/err  slit2 bps2  err2 ebp2 2 24 0.3 
+ set pmci 3
+ gr/hpl/err  slit3 bps3  err2 ebp3 2 26 0.3 
+ set pmci 6
+ gr/hpl/err  slit4 bps4  err2 ebp4 2 23 0.3 
+ set pmci 1
+ gr/hpl/err  slit5 bps5  err2 ebp5 2 29 0.3 
+
+
+* null -185. -133. 55. 98.
+* gr/hpl/err  phase bp2  err er [nr] 20 0.2 
+* atitle 'Laser Phase, deg' 'Beam Polarization, "Y#' 
+* itx -162. 75. 'regular'
+* itx -180. 65. 'Att=165 Slit=15.45'
+* arrow -163.8 -163.8  70.  80. 0.11
+* set pmci 2
+* gr/hpl/err  phase2 bp22  err2 er2 [nr2] 24 0.2
+* set txci 2
+* itx -180. 60. 'Att=165 Slit=15.45'
+* set pmci 1
+* set txci 1
+
+ close 56
+
+RETURN

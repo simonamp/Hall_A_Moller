@@ -1,0 +1,39 @@
+*** Begin of history file: Mon Sep 14 10:41:36 2009
+exec run run=13520
+exec lg_spectra run=13520
+exec lg_pedes run=13520
+exec lg_time run=13520
+exec time run=13520
+exec asymv run=13520
+zone 2 2
+exec asymv run=13521
+exec asymv run=13522
+exec asymv run=13523
+exec asymv run=13524
+exec asym_av run=13520 run2=13524
+exec asym_av run1=13520 run2=13524
+exec asym_avt
+exec asymv run=13525
+exec asymv run=13526
+exec asymv run=13527
+exec asym_av run1=13525 run2=13527
+exec asymv run=13529
+exec asymv run=13530
+exec asymv run=13531
+exec asymv run=13532
+exec asym_av run1=13529 run2=13532
+exec asym_avt
+exec asymv run=13533
+exec asymv run=13534
+exec asymv run=13535
+exec asymv run=13536
+exec asym_av run1=13533 run2=13536
+exec asym_avt
+exec asym_av run1=13520 run2=13536
+exec asym_avt
+zone
+exec olpla
+exec asym_avt
+exec cllops
+exit
+*** End   of history file: Mon Sep 14 10:47:15 2009

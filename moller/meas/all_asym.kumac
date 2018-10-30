@@ -1,0 +1,9 @@
+MACRO all_asym angl=22.5 anpow=0.76 run1=0 run2=0
+
+  do r=[run1],[run2]
+    mess [angl]
+    exec run run=[r]
+    exec asymq anpow=[anpow] angl=[angl] run=[r]
+  enddo
+
+RETURN

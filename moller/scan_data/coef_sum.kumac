@@ -1,0 +1,76 @@
+MACRO coef_sum
+
+ext1=fc
+ext2=scan
+ext3=scan3
+ext4=av
+ext5=nc
+
+tgt2=2_sup30
+tgt3=3_fe14
+tgt4=4_fe10
+tgt5=5_sup07
+
+opt *
+set *
+opt nbox
+opt grid
+sigma coor=array(551,-25.#30.)
+fort/fil 55 coef_sum7.ps
+meta 55 -111
+	do i=2,5
+
+		do k=1,5
+ve/re [ext[k]]1,[ext[k]]2,[ext[k]]3,[ext[k]]4,[ext[k]]5,[ext[k]]6,[ext[k]]7,[ext[[k]]8 [tgt[i]][ext[k]].dat
+		enddo
+
+sigma e1=vmin(scan37)
+sigma e2=vmax(scan37)
+min=e1*0.99
+max=e2*1.005
+null -25. 30. [min] [max]
+set pmci 1
+set mtyp 24
+mt=24
+atitle 'Coordinate along Target, mm' 'Target Polarization, "Y#'
+ve/pl fc7%coor ! s
+target=[tgt[i]]
+mess target=[target]
+selnt 1
+text 10.0 18.5 [target] 0.4 0.0 C
+key 4.0 3.2 [mt] '- stand'
+selnt 10
+set pmci 2
+set mtyp 25
+mt=25
+ve/pl scan7%coor ! s
+selnt 1
+key 4.0 3.6 [mt] '- scan 1mm'
+selnt 10
+set pmci 3
+set mtyp 20
+mt=20
+ve/pl scan37%coor ! s
+selnt 1
+key 4.0 4.0 [mt] '- scan 3mm'
+selnt 10
+set pmci 4
+set mtyp 21
+mt=21
+ve/pl av7%coor ! s
+selnt 1
+key 4.0 4.4 [mt] '- scan+stand'
+selnt 10
+set pmci 6
+set mtyp 22
+mt=22
+ve/pl nc7%coor ! s
+selnt 1
+key 4.0 4.8 [mt] '- nonorm'
+selnt 10
+
+wait
+	enddo
+set pmci 1
+close 55
+RETURN

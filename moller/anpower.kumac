@@ -1,0 +1,41 @@
+MACRO anpower np=25 step=1. nev=10000 fill=1
+*
+* Moller analyzing power vs Theta bite. The acceptance assumed to be flat.
+*
+  ac=0.001
+  if [fill]=0 then
+    goto plot
+  endif
+
+  ve/cr anpow([np]) r
+  ve/cr enpow([np]) r
+  ve/cr accep([np]) r
+  ve/cr exx([np]) r
+     
+  do iac=1,[np]
+     ac=[ac]+[step]
+     ve/in accep([iac]) [ac]
+     call crossec.f(100,[nev],[ac])
+     anp=$HINFO(100,'MEAN')
+     enp=$HINFO(100,'RMS')
+     qq=$SIGMA(SQRT([nev]))
+     enp=[enp]/[qq]
+*     h/pl 100
+     mess [iac] [ac] [anp] [enp]
+     ve/in anpow([iac]) [anp]
+     ve/in enpow([iac]) [enp]
+     h/del 100
+     h/del 110
+  enddo
+
+  plot:
+  x2=0+[np]*[step]+2.
+  null 0 [x2] 0.65 0.8
+  gr/hpl/err accep anpow exx enpow [np] 24 0.05
+  atit 'Moller [Q] acceptance' 'Mean analysing power'
+
+RETURN
+
+
+
+

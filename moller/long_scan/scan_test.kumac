@@ -1,0 +1,450 @@
+MACRO scan_test run=0 reload=0 compress=0 clear=0 dirg=XX nline=5
+*
+* calculation of foil thickness from longitudinal (Z) scan
+*
+* - attaches a scaler ntuple file with a given run number
+* - starts with lun=51
+
+* -    lruns  - run numbers
+* -    mruns  - LUNs
+* -  ktyruns  - run type (=0 - normal, =1 - LED ...)
+
+ve/de edge tposx tposy signal np1 signal1 tposx1 line
+
+ if [clear]>0 then
+   icur=$VLEN(lruns)
+   do j=1,[icur]
+     l=mruns([j])
+     if [l]>0 then
+       clo [l]
+     endif
+   enddo
+   nd=$VDIM(lruns,1)
+   ve/in lruns [nd]*0
+   ve/in mruns [nd]*0
+   ve/in ktyruns [nd]*0
+   mess Scaler runs/files closed and the vectors reset
+   exitm
+ endif
+
+ if [run]<1 then
+   mess "*** Wrong run number" run=[run]
+   exit
+ endif
+
+ fnamntu='moller_scal_'//[run]//'.nt'
+ fnamdat=[name]//'*'//'_'//[run]//'.nt'
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirg=/adaql1/data1/moller/
+ elseif $INDEX([host],'haplix')>0 then
+   dirg=/data2c/user/gen/moller/exp
+ elseif $INDEX([host],'saranac')>0 then
+   dirg=/home/glamazdi/data
+ elseif $INDEX([host],'jlab')>0 .OR. $INDEX([host],'farm')>0 then
+   dirg=/data2c/user/gen/moller/exp
+ endif
+ dirn=[dirg]
+
+ nrun=10
+ lun1=51
+ lun2=[lun1]+[nrun]-1
+ if $VDIM(lruns)=0 .OR. $VDIM(mruns)=0 .OR. $VDIM(ktyruns)=0 then
+   ve/cr lruns([nrun]) i
+   ve/cr mruns([nrun]) i
+   ve/cr ktyruns([nrun]) i
+ endif
+ nact=$VDIM(lruns)
+
+ icur=$VLEN(lruns)
+ do j=1,[icur]
+   i=lruns([j])
+   if [i]=[run] then
+     l=mruns([j])
+     mess ' scan_test.kumac:' run=[run] is already attached to lun=[l]
+*     exitm
+        goto next
+   endif
+ enddo
+*
+* --- If there are too many files attached - release the first one
+*
+ if [icur]=[nrun] then
+   lun=mruns(1)
+   r=lruns(1)
+   mess Releasing the run [r] , lun=[lun]
+   clo [lun]
+   do i=2,[icur]
+     i1=[i]-1
+     ve/in lruns([i1]) lruns([i])
+     ve/in mruns([i1]) mruns([i])
+     ve/in ktyruns([i1]) ktyruns([i])
+   enddo
+   ve/in lruns([icur]) 0
+   ve/in mruns([icur]) 0
+   ve/in ktyruns([icur]) 0
+   icur=[icur]-1
+ endif
+*
+* --- Find an empty LUN in the allowed range
+*
+ icur=$VLEN(lruns)
+ lun=0
+ do l=[lun1],[lun2]
+   find=0
+   do i=1,[icur]
+     l1=mruns([i])
+*     mess loop1 [l1] [l
+     if [l1]=[l] then
+       find=1
+       breakl
+     endif
+   enddo
+*   mess loop2 [find] [l
+   if [find]=0 then
+     lun=[l]
+     breakl
+   endif
+ enddo
+ if [lun]=0 then
+   mess "*** Error: did not find any free LUN"
+   exitm
+ endif
+
+ icur=[icur]+1
+
+ try=0
+
+ mfindfile:
+
+ try=[try]+1
+
+ shell find [dirn] -name [fnamntu] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]>1 then
+   mess Strange... Several files for this run:
+   shell cat tmp.nam
+ endif
+ if [nf]>0 then
+   nam=$SHELL('cat tmp.nam',1)
+ else
+   if [try]>1 then
+     mess Error: missing ntuple for run [run], dir=[dirn] ,  file pattern=[fnamntu]
+     exitm
+   else
+*
+* ---   No scaler NTUPLE found: try to create one
+*
+     exec run run=[run]
+     exec asymwr run=[run]
+
+     goto mfindfile
+   endif
+ endif
+ shell rm -f tmp.nam
+
+ h/fil [lun] [nam]
+ ve/in lruns([icur]) [run]
+ ve/in mruns([icur]) [lun]
+ kty=0
+ i=$INDEX([nam],'_led_')
+ if $INDEX([nam],'_led_')>0  then
+    kty=1
+ endif
+ ve/in ktyruns([icur]) [kty]
+ mess Run=[run] is attached to lun=[lun]
+
+**************************************
+        next:
+exec run run=[run]
+*  Load the settings data
+   if [run]<13400 then 
+ exec get_settings run=[run]
+   else
+ exec get_settings_2009 run=[run]
+   endif
+
+ nl=$VLEN(run_sett,1)
+ if [nl]<1 then
+   mess Setting data have not been found. Exiting...
+   exitm
+ endif
+
+ hcoil=run_sett(79)
+ coil=$RSIGMA([hcoil])
+ itarg=run_sett(101)
+ ydifcm=run_sett(103)
+
+ mess hcoil=[hcoil] coil=[coil]
+
+* -- Find the target polarization
+* if [ptar]>1. then
+   exec get_targpol hcoil=[hcoil] target=[itarg] zcm=[ydifcm] print=2
+   ptar=tpolcur(1)
+* endif
+lun=[l]
+*************************************************   
+shell rm -rf tpos.dat signal.dat 
+shell rm -rf ttpos.dat tsignal.dat
+opt *
+opt ndate
+opt nbox
+opt stat
+nt/pl //lun[lun]/1.a_signal.f(3,1,1,0,0,0,0)%a_tpos.f(2,0) ifzug=0
+shell cp tpos.dat ttpos.dat
+shell cp signal.dat tsignal.dat
+ve/re tx,ty ttpos.dat
+ve/re ts tsignal.dat
+gmax=$SIGMA(VMAX(ts))
+gmin=[gmax]*0.4
+***
+wait
+
+opt grid
+nt/pl //lun[lun]/1.a_tpos.f(1,1) ifzug=0
+	npp=$HINFO(1000000,'ENTRIES')
+	mess Total number of pair in scan = [npp]
+***
+wait
+	if [run]=12001 then
+	ve/cr edge(2) r 1 0.275
+	goto lin
+	elseif [run]=12002 then
+ve/cr edge(2) r 1 0.28
+	goto lin
+	elseif [run]=12058 then
+ve/cr edge(2) r 1 0.14
+	goto lin
+	elseif [run]=12059 then
+ve/cr edge(2) r 1 0.75
+	goto lin
+	elseif [run]=12060 then
+ve/cr edge(2) r 1 -0.65
+	goto lin
+	elseif [run]=12078 then
+ve/cr edge(8) r 7 -0.5 -0.2 0.1 0.4 0.7 1.0 1.2
+	goto lin
+	elseif [run]=12079 then
+ve/cr edge(8) r 7 -0.7 -0.4 -0.1 0.2 0.5 0.8  1.05
+	goto lin
+	elseif [run]=12087 then
+ve/cr edge(15) r 14  -1.05 -0.9 -0.75 -0.6 -0.5 -0.3 -0.15  0.0 0.1 0.3 0.4 0.6  0.9 1.2
+	goto lin
+	elseif [run]=12253 then
+ve/cr edge(2) r 1 0.025
+	goto lin
+	elseif [run]=12254 then
+ve/cr edge(2) r 1 0.03
+	goto lin
+	elseif [run]=12291 then 
+ve/cr edge(6) r 5 0.05  0.35 0.65 0.95 1.2
+	goto lin
+	elseif [run]=12292 then
+ve/cr edge(4) r 3 -0.85 -0.55 -0.25
+	goto lin
+	elseif [run]=12349 then
+ve/cr edge(10) r 9 -1.4 -1.1 -0.8 -0.5 -0.2 0.2 0.7 1.1 1.4 
+	goto lin
+	elseif [run]=12351 then
+ve/cr edge(10) r 9 -1.4 -1.1 -0.8 -0.5 -0.2 0.25 0.7 1.1 1.6
+	goto lin
+	elseif [run]=12352 then
+ve/cr edge(10) r 9 -1.4 -1.1 -0.8 -0.5 -0.2 0.2 0.7 1.1 1.4
+	goto lin
+	elseif [run]=12371 then
+ve/cr edge(9) r 8 -1.7 -1.4 -1.1 -0.7 -0.2 0.3 0.7 1.2
+	goto lin
+	elseif [run]=12372 then
+ve/cr edge(8) r 7 -1.4 -0.9 -0.4 0.0 0.4 0.8 1.2
+	goto lin
+	elseif [run]=12373 then
+ve/cr edge(13) r 12 -1.4 -1.15 -0.9 -0.7 -0.6 -0.3 -0.2 -0.05 0.25 0.8 1.1 1.2
+	goto lin
+	elseif [run]=13428 then
+ve/cr edge(8) r 7 -1.3  -1.0  -0.6  -0.2  0.3  0.8  1.2  
+	goto lin
+	elseif [run]=13439 then
+ve/cr edge(3) r 2  -1.5  -1.05  
+	goto lin
+	elseif [run]=13440 then
+ve/cr edge(7) r 6  -1.5  -1.0  -0.6  -0.12  0.25 0.75
+	goto lin
+	elseif [run]=13447 then
+ve/cr edge(9) r 8  -1.0 -0.5  -0.1  0.15  0.4  0.6  0.9  1.0 
+	goto lin
+        elseif [run]=13452 then
+ve/cr edge(6) r 5  -1.3  -0.4  0.0  0.5  0.9
+ 	goto lin
+        elseif [run]=13458 then
+ve/cr edge(8) r 7 -1.7 -1.2 -0.8 -0.4 0.1 0.5 0.8
+ 	goto lin
+        elseif [run]=13463 then
+ve/cr edge(7) r 6 -1.3 -0.9 -0.5 -0.1 0.4 0.8
+ 	goto lin
+        elseif [run]=13518 then
+ve/cr edge(7) r 6  -1.5 -1.0 -0.6  0.3  0.7  1.2 
+ 	goto lin
+        elseif [run]=13582 then
+ve/cr edge(7) r 6 -0.75 -0.5 -0.2 0.1 0.4 1.0 
+ 	goto lin
+	endif
+
+read nline ' Input number of longitudinal lines in scan'
+nlin=[nline]+1
+ve/cr edge([nlin]) r
+ve/in edge([1]) [nline]  
+	do i=2,[nlin]
+	read xcoor 'Input coordinate of  line center'
+	ve/in edge([i]) [xcoor]
+	enddo
+******
+wait
+	lin:
+nlin=edge(1)+1
+*ve/pr edge
+opt nstat
+zone 
+	do i=2,[nlin]
+	   emin=edge([i])-0.05
+	   emax=edge([i])+0.05 
+	   2dh 110 ' ' 50 -2.7 3.3 10 -0.1 [gmax]
+nt/pl //lun[lun]/1.a_signal.f(3,1,1,0,0,0,0)%a_tpos.f(2,0) ifzug=0.and.[emin]<a_tpos.f(1,1)<[emax] -110
+	   npl=$HINFO(110,'ENTRIES')
+	   ir=[i]-1
+***
+	   mess Number of pair in line [ir] = [npl]
+	   hi/de 110
+***
+wait
+	enddo
+
+ve/cr tposx([npp]) r
+ve/cr tposy([npp]) r
+ve/cr signal([npp]) r
+ve/copy tx(1:[npp]) tposx(1:[npp])
+ve/copy ty(1:[npp]) tposy(1:[npp])
+ve/copy ts(1:[npp]) signal(1:[npp])
+sigma np=array([npp],1#[npp])
+zone 1 2
+ve/pl signal%tposx
+ve/pl signal%tposy
+***
+wait
+	nk=0
+*** test for nobeam pairs
+	sigma ymax=vmax(tposy)
+	sigma ymin=vmin(tposy)
+	do i=1,[npp]
+	  if signal([i])<3. then
+	   goto fin
+	         else    
+			nk=[nk]+1
+	     fin:
+	  endif
+	enddo
+mess Number of 'good' pairs [nk]
+
+ve/cr np1([nk]) 
+ve/cr signal1([nk]) 
+ve/cr tposx1([nk])
+ve/cr tposy1([nk])
+ve/cr line([nk])
+
+test=$SIGMA(tposx(1)+0.01)
+nlin=1
+*mess test=[test],   nlin=[nlin]
+	k=0
+	do i=1,[npp]
+	  if signal([i])<3.0 then
+	   goto fin1
+	         else	      
+				k=[k]+1
+	      ve/in np1([k])  [k]
+	      ve/in tposx1([k])  tposx([i])
+	      ve/in tposy1([k])  tposy([i])
+	      ve/in signal1([k])  signal([i])
+		if tposx([i])<[test] then
+			ve/in line([k]) [nlin]
+		else
+			test=$SIGMA(tposx([i])+0.01)
+			nlin=[nlin]+1
+			ve/in line([k]) [nlin]
+		endif
+	    fin1:
+	  endif
+	enddo
+ve/pl signal1%tposx1
+ve/pl signal1%tposy1
+***
+wait
+sigma coor=array([nk],1#[nk])
+*ve/pl tposy1%coor
+*ve/pl tposx1%coor
+zone
+* ve/pl signal1%coor
+* number of points along the foil
+ns=551
+sigma fcoor=array([ns],-2.5#3.0)
+sums=0
+ks=0
+ve/cr signal2([ns])
+
+	do kf=1,551
+*** rmin<->rmax - gate for integration along the foil
+	   rmin=fcoor([kf])-0.15
+	   rmax=fcoor([kf])+0.15
+*	   rmin=fcoor([kf])-0.1
+*	   rmax=fcoor([kf])+0.1
+		do i=1,[nk]
+		   coory=tposy1([i])	
+	  		if [coory] .GE. [rmin] .AND. [coory] .LE. [rmax] then
+				sums=[sums]+signal1([i])
+				ks=[ks]+1
+			endif
+		enddo
+	   sums1=[sums]
+	   signali=[sums1]/[ks]
+*	mess [kf] signal=[signali], [sums1], [ks]
+****wait
+	   sums=0
+	   ks=0
+	   ve/in signal2([kf]) [signali]
+*		if [kf]=8 then
+*			do k=1,7
+*	mess [kf] signal=[signali], [sums1], [ks]
+*				ve/in signal2([k]) [signali]
+*			enddo
+*		endif
+*		if [kf]=544 then
+*			do k=545,551
+*				ve/in signal2([k]) [signali]
+*			enddo
+*		endif
+	  enddo
+
+zone 
+*ve/pl signal2(7:545)%fcoor
+
+opt nstat
+opt grid
+igset mtyp 20
+igset pmci 2
+sigma fcoor1=array([ns],-25.#30.)
+sigma sns1=array([ns],1#[ns])
+ve/pl signal2%fcoor1
+
+igset pmci 1
+atitle 'Coordinate along foil (Y), mm' 'Target thickness, r.u.'
+selnt 1
+text 5.0 19.0 'LONGITUDINAL SCAN RUN='//[run] 0.35 0
+selnt 10
+mess target=[itarg] BOP=[coil]
+sigma cur=INT([coil])
+cur=$SIGMA(ABS(cur))
+ve/write sns1,fcoor1,signal2  scan_data/[itarg]_[cur]A_[run].dat (F6.0,2(F12.6))
+igset *
+*ve/de *
+*ve/de edge tposx tposy signal np1 signal1 tposx1 line
+
+RETURN

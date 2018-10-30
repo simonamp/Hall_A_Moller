@@ -1,0 +1,47 @@
+MACRO spin_dance_pred elin=0.550 delin=-0.001 ainj=0. n1=3 n2=2 n3=5 x1=-100 x2=100 
+  zone 1 1
+  tit='Spin dance, A='//[n1]//' pass, B='//[n2]//' pass, C='//[n1]//' pass, Elin='//[elin]//' '//[delin]
+  titl [tit]
+
+  ve/cr passh(3) i [n1] [n2] [n3]
+  ve/cr vprec(8) r [elin] 1 3
+  
+  null [x1] [x2] -1.1 1.1
+  atit 'Wien angle' 'Polarization in the hall'
+  xm=-95
+  ym=-0.6
+
+  do ih=1,3
+    mess hall= [ih]
+    pass=passh([ih])
+    ve/in vprec(1:3) [elin] [ih] [pass]
+    set dmod 1
+    col=1+[ih]
+    igset plci [col]
+    igset txci [col]
+    ch=$SUBSTRING('ABC',[ih],1)
+    text [xm] [ym] [ch] 0.5 
+    ym=[ym]-0.1
+    fu/pl spinpred.f [x1] [x2] s
+    if [delin] .NE. 0 then
+      elin1=$SIGMA([elin]+[delin])
+      ve/in vprec(1) [elin1] 
+      set dmod 2
+*      ve/pri vprec
+      fu/pl spinpred.f [x1] [x2] s
+    endif
+    if [ainj] .GT. 0 then
+      ve/in vprec(1) [elin]  
+      ve/in vprec(8) [ainj] 
+      set dmod 3
+*      ve/pri vprec
+      fu/pl spinpred.f [x1] [x2] s
+      ve/in vprec(8) 0
+    endif
+     
+  enddo
+  igset plci 1
+  igset txci 1
+  set dmod 0
+
+RETURN

@@ -1,0 +1,1023 @@
+MACRO pol_tot_ana1_07-14-10 s=0
+* Polarization vs beam current dependence
+*fort/fil 55 pol_tot_ana1.ps
+*meta 55 -111
+
+* total list of polarization measurements for target N2
+ve/cr da2(11) r  18.0 18.1 18.2_
+                 35.0 35.1_
+                 48.8 48.9_
+                 76.4_
+                 243.6_
+                 305.6_
+                 434.6
+ve/cr pd2c(11) r 82.78 82.96 82.28_
+                 84.45 84.76_
+                 84.58 84.15_
+                 87.98_
+                 84.41_
+                 85.09_
+                 86.18
+ve/cr p2mi(11) r 82.92 82.92 82.92_
+                 83.44 83.44_
+                 84.64 84.64_
+                 87.39_
+                 85.42_
+                 85.35_
+                 86.64
+ve/cr dd2(11) r  0.38 0.22 0.22_
+                 0.23 0.12_
+                 0.20 0.33_
+                 0.18_
+                 0.18_
+                 0.20_
+                 0.17
+ve/cr ddl2(11) r 11*0.
+
+vector/operations/vsubtract pd2c p2mi dp2mi 
+  
+* total list of polarization measurements for target N3
+ve/cr da3(41) r   1.1   1.2   1.3   1.4   1.5   1.6_
+                 17.1  17.2  17.3  17.4  17.5  17.6  17.7  17.8  17.9_
+                 32.2  32.3  32.4  34.9  35.3_
+                 48.5  48.6_
+                 76.3  76.5_
+                233.3 233.4_
+                243.5 243.7_
+                259.4_
+                305.4 305.5_
+                423.3 423.4_
+                434.4 434.5_
+                449.3 449.4 451.3 451.4 451.7 451.8
+ve/cr pd3c(41) r 84.75 84.79 84.82 85.18 84.85 84.82_
+                 82.97 82.49 82.24 82.53 82.19 82.73 82.73 82.92 84.41_
+                 83.52 82.73 82.30 83.95 84.53_
+                 83.73 84.36_
+                 86.97 87.04_
+                 86.99 86.70_
+                 84.73 84.94_
+                 80.26_
+                 84.99 84.83_
+                 84.26 84.95_
+                 87.09 86.22_
+                 86.48 85.37 85.98 86.25 85.99 86.50  
+ve/cr p3mi(41) r 84.71 84.71 84.71 84.71 84.71 84.71_
+                 82.92 82.92 82.92 82.92 82.92 82.92 82.92 82.92 82.92_
+                 83.44 83.44 83.44 83.44 83.44_
+                 84.64 84.64_
+                 87.39 87.39_
+                 87.89 87.89_
+                 85.42 85.42_
+                 81.54_
+                 85.35 85.35_
+                 85.30 85.30_
+                 86.64 86.64_
+                 86.58 86.58 86.58 86.58 86.58 86.58
+ve/cr dd3(41) r   0.21  0.21  0.21  0.22  0.24  0.21_
+                  0.24  0.25  0.27  0.24  0.26  0.27  0.43  0.40 0.30_
+                  0.16  0.17  0.20  0.22  0.16_
+                  0.18  0.27_
+                  0.16  0.26_
+                  0.16  0.25_
+                  0.18  0.22_
+                  0.22_
+                  0.20  0.29_
+                  0.23  0.29_
+                  0.15  0.20_
+                  0.13  0.23  0.13  0.22  0.18  0.25  
+ve/cr ddl3(41) r 41*0.
+
+vector/operations/vsubtract pd3c p3mi dp3mi
+
+* total list of polarization measurements for target N4
+ve/cr da4(50) r     1.7   1.8   1.9   2.0   2.1   2.2   2.3   2.4   2.5_
+                    2.6_
+                   32.5  32.6  32.7  32.8  32.9  33.0  33.1  33.2  33.3_
+                   33.4  33.5  33.6  33.7  33.8  33.9  34.0  34.4  34.5_
+                   34.6  34.7  34.8_
+                   48.3  48.4_
+                   69.2  76.2_
+                  243.4_
+                  259.3 259.5 259.6_
+                  305.3 305.7 305.8 305.9 306.0 306.1 306.2 306.3 306.4_
+                  306.5_
+                  434.3
+ ve/cr pd4c(50) r 84.21 84.04 83.87 84.33 84.50 84.18 84.69 84.24 83.49_
+                  84.26_
+                  81.97 81.97 82.53 82.57 82.31 82.87 82.27 83.05 82.79_
+                  82.36 81.30 81.83 82.84 82.91 82.80 82.89 83.83 83.79_
+                  82.52 83.04 82.50_
+                  84.25 84.47_
+                  86.44 87.17_
+                  85.05_
+                  81.34 81.29 81.69_
+                  84.83 85.27 85.61 85.61 83.60 84.80 83.38 85.66 84.58_
+                  84.49_
+                  85.17
+ve/cr p4mi(50) r  84.71 84.71 84.71 84.71 84.71 84.71 84.71 84.71 84.71_
+                  84.71_
+                  83.44 83.44 83.44 83.44 83.44 83.44 83.44 83.44 83.44_
+                  83.44 83.44 83.44 83.44 83.44 83.44 83.44 83.44 83.44_
+                  83.44 83.44 83.44_
+                  84.64 84.64_
+                  87.39 87.39_
+                  85.42_
+                  81.54 81.54 81.54_
+                  85.35 85.35 85.35 85.35 85.35 85.35 85.35 85.35 85.35_
+                  85.35_
+                  86.64
+ve/cr dd4(50) r   0.27  0.28  0.29  0.29  0.27  0.27  0.26  0.29  0.29_
+                  0.28_
+                  0.21  0.32  0.41  0.30  0.33  0.19  0.23  0.21  0.23_
+                  0.23  0.25  0.22  0.24  0.21  0.20  0.24  0.20  0.21_
+                  0.21  0.20  0.22_
+                  0.21  0.36_
+                  0.21  0.21_
+                  0.24_
+                  0.31  0.34  0.13_
+                  0.28  0.20  0.23  0.22  0.28  0.32  0.32  0.34  0.33_
+                  0.31_
+                  0.20
+ve/cr ddl4(50) r 50*0.
+
+vector/operations/vsubtract pd4c p4mi dp4mi
+
+* total list of polarization measurements for target N5
+ve/cr da5(42) r   2.7   2.8   2.9_
+                 18.3  18.4_
+                 32.1  34.1  34.2  34.3  35.2_
+                 48.1  48.2  48.7_
+                 69.1  76.1_
+                 233.1 233.2 238.1 238.2 238.3_
+                 243.1 243.2 243.3_
+                 259.1 259.2_
+                 305.1 305.2 306.6 306.7 306.8_
+                 423.1 423.2_
+                 434.1 434.2 434.7_
+                 449.1 449.2 449.5 451.1 451.2 451.5 451.6
+ve/cr pd5c(42) r 86.24 85.96 85.77_
+                 83.69 84.58_
+                 84.00 85.52 85.83 85.47 86.71_
+                 85.49 85.76 85.07_
+                 87.49 88.91_
+                 88.67 89.05 87.78 88.51 86.87_
+                 86.19 85.96 86.81_
+                 82.12 83.04_
+                 85.83 86.46 86.30 87.88 86.66_
+                 86.15 86.19_
+                 86.76 88.10 87.58_
+                 86.85 86.89 87.38 87.72 87.34 87.45 87.91
+ve/cr p5mi(42) r 84.71 84.71 84.71_
+                 82.92 82.92_
+                 83.44 83.44 83.44 83.44 83.44_
+                 84.64 84.64 84.64_
+                 87.39 87.39_
+                 87.89 87.89 87.89 87.89 87.89_
+                 85.42 85.42 85.42_
+                 81.54 81.54_
+                 85.35 85.35 85.35 85.35 85.35_
+                 85.30 85.30_
+                 86.64 86.64 86.64_
+                 86.58 86.58 86.58 86.58 86.58 86.58 86.58
+ve/cr dd5(42) r   0.29  0.29  0.29_
+                  0.31  0.24_
+                  0.21  0.21  0.25  0.17  0.43_
+                  0.22  0.22  0.23_
+                  0.23  0.23_
+                  0.14  0.19  0.14  0.36  0.24_
+                  0.15  0.20  0.26_
+                  0.26  0.33_
+                  0.24  0.27  0.34  0.34  0.22_
+                  0.24  0.31_
+                  0.14  0.30  0.21_
+                  0.17  0.30  0.30  0.18  0.30  0.25  0.36
+ve/cr ddl5(42) r 42*0.
+
+vector/operations/vsubtract pd5c p5mi dp5mi
+ 
+
+* Start mean values calculation
+* the means value calculation for measurements at 1-st day 
+ve/cr pdct1(19) r 84.75 84.79 84.82 85.18 84.85 84.82 84.21 84.04 83.87_
+                  84.33 84.50 84.18 84.69 84.24 83.49 84.26 86.24 85.96_
+                  85.77
+ve/cr ddt1(19) r   0.21  0.21  0.21  0.22  0.24  0.21  0.27  0.28  0.29_
+                   0.29  0.27  0.27  0.26  0.29  0.29  0.28  0.29  0.29_
+                   0.29
+ve/cr x1(19) r 19*1.
+
+set stat
+opt stat
+ve/pl pdct1
+text 83.6 2.35 'Mesured on August 10 2005' 0.3
+text 83.6 2.0 'Beam Energy E=2.758 GeV' 0.3
+text 83.6 1.8 'Slit 18.5   Att 73   Rastr on' 0.3
+* the weightening of P-value (p/d**2)
+vector/operations/vdivide pdct1 ddt1 pdct1s
+vector/operations/vdivide pdct1s ddt1 pdct1w
+* sum of weightened P-values
+sigma ps=vsum(pdct1w)
+*write ps
+* determination of weights sum
+vector/operations/vdivide x1 ddt1 ddt1w
+vector/operations/vdivide ddt1w ddt1 t1w
+sigma tw=vsum(t1w)
+*write tw
+vector/operations/vdivide ps tw pm
+* the calculation of mean P-value
+write pm
+sigma ds=vsum(ddt1w)
+vector/operations/vdivide ds tw dm
+* the calculation of mean P-value
+write dm
+wait
+
+* the means value calculation for measurements at 17/18-th days
+ve/cr pdct2(14) r 82.97 82.49 82.24 82.53 82.19 82.73 82.73 82.92 84.41_
+                  84.42 82.60 81.92 83.69 84.58 
+ve/cr ddt2(14) r   0.24  0.25  0.27  0.24  0.26  0.27  0.43  0.40  0.30_
+                   0.38  0.22  0.22  0.31  0.24
+ve/cr x2(14) r 14*1.
+
+ve/pl pdct2
+text 82.0 2.3 'Mesured on August 26-27 2005' 0.3
+text 83.0 2.0 'Beam Energy E=2.758 GeV' 0.3
+text 83.0 1.8 'Slit 16.5   Att 290   Rastr on' 0.3
+vector/operations/vdivide pdct2 ddt2 pdct2s
+vector/operations/vdivide pdct2s ddt2 pdct2w
+sigma ps=vsum(pdct2w)
+*write ps
+vector/operations/vdivide x2 ddt2 ddt2w
+vector/operations/vdivide ddt2w ddt2 t2w
+sigma tw=vsum(t2w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm                           
+sigma ds=vsum(ddt2w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 32/33-rd days
+ve/cr pdct3(33) r 84.45 84.76 83.52 82.73 82.30 83.95 84.53 81.97 81.97_
+                  82.53 82.57 82.31 82.87 82.27 83.05 82.79 82.36 81.30_
+                  81.83 82.84 82.91 82.80 82.89 83.83 83.79 82.52 83.04_
+                  82.50 84.00 85.52 85.83 85.47 86.71
+ve/cr ddt3(33) r   0.23  0.22  0.16  0.17  0.20  0.22  0.16  0.21  0.32_
+                   0.41  0.30  0.33  0.19  0.23  0.21  0.23  0.23  0.25_
+                   0.22  0.24  0.21  0.20  0.24  0.20  0.21  0.21  0.20_
+                   0.22  0.21  0.21  0.25  0.17  0.43
+ve/cr x3(33) r 33*1.
+
+ve/pl pdct3
+text 81.5 3.45 'Mesured on September 10-11 2005' 0.3
+text 83.2 3.1 'Beam Energy E=2.758 GeV' 0.3
+text 83.2 2.8 'Slit 15.0   Att 300  rastr off' 0.3
+vector/operations/vdivide pdct3 ddt3 pdct3s
+vector/operations/vdivide pdct3s ddt3 pdct3w
+sigma ps=vsum(pdct3w)
+*write ps
+vector/operations/vdivide x3 ddt3 ddt3w
+vector/operations/vdivide ddt3w ddt3 t3w
+sigma tw=vsum(t3w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt3w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 48-th days
+ve/cr pdct4(9) r  84.58 84.15 83.73 84.36 84.25 84.47 85.49 85.76 85.07
+ve/cr ddt4(9) r    0.20  0.33  0.18  0.27  0.21  0.36  0.22  0.22  0.23 
+ve/cr x4(9) r 9*1.
+
+ve/pl pdct4
+text 83.8 1.15 'Mesured on September 26 2005' 0.3
+text 84.6 0.85 'Beam Energy E=2.758 GeV' 0.3
+text 84.6 0.75 'Slit 15.6   Att 174  Rastr on' 0.3
+vector/operations/vdivide pdct4 ddt4 pdct4s
+vector/operations/vdivide pdct4s ddt4 pdct4w
+sigma ps=vsum(pdct4w)
+*write ps
+vector/operations/vdivide x4 ddt4 ddt4w
+vector/operations/vdivide ddt4w ddt4 t4w
+sigma tw=vsum(t4w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt4w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 69/76-th days
+ve/cr pdct5(7) r 87.98 86.97 87.04 86.44 87.17 87.49 88.91
+ve/cr ddt5(7) r   0.18  0.16  0.26  0.21  0.21  0.23  0.23
+ve/cr x5(7) r 7*1.
+
+ve/pl pdct5
+text 86.4 1.15 'Mesured on October 17, 24 2005' 0.3
+text 88.1 0.85 'Beam Energy E=3.186 GeV' 0.3
+text 88.1 0.75 'Slit 15.8   Att 250  Rastr on' 0.3
+vector/operations/vdivide pdct5 ddt5 pdct5s
+vector/operations/vdivide pdct5s ddt5 pdct5w
+sigma ps=vsum(pdct5w)
+*write ps
+vector/operations/vdivide x5 ddt5 ddt5w
+vector/operations/vdivide ddt5w ddt5 t5w
+sigma tw=vsum(t5w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt5w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 233/238-th days
+ve/cr pdct6(7) r  86.99 86.70 88.67 89.05 87.78 88.51 86.87
+ve/cr ddt6(7) r    0.16  0.25  0.14  0.19  0.14  0.36  0.24
+ve/cr x6(7) r 7*1.
+
+ve/pl pdct6
+text 86.8 1.15 'Mesured on February 28 - March 4 2006' 0.3
+text 87.05 0.95 'Beam Energy E=1.520 GeV' 0.3
+text 87.05 0.85 'Slit 17.6   Att 215  Rastr on' 0.3
+vector/operations/vdivide pdct6 ddt6 pdct6s
+vector/operations/vdivide pdct6s ddt6 pdct6w
+sigma ps=vsum(pdct6w)
+*write ps
+vector/operations/vdivide x6 ddt6 ddt6w
+vector/operations/vdivide ddt6w ddt6 t6w
+sigma tw=vsum(t6w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt6w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 243th days
+ve/cr pdct7(7) r 84.41 84.73 84.94 85.05 86.19 85.96 86.81
+ve/cr ddt7(7) r   0.18  0.18  0.22  0.24  0.15  0.20  0.26
+ve/cr x7(7) r 7*1.
+
+ve/pl pdct7
+text 84.4 1.15 'Mesured on March 9 2006' 0.3
+text 85.1 0.85 'Beam Energy E=2.645 GeV' 0.3
+text 85.1 0.75 'Slit 22.0   Att 94  Rastr off' 0.3
+vector/operations/vdivide pdct7 ddt7 pdct7s
+vector/operations/vdivide pdct7s ddt7 pdct7w
+sigma ps=vsum(pdct7w)
+*write ps
+vector/operations/vdivide x7 ddt7 ddt7w
+vector/operations/vdivide ddt7w ddt7 t7w
+sigma tw=vsum(t7w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt7w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 259th days
+ve/cr pdct8(6) r  80.26 81.34 81.29 81.69 82.12 83.04
+ve/cr ddt8(6) r    0.22  0.31  0.34  0.13  0.26  0.33
+ve/cr x8(6) r 6*1.
+
+ve/pl pdct8
+text 80.3 1.15 'Mesured on March 25 2006' 0.3
+text 80.4 0.95 'Beam Energy E=3.296 GeV' 0.3
+text 80.4 0.85 'Slit 19.0   Att 108  Rastr on' 0.3
+vector/operations/vdivide pdct8 ddt8 pdct8s
+vector/operations/vdivide pdct8s ddt8 pdct8w
+sigma ps=vsum(pdct8w)
+*write ps
+vector/operations/vdivide x8 ddt8 ddt8w
+vector/operations/vdivide ddt8w ddt8 t8w
+sigma tw=vsum(t8w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt8w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 305th days
+ve/cr pdct9(18) r  85.09 84.99 84.83 84.83 85.27 85.61 85.61 83.60 84.80_
+                   83.38 85.66 84.58 84.49 85.83 86.46 86.30 87.88 86.66
+ve/cr ddt9(18) r    0.20  0.20  0.29  0.28  0.20  0.23  0.22  0.28  0.32_
+                    0.32  0.34  0.33  0.31  0.24  0.27  0.34  0.34  0.22
+ve/cr x9(18) r 18*1.
+
+ve/pl pdct9
+text 83.4 2.30 'Mesured on May 10 2006' 0.3
+text 86.0 1.70 'Beam Energy E=2.081 GeV' 0.3
+text 86.0 1.60 'Slit 16.5   Att 306  Rastr on' 0.3
+vector/operations/vdivide pdct9 ddt9 pdct9s
+vector/operations/vdivide pdct9s ddt9 pdct9w
+sigma ps=vsum(pdct9w)
+*write ps
+vector/operations/vdivide x9 ddt9 ddt9w
+vector/operations/vdivide ddt9w ddt9 t9w
+sigma tw=vsum(t9w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt9w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 423th days
+ve/cr pdct0(4) r   84.26 84.95 86.15 86.19
+ve/cr ddt0(4) r     0.23  0.29  0.24  0.31
+ve/cr x0(4) r 4*1.
+
+ve/pl pdct0
+text 84.25 1.15 'Mesured on October 6 2006' 0.3
+text 84.35 0.95 'Beam Energy E=1.991 GeV' 0.3
+text 84.35 0.85 'Slit 15.0   Att 228  Rastr on' 0.3
+vector/operations/vdivide pdct0 ddt0 pdct0s
+vector/operations/vdivide pdct0s ddt0 pdct0w
+sigma ps=vsum(pdct0w)
+*write ps
+vector/operations/vdivide x0 ddt0 ddt0w
+vector/operations/vdivide ddt0w ddt0 t0w
+sigma tw=vsum(t0w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt0w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 434th days
+ve/cr pdct6(7) r  86.18 87.09 86.22 85.17 86.76 88.10 87.58
+ve/cr ddt6(7) r    0.17  0.15  0.20  0.20  0.14  0.30  0.21  
+ve/cr x6(7) r 7*1.
+
+ve/pl pdct6
+text 85.2 1.15 'Mesured on October 17 2006' 0.3
+text 85.3 0.95 'Beam Energy E=2.640 GeV' 0.3
+text 85.3 0.85 'Slit 15.0   Att 240  Rastr on' 0.3
+vector/operations/vdivide pdct6 ddt6 pdct6s
+vector/operations/vdivide pdct6s ddt6 pdct6w
+sigma ps=vsum(pdct6w)
+*write ps
+vector/operations/vdivide x6 ddt6 ddt6w
+vector/operations/vdivide ddt6w ddt6 t6w
+sigma tw=vsum(t6w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt6w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+* the means value calculation for measurements at 449/451st days
+ve/cr pdct12(13) r 86.48 85.37 85.98 86.25 85.99 86.50 86.85 86.89 87.38_
+                   87.72 87.34 87.45 87.91
+ve/cr ddt12(13) r   0.13  0.23  0.13  0.22  0.18  0.25  0.17  0.30  0.30_
+                    0.18  0.30  0.25  0.36 
+ve/cr x12(13) r 13*1.
+
+ve/pl pdct12
+text 85.4 2.30 'Mesured on November 1, 3 2006' 0.3
+text 86.7 1.60 'Beam Energy E=2.640 GeV' 0.3
+text 86.7 1.40 'Slit 15.0   Att 280  Rastr off-on' 0.3
+vector/operations/vdivide pdct12 ddt12 pdt12s
+vector/operations/vdivide pdt12s ddt12 pdt12w
+sigma ps=vsum(pdt12w)
+*write ps
+vector/operations/vdivide x12 ddt12 ddt12w
+vector/operations/vdivide ddt12w ddt12 t12w
+sigma tw=vsum(t12w)
+*write tw
+vector/operations/vdivide ps tw pm
+write pm
+sigma ds=vsum(ddt12w)
+vector/operations/vdivide ds tw dm
+write dm
+wait
+
+zone 1 1
+opt grid
+null 0. 455. 79. 90.
+atitle 'N, measurenent' 'Beam polarization'
+text 100. 90.7 'BEAM POLARIZATION MEASUREMENTS - TOTAL SET' 0.35
+igset pmci 1
+key 100. 80.5 20
+text 110. 80.5 'Sup 30mk' 0.3
+igset pmci 3
+key 100. 81.5 21
+text 110. 81.5 'Fer 14mk' 0.3
+igset pmci 4
+key 100. 82.5 22
+text 110. 82.5 'Fer 9mk' 0.3
+igset pmci 2
+key 100. 83.5 24
+text 110. 83.5 'Sup 7mk' 0.3
+
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s 
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s 
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+wait
+
+y0=75.
+y1=95.
+xm=100.
+ssiz=0.2
+ym=$SIGMA([y0]*0.9+[y1]*0.1)
+dym=$SIGMA(([y1]-[y0])*0.05)
+null 0. 455. [y0] [y1]
+set asiz 0.60
+set vsiz 0.45
+set csiz 0.50
+atitle 'Day' 'Beam polarization'
+* text 110. 100.7 'BEAM POLARIZATION MEASUREMENTS - TOTAL SET' 0.35
+set ksiz [ssiz]
+
+col=1
+igset pmci [col]
+igset plci [col]
+sym=20
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 [sym] [ssiz] 1
+gr/hpl/key [xm] [ym] [sym] '2 Sup 30[m]m'
+ym=$SIGMA([ym]+[dym])
+
+igset pmci 3
+sym=21
+graphics/hplot/errors da3 pd3c ddl3 dd3 43 [sym] [ssiz] 1
+gr/hpl/key [xm] [ym] [sym] '3 Fer 14[m]m'
+ym=$SIGMA([ym]+[dym])
+
+col=4
+igset pmci [col]
+igset plci [col]
+sym=22
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 [sym] [ssiz] 1
+gr/hpl/key [xm] [ym] [sym] '4 Fer 9[m]m'
+ym=$SIGMA([ym]+[dym])
+
+col=2
+igset pmci [col]
+igset plci [col]
+sym=24
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 [sym] [ssiz] 1
+gr/hpl/key [xm] [ym] [sym] '5 Sup 7[m]m'
+ym=$SIGMA([ym]+[dym])
+go to eend
+wait
+
+null -5. 457. -4. 4.
+atitle 'N, measurenent' 'Beam polarization'
+text 50. 90.7 'BEAM POLARIZATION MEASUREMENTS - TOTAL DEFLECTION  SET' 0.35
+igset pmci 1
+key 100. -1.25 20
+text 110. -1.25 'Sup 30mk' 0.3
+igset pmci 3
+key 100. -1.75 21
+text 110. -1.75 'Fer 14mk' 0.3
+igset pmci 4
+key 100. -2.25 22
+text 110. -2.25 'Fer 9mk' 0.3
+igset pmci 2
+key 100. -2.75 24
+text 110. -2.75 'Sup 7mk' 0.3
+
+igset pmci 1 
+graphics/hplot/errors da2 dp2mi ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 dp3mi ddl3 dd3 41 21 .2 1 ! s 
+
+igset pmci 4
+graphics/hplot/errors da4 dp4mi ddl4 dd4 50 22 .2 1 ! s 
+
+igset pmci 2
+graphics/hplot/errors da5 dp5mi ddl5 dd5 42 24 .2 1 ! s
+wait
+ve/cr dptot(144) r
+ve/cr dptotc(288) r
+ve/copy dp2mi(1:11) dptot(1:11)
+ve/copy dp3mi(1:41) dptot(12:52)
+ve/copy dp4mi(1:50) dptot(53:102)
+ve/copy dp5mi(1:42) dptot(103:144)
+*ve/cr dptot(720) r
+*vector/operations/vbias dp2mi 0.11 dp2mib
+*vector/operations/vbias dp3mi 0.22 dp3mib
+*vector/operations/vbias dp4mi 0.18 dp4mib
+*vector/operations/vbias dp5mi -1.382 dp5mib
+*ve/copy dp2mib(1:11) dptot(1:11)
+*ve/copy dp3mib(1:41) dptot(12:52)
+*ve/copy dp4mib(1:50) dptot(53:102)
+*ve/copy dp5mib(1:42) dptot(103:144)
+*vector/operations/vbias dp2mib -0.05 dp2mip
+*vector/operations/vbias dp3mib -0.05 dp3mip
+*vector/operations/vbias dp4mib -0.05 dp4mip
+*vector/operations/vbias dp5mib -0.05 dp5mip
+*ve/copy dp2mip(1:11) dptot(145:155)
+*ve/copy dp3mip(1:41) dptot(156:196)
+*ve/copy dp4mip(1:50) dptot(197:246)
+*ve/copy dp5mip(1:42) dptot(247:288)
+*vector/operations/vbias dp2mib 0.05 dp2mim
+*vector/operations/vbias dp3mib 0.05 dp3mim
+*vector/operations/vbias dp4mib 0.05 dp4mim
+*vector/operations/vbias dp5mib 0.05 dp5mim
+*ve/copy dp2mim(1:11) dptot(289:299)
+*ve/copy dp3mim(1:41) dptot(300:340)
+*ve/copy dp4mim(1:50) dptot(341:390)
+*ve/copy dp5mim(1:42) dptot(391:432)
+*vector/operations/vbias dp2mib -0.1 dp2mip
+*vector/operations/vbias dp3mib -0.1 dp3mip
+*vector/operations/vbias dp4mib -0.1 dp4mip
+*vector/operations/vbias dp5mib -0.1 dp5mip
+*ve/copy dp2mip(1:11) dptot(433:443)
+*ve/copy dp3mip(1:41) dptot(444:484)
+*ve/copy dp4mip(1:50) dptot(485:534)
+*ve/copy dp5mip(1:42) dptot(535:576)
+*vector/operations/vbias dp2mib 0.1 dp2mim
+*vector/operations/vbias dp3mib 0.1 dp3mim
+*vector/operations/vbias dp4mib 0.1 dp4mim
+*vector/operations/vbias dp5mib 0.1 dp5mim
+*ve/copy dp2mim(1:11) dptot(577:587)
+*ve/copy dp3mim(1:41) dptot(588:628)
+*ve/copy dp4mim(1:50) dptot(629:678)
+*ve/copy dp5mim(1:42) dptot(679:720) 
+ve/pl dptot(1:11) 90
+opt fit
+*hi/fit 90 G
+text -1.0 1.15 'Sup 30mk' 0.3
+wait 
+ve/pl dptot(1:52) 91
+opt fit
+*hi/fit 91 G
+text -1.2 3.5 'Sup 30mk + Fer 14mk' 0.3
+wait
+ve/pl dptot(12:52) 92
+opt fit
+*hi/fit 92 G
+text -1.3 3.5 'Fer 14mk' 0.3 
+wait
+ve/pl dptot(1:102) 93
+opt fit
+*hi/fit 93 G
+text -2.1 7.0 'Sup 30mk + Fer 14mk + Fer 9mk' 0.3
+wait
+ve/pl dptot(53:102) 94
+opt fit
+*hi/fit 94 G
+text -2.1 4.6 'Fer 9mk' 0.3 
+wait
+zone 1 1
+*opt nstat
+ve/pl dptot(1:144) 95
+*wait
+ve/cr par2(6) r -0.4 0.3 0.1 0.56 0.1 0.1
+opt fit
+*opt nstat
+*hi/fit 95 G+G ! 6 par2
+text -2.2 10.6 'Sup 30mk + Fer 14mk + Fer 9mk + Sup 7mk' 0.3
+ve/cr par2(6) r -0.4 0.6 0.1 1.56 0.1 0.1
+*opt fit
+*hi/fit 96 G
+opt nstat
+wait
+ve/cr mark(1) r 0.
+*ve/copy mark(1) dptot(41)
+*ve/copy mark(1) dptot(185)
+*ve/copy mark(1) dptot(329)
+*ve/copy mark(1) dptot(473)
+*ve/copy mark(1) dptot(617)
+*ve/pl dptot(1:720) ! s
+*wait
+zone
+opt stat
+ve/pl dptot(103:144) 97
+text -0.6 4.6 'Sup 7mk' 0.3
+opt fit
+*hi/fit 97 G
+wait 
+ve/pl dptot(12:144) 98
+opt fit
+hi/fit 98 G
+text -2.2 10.5 'Fer 14mk + Fer 9mk + Sup 7mk' 0.3
+opt nstat
+wait
+
+null 1.0 3.0 79. 90.
+text 1.1 90.5 'Mesured on August 10 2005' 0.3
+text 1.2 89.0 'RMS=0.688' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3 
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s 
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s 
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 1.0 3.0 84.71 84.71 0.01
+igset plci 4
+arrow 1.0 3.0 84.96 84.96 0.01
+arrow 1.0 3.0 84.46 84.46 0.01
+igset plci 1
+arrow 1.0 3.0 85.40 85.40 0.01
+arrow 1.0 3.0 84.02 84.02 0.01
+
+wait
+
+null 17.0 18.5 79. 90.
+text 17.05 90.5 'Mesured on August 26-27 2005' 0.3
+text 17.1 89.0 'RMS=0.849' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s 
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 17.0 18.5 82.92 82.92 0.01
+igset plci 4
+arrow 17.0 18.5 83.20 83.20 0.01
+arrow 17.0 18.5 82.65 82.65 0.01
+igset plci 1
+arrow 17.0 18.5 83.77 83.77 0.01
+arrow 17.0 18.5 82.07 82.07 0.01
+
+wait
+
+null 32.0 35.4 79. 90.
+text 32.1  90.7 'Mesured on September 10-11 2005' 0.3
+text 32.2 89.0 'RMS=1.251' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s 
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s 
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 32.0 35.4 83.35 83.35 0.01
+igset plci 4
+arrow 32.0 35.4 83.56 83.56 0.01
+arrow 32.0 35.4 83.14 83.14 0.01
+igset plci 1
+arrow 32.0 35.4 84.60 84.60 0.01
+arrow 32.0 35.4 82.10 82.10 0.01
+
+wait
+
+null 48.0 49.0 79. 90.
+text 48.3 91. 'Mesured on September 26 2005' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 48.0 49.0 84.64 84.64 0.01
+igset plci 4
+arrow 48.0 49.0 84.41 84.41 0.01
+arrow 48.0 49.0 84.87 84.87 0.01
+igset plci 1
+arrow 48.0 49.0 84.02 84.02 0.01
+arrow 48.0 49.0 85.26 85.26 0.01
+
+wait
+
+null 69.0 76.6 79. 90.
+text 71.4 91. 'Mesured on October 17, 24 2005' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 69.0 76.6 87.39 87.39 0.01
+igset plci 4
+arrow 69.0 76.6 87.19 87.19 0.01
+arrow 69.0 76.6 87.59 87.59 0.01
+igset plci 1
+arrow 69.0 76.6 88.14 88.14 0.01
+arrow 69.0 76.6 86.64 86.64 0.01
+
+wait
+
+null 233.0 238.4 79. 90.
+text 234.4 91. 'Mesured on February 28 - March 4 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 233.0 238.4 87.89 87.89 0.01
+igset plci 4
+arrow 233.0 238.4 87.71 87.71 0.01
+arrow 233.0 238.4 88.07 88.07 0.01
+igset plci 1
+arrow 233.0 238.4 87.00 87.00 0.01
+arrow 233.0 238.4 88.78 88.78 0.01
+
+wait
+
+null 243.0 243.8 79. 90.
+text 243.1 91. 'Mesured on March 9 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 243.0 243.8 85.42 85.42 0.01
+igset plci 4
+arrow 243.0 243.8 85.23 85.23 0.01
+arrow 243.0 243.8 85.61 85.61 0.01
+igset plci 1
+arrow 243.0 243.8 84.60 84.60 0.01
+arrow 243.0 243.8 86.24 86.24 0.01
+
+wait
+
+null 259.0 259.7 79. 90.
+text 259.1 91. 'Mesured on March 25 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 259.0 259.7 81.54 81.54 0.01
+igset plci 4
+arrow 259.0 259.7 81.33 81.33 0.01
+arrow 259.0 259.7 81.75 81.75 0.01
+igset plci 1
+arrow 259.0 259.7 80.69 80.69 0.01
+arrow 259.0 259.7 82.39 82.39 0.01
+
+wait
+
+null 305.0 306.9 79. 90.
+text 305.4 91. 'Mesured on May 10 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 305.0 306.9 85.35 85.35 0.01
+igset plci 4
+arrow 305.0 306.9 85.10 85.10 0.01
+arrow 305.0 306.9 85.60 85.60 0.01
+igset plci 1
+arrow 305.0 306.9 84.30 84.30 0.01
+arrow 305.0 306.9 86.40 86.40 0.01
+wait
+
+null 423.0 423.5 79. 90.
+text 423.1 91. 'Mesured on October 6 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 423.0 423.5 85.30 85.30 0.01
+igset plci 4
+arrow 423.0 423.5 85.04 85.04 0.01
+arrow 423.0 423.5 85.56 85.56 0.01
+igset plci 1
+arrow 423.0 423.5 84.48 84.48 0.01
+arrow 423.0 423.5 86.12 86.12 0.01
+wait
+
+null 434.0 434.8 79. 90.
+text 434.25 91. 'Mesured on October 17  2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 434.0 434.8 86.64 86.64 0.01
+igset plci 4
+arrow 434.0 434.8 86.46 86.46 0.01
+arrow 434.0 434.8 86.82 86.82 0.01
+igset plci 1
+arrow 434.0 434.8 85.74 85.74 0.01
+arrow 434.0 434.8 87.54 87.54 0.01
+wait
+
+null 449.0 451.9 79. 90.
+text 450. 91. 'Mesured on November 1, 3 2006' 0.3
+igset pmci 1 
+graphics/hplot/errors da2 pd2c ddl2 dd2 11 20 .2 1 ! s
+
+igset pmci 3
+graphics/hplot/errors da3 pd3c ddl3 dd3 41 21 .2 1 ! s
+
+igset pmci 4
+graphics/hplot/errors da4 pd4c ddl4 dd4 50 22 .2 1 ! s
+
+igset pmci 2
+graphics/hplot/errors da5 pd5c ddl5 dd5 42 24 .2 1 ! s
+
+igset plci 2
+arrow 449.0 451.9 86.58 86.58 0.01
+igset plci 4
+arrow 449.0 451.9 86.40 86.40 0.01
+arrow 449.0 451.9 86.76 86.76 0.01
+igset plci 1
+arrow 449.0 451.9 85.85 85.85 0.01
+arrow 449.0 451.9 87.31 87.31 0.01
+
+eend:
+close 55

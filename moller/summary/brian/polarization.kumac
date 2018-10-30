@@ -1,0 +1,111 @@
+macro polarization
+
+v/cre mott(12) r 70.8 72.6 72.3 69.3 71.9 71.4 76.0 73.4 67.0 71.1 69.1 69.5
+v/cre emott(12) r .4 .4 .3 .6 .3 .7 .3 .6 1.0 0.2 0.7 0.4
+v/cre dmott(12) r 6 14 26 28 29 31 34 36 45 48 51 54
+
+v/cre moller(21) r 67.4 67.4 67.0 69.0 69.9 70.5 68.6 67.6 70.8 73.0 73.2 73.2_
+ 73.3 67.9 66.1 69.0 69.6 69.5 67.2 68.3 66.9
+v/cre emoller(21) r .2 .2 .1 .1 .15 .15 .15 .15 .15 .2 .16 .2 .2 .2 .2 .2_
+ .2 .2 .2 .2 .2
+v/cre dmoller(21) r 2 7 10 16 19 21 23 26 30 33 35 37 40 44 46 47 48 50 50 52_
+ 55
+
+v/cre all(33) r 67.4 67.4 67.0 69.0 69.9 70.5 68.6 67.6 70.8 73.0 73.2 73.2_
+ 73.3 70.8 72.6 72.3 69.3 71.9 71.4 76.0 73.4 67.9 67.0 66.1 69.0 69.6 71.1_
+ 69.5 67.2 69.1 68.3 69.5 66.9
+v/cre eall(33) r .2 .2 .1 .1 .15 .15 .15 .15 .15 .2 .16 .2 .2 .4 .4 .3 .6_
+ .3 .7 .3 .6 .2 1.0 .2 .2 .2 .2 .2 .2 .7 .2 .4 .2
+v/cre dall(33) r 2 7 10 16 19 21 23 26 30 33 35 37 40 6 14 26 28 29 31 34 36_
+ 44 45 46 47 48 48 50 50 51 52 54 55
+
+v/cre z12(12) r 12*0.
+v/cre z21(21) r 21*0.
+v/cre z33(33) r 33*0.
+v/cre par1(1) r 70.
+v/cre epar1(1) r .2
+v/cre par2(1) r 70.
+v/cre epar2(1) r .2
+
+v/read dcompton,compton,ecompton compton_data_day ! oc
+ncompton = $vlen(compton)
+v/cre zc([ncompton]) r [ncompton]*0.0
+
+opt nbox
+opt nstat
+opt nfit
+zone 1 1
+set chhe 0.6
+
+v/fit dmott mott emott p0 ! 1 par1 ! ! ! epar1 
+v/fit dmoller moller emoller p0 ! 1 par2 ! ! ! epar2
+for/file 66 polar.ps
+gra/meta 66 -111
+null 0. 58. 65. 78.
+set pmci 4
+gra/hpl/err dmott mott z12 emott 12 26 .3
+set pmci 2
+gra/hpl/err dmoller moller z21 emoller 21 20 .3 
+v/fit dall all z33 p0 s
+atitle 'Days since April 1' 'Absolute Polarization ("Y#)' ! 222 
+set chhe 0.4
+set tfon -21
+itx 10. 78.2 'Polarization Measurements'
+set tfon -1
+set ksiz 0.3
+set csiz 0.4
+set pmci 4
+key 2 76.1 26 'Mott mean = 71.19 "A# 0.65'
+set pmci 2
+key 2 76.6 20 'Moller mean = 69.30 "A# 0.49'
+* key 2 77.1 30 'Compton meas. normalized to ave. of all'
+text 2.0 77.6 'Average of all Measurements = 70.00 "A# 0.42' 0.4
+text 7.5 74.4 "8# .5 
+text 5.5 74.9 'CsNF3' .3
+text 12.5 74.4 "8# .5 
+text 13.5 74.9 'New Laser' .3
+text 13.5 74.4 'Activation' .3
+text 21.5 74.4 "8# .5
+text 21.5 74.9 'Cs' .3
+text 35.5 74.4 "8# .5
+text 34.0 74.9 'Cs' .3
+text 38.5 74.4 "8# .5
+text 36.5 74.9 'CsNF3' .3
+text 41.5 74.4 "8# .5
+text 41.5 74.9 'Act' .3
+text 49.5 74.4 "8# .5
+text 48.0 74.9 'Cs' .3
+text 50.5 74.4 "8# .5
+text 51.0 74.9 'Cs' .3
+text 53.5 74.4 "8# .5
+text 54.0 74.9 'Cs' .3
+
+text 1.5 65.5 "6# .5
+text 3.0 65.5 '1930, 2020' .3
+text 13.5 65.5 "6# .5
+text 15.0 65.5 '1930, 1940' .3
+text 27.5 65.5 "6# .5 
+text 29.0 65.5 '2000, 1890' .3
+text 44.0 65.5 "6# .5 
+text 40.0 65.2 '2050, 1950' .3
+text 53.0 65.5 "6# .5 
+text 49.0 65.2 '2000, 1950' .3
+
+v/fit dmoller(10:13) moller(10:13) emoller(10:13) p0 s
+v/fit dmoller(1:3) moller(1:3) emoller(1:3) p0 s
+v/fit dmoller(4:9) moller(4:9) emoller(4:9) p0 s
+v/fit dmoller(15:20) moller(15:20) emoller(15:20) p0 s
+text 2. 68.4 'Moller 1-3' .3
+text 2. 68.0 '67.27 "A# 0.11' .3
+text 15. 68.4 'Moller 4-9' .3
+text 15. 68.0 '69.40 "A# 0.45' .3
+text 35. 72.4 'Moller 10-13' .3
+text 35. 72.0 '73.17 "A# 0.05' .3
+text 35. 68.8 'Moller 15-20' .3
+text 35. 68.4 '68.28 "A# 0.08' .3
+
+* hpl/err dcompton compton zc ecompton [ncompton] 30 .3
+
+
+
+for/close 66

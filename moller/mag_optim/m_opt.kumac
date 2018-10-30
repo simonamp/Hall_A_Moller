@@ -1,0 +1,220 @@
+MACRO m_opt e0=2000 de=10 n=1 [id]=1000 d=opt plot0=0 plot=1 fill=1 h=2 
+*
+* ---  Analysis of m_opt.his files 
+*
+
+  if [fill]=0 then
+    goto calc
+  endif
+
+  dir='/data'//[h]//'/user/gen/moller/simul/'//[d]
+  clo 1
+
+  ne=0
+  ve/cr enerv([n]) r
+  ve/cr thetv([n]) r
+  ve/cr thmav([n]) r
+  ve/cr thm1v([n]) r
+  ve/cr q1mav([n]) r
+  ve/cr q2mav([n]) r
+  ve/cr q3mav([n]) r
+  ve/cr sumav([n]) r
+  ve/cr samav([n]) r
+  ve/cr s2mav([n]) r
+  ve/cr errv([n]) r
+
+*  opt pto
+  e=[e0]
+*  zone 3 2
+  do i=1,[n]
+    suf=[e]
+    if [e]<1000 then
+       suf='0'//[suf]
+    endif
+    nam=[dir]//'/m_opt_'//[suf]//'.his'
+    cd //pawc
+    h/del 0 
+    if $FEXIST([nam])>0 then
+      h/fil 1 [nam]
+      hrin 0
+      cd //pawc
+      clo 1
+    endif
+
+    idd=[id]+20
+    ok=$HEXIST([idd])
+    if [ok]>0 then
+      ok=$HINFO([idd],'ENTRIES')
+    endif
+    if [ok]>0 then
+      ne=[ne]+1
+      if [plot0]>0 then
+        idd=[id]+20
+        h/pl [idd]
+        idd=[id]+21
+        h/pl [idd]
+        idd=[id]+22
+        h/pl [idd]
+      endif
+    
+*      idd=[id]+23
+*      h/pl [idd]
+
+      eg=[e]/1000.
+      ve/in enerv([ne]) [eg]
+
+      idd=[id]+20
+      tmx=$HINFO([idd],'MAX')
+      ve/in thetv([ne]) [tmx]
+      nq1=$HINFO([idd],'XBINS')
+      IF $VDIM(q1q1) .NE. [nq1] then
+        ve/cr q1q1([nq1]) r
+        ve/cr thq1([nq1]) r
+        ve/cr q2q1([nq1]) r
+        ve/cr q3q1([nq1]) r
+        ve/cr suq1([nq1]) r
+        ve/cr saq1([nq1]) r
+        ve/cr erq1([nq1]) r
+      endif       
+      idd=[id]+19
+      if $HEXIST([idd])>0 then
+         h/get_vec/con [idd] q1q1
+      else 
+         idd=[id]+20
+         h/get_vec/abs [idd] q1q1
+      endif 
+      idd=[id]+20
+      h/get_vec/con [idd] thq1 
+      idd=[id]+21
+      h/get_vec/con [idd] q2q1 
+      idd=[id]+22
+      h/get_vec/con [idd] q3q1 
+      idd=[id]+23
+      h/get_vec/con [idd] suq1 
+      idd=[id]+26
+      h/get_vec/con [idd] saq1
+*
+*---    Find the area of 0.9 from the maxinmum, and take it's center 
+*    
+      i1=0
+      i2=0
+      tlim=[tmx]*0.9
+      do i=1,[nq1]
+        j=[i]
+        a=thq1([j])
+        if [a]>[tlim] .AND. [i1]=0 then
+          i1=[i]
+        endif
+        j=[nq1]-[i]+1
+        a=thq1([j])
+*        mess [i] [j] [a] [tlim] [i2]
+        if [a]>[tlim] .AND. [i2]=0 then
+          i2=[j]
+        endif
+      enddo
+      icen=$SIGMA(INT(([i1]+[i2])/2.))
+*      mess [i1] [i2] [icen]
+*      idd=[id]+20
+*      h/pl [idd]
+      a=thq1([icen])
+      ve/in thetv([ne]) [a]
+      q1=q1q1([icen])
+      ve/in q1mav([ne]) [q1]
+      q2=q2q1([icen])
+      s2=[q2]
+      ve/in q2mav([ne]) [q2]
+      q3=q3q1([icen])
+      s2=[s2]+[q3]
+      ve/in q3mav([ne]) [q3]
+      a=suq1([icen])
+      ve/in sumav([ne]) [a]
+      a=saq1([icen])
+      ve/in samav([ne]) [a]
+      ve/in s2mav([ne]) [s2]
+      q2=0.15
+      q3=[s2]-[q2]
+      a=[s2]/2.
+      th=0.
+      fun=thac_m.f([eg],[q1],[q2],[q3],0)
+      th=$CALL([fun])
+*      mess icen=[icen] ne=[ne] [eg] [th]
+      ve/in thmav([ne]) [th]
+
+    endif
+
+    e=[e]+[de]
+  enddo
+
+  calc:
+
+  ne=$VLEN(enerv,1)
+  if [ne]=0 then
+     goto eend
+  endif
+  ve/cr par(10) r 
+  1dh 10 ' ' 147 0.675 8.025
+  h/cop 10 11
+  h/put_vec/con 10 q1mav
+  h/put_vec/con 11 q3mav
+  ve/cr err1([ne]) r [ne]*0.005
+  h/put_vec/err 11 err1
+  ve/cr par(10) r 
+  h/fit 10(1:105) p2 w0 3 par
+  ve/cr par1(10) r 
+  ve/cr par2(10) r 
+  ve/cr par3(10) r 
+  h/fit 11(1:27)    p2 0 3 par1
+  h/fit 11(27:105)  p2 0 3 par2
+  h/fit 11(105:147) p2 0 3 par3
+
+  do i=1,[ne]
+    eg=enerv([i])
+    q1=q1mav([i])
+*    q1=$SIGMA(par(1)+[eg]*par(2)+[eg]*[eg]*par(3))
+    q2=q2mav([i])
+    if [i]<27 then
+      q3=$SIGMA(par1(1)+[eg]*par1(2)+[eg]**2*par1(3)+[eg]**3*par1(4))
+    elseif [i]<105 then
+      q3=$SIGMA(par2(1)+[eg]*par2(2)+[eg]**2*par2(3)+[eg]**3*par2(4))
+    else
+      q3=$SIGMA(par3(1)+[eg]*par3(2)+[eg]**2*par3(3)+[eg]**3*par3(4))
+    endif
+*    q3=q3mav([i])
+    j=$INDEX([eg],'.')
+    if [j]=0 then
+      eg=[eg]//'.'
+    endif
+    j=$INDEX([q1],'.')
+    if [j]=0 then
+      q1=[q1]//'.'
+    endif
+    j=$INDEX([q2],'.')
+    if [j]=0 then
+      q2=[q2]//'.'
+    endif
+    j=$INDEX([q3],'.')
+    if [j]=0 then
+      q3=[q3]//'.'
+    endif
+*    mess [j]
+    fun=thac_m.f([eg],[q1],[q2],[q3],0)
+    th=$CALL([fun])
+    ve/in thmav([i]) [th]
+*    mes [i] [eg] [q1] [q2] [q3] [th]
+  enddo
+
+  if [plot]>0 then  
+    exec m_plot 
+  endif
+
+  eend:
+RETURN
+
+
+
+
+
+
+
+
+

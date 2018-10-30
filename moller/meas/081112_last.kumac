@@ -1,0 +1,132 @@
+*** Begin of history file: Wed Nov 12 17:17:52 2008
+ve/cr vprec(8) r
+ve/in vprec(1:3) 0.5835 1 1
+fu/pl spinpred.f -40 40
+ve/in vprec(1:3) 0.5835 1 5
+fu/pl spinpred.f -40 40
+mess $sigma((1.23/5.8)**(1./7.)*1730)
+mess $sigma((1.23/5.8)**(1./7.)*1826)
+mess $sigma((1.23/5.8)**(1./7.)*2150)
+mess $sigma((1.23/5.8)**(1./7.)*2011)
+mess $sigma((1.23/5.8)**(1./7.)*1800)
+mess $sigma((1.23/5.8)**(1./7.)*1761)
+mess $sigma((1.23/5.8)**(1./7.)*1855)
+mess $sigma((1.23/5.8)**(1./7.)*1960)
+exec sett_magp e0=5.892
+exec sett_magp e0=5.892 nq=2
+exec run run=12875
+exec lg_spectra run=12875
+exec lg_spectra run=12875
+loca
+mess $sigma((300/400.)**(1./7.)*1387)
+mess $sigma((300/400.)**(1./7.)*1464)
+exec lg_spectra run=12875
+mess $sigma((300/480.)**(1./7.)*1612)
+mess $sigma((300/480.)**(1./7.)*1442)
+mess $sigma((300/480.)**(1./7.)*1722)
+exec lg_spectra run=12875
+loca
+mess $sigma((300/400.)**(1./7.)*1442)
+mess $sigma((300/480.)**(1./7.)*1411)
+mess $sigma((300/520.)**(1./7.)*1486)
+mess $sigma((300/520.)**(1./7.)*1570)
+exec lg_spectra run=12875
+exec run run=12876
+exec lg_spectra run=12876
+loca
+exec lg_spectra run=12876 cut=11
+exec time run=12876
+exec asymt delay=0 angl=20.0 ptar=0.0797 run=12876
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12876
+zone 2 2
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12876
+exec time run=12877
+exec run run=12877
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12877
+call prunpr.f(10000,20000)
+call prunpri.f(10000,20000)
+fu/pl spinpred.f -40 40
+fu/pl spinpred.f -50 50
+fu/pl spinpred.f -50 50
+loca
+exec run run=12878
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12878
+call prunpri.f(10000,20000)
+exec run run=12879
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12879
+call prunpri.f(10000,20000)
+exec lg_spectra run=12879 cut=0
+exec lg_spectra run=12879 cut=11
+zone 2 2
+call prunpri.f(10000,20000)
+zone 2 2
+exec run run=12880
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12880
+call prunpri.f(10000,20000)
+exec asym_av run1=12877 run2=12878
+exec asym_av run1=12877 run2=12880
+exec run run=12881
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12881
+call prunpri.f(10000,20000)
+ve/in vprec(1:3) 0.5835 1 5
+mess $sigma((5889-65.5)/10)
+mess $call('spinpred.f(31.2)')
+mess $sigma(88*.94)
+ve/in vprec(1:3) 0.58235 1 5
+mess $call('spinpred.f(31.2)')
+mess $sigma(88*.74)
+mess $sigma(75/88)
+ve/in vprec(1:3) 0.583 1 5
+mess $call('spinpred.f(31.2)')
+ve/in vprec(1:3) 0.5827 1 5
+mess $call('spinpred.f(31.2)')
+ve/in vprec(1:3) 0.5829 1 5
+mess $call('spinpred.f(31.2)')
+mess $call('spinpred.f(31.2)')
+exec run run=12882
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12882
+call prunpri.f(10000,20000)
+exec run run=12883
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12883
+call prunpri.f(10000,20000)
+exec run run=12884
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12884
+call prunpri.f(10000,20000)
+exec asym_av run1=12881 run2=12884
+exec run run=12885
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12885
+call prunpri.f(10000,20000)
+exec run run=12886
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12886
+call prunpri.f(10000,20000)
+exec run run=12887
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12887
+call prunpri.f(10000,20000)
+exec run run=12888
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12888
+call prunpri.f(10000,20000)
+exec asym_av run1=12885 run2=12888
+exec run run=12889
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12889
+call prunpri.f(10000,20000)
+exec run run=12890
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12890
+call prunpri.f(10000,20000)
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12890
+call prunpri.f(10000,20000)
+exec run run=12891
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12891
+call prunpri.f(10000,20000)
+exec run run=12892
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12892
+call prunpri.f(10000,20000)
+exec asym_av run1=12889 run2=12892
+exec asym_av run1=12877 run2=12892
+exec run run=12893
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12893
+call prunpri.f(10000,20000)
+mess $sigma((75.8+74.6+73.8+74.8)/4))
+exec run run=12894
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12894
+call prunpri.f(10000,20000)
+*** End   of history file: Wed Nov 12 20:08:51 2008

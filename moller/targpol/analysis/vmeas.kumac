@@ -1,0 +1,126 @@
+MACRO vmeas file=XX stage=1
+*
+*  Analyze one measurement:
+*  1) - read the file into vtmp
+*  2) - remove the single channel peaks (noise)
+*  3) - filter out 60Hz noise
+*  4) - filter out other noises (about 1Hz)
+*
+  if $VDIM(vstatus,1)<20 then
+    ve/cr vstatus(20) r
+  endif
+  ve/in vstatus(1) 0 
+
+  if $FEXIST([file])=0 then
+    mess vmeas.kumac - the file [file] is missing
+    exitm
+  endif
+
+  if $VDIM(pp1,1)>0 then
+    ve/del pp1
+  endif
+  if $VDIM(pp2,1)>0 then
+    ve/del pp2
+  endif
+
+* - Read the file
+  ve/read pp1,pp2 [file]
+
+  nl=$VDIM(pp1,1)
+  if $VDIM(vtmp,1)<>[nl] then
+    if $VDIM(vtmp,1)>0 then
+      ve/del vtmp
+    endif
+  endif
+
+  ve/copy pp1 vtmp
+
+*  Remove one channel noise
+
+* exitm
+  exec vclean serr=3.
+
+*  Find the right 60Hz cycle length and filter it out
+
+  exec vbgsub nd=1000 dastep=0.3E-4 nshift=61 tune=1
+
+  if [stage]<1 then
+    exitm
+  endif
+
+  if $VDIM(vtmp0,1)<>[nl] then
+    if $VDIM(vtmp0,1)>0 then
+      ve/del vtmp0
+    endif
+  endif
+
+  ve/copy vtmp vtmp0
+  ve/copy vtmp1 vtmp
+
+*  Subtract 500 Hz
+
+  exec vbgsub nd=400 tune=1 dastep=0.00001 nshift=21 da=0 spline=0
+
+  if [stage]<2 then
+    exitm
+  endif
+
+
+  ve/copy vtmp1 vtmp
+
+*  Subtract 500 Hz
+
+  do i=1,10
+    df=$SIGMA(0.+([i]-1)*0.25)
+    exec vbgsub nd=1919 tune=0 dastep=0.00001 nshift=0 da=[df] spline=0
+    ve/copy vtmp1 vtmp
+  enddo
+
+*  exec vbgsub nd=192 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+
+  if [stage]<3 then
+    exitm
+  endif
+
+*
+* 2.6kHz 
+  do i=1,6
+    df=$SIGMA(0.+([i]-1)*0.1)
+    exec vbgsub nd=1903 tune=0 dastep=0.00001 nshift=0 da=[df] spline=0
+    ve/copy vtmp1 vtmp
+  enddo
+
+  if [stage]<4 then
+    exitm
+  endif
+
+*  12 Hz
+
+  do i=1,20
+    df=$SIGMA(0.+([i]-1)*1.)
+    ve/copy vtmp vtmp00
+    exec vbgsub nd=1700 tune=0 dastep=0.00001 nshift=0 da=[df] spline=0
+    ve/copy vtmps vtmp
+    exec vsmooth nav=1
+    ve/copy vtmpf vtmp
+    exec vsmooth nav=1
+    ve/copy vtmpf vtmps
+    ve/op/vsub vtmp00 vtmps vtmp1
+    ve/copy vtmp1 vtmp
+  enddo
+
+  if [stage]<5 then
+    exitm
+  endif
+
+*  Subtract the smoothed lower frequency noise about 0.8Hz (8570 bins  period), with internal structure of about 20Hz (475 bins))
+
+  exec vbgsub nd=380 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+  ve/wri vtmp1 vtmp.out 
+* exitm
+*  exec vbgsub nd=8570 tune=1 dastep=0.0005 nshift=41 da=0 spline=1
+
+
+  ve/in vstatus(1) 1
+  
+RETURN

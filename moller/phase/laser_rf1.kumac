@@ -1,0 +1,18 @@
+MACRO laser_rf1
+* Laser phase from Jul,10 1999
+
+ np=19
+ ve/cr pha([np]) r -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0    2    4    6    8   10   12   14   16 
+ ve/cr cur([np]) r .019 .130 .420 .580 .600 .588 .590 .600 .610 .620 .635 .650 .675 .700 .680 .495 .246 .102 .086
+ ve/cr err([np]) r 
+
+ null -25 20 0 0.8
+ atit 'Laser A phase, deg' 'Beam current, [m]A'
+ gr/hpl/err pha cur err err [np] 20 0.15
+
+ text -20 0.7 'Slit 16.2' 0.25
+ gr/prim/arrow 8.6 8.6 0.8 0.7 0.2
+ gr/prim/arrow 4.0 4.0 0.8 0.7 0.2
+ gr/prim/arrow 8.2 4.6 0.75 0.75 0.2
+
+RETURN

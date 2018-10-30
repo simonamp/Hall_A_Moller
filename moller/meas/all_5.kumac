@@ -1,0 +1,49 @@
+MACRO all_5 
+
+   i=3931
+   exec run run=[i]
+   exec asymp angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3937
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3941
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3942
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3948
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3951
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+   cd //pawc
+   h/del 0
+
+   i=3953
+   exec run run=[i]
+   exec asymp run=[i] angl=88.5 ptar=0.076 norm=1 norbcm=0 run=[i] 
+
+
+
+
+
+RETURN
+
+

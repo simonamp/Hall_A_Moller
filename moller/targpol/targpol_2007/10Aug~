@@ -1,0 +1,45 @@
+Genja, 
+ja dobavil dannye s poljarizaciej pri malyh poljah dlja fol'g: #4 i #5
+c fol'goj #3 poka razbiraemsja s Sashej.
+
+poluchilis' sleduyushie poljarizacii po izmerenijam 10 Aug 2005:
+
+targets:
+#1 - old SM 13um
+#2 - SM 29.4 um
+#3 - Fe 14um
+#4 - Fe 9.3um
+#5 - SM 6.8um
+
+runs##         target#    Hcurrent(A)  Coordinate(mm)  FoilPolarization(%)
+			               vert. linear
+11795-11800	1         2*7.9        0.0             7.95  			       
+11879-18882     1         2*6.3        0.0             7.95
+11883-11884     1         2*9.9        0.0             7.95
+
+11801-11804     3         2*7.9        0.0             7.62
+11807-11810     3         2*7.9        0.0  +3mm       7.62  
+11811-11814     3         2*7.9        0.0  -3mm       7.62
+11815-11818     3         2*6.3        0.0  -3mm       ***       poka net dannyh   
+11819-11822     3         2*3.98       0.0  -3mm       ***       poka net dannyh 
+11823-11826     3         2*9.9        0.0  -3mm       7.76 
+
+11827-11830     4         2*9.9        0.0             7.62
+11831-11834     4	  2*7.9        0.0             7.42
+11835-11838     4	  2*6.3        0.0             7.20
+11839-11842     4	  2*6.3        -10.            7.23
+11843-11846     4	  2*9.9        -10.            7.64
+11847-11850     4	  2*9.9        +10.            7.50
+11851-11854     4	  2*9.9**      +20.            7.50      (tok v katushkah umen'shalsja, 
+								  privedna usrednenaja velichina poljarizacii)
+11855-11858     4         2*6.3        +20.            7.05   
+11859-11862     4         2*6.3        -20.            7.29
+11863-11866     4         2*7.9        -20.            7.54  
+
+11867-11868     5         2*7.9        0.0             7.96  
+11869-11874     5         2*6.3        0.0             7.90  
+11875-11879     5         2*9.9        0.0             8.01   
+
+
+
+Roman.

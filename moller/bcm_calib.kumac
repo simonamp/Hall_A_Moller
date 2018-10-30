@@ -1,0 +1,77 @@
+MACRO bcm_calib n=3 irate=3 inorm=5 isub=0 same=0
+*
+* ===  BCM calibration
+* ===  n - number of runs (vector runbcm([n]) contains the run numbers)
+*
+
+  ve/cr bcmr([n]) r
+  ve/cr rate([n]) r
+  ve/cr erate([n]) r 
+  ve/cr ery([n])
+  ve/cr runbcm([n]) r 16115 16116 16117 16118  16111 16112  16113 16114 16119 16120 16121 16122 
+
+  bcmmx=0.
+  ratmx=0.
+  do i=1,[n]
+    r=runbcm([i])
+    if [r]<2 then
+       mess Warning : run=[r] is out of range
+       goto endrun
+    endif
+    ir=krunpnt([r])
+    if [ir]<1 then
+       mess Warning : run=[r] is missing
+       goto endrun
+    endif
+    bcm=resrun([inorm],[ir])
+    rat=resrun([irate],[ir])
+    mess bcm=[bcm] rat=[rat]
+    sub=0.
+    if [isub]>0 then
+       sub=resrun([isub],[ir])
+    endif
+    rat=[rat]-[sub]
+*    rat=$SIGMA([bcm]*1.+10)
+    ncy=nrsrun(1,[ir])
+    mess rat=[rat]
+    rat=[rat]/[bcm]
+    mess rat=[rat]
+    ve/in bcmr([i]) [bcm]
+    ve/in rate([i]) [rat]
+*    a=$SIGMA(sqrt([rat]*0.5/[ncy]))
+    a=eresrun([irate],[ir])
+    a=[a]/[bcm]
+    ve/in erate([i]) [a]
+    if [bcm]>[bcmmx] then
+      bcmmx=[bcm]
+      ratmx=[rat]
+    endif
+    endrun:
+  enddo
+
+  sca=[bcmmx]/[ratmx]
+  mess [bcmmx] [rat] [sca]
+  ve/pr rate
+  ve/oper/vsca  rate [sca]  rate
+  ve/oper/vsca erate [sca] erate
+  ve/pr rate
+
+  ve/cr par(10) r 0. 1.
+  x2=[bcmmx]*1.2
+*  null 0 [x2] 0 [x2] 
+*  gr/hplot/err bcmr rate ery erate [n] 20 0.1
+  ve/in par(1:2) 1. 0.
+  opt=' '
+  if [same]>0 then
+    opt=0
+  endif
+  ve/fit bcmr rate erate p2 [opt] 3 par 
+  gr/hplot/err bcmr rate ery erate [n] 20 0.1
+
+  ve/wri bcmr,rate,erate bcm_calib_7.dat '3F10.1' OC
+  a=par(1)
+  b=par(2)
+  fu/pl [a]+[b]*x 0 [x2] s
+
+RETURN
+

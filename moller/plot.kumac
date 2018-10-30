@@ -1,0 +1,31 @@
+MACRO plot run1=1 run2=30  bpn=1
+
+ nr=6
+ ve/cr fld([nr]) r  2.75   3.0   3.25  3.5   3.75   3.9
+ ve/cr bp([nr])  r 76.01 76.33 76.65 77.19  76.86 76.73
+ ve/cr err([nr]) r  0.20  0.15  0.20 0.19  0.21  0.17
+
+
+ zone
+ fort/fil 56 saturation_101015.ps
+ meta 56 -112
+ sigma er1=array([nr],0.001#0.001)
+ sigma rn=array([nr],1#[nr])
+* sigma rn=array([nr],14561#14620)
+ ve/cr parv(5) r
+ set dmod 3
+ ve/in parv(1) 0.5
+ ve/fit  rn  bp err  p0 ! 1 parv
+ set dmod 0
+ null 2.6 4.0  75.5  77.5
+* gr/hpl/err rn bp  er1 err [nr] 20 0.3
+ gr/hpl/err fld bp  er1 err [nr] 20 0.3
+ atitle 'Target field, T'   'Beam Polarization, "Y#'  
+* atitle 'Moller Target'   'Beam Polarization, "Y#' 
+ selnt 1
+ text 14.0 20.5 'Moller target, 10/15/2010' 0.5 0 C
+ text 3.0 10. 'with Levchuk correction' 0.4 0 
+ selnt 10
+ close 56
+
+RETURN 

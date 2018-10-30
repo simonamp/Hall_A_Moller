@@ -1,0 +1,49 @@
+MACRO help_runs chain=1 pr=5 angl=20.5  meth=0
+ ld //
+ read chain ' Input chain number (1-10)'
+	if [meth]=0 then
+ ve/cr runn(4) r 12386 12387 12388 12395   
+ ve/cr lunn(4) r 51 52 53 54   
+	else
+ read nr ' Input number of runs (2)'
+ ve/cr runn([nr]) r
+ ve/cr lunn([nr]) r
+ 	do i=1,[nr]
+	   read rnum ' Input run number (13336)'
+	   ve/input runn([i]) [rnum]
+	   read lnum ' Input lun number (13336)'
+	   ve/input lunn([i]) [lnum]
+	enddo
+        endif
+
+ ve/cr pars(10) r 
+ nn=$sigma(NCO(runn))
+ 1dh 101 'asym' 200 -0.1 0.1
+ fctrs=0.0
+ do i=1,[nn]
+ run=runn([i])
+ ln=lunn([i])
+ kt=[ln]-50
+ exec asymu run=[run]  pr=[pr]
+ fctr[i]=consrun(9,[kt])
+ mess Factor=[fctr[i]] kt=[kt]
+ fctrs=[fctrs]+[fctr[i]]
+ mess Factor Sum = [fctrs]
+ chain ch[chain] //lun[ln]
+ enddo
+
+ fctr=[fctrs]/[nn]
+ nt/pl //ch[chain]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 pars
+* asym_ave=$HINFO(101,'MEAN')
+ asym_ave=pars(2)
+ mess chain=[chain] 
+ exec asym_avr nn=[nn] pr=[pr]
+ res[pr]=[fctr]*[asym_ave]*100.
+ mess Factor Average=[fctr] Asymmetry=[asym_ave]
+ mess Polarization=[res[pr]]
+ in=[pr]+1
+ call prunpri.f(11000,14000)
+
+RETURN

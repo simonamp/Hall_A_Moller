@@ -1,0 +1,34 @@
+*** Begin of history file: Sat Feb  7 13:43:30 2009
+exec help
+call prunpri.f(13114,20000)
+exec run run=13114
+exec asymu run=13114 delay=0
+call prunpri.f(13114,20000)
+call prunpri.f(13114,20000)
+exec asymu run=13114 delay=0
+zone 3 2
+call prunpri.f(13000,20000)
+exec run run=13144
+exec asymu run=13144 delay=0
+call prunpri.f(13000,20000)
+exec run run=13145
+exec asymu run=13145 delay=0
+call prunpri.f(13000,20000)
+exec run run=13146
+exec asymu run=13146 delay=0
+call prunpri.f(13000,20000)
+exec asym_av run1=13143 run2=13146
+exec asym_av run1=13131 run2=13138
+exec asym_av run1=13131 run2=13146
+zone
+exec asym_av run1=13131 run2=13146
+exec ../oppla
+exec olpla
+exec ../olpla
+exec asym_av run1=13131 run2=13146
+exec ../cllop
+exec ../cllops
+call prunpri.f(13000,20000)
+exec asym_av run1=13143 run2=13146
+exit
+*** End   of history file: Sat Feb  7 14:16:33 2009

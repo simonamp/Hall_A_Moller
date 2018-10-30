@@ -1,0 +1,48 @@
+MACRO cycle
+
+ ve/cr runn(13) r  14488  14489  14490  14491  14493  14494  14495  14496  14497  14498  14499  14500  14501 
+ ve/cr sing(13) r 103198 103123 102934 103155 102195 102321 106063 106216 110977 110406 111656 112432 112555
+ ve/cr coin(13) r  21116  21134  21110  21084  21025  20977  20029  20137  17895  17761  18432  18642  18679
+
+ zone 1 2
+ set mtyp 20
+ opt nstat 
+ opt nbox
+ opt ndat
+ set xlab 1.5
+ set xval 0.1
+
+ fort/fil 56 cycle.ps
+ meta 56 -112
+
+ ve/pl sing%runn
+ atitle 'Moller runs' 'Single arm rate/sec' 
+ set txci 4
+ set plci 4
+ arrow 14494.5 14494.5 108000 102500 0.35
+ text  14494.2 104000 'Quad 1 1.48kG"5#1.46kG' 0.3 90.
+ set txci 1
+ set plci 1
+
+ ve/pl coin%runn
+ atitle 'Moller runs' 'Coincidence rate/sec' 
+ set txci 4
+ set plci 4
+ arrow 14488 14496 18000 18000 -0.35
+ text  14492 18200 'Field 0T' 0.35
+ arrow 14492 14492 20000 21000 0.35
+ text  14491.7 19500 'Quad 1 cycle' 0.3 90. 
+ arrow 14495.5 14495.5 19000 20000 0.35
+ text  14495.2 18500 'Quad 3 cycle' 0.3 90. 
+ arrow 14497 14501 21000 21000 -0.35
+ text  14498 20700 'Field 3T' 0.35
+ arrow 14498.5 14498.5 19500 17900 0.35
+ text  14498.2 18500 'Quad 1 cycle' 0.3 90.
+ arrow 14499.5 14499.5 20500 18500 0.35
+ text  14499.2 18800 'Quad 3 cycle' 0.3 90.
+ set txci 1
+ set plci 4
+
+ close 56
+
+RETURN

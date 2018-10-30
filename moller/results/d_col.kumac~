@@ -1,0 +1,69 @@
+MACRO d_col
+
+ ve/cr coll(5) r    4.0    3.0     2.0     1.0     3.0
+ ve/cr sing(5) r 224187  178361 129617   95408  175528
+ ve/cr coin(5) r  36783   26946  16105    5749   26641
+
+ ve/cr gcol(7) r    4.0  3.5      3.0    2.5    2.0    1.5   1.0
+ ve/cr gsin(7) r 158680 140023 120262 100022  78913  58632  38609
+ ve/cr gcoi(7) r  70375  61902  52607  42849  32818  22836  12878
+ ve/cr ganp(7) r .76780 .76769 .76761 .76763 .76768 .76784 .76835
+
+ set mtyp 20
+ opt ndat
+ opt nbox
+ opt nstat
+ zone 1 2
+ fort/fil 56 d_col.ps
+ meta 56 -112
+
+ sigma singn=sing*0.35/0.90
+ sigma gsinn=gsin/1.9
+ sigma gcoin=gcoi/1.9
+
+ null 0.8 4.2 18000. 90000.
+ set mtyp 20
+ set pmci 1
+ set txci 1
+ set mscf 1.0
+ ve/pl singn%coll ! s
+ key 1.2 80000. 20 '- measurement' 0.30
+ set xlab 1.7
+ atitle 'Dipole collimator size, cm' 'Single rate/sec'
+ selnt 1
+ text 13.0 20.5 'Moller Dipole Collimator Test' 0.45 0 C
+ selnt 10
+ set mscf 1.3
+ set mtyp 22
+ set pmci 2
+ set txci 2
+ ve/pl gsinn%gcol ! s
+ key 1.2 70000. 22 '- GEANT' 0.3
+
+
+ null 0.8 4.2 3000. 40000. 
+ set mtyp 20
+ set pmci 1
+ set txci 1
+ set mscf 1.0
+ ve/pl coin%coll ! s
+ key 1.2 30000. 20 '- measurement' 0.30
+ atitle 'Dipole collimator size, cm' 'Coinsidence rate/sec'
+ set mscf 1.3
+ set mtyp 22
+ set pmci 2
+ set txci 2
+ ve/pl gcoin%gcol ! s
+ key 1.2 25000. 22 '- GEANT' 0.3
+ set pmci 1
+ set txci 1
+
+ close 56 
+
+* wait
+* zone 
+* set mtyp 20
+* ve/pl ganp%gcol 
+
+
+RETURN

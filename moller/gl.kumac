@@ -1,0 +1,25 @@
+MACRO gl g1=1. g2=1. g3=1. g4=1.
+*
+* === Converts Gauss to GL for 3 quads
+*
+ a1=12542./1.390
+ a2=9682./1.342
+ a3=11328./1.5615
+ a4=944585./5.750
+
+ gl1=[a1]*[g1]
+ gl2=[a2]*[g2]
+ gl3=[a3]*[g3]
+ gl4=[a4]*[g4]
+
+ mess GL= [gl1] [gl2] [gl3] [gl4]
+
+ gl1=[g1]/[a1]
+ gl2=[g2]/[a2]
+ gl3=[g3]/[a3]
+ gl4=[g4]/[a4]
+
+ mess Gs= [gl1] [gl2] [gl3] [gl4]
+
+RETURN
+

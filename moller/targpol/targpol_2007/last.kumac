@@ -1,0 +1,46 @@
+*** Begin of history file: Wed Feb 21 14:45:14 2007
+ve/re coor,p48 4_fe10_8a.dat
+ve/re coor,p416 4_fe10_16a.dat
+ve/re coor,p516 5_sup07_16a.dat
+ve/cr left4(300) r
+ve/cr righ4(300) r
+ve/copy p48(1:300) left(1:300)
+ve/copy p48(1:300) left4(1:300)
+ve/de rigth4
+ve/de righ4
+ve/cr righ4(251) r
+ve/copy p48(301:551) righ4(1:251)
+sigma rat=vsum(left4)
+mess $sigma([rat]/300.)
+mess $sigma(rat/300.)
+sigma rat=vsum(righ4)
+mess $sigma(rat/251.)
+mess $sigma(6.85489/6.59155)
+ve/copy p416(1:300) left(1:300)
+ve/copy p416(1:300) left4(1:300)
+ve/copy p416(301:551) righ4(1:251)
+sigma rat=vsum(left4)
+mess $sigma(rat/300.)
+sigma rat=vsum(righ4)
+mess $sigma(rat/251.)
+mess $sigma(7.47323/7.31126)
+ve/cr min5(290) r
+ve/cr max5(210) r
+ve/copy p516(51:70) max5(1:20)
+ve/copy p516(151:180) max5(21:50)
+ve/copy p516(271:290) max5(51:70)
+ve/copy p516(331:370) max5(71:110)
+ve/copy p516(411:450) max5(111:150)
+ve/copy p516(491:550) max5(151:210)
+ve/copy p516(71:150) min5(1:80)
+ve/copy p516(181:270) min5(81:170)
+ve/copy p516(291:330) min5(171:210)
+ve/copy p516(371:410) min5(211:250)
+ve/copy p516(451:490) min5(251:290)
+sigma rat1=vsum(min5)
+mess $sigma(rat1/290.)
+sigma rat1=vsum(max5)
+mess $sigma(rat1/210.)
+mess $sigma(7.98267/7.95706)
+exit
+*** End   of history file: Wed Feb 21 15:13:14 2007

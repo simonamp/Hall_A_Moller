@@ -1,0 +1,20 @@
+opt ndat 
+opt nstat
+ve/cr vprec(8) r
+null  35. 125  0.65 1.05
+ve/in vprec(1:5) 0.6002 1 5  0  0
+set hcol 2
+set txci 2
+itx 70. 0.75  '- 6069.5 MeV MOLLER-1uAmp'
+fu/pl spinpred.f 0 150 s
+set hcol 1
+set txci 1
+ve/in vprec(1:5) 0.600 1 5  0  0
+fu/pl spinpred.f 0 150 s
+itx 70. 0.72  '- 6067.5 MeV PVDIS-90uAmp'
+atitle 'Wien filter angle, deg' 'Beam polarization, r.u.'
+arrow 74.73 74.73  0.9  0.978  0.11
+itx 75. 0.92  'Wien 74.73deg'
+selnt 1
+text 13.0 20.5 'Beam Polarization Dependence of Beam Energy' 0.4 0 C
+selnt 10

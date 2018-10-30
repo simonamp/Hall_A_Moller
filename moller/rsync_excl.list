@@ -1,0 +1,16 @@
+comis*.inc
+last.kumac
+last.kumacold
+adctdc.nt
+scal.nt
+raw.dat
+fort.?
+fort.??
+inc/v_run.inc
+inc/v_asym.inc
+paw.metafile
+paw.ps
+runs.tab
+runs.ps
+tmp.*
+*~

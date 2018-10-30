@@ -1,0 +1,17 @@
+MACRO all_asymwr run1=0 run2=0 new=0 attach=1 delay=8
+*
+* - write Scaler NTUPLEs for the run range and attach the files
+*
+ do run=[run1],[run2]
+   if [new]>0 then
+     exec asymwr10 run=[run] delay=[delay]
+   endif
+   if [attach]>0 then
+     exec run_scal10 run=[run]
+   endif
+
+ enddo
+
+RETURN
+
+

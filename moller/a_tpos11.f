@@ -1,0 +1,139 @@
+      REAL FUNCTION A_TPOS11(IXY,IFL)
+C
+C ===  Analyze the SCALER ntuple (one quad per entry)
+C ==   Returns the target position
+C ==     IXY = 1 - X
+C            = 2 - Y(Z)
+C        IFL = 0 - absolute coordinate (from target 5) in cm
+C            = 1 - relative coordinate with respect to the current target center
+C            = 2 - returns the target number
+C      Returns the signal average per quad
+C
+      IMPLICIT NONE
+      INTEGER IXY,IFL
+      INCLUDE ?
+C
+      INTEGER mxtar
+      PARAMETER (mxtar=6)
+      INTEGER iq,nel,jxy(2),i,it1,it2,itar
+      REAL enc(2),xytcm(2,mxtar),xyten(2,mxtar),xtdis,xytsl(2),xyorcm(2)
+     +    ,xyoren(2),xy(2),yen1,yen2,ycm1,ycm2
+
+C*** Feb 9,2011 modifyed for 1000Hz Helicity rate
+      REAL hrc      
+C***     ratio of helicity window width for 30Hz and 1000Hz
+      hrc=0.033/0.00083
+C
+      A_TPOS11=-99.
+C        open(2,file='tpos.dat',status='unknown')
+C
+      jxy(1)=26
+      jxy(2)=27
+C
+      IF(IXY.LT.1.OR.IXY.GT.2) GO TO 999
+C
+      IF(jxy(IXY).GT.NSCAL) THEN
+         WRITE(6,*) ' *** Error: zug=',IZUG,' JXY=',jxy(IXY)
+     +              ,' is out of range ',1,NSCAL
+         GO TO 999
+      ENDIF
+C
+      it1=5 ! zero point (convention)
+      it2=3 ! ref. measurement
+      xtdis=-8.89 ! distance between target centers (cm)
+      xytcm(1,it1)=0.
+      xyorcm(1)=xytcm(1,it1)
+      xyorcm(2)=3.15 ! target center in Z
+C
+C ---     History of measuremnts (by scanning across the foil, see foil_center.kumac)
+C
+      xyten(1,it1)=3374.
+      xyten(1,it2)=7478.
+      IF(IZRUN.LT.12220) THEN
+         xyten(1,it1)=3365.
+         xyten(1,it2)=7475.
+      ELSEIF(IZRUN.LT.12258) THEN
+         xyten(1,it1)=3402.
+         xyten(1,it2)=7578.
+      ELSEIF(IZRUN.LT.12374) THEN
+         xyten(1,it1)=3417.
+         xyten(1,it2)=7581.
+      ELSE
+         xyten(1,it1)=3464.
+         xyten(1,it2)=7627.
+      ENDIF
+C*** Feb 9, 2011
+         xyten(1,it1)=xyten(1,it1)/hrc
+         xyten(1,it2)=xyten(1,it2)/hrc
+C
+      xyoren(1)=xyten(1,it1)
+      DO i=1,mxtar
+        xytcm(1,i)=xytcm(1,it1)+xtdis*(i-it1)
+        xytcm(2,i)=xyorcm(2)
+      ENDDO
+      xytsl(1)=(xytcm(1,it2)-xytcm(1,it1))/(xyten(1,it2)-xyten(1,it1))
+C
+      DO i=1,mxtar
+        xyten(1,i)=xyten(1,it1)+xtdis*(i-it1)/xytsl(1)
+      ENDDO
+C      WRITE(6,FMT='(6F10.2)') (xytcm(1,i),i=1,mxtar)
+C      WRITE(6,FMT='(6F10.1)') (xyten(1,i),i=1,mxtar)
+C
+      IF(IZRUN.LT.12220) THEN
+        ycm1=0.1
+        ycm2=5.55
+        yen1=252400./30.
+        yen2=46600./30.
+      ELSE
+        ycm1=0.15
+        ycm2=5.55
+        yen1=256430./30.
+        yen2=47150./30.
+      ENDIF
+C*** Feb 9, 2011
+      yen1=yen1/hrc
+      yen2=yen2/hrc
+
+      xytsl(2)=(ycm2-ycm1)/(yen2-yen1)
+      xyoren(2)=yen1+(xyorcm(2)-ycm1)/xytsl(2)
+C
+      nel=NELEM
+C
+      DO i=1,2
+         enc(i)=0.
+         DO iq=1,nel
+            enc(i)=enc(i)+JCNT(jxy(i),iq)
+         ENDDO
+         IF(nel.GT.0) enc(i)=enc(i)/REAL(nel)
+C         write(6,*) enc(i),xyoren(i),xytsl(i)
+         xy(i)=(enc(i)-xyoren(i))*xytsl(i)
+         IF(IFL.GT.0) THEN
+            IF(i.EQ.1) THEN
+               itar=it1-INT((xy(i)-xyorcm(1)+ABS(xtdis)/2.)/ABS(xtdis))
+               IF(itar.GT.0.AND.itar.LE.mxtar) THEN
+                  xy(i)=xy(i)-xytcm(1,itar)
+               ENDIF
+            ELSE
+C
+            ENDIF
+         ENDIF
+      ENDDO
+C
+C---   Convert to the foil coordinate
+C
+      xy(2)=-xy(2)
+C     write data to file tpos.dat
+      write(2,20) xy(1),xy(2)
+C
+      A_TPOS11=xy(IXY)
+      IF(IFL.EQ.2) A_TPOS11=itar
+C       write(2,30) A_TPOS11
+C      ENDIF
+
+ 999  RETURN
+ 20     format(2(2x,f10.6))
+ 30     format(2x,f10.6)
+        close(2)
+
+      END
+

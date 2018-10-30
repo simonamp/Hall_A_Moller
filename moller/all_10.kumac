@@ -1,0 +1,18 @@
+MACRO all_10 run1=90000 run2=1 delay=8  ptar=0.08043 dtick=4. scal=-1. gate=0.008 anpow=0.772
+
+  delay1=0
+  if [delay]=8 then
+     delay1=9
+  endif
+
+  do i=[run1],[run2]
+    if [scal]>0 then
+      exec run run=[i]
+       exec asymwr10 run=[i] delay=[delay] dtick=[dtick] ptar=[ptar] anpow=[anpow]
+    endif
+    exec asym10  delay=[delay1] run=[i] ptar=[ptar] gate=[gate] anpow=[anpow]
+    cd //pawc
+    h/del 0
+  enddo
+
+RETURN

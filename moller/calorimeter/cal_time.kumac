@@ -1,0 +1,15 @@
+MACRO cal_time lun=lun21 cut=0 id=1000
+
+  do i=1,16
+    id1=[id]+[i]
+    1dh [id1] 'TDC' 1200 0 1200
+ 
+    j=16+[i]
+    if [cut]=0 then
+      nt/loop //[lun]/1 nadc>0.and.gettim.f([j],[id1])>0
+    else
+      nt/loop //[lun]/1 nadc>0.and.$[cut].and.gettim.f([j],[id1])>0
+    endif
+  enddo
+
+RETURN

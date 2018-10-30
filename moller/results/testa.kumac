@@ -1,0 +1,43 @@
+ MACRO testa run1=0 run2=0 clear=0
+*  Find the settings file
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp
+ elseif $INDEX([host],'ch-dom')>0 then
+   dirm=/v3/user/gen/data/moller/exp
+ endif
+
+   do i=[run1],[run2]
+   nr=[run2]-[run1]+1
+
+   ve/cr filt(3) r 
+
+   run=[i]
+ fmong='mollerrun_'//[run]//'.set'
+ shell find [dirm] -name [fmong] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]<1 then
+   mess Setting file [fmong] has not been found. Exiting...
+   exitm
+ endif
+ 
+ fmon=$SHELL('cat tmp.nam | head -1',1) 
+* mess Settings file [fmon]
+
+ comn='cat '//[fmon]//' | grep "^Moller Magnet Outside Hall Probe" | cut -c61-67'
+ par1=$SHELL([comn])
+ comn='cat '//[fmon]//' | grep "^Hcoils current (Amps)" | cut -c61-67'
+ par2=$SHELL([comn])
+ mess run=[run] par1=[par1] par2=[par2]
+
+ ve/in filt [run] [par1] [par2] 
+
+ ve/write filt(1),filt(2),filt(3) filt.dat (F7.0,2F8.4)
+ shell cat filt.dat >> filter.dat
+
+ enddo
+
+RETURN

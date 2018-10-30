@@ -1,0 +1,6 @@
+ve/re  run,q1,q2,q3,dp  quads0518.dat
+zone 2 2
+ve/pl q1%run
+ve/pl q2%run
+ve/pl q3%run
+ve/pl dp%run

@@ -1,0 +1,99 @@
+MACRO spin_dance_sim rnd=1
+*
+* --- Simulate the spin dance
+*
+
+  np=4
+*  ve/cr wang([np]) r -10. 0.  30. 90. 120. 170. 190.
+  ve/cr wang([np]) r -100. -10.  26. 90.
+  ve/cr  pol([np])
+  ve/cr epol([np])
+  ve/cr exx([np])
+
+
+  nev=1000
+  if [rnd]=0 then
+    nev=1
+  endif
+
+  ve/cop wang wangmx
+  ve/cr par(6) r
+  ve/cr erpar(6) r
+  ermin=1000.
+  imx=0
+  ve/cop pol polmx
+  ve/cop epol epolmx
+
+  do iev=1,[nev]
+    if [rnd]>0 then
+      ve/in wang(1) 90.
+      do i=2,[np]
+        r=$CALL('rndm(0.1)')
+        w=$SIGMA(-90.+(250.+90.)*[r])
+        ve/in wang([i]) [w]
+      enddo
+    endif
+*
+* ---    Sort the vector
+*
+    n1=[np]-1
+    do i=1,[n1]
+      a1=wang([i])
+      i1=[i]+1
+      do j=[i1],[np]
+        a2=wang([j])
+        if [a2]<[a1] then
+           ve/in wang([i]) [a2]
+           ve/in wang([j]) [a1]
+           a1=[a2]
+        endif
+      enddo
+    enddo
+*    ve/pri wang  
+  
+    do i=1,[np]
+      wr=wang([i])
+      wr=$SIGMA([wr]*3.1415/180.)
+      p=$SIGMA(0.7*SIN([wr]))
+      p=[p]+0.02
+      ep=$SIGMA(abs([p])*0.003+0.01)
+      ve/in  pol([i]) [p]
+      ve/in epol([i]) [ep] 
+    enddo
+
+    ve/in par(1:2) 0.7 0. 1. 
+    ve/fit wang pol epol wave.f 'Q0' 2 par ! ! ! erpar
+*    gr/hpl/err wang pol exx epol [np] 20 0.1
+    er=erpar(2)
+    if [er]<[ermin] then
+      ermin=[er]
+      ve/oper/vbias wang 0. wangmx
+      ve/oper/vbias pol 0. polmx
+      ve/oper/vbias epol 0. epolmx
+      imx=[iev]
+    endif
+  enddo
+  mess Error=[ermin] at [iev], points:
+  ve/pri wangmx
+  ve/oper/vbias wangmx 0. wang
+  ve/oper/vbias polmx 0. pol
+  ve/oper/vbias epolmx 0. epol
+  ve/in par(1:2) 0.7 0. 1. 
+  ve/fit wang pol epol wave.f ' ' 2 par ! ! ! erpar
+  gr/hpl/err wang pol exx epol [np] 20 0.1
+  
+RETURN
+
+
+
+
+
+
+
+
+
+
+
+
+
+

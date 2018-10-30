@@ -1,0 +1,17 @@
+* this file contains corrections to the run settings
+* it can be used if some variable is missing or wrong in mollerrun_???.set
+* run_number number_of_the_variable value
+*  The inear position was missing - disconnected from the ADC? It was OK in VtoF.
+*  format: I6,1X,I3,1X,E12.4
+ 12705  35  1.040 
+ 12706  35  1.040 
+ 12707  35  1.020 
+ 12708  35  1.020 
+ 12709  35  1.660 
+ 12710  35  1.660 
+ 12711  35  2.310 
+ 12712  35  2.310 
+ 12713  35  2.310 
+ 12714  35  2.310 
+ 12715  35  2.930 
+ 12716  35  2.930 

@@ -1,0 +1,110 @@
+MACRO a_an_thick meas=66 xy=1
+*
+* -- Foil thickness along xy (=2 - Y/Z)
+*
+  if [meas]<1 then
+     mess No measurement number defined [meas]
+     exitm
+  endif
+
+  exec a_meas meas=[meas] 
+  itarg=run_sett(101)
+
+  opt nsta
+  opt utit
+  set ywin 0.9
+  txt='Foil '//[itarg]//' thickness'
+  titl [txt]
+  
+  nd=1500
+  np=0
+  anorm=1.
+  if [meas]=65 then
+     nd=1500
+     np=7
+     anorm=47.
+     ve/cr xf([np]) r
+     ve/in xf -0.5 -0.2 0.1 0.4 0.7 1.0 1.23
+     y1=0.85
+     y2=1.15
+     ya1=0.85
+     ya2=1.15
+  elseif [meas]=66 then
+     nd=1500
+     np=7
+     anorm=80.
+     ve/cr xf([np]) r
+     ve/in xf -0.7 -0.4 -0.1 0.2 0.5 0.8 1.04
+     y1=0.75
+     y2=1.25
+     ya1=0.85
+     ya2=1.15
+  endif
+
+  zone 1 [np]
+
+  do ip=1,[np]
+    x=xf([ip])
+    x1=-1.5
+    if [ip]>1 then
+      i1=[ip]-1
+      x1=xf([i1])
+      x1=$SIGMA(([x]+[x1])/2.)
+    endif
+    x2=1.5
+    if [ip]<[np] then
+      i1=[ip]+1
+      x2=xf([i1])
+      x2=$SIGMA(([x]+[x2])/2.)
+    endif
+    mess [ip] [x1] [x2]
+    null -3.2 3.2 [y1] [y2]
+    nt/pl //scan0/1.a_siglr.f(1,2,1,0,0)/[anorm]%a_tpos.f(2,1) a_signal.f(1,1,0,0,0,0,0)>10.and.[x1]<a_tpos.f(1,1)<[x2] ! ! ! s
+    i1=[i1]+[nd]
+    if [ip]=$SIGMA(INT([np]/2)) then
+       atit ' ' 'L+R rate, normalized'
+    endif
+*    txt='x '//[x]
+*    mess txt=[txt]
+    text -3.0 1. 'x='//[x] 0.3
+  enddo
+  atit 'Z, cm' ' '
+
+  id1=120
+  if $HEXIST([id1])>0 then
+    h/del [id1]
+  endif
+  ny=256
+  h/cr/prof [id1] ' ' [ny] -3.2 3.2 0.1 2
+  min [id1] [ya1]
+  max [id1] [ya2]
+
+  idt=[id1]+10
+  if $HEXIST([idt])>0 then
+    h/del [idt]
+  endif
+  1dh [idt] ' ' 400 -5. 5.
+  nt/pl //scan0/1.a_siglr.f(1,-2,0,0,0) a_signal.f(1,1,0,0,0,0,0)>10 ! ! ! N [idt]
+  av=$HINFO([idt],'MEAN')
+  sg=$HINFO([idt],'RMS')
+  yb1=$SIGMA([av]-[sg]*1)
+  yb2=$SIGMA([av]+[sg]*1)
+
+  id2=[id1]+1
+  if $HEXIST([id2])>0 then
+    h/del [id2]
+  endif
+  ny=256
+  h/cr/prof [id2] ' ' [ny] -3.2 3.2 -5 5
+  min [id2] [yb1]
+  max [id2] [yb2]
+
+  zone 1 3
+  nt/pl //scan0/1.a_siglr.f(1,2,1,0,0)/[anorm]%a_tpos.f(2,1) a_signal.f(1,1,0,0,0,0,0)>10 ! ! ! ! [id1]
+  nt/pl //scan0/1.a_siglr.f(1,-2,0,0,0)%a_tpos.f(2,1) a_signal.f(1,1,0,0,0,0,0)>10 ! ! ! ! [id2]
+  
+RETURN
+ 
+  
+
+  

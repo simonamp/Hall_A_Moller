@@ -1,0 +1,24 @@
+MACRO help_run pr=5 angl=20.5 run=12000 
+
+ ve/cr par5(10) r
+ 1dh 101 'asym' 200 -0.1 0.1
+ exec run run=[run]
+ exec asymwr run=[run]
+ exec asymu run=[run]  pr=[pr]
+* exec run_scalu  run=[run] pr=[pr]
+ lun=tlun(1)
+ mess lun=[lun]
+ nt/pl //lun[lun]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.abs(a_tpos.f(1,1))<1.4._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 par5
+ kl=[lun]-50
+ fctr=consrun(9,[kl])
+* asym=$HINFO(101,'MEAN')
+ asym=par5(2)
+ call prunpri.f(11000,14000)
+ mess Factor=[fctr] Asymmetry=[asym]
+ res=[fctr]*[asym]*100.
+ mess Polarization=[res]
+
+
+RETURN

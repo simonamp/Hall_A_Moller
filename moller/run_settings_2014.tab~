@@ -1,0 +1,81 @@
+r     1	Beam energy, MeV Hall A              MBSY1C_energy        : 2,758.22
+r     2	Injector energy, MeV                 MMSINJEGAIN          : 50.625
+r     3	South linac energy, MeV              MMSLIN1EGAIN         : 450
+r     4	North linac energy, MeV              MMSLIN2EGAIN         : 450
+r     5	Passes Hall A                        MMSHLAPASS           : Pass 3
+r     6	Beam Current Average                 hac_bcm_average      : 0.259
+r     7	Current on Unser monitor             hac_unser_read       : -2.16
+r     8	Current on Upstream bcm              hac_bcm_dvm1_current : 0.254
+r     9	Current on Downstream bcm            hac_bcm_dvm2_current : 0.264
+r    10 Injector Full Current Monitor 02     IBC0L02Current       : 0.259
+r    11	Upstream Cavity Coefficient          hac_bcm_A1           : 76.7
+r    12	Downstream Cavity Coefficient        hac_bcm_A2           : 78.9
+r    13 Injector Full Current Monitor        IBC0L02Current       : 12.734
+c    14	Injector Current Monitor Hall A      IBC1H04CRCUR2        : 0.2
+r    15	Beam Position BPM01  X, mm           IPM1H01.XPOS         : 0.421
+r    16	Beam Position BPM01  Y, mm           IPM1H01.YPOS         : 0.069
+r    17 Beam Position BPM04  X, mm           IPM1H04.XPOS         : -0.563
+r    18 Beam Position BPM04  Y, mm           IPM1H04.XPOS         : -0.563
+r    19 Beam Position BPM04D X, mm           IPM1H04D.XPOS        : -0.54687        
+r    20 Beam Position BPM04D Y, mm           IPM1H04D.YPOS        : -1.3066     
+r    21 Quad Q1 (Amps)                       MQO1H02M             : 0.0
+r    22 Quad Q2 (Amps)                       MQM1H02M             : 0
+r    23	Quad Q3 (Amps)                       MQO1H03M             : 0.161
+r    24	Quad Q4 (Amps)                       MQO1H03AM            : 61.004
+r    25	Dipole  (Amps)                       MMA1H01M             : 175.952
+r    26	Target Lifting Position(V)           HAMOL_ENC2           : 1.389
+r    27	Lifting Up Limit Switch              HAMOL1_SM.MCCW       : 0
+r    28	Lifting Down Limit Switch            HAMOL1_SM.MCW        : 0
+r    29	Lifting Home(Center) Switch          HAMOL1_SM.HMSW       : 1
+c    30	Lifting Position in Steps            HAMOL1_SM.RBV        : 0
+r    31	Target Linear Position(V)            HAMOL_ENC1           : 1.678
+r    32	Linear Right Limit Switch            HAMOL2_SM.MCCW       : 0
+r    33	Linear Left Limit switch             HAMOL2_SM.MCW        : 0
+r    34	Linear target on beam switch         HAMOL2_SM.HMSW       : 0
+r    35 Linear Position in Steps             HAMOL2_SM.RBV        : 0
+r    36	Laser mode Hall A                    IGL1I00HALLAMODE     : CW MODE (DC)
+r    37	Laser mode Hall B                    IGL1I00HALLBMODE     : CW MODE (DC)
+r    38	Laser mode Hall C                    IGL1I00HALLCMODE     : CW MODE (DC)
+r    39	Laser power Hall A                   IGL1I00DAC0          : 100
+r    40	Laser power Hall B                   IGL1I00DAC2          : 100
+r    41	Laser power Hall C                   IGL1I00DAC4          : 100
+r    42	Laser attenuation Hall A             psub_aa_pos          : 138
+r    43	Laser attenuation Hall B             psub_ab_pos          : 82
+r    44	Laser attenuation Hall C             psub_ac_pos          : 140
+r    45	Slit Position Hall A                 SMRPOSA              : 15.3
+r    46	Slit Position Hall B                 SMRPOSB              : 17.8
+r    47	Slit Position Hall C                 SMRPOSC              : -0.995
+c    48	Laser 1/2 wave plate                 IGL1I00OD16_16       : OUT
+r    49 Rotating 1/2 wave plate              psub_pl_pos          : 0
+r    50 VWien BdL                            MWF1I04.BDL          : 0
+r    51 VWien field                          MWF1I04.S            : -0.0113658
+r    52 VWien filter angle, deg              VWienAngle           : 0
+r    53 Solenoid A BdL                       MFG1I04A.BDL         : 0
+r    54 Solenoid A field                     MFG1I04A.S           : 0
+r    55 Solenoid B BdL                       MFG1I04B.BDL         : 0
+r    56 Solenoid B field                     MFG1I04B.S           : 0
+r    57 Solenoids angle, deg                 Phi_FG               : 0
+r    58 HWien BdL                            MWF0I02.BDL          : 0
+r    59 HWien field                          MWF0I02M             : 0
+r    60 HWien filter angle, deg              HWienAngle           : 0
+c    61	Helicity Mode ON/OFF Random/Toggle   HELPATTERNd          : Quartet
+r    62 Helicity frequency                   HELFREQ              : 960.015
+c    63 Helicity delay                       HELDELAYd            : 8 windows
+r    64 MPS signal, usec                     HELTSETTLEd          : 70
+r    65 Helicity window, usec                HELTSTABLEd          : 971.65
+r    66	Pockels Cell Voltage 1               IGL1I00AI7           : 2.759
+r    67	Pockels Cell Voltage 2               IGL1I00AI8           : 2.772
+r    68	Laser A RF phase degrees             R00LPMESA            : -71.565
+r    69	Laser A source current uA            enlk4A:floatspare1   : 36.982
+r    70 Beam Duty Factor                     IGL1IGXPBEAMDF       : 0
+r    71 Pulse width, usec                    IGL1IGXPPMPW         : 100
+r    72 Pulse period, usec                   IGL1IGXPPMPP         : 16666.7
+r    73 Pulse Frequency, Hz                  IGL1IGXPPMHZ         : 60
+c    74 Expert Mode Status                   IGL1IGXPPMISTATUS    : OFF
+r    75 Low beam current monitor             IBC1H04CRCUR2        : 0
+r    76 Beam Position BPM02A X, mm           IPM1P02A.XPOS        : 0
+r    77 Beam Position BPM02A Y, mm           IPM1P02A.YPOS        : 0
+r    78 MCZ1H0V vertical corrector           MBD1H04VM            : 0.334
+r    79	Hcoils current (Amps)                                     : 9.954990 
+D    80 # Date                                                        03:09:26 AM Aug 10, 2005      6 words: year mon day h min sec
+D    90 End Run Time                                              :   Wed Aug 10 03:12:27 EDT 2005  6 words

@@ -1,0 +1,56 @@
+MACRO left_right pr=5 angl=20.5 run=12000 
+***
+*** Comparison of the beam polarization from 
+*** left and right parts target
+*** central part and whole target width
+***
+ ve/cr par5(10) r
+ 1dh 101 'asym' 200 -0.1 0.1
+ exec run run=[run]
+ exec asymwr run=[run]
+ exec asymu run=[run]  pr=[pr]
+ exec run_scalu  run=[run] pr=[pr]
+ lun=tlun(1)
+ mess lun=[lun]
+* lun=51
+*** Left part of foil
+ nt/pl //lun[lun]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<0.01._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 par5
+ kl=[lun]-50
+ fctr=consrun(9,[kl])
+ asym=par5(2)
+ mess Factor=[fctr] Asymmetry=[asym]
+ left=[fctr]*[asym]*100.
+ mess Left Polarization=[left]
+*** Right part of foil
+ nt/pl //lun[lun]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-0.01<(a_tpos.f(1,1))<1.4._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 par5
+ asym=par5(2)
+ mess Factor=[fctr] Asymmetry=[asym]
+ right=[fctr]*[asym]*100.
+ mess Right Polarization=[right]
+*** Central part of foil
+ nt/pl //lun[lun]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-0.3<(a_tpos.f(1,1))<0.3._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 par5
+ asym=par5(2)
+ mess Factor=[fctr] Asymmetry=[asym]
+ centr=[fctr]*[asym]*100.
+ mess Center Polarization=[centr]
+*** Whole Foil
+ nt/pl //lun[lun]/1.abs(a_asymm.f(3,4,1,0,0,0,0)) ifzug=0.and.-1.4<(a_tpos.f(1,1))<1.4._
+and.abs(a_asymm.f(3,4,1,0,0,0,0))<2.0 -101
+ h/fit 101 g ! 0 par5
+ asym=par5(2)
+ mess Factor=[fctr] Asymmetry=[asym]
+ res=[fctr]*[asym]*100.
+ mess Polarization=[res]
+ call prunpri.f(11000,14000)
+ rat=[left]/[right]-1.
+ rat1=[res]/[centr]-1.
+ mess Left=[left] Right=[right] Center=[centr] Whole=[res] 
+ mess Left/Right=[rat] Whole/Center=[rat1] 
+
+RETURN

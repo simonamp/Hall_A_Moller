@@ -1,0 +1,55 @@
+MACRO spin_dance_360mev x1=-50 x2=110 y1=0. y2=0.006
+
+  np=7
+  ve/cr swang([np]) r 71.2 85.2 55.2 5.2 -35.2 -15.2 15.2 
+  ve/cr spo([np]) r 2.62e-3 1.38e-3 3.586e-3 5.056e-3 3.65e-3 4.549e-3 5.1192e-3 
+  ve/cr espo([np]) r 2.9e-5 2.9e-5 3.5e-5 3.0e-5 3.6e-5 1.9e-5 3.6e-5
+  ve/cr serr([np]) r 
+
+* Energies of the injector and linacs
+  el1=0.305
+  el2=0.20
+  ei=0.03608
+  elav=$SIGMA(([el1]+[el2])/2.)
+  elas=$SIGMA(([el1]-[el2])/2./[elav])
+  ve/cr vprec(8) r
+  ve/in vprec(1:3) [elav] 1 1
+  ve/in vprec(5) [elas]
+  scal=-1.
+  ang=swang(1)
+  ang=$RSIGMA([ang])
+  cnm='spinpred.f('//[ang]//')'
+  p=$CALL([cnm])
+  p1=spo(1)
+  scal=$SIGMA([p]/[p1])
+
+
+  ve/del spo1
+  ve/del espo1
+  ve/op/vsca spo [scal] spo1
+  ascal=$SIGMA(ABS([scal]))
+  ve/op/vsca espo [ascal] espo1
+  
+  opt ndat
+
+  null [x1] [x2] [y1] [y2]
+  atit 'Wien angle, deg' 'Raw asymmetry'
+*  fu/pl spinpred.f [x1] [x2] s
+  igset pmci 4
+  gr/hpl/err swang spo serr espo [np] 20 0.15
+
+  ve/in vprec(1:3) [elav] 3 1
+*  fu/pl spinpred.f [x1] [x2] s
+
+  ve/cr par(10) r
+  ve/in par(1:3) 0.005 -20. 1.
+  ve/cr ipfit(2)
+
+  ve/in ipfit(1) 0
+  set hcol 2
+  ve/fit swang spo espo wave_1.f s 2 par
+  ve/in ipfit(1) 0
+  fu/pl wave_1.f [x1] [x2] s
+  set hcol 1
+
+RETURN

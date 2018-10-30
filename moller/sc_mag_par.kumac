@@ -1,0 +1,45 @@
+MACRO sc_mag_par par=1 fld=10.0 cur=10.0 fld1=0 fld2=93.28 ext=2.0
+* calculation of new SC magnet parameters
+* ramp rate 0-85A(45.56kG)     - 0.0254A/s
+* ramp rate 85-93.28A(50.0kG)  - 0.0031A/s
+* field to current ratio:      - 0.536kg/A
+
+* par=1 field -> current
+* par=2 current -> field
+* par=3 external Gauss-> field
+* par=4 time to change field
+ mess !!! par=1 kg->A, par=2 A->kG, external->field, par=34 time
+ mess   
+ if [par]=1 then
+    crn=[fld]/0.536
+    mess To reach field [fld]kG set [crn]A magnet current
+ elseif [par]=2 then
+    fld=[cur]*0.536
+    mess Current [cur]A -> [fld]kG field in the magnet center
+ elseif [par]=3 then
+    crn=1.22+10.625*[ext]
+    fld=[crn]*0.536
+    mess External Gaussmeter reading [ext]kG = [fld]kG = [crn]A 
+ elseif [par]=4 then 
+    if [fld2]<45.56 then
+        fld=[fld2]-[fld1]
+        crn=[fld]/0.536
+        sec=[crn]/0.0254
+        min=[sec]/60.
+        mess Field ramp [fld1]kG->[fld2]kG needs [sec]sec=[min]min
+    else
+    mess field > 45.56kG -> low rate will be applied
+        crn2=[fld2]/0.536
+        crn1=[fld1]/0.536
+        crn21=[crn2]-85.
+        crn11=85.-[crn1]
+        sec1=[crn21]/0.0031
+        sec2=[crn11]/0.0254
+        sec=[sec1]+[sec2]
+        min=[sec]/60.
+        mess Field ramp [fld1]kG->[fld2]kG needs [sec]sec=[min]min
+    endif
+ endif
+  
+
+RETURN

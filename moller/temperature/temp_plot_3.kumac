@@ -1,0 +1,40 @@
+MACRO temp_plot_1
+*
+* --- Plots the temperature curves 
+*
+ opt liny
+ opt linx
+ set csiz 0.3
+
+ zone 2 1
+ 
+ next
+ 
+ titl 'Target temperature for beam 3.6E11 20Hz spot x/y RMS 0.1cm rad. coeff=0.2'  
+
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.010_rad-0.2_dtv-0.5/ same=0 zone=1 col=2
+ igset pmci 2
+ gr/hpl/key 500 65 20 '100 [m]m foil'
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.005_rad-0.2_dtv-0.5/ same=1 zone=1 col=4
+ igset pmci 4
+ gr/hpl/key 500 60 20 ' 50 [m]m foil'
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.002_rad-0.2_dtv-0.5/ same=1 zone=1 col=6
+ igset pmci 6
+ gr/hpl/key 500 55 20 '20 [m]m foil'
+ igset pmci 1
+
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.010_rad-0.2_dtv-0.5/ same=0 zone=2 col=2
+ igset pmci 2
+ gr/hpl/key -11 65 20 '100 [m]m foil'
+ text 0 65 'Y at 0,-0.7,-1.4cm' 0.25 0
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.005_rad-0.2_dtv-0.5/ same=1 zone=2 col=4
+ igset pmci 4
+ gr/hpl/key -11 60 20 ' 50 [m]m foil'
+ exec temp_get dir=t_2000._beam-3.6x20.-0.1_foil-0.002_rad-0.2_dtv-0.5/ same=1 zone=2 col=6
+ igset pmci 6
+ gr/hpl/key -11 55 20 '20 [m]m foil'
+ igset pmci 1
+
+
+
+

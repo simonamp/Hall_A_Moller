@@ -1,0 +1,47 @@
+MACRO spin_prec_18 
+*
+* Hall A Moller spin dance 11 Nov 2014
+* ebeam - beam energy in GeV
+* inject - injectro energy in Gev
+* pass - number of pass
+ opt ndat
+ ebeam=7.367
+ inject=0.1023
+ pass=4
+
+ set pmci 1
+ fort/fil 56 spin_prec_18.ps
+ meta 56 -112
+*Flipper vertical +90 Solenoid -91.947
+ np=5
+ ve/cr exx([np])  r 
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr bpol1([np]) r
+ ve/cr ebpol([np]) r
+ ve/in wang -75.0 -60.85 -60.20 -20. 20.  
+ ve/in bpol -86.32 -82.67 -80.40 -43.82 17.23
+ ve/in ebpol 0.55 0.41 0.45 0.51 0.51
+ set fit 1111 
+ ve/cr ipfit(2) i
+ ve/in ipfit 0 0
+ ve/cr par(10) r
+ zone 
+ set csiz 0.5
+ null -100. 45.  -90.0  20. 
+ ve/fit wang bpol ebpol wave.f s  2  par
+ fu/pl wave.f -100 40 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#'
+
+ selnt 1
+ text 14.0 20.5 'Moller results for Spin Dance 11/11/2014' 0.4 0 C
+ selnt 10
+* a=par(1)
+* b=par(2)
+* mess a=[a] b=[b]
+
+ close 56
+
+RETURN
+

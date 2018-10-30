@@ -1,0 +1,19 @@
+MACRO laser_temp
+*
+* == plots the results of tha laser temperature studies
+* 
+
+ zone 2 2
+ null 0 40 0.55 0.64
+ exec asym_pl k1=1 k2=4 symb=20
+ exec asym_pl k1=9 k2=12 symb=21 
+ exec asym_pl k1=14 k2=17 symb=22
+ exec asym_pl k1=19 k2=38 symb=24
+ atit 'Run' 'Polarization'
+
+ set csiz 0.3
+ gr/hpl/key 16 0.555 20 'default'
+ gr/hpl/key 16 0.562 21 'laser low'
+ gr/hpl/key 16 0.569 22 'laser high'
+ gr/hpl/key 16 0.576 24 'laser high, cathode low'
+RETURN

@@ -1,0 +1,148 @@
+*** Beam polarization vs. Target field
+***
+fort/fil 55 field.ps
+meta 55 -111
+set *
+opt *
+opt nbox
+opt ndate
+opt nstat
+opt grid
+*** Target 2
+ve/cr t2cr(2) r 8.5    4.3    
+ve/cr t2po(2) r 82.96  82.28
+ve/cr t2er(2) r 0.22   0.22
+*** Target 3
+ve/cr t31cr(2) r 8.0    4.0    
+ve/cr t31po(2) r 82.19  83.73
+ve/cr t31er(2) r 0.17   0.20
+ve/cr t32cr(4) r 8.0    6.3    4.0    9.9
+ve/cr t32po(4) r 85.02  86.30  86.74  85.24
+ve/cr t32er(4) r 0.21   0.22   0.24   0.21
+ve/cr t33cr(5) r 8.4    6.8    4.1    10.1   4.2   
+ve/cr t33po(5) r 83.09  83.51  84.12  82.87  84.07
+ve/cr t33er(5) r 0.24   0.25   0.27   0.24   0.26
+*** Target 4
+ve/cr t41cr(2) r 8.1    4.1    
+ve/cr t41po(2) r 83.91  84.25
+ve/cr t41er(2) r 0.30   0.33
+ve/cr t42cr(3) r 9.96   8.1   6.4
+ve/cr t42po(3) r 85.75  85.94  86.39
+ve/cr t42er(3) r 0.27   0.28   0.29
+ve/cr t43cr(2) r 9.9    6.3    
+ve/cr t43po(2) r 85.59  86.39
+ve/cr t43er(2) r 0.27   0.29
+ve/cr t44cr(2) r 8.2    6.6    
+ve/cr t44po(2) r 85.13  84.94
+ve/cr t44er(2) r 0.28   0.29
+ve/cr t45cr(2) r 9.99   6.5    
+ve/cr t45po(2) r 86.25  86.10
+ve/cr t45er(2) r 0.26   0.26
+ve/cr t46cr(2) r 8.2    4.2    
+ve/cr t46po(2) r 83.94  83.71
+ve/cr t46er(2) r 0.21   0.23
+ve/cr t47cr(2) r 8.3    4.3    
+ve/cr t47po(2) r 83.12  83.08
+ve/cr t47er(2) r 0.23   0.23
+ve/cr t48cr(2) r 8.4    4.4    
+ve/cr t48po(2) r 83.86  84.27
+ve/cr t48er(2) r 0.22   0.25
+ve/cr t441cr(2) r 8.0    4.0    
+ve/cr t441po(2) r 83.59  84.60
+ve/cr t441er(2) r 0.21   0.24
+ve/cr t442cr(2) r 8.0    4.0    
+ve/cr t442po(2) r 84.72  85.88
+ve/cr t442er(2) r 0.20   0.24
+ve/cr t443cr(3) r 8.0    4.0    6.3
+ve/cr t443po(3) r 85.81  86.15  86.15
+ve/cr t443er(3) r 0.20   0.23   0.22
+*** Target 5
+ve/cr t51cr(3) r 8.3    6.7    9.99
+ve/cr t51po(3) r 87.22  86.21  86.74
+ve/cr t51er(3) r 0.29   0.2   0.29
+ve/cr t52cr(3) r 8.0    4.0    6.3
+ve/cr t52po(3) r 86.73  88.26  87.03
+ve/cr t52er(3) r 0.34   0.37   0.22
+
+zone 1 2
+
+null 3.9 10.0 81.5 83.5
+selnt 1
+text 10.0 18.5 'Beam Polarization vs. Magnetic Field' 0.45 0 C
+atitle 'BOP current, Amp' 'Beam polarization, "Y#'
+selnt 10
+pmci=1
+mtyp=20
+sigma err=array(2,0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t2cr t2po err err t2er t2er 2 20 0.25 ! 
+text 5.  82.6 'Target 2-Sup30' 0.4
+
+null 3.9 10.0 81.5 87.5
+atitle 'BOP current, Amp' 'Beam polarization, "Y#'
+text 5.  84.5 'Target 3-Fe14' 0.4
+		DO k=1,2
+set pmci [pmci]
+sigma nn=nco(t3[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t3[k]cr t3[k]po err err t3[k]er t3[k]er [nm] [mtyp] 0.25 ! 
+mtyp=[mtyp]+1
+pmci=[pmci]+1
+		ENDDO
+
+wait
+
+null 3.5 10.5 82.0 87.0
+text 5.  83.5  'Target 4-Fe9' 0.4
+set pmci 1
+mtyp=20
+		DO k=1,4
+sigma nn=nco(t4[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t4[k]cr t4[k]po err err t4[k]er t4[k]er [nm] [mtyp] 0.25 ! 
+mtyp=[mtyp]+1
+		ENDDO
+set pmci 2
+mtyp=24
+		DO k=5,8
+sigma nn=nco(t4[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t4[k]cr t4[k]po err err t4[k]er t4[k]er [nm] [mtyp] 0.25 ! 
+mtyp=[mtyp]+1
+		ENDDO
+set pmci 4
+mtyp=20
+		DO k=1,3
+sigma nn=nco(t4[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t44[k]cr t44[k]po err err t44[k]er t44[k]er [nm] [mtyp] 0.25 ! 
+mtyp=[mtyp]+1
+		ENDDO
+
+selnt 1
+text 10.0 18.5 'Beam Polarization vs. Magnetic Field' 0.45 0 C
+atitle 'BOP current, Amp' 'Beam polarization, "Y#'
+selnt 10
+
+null 3.5 9.5 85.5 88.5
+pmci=1
+mtyp=20
+		DO k=1,2
+set pmci [pmci]
+sigma nn=nco(t5[k]po)
+nm=nn
+sigma err=array([nm],0.001#0.001)
+GRAPHICS/HPLOT/AERRORS t5[k]cr t5[k]po err err t5[k]er t5[k]er [nm] [mtyp] 0.25 ! 
+mtyp=[mtyp]+1
+pmci=[pmci]+1
+		ENDDO
+
+selnt 1
+text 10.0 18.5 'Beam Polarization vs. Magnetic Field' 0.45 0 C
+atitle 'BOP current, Amp' 'Beam polarization, "Y#'
+selnt 10
+text 4.  86.0  'Target 5-Sup7' 0.4
+close 55

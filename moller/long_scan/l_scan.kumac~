@@ -1,0 +1,145 @@
+MACRO l_scan
+*
+*ve/re run,tgt,bop,mean1,er1,mean2,er2,mean3,er3,mean4,er4,rat1,rat2  l_scan.dat  ! ! -/*/
+ve/re run,tgt,bop,mean1,er1,mean2,er2,mean3,er3,mean4,er4,rat1,rat2  long_scan_new.dat  ! ! -/*/
+
+	do i=1,4
+	sigma mean[i]1=abs(mean[i])
+	enddo
+
+fort/fil 55 long_scan_new.ps
+*fort/fil 55 l_scan.ps
+meta 55 -111
+
+opt nbox
+opt nstat
+opt ndat
+opt grid
+sigma np=nco(run)
+np=np
+sigma nn=array([np],1#[np])
+
+zone 1 2
+
+*null 11980. 12400. 0.038  0.051
+null 0  23  0.038  0.051
+selnt 1
+text 11.0 20.0 'Target Scan -20mm/+25mm' 0.45 0 C
+selnt 10
+atitle 'Run' 'Raw Asymmetry'
+set pmci 1
+set mtyp 20
+mt=20
+GRAPHICS/HPLOT/AERRORS nn mean11 er1 er1 er1 er1 [np] [mt] 0.15 ! S
+key 13.0 0.041 [mt] '- left side of target'
+set pmci 2
+set mtyp=24
+mt=24
+GRAPHICS/HPLOT/AERRORS nn mean21 er2 er2 er2 er2 [np] [mt] 0.15 ! S
+key 13.0 0.040 [mt] '- right side of target'
+set pmci 1
+
+null 0  23  0.81  0.89
+atitle 'Run' 'Beam Polarization'
+set pmci 1
+set mtyp 20
+mt=20
+GRAPHICS/HPLOT/AERRORS nn mean31 er3 er3 er3 er3 [np] [mt] 0.15 ! S
+key 13.0 0.84 [mt] '- left side of target'
+set pmci 2
+set mtyp=24
+mt=24
+GRAPHICS/HPLOT/AERRORS nn mean41 er4 er4 er4 er4 [np] [mt] 0.15 ! S
+key 13.0 0.83 [mt] '- right side of target'
+
+wait
+
+zone
+null 0.0  23.0  -8.0  6.0
+selnt 1
+text 11.0 20.0 'Target Scan -20mm/+25mm' 0.45 0 C
+selnt 10
+atitle 'Run' '(Mean1-Mean2)/sqrt(er1**2+er2**2)'
+set pmci 1
+set mtyp 20
+mt=20
+ve/pl rat1%nn ! S
+key 13.0 -6.0 [mt] '- raw asymmetry'
+set pmci 2
+set mtyp 24
+mt=24
+ve/pl rat2%nn ! S
+key 13.0 -5.0 [mt] '- polarization'
+
+wait
+
+zone
+null 0.0  21.0  -5.0  5.0
+selnt 1
+text 11.0 20.0 'Target Scan -20mm/+25mm 8Amp' 0.45 0 C
+selnt 10
+atitle 'Run' '(Mean1-Mean2)/sqrt(er1**2+er2**2)'
+set pmci 1
+set mtyp 23
+mt=23
+ve/pl rat1(1:1)%nn(1:1) ! S
+key 2.5 -4.5 [mt] '- tgt-2 raw asymmetry'
+set mtyp 22
+mt=22
+ve/pl rat1(2:2)%nn(2:2) ! S
+key 2.5 -4.0 [mt] '- tgt-3 raw asymmetry'
+set mtyp 21
+mt=21
+ve/pl rat1(10:11)%nn(10:11) ! S
+key 2.5 -3.5 [mt] '- tgt-4 raw asymmetry'
+set mtyp 20
+mt=20
+ve/pl rat1(13:20)%nn(13:20) ! S
+key 2.5 -3.0 [mt] '- tgt-5 raw asymmetry'
+
+set pmci 2
+set mtyp 27
+mt=27
+ve/pl rat2(1:1)%nn(1:1) ! S
+key 13.0 -4.5 [mt] 'tgt2 - polarization'
+set mtyp 26
+mt=26
+ve/pl rat2(2:2)%nn(2:2) ! S
+key 13.0 -4.0 [mt] 'tgt3 - polarization'
+set mtyp 25
+mt=25
+ve/pl rat2(10:11)%nn(10:11) ! S
+key 13.0 -3.5 [mt] 'tgt4 - polarization'
+set mtyp 24
+mt=24
+ve/pl rat2(13:20)%nn(13:20) ! S
+key 13.0 -3.0 [mt] 'tgt5 - polarization'
+
+wait
+
+null 1.8 5.2  0.83 0.863
+selnt 1
+text 11.0 20.0 'Target Scan -20mm/+25mm 8Amp' 0.45 0 C
+selnt 10
+atitle 'Target' 'Beam Polarization'
+set pmci 1
+set mtyp 20
+mt=20
+ve/pl mean3(1:1)%tgt(1:1) ! S
+ve/pl mean3(2:2)%tgt(2:2) ! S
+ve/pl mean3(10:10)%tgt(10:10) ! S
+ve/pl mean3(13:16)%tgt(13:16) ! S
+key 2.5 0.858 [mt] '- left part'
+set pmci 2
+set mtyp 24
+mt=24
+ve/pl mean4(1:1)%tgt(1:1) ! S
+ve/pl mean4(2:2)%tgt(2:2) ! S
+ve/pl mean4(10:10)%tgt(10:10) ! S
+ve/pl mean4(13:16)%tgt(13:16) ! S
+key 2.5 0.855 [mt] '- right part'
+
+close 55
+set pmci 1
+
+RETURN

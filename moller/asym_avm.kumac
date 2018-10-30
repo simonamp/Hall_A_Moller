@@ -1,0 +1,157 @@
+MACRO asym_avm nr=16 scoil=1 pcut=-2. sign=0 kill=0 ich=3 ityp=3 atit=1 titl=1 coil=0
+*
+* ===  Averages asymmetries
+* === file was modified 07 for any set of runs
+*
+
+*read nr 'How many runs are you going to average?'
+ve/cr runn([nr]) r 13097 13098 13099 13100 13101 13102 13103 13104 13105 _
+13106 13107 13108 13109 13110 13111 13112
+opt ndat
+*	do i=1,[nr]
+*read run 'Input run number for averaging'
+*	ve/input runn([i]) [run]
+*	enddo
+
+ ve/cr as1(90) r
+ ve/cr es1(90) r
+ ve/cr xx(90) r
+ ve/cr ex(90) r
+
+run1=runn(1)
+run2=runn([nr])
+ tit='Polarization for runs '//[run1]//' - '//[run2]
+ if [titl]>0 then
+   titl [tit]
+ endif
+ if $VDIM(para)<10 then
+   ve/cr para(10) r
+ endif
+
+ ndd=$VDIM(resrun,1)
+ ndd=$SIGMA([ndd]/4)
+* mess ndd=[ndd]
+
+ k=0
+ apol=0.
+ apole=0.
+ apolmin=1.
+ apolmax=-1.
+ beam=0.
+ do krun=1,[nr]
+    if [nr]<2 .OR. [krun]>$VDIM(krunpnt,1) then
+       mess Error in asym_av.kumac : run=[irun] is out of range
+       exitm
+    endif
+irun=runn([krun])
+    r=krunpnt([irun])
+    if [r]<1 then
+       mess Warning from asym_av.kumac : run=[irun] is missing
+       goto endrun
+    endif
+    a=resrun(1,[r])
+    sc=1
+    if [scoil].ne.0 then
+      hcoil=consrun(6,[r])
+      if [hcoil]>0.5 then
+        sc=1.
+      elseif [hcoil]<-0.5 then
+        sc=-1.
+      endif
+      mess sc=[sc] hcoil=[hcoil]
+    endif
+    
+    i=[ndd]*[ityp]+[ich]
+*    mess run=[irun] i=[i]
+    pol=resrun([i],[r])
+    epol=eresrun([i],[r])
+****    pol=$SIGMA(-1.*[pol]*[sc])
+    pol=$SIGMA([pol]*[sc])
+    ok=0
+    if [sign]=0 then
+       ok=1
+    else 
+       aa=[pol]*[sign]
+       if [aa]>0 then
+          ok=1
+       endif
+    endif
+    if [coil]<>0 then
+*       mess [coil] [hcoil]
+       tmp=$SIGMA([coil]*[hcoil])
+       if [tmp]<0 then
+          ok=0
+       endif
+    endif
+      
+    if [kill]>0 then
+      nkill=$VLEN(killrun,1)
+      if [nkill]>0 then
+         do ii=1,[nkill]
+           irk=killrun([ii])
+           irk=krunpnt([irk])
+           mess irk=[irk] [r]
+           if [irk]=[r]  then
+             ok=0
+           endif
+         enddo
+      else
+        mess No vector killrun [nkill] 
+      endif
+    endif 
+    if [a]>100 .AND. [ok]>0 then
+      if [sign] .ne. 0 then
+        pol=$SIGMA(ABS([pol]))    
+      endif
+        pol=$SIGMA(ABS([pol]))   
+      mess pol2=[pol]
+      if [pol].gt.[pcut] then
+          k=[k]+1
+          ve/in as1([k]) [pol]    
+          ve/in es1([k]) [epol] 
+          ve/in xx([k]) [k]
+          apol=[apol]+[pol]
+	  apole=[apole]+[pol]*[pol]
+          apolmin=$SIGMA(MIN([apolmin],[pol]))
+          apolmax=$SIGMA(MAX([apolmax],[pol]))
+          bbb=resrun(5,[r])
+          beam=[beam]+[bbb]
+      endif
+    endif
+    endrun:
+ enddo
+
+ set dmod 3
+ ve/in para(1) 0.5
+ ve/fit xx(1:[k]) as1(1:[k]) es1(1:[k]) p0 ! 1 para
+ set dmod 0
+ gr/hpl/err xx(1:[k]) as1(1:[k]) ex(1:[k]) es1(1:[k]) [k] 24 0.2
+ if [atit]>0 then
+    atit 'run' 'Beam Polarization'
+ endif
+
+
+ if [k]>0 then
+   apol=[apol]/[k]
+   apole=[apole]/[k]
+   apole=[apole]-[apol]*[apol]
+   apole=$SIGMA(SQRT([apole]))
+   beam=[beam]/[k]
+   mess Average=[apol], RMS=[apole]
+   mess BCM=[beam]
+ endif
+
+ goto exitm
+ set fit 1111
+
+ k1=[k]+1
+ apolmin=$SIGMA(INT([apolmin]*100.-1.)/100.)
+ apolmax=$SIGMA(INT([apolmax]*100.+1.)/100.)
+ null 0 [k1] [apolmin] [apolmax]
+ gr/hpl/err xx(1:[k]) as1(1:[k]) ex(1:[k]) es1(1:[k]) [k] 24 0.2
+
+exitm:
+
+RETURN 
+
+

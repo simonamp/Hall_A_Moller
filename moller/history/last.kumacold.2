@@ -1,0 +1,122 @@
+*** Begin of history file: Wed May 10 00:00:36 2006
+exec sett_magp e0=2.075 nq=2
+exec sett_magp e0=2.075 nq=3
+exec sett_magp e0=2.075 nq=2
+ve/cr vprec(8) r
+mess $sigma((540.38-28.78)/2)
+ve/in vprec(8) 0.2558 1 4
+fu/pl spinpred.f 0 90
+mess $CALL('spinpred.f(0.)')
+ve/pri vprec
+ve/in vprec(1:3) 0.2558 1 4
+fu/pl spinpred.f 0 90
+fu/pl spinpred.f -90 90
+ve/in vprec(1:3) 0.2558 3 1
+fu/pl spinpred.f -90 90 s
+ve/in vprec(1:3) 0.2558 2 2
+fu/pl spinpred.f -90 90 s
+ve/in vprec(1:3) 0.325 1 5
+fu/pl spinpred.f -90 90 s
+fu/pl spinpred.f -90 90
+fu/pl spinpred.f -90 100
+exec run run=12333
+exec lg_spectra run=12333 icut=100
+exec lg_spectra run=12333 icut=100 cut=11
+exec lg_spectra run=12333 icut=100
+exec time run=12333
+exec time run=12334
+exec run run=12334
+exec time run=12334
+exec lg_spectra run=12334 icut=100
+exec time run=12334
+exec lg_spectra run=12334 icut=100
+exec lg_spectra run=12334 icut=150
+exec time run=12335
+exec run run=12335
+exec lg_spectra run=12335 icut=150
+exec time run=12335
+exec run run=12290
+exec time run=12290
+exec lg_spectra run=12335 icut=150 cut=11
+exec asymt run=12335
+exec run run=12336
+exec time run=12336
+exec asymt run=12336
+exec lg_spectra run=12336 icut=150 cut=11
+exec lg_spectra run=12336 icut=150
+loca
+cut $0
+loca
+ve/in vprec(1:3) 0.325 1 4
+fu/pl spinpred.f -90 100
+zone 1 1
+fu/pl spinpred.f -90 100
+loca
+ve/in vprec(1:3) 0.45 1 3
+fu/pl spinpred.f -90 100
+ve/in vprec(8) 0
+fu/pl spinpred.f -90 100
+ve/in vprec(1:3) 0.2558 1 4
+fu/pl spinpred.f -90 100
+exec run run=12337
+exec lg_spectra run=12337 icut=150
+loca
+exec asymt delay=9 run=12337
+ve/nt/pri 1
+nt/pri 1
+nt/pl 1.ntdc
+zone 2 2
+nt/pl 1.ntdc
+exec run run=12338
+exec lg_spectra run=12338 icut=150
+loca
+exec time run=12337
+nt/pl 1.timchan.f(1,100,200)
+zone 2 2
+nt/pl 1.timchan.f(1,100,200)
+exec time run=12337
+zone 2 2
+h/pl 12337301
+h/pl 12337302
+h/pl 12337303
+h/pl 12337304
+h/pl 12337305
+h/pl 12337301(151:200)
+zone 1 4
+h/pl 12337301(151:200)
+h/pl 12337302(151:200)
+h/pl 12337304(151:200)
+h/pl 12337305(151:200)
+1dh 401 'time' 1000 0 1000
+nt/loop 1 gettim.f(1,401)>-1
+h/pl 401
+nt/loop 1 gettim.f(36,401)>-1
+h/pl 401
+exec run run=12339
+exec run run=12338
+exec lg_spectra run=12339 icut=150
+exec asymt delay=9 run=12338
+exec asymt delay=9 run=12339
+zone 2 2
+exec run run=12340
+exec asymt delay=9 run=12340
+exec asymwr_run run1=12339 run2=12340
+ld //
+exec run_scal run=12339
+exec run_scal run=12340
+nt/pl //lun51/1.a_signal.f(3,1,1,0,0,0,0)
+nt/pl //lun51/1.a_signal.f(3,1,1,0,0,0,0)%a_tpos.f(1,1)
+nt/pl //lun51/1.a_signal.f(1,1,1,0,0,0,0)%a_tpos.f(1,1)
+nt/pl //lun51/1.a_signal.f(2,1,1,0,0,0,0)%a_tpos.f(1,1)
+zone 1 2
+nt/pl //lun51/1.a_signal.f(1,1,1,0,0,0,0)%a_tpos.f(1,1)
+nt/pl //lun52/1.a_signal.f(1,1,1,0,0,0,0)%a_tpos.f(1,1)
+loca
+exec run run=12341
+exec asymt delay=9 run=12341
+nt/loop 1 gettim.f(36,401)>-1
+h/pl 401
+1dh 401 'time' 1000 0 1000
+nt/loop 1 gettim.f(36,401)>-1
+h/pl 401
+*** End   of history file: Wed May 10 02:18:45 2006

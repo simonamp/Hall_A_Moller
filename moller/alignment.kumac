@@ -1,0 +1,108 @@
+MACRO aligment test=1 field=2.0
+* test =0 -matrix check
+*      >0 -reading from BPM
+* sk - scale coefficient (3T/field)
+  sk=3.0/[field]
+*4.02     1.97      5.47     2.86
+*-4.32    -1.89     -6.12    -2.50
+*6.51    1.37    7.09    2.32
+*-6.68   -1.53   -7.24   -2.57
+* Shifts on BPM4A at 3T (p->+3T, m->-3T)
+     if [test]=0 then
+ 	dxp1=2.10
+ 	dxm1=-0.9
+	dyp1=-0.9
+ 	dym1=2.10
+     else
+ 	dxp1=3.292
+ 	dxm1=-3.413
+ 	dyp1=0.203
+ 	dym1=-0.350
+     endif
+* Shifts on BPM4B at 3T (p->+3T, m->-3T)
+     if [test]=0 then
+	dxp2=3.10
+	dxm2=-1.3
+	dyp2=-1.3
+	dym2=3.10
+     else
+	dxp2=5.031
+	dxm2=-5.316
+	dyp2=0.210
+	dym2=-0.440
+     endif
+*
+* ap*1=Xcoef for BPM4A +3T
+* bp*1=Ycoef for BPM4A +3T
+* am*1=Xcoef for BPM4A -3T
+* bm*1=Ycoef for BPM4A -3T
+* ap*2=Xcoef for BPM4B +3T
+* bp*2=Ycoef for BPM4B +3T
+* am*2=Xcoef for BPM4B -3T
+* bm*2=Ycoef for BPM4B -3T
+* for 3T
+ ap11=0.5/[sk]
+ ap21=0.1/[sk]
+ ap31=0.1/[sk]
+ ap41=1.4/[sk]
+ bp11=-0.1/[sk]
+ bp21=0.5/[sk]
+ bp31=-1.4/[sk]
+ bp41=0.1/[sk]
+*
+ ap12=0.7/[sk]
+ ap22=0.0/[sk]
+ ap32=0.2/[sk]
+ ap42=2.2/[sk]
+ bp12=0.0/[sk]
+ bp22=0.7/[sk]
+ bp32=-2.2/[sk]
+ bp42=0.2/[sk]
+*
+ am11=[ap11] 
+ am21=-[ap21] 
+ am31=[ap31] 
+ am41=-[ap41] 
+ bm11=-[bp11] 
+ bm21=[bp21] 
+ bm31=-[bp31] 
+ bm41=[bp41] 
+*
+ am12=[ap12] 
+ am22=-[ap22] 
+ am32=[ap32] 
+ am42=-[ap42] 
+ bm12=-[bp12] 
+ bm22=[bp22] 
+ bm32=-[bp32] 
+ bm42=[bp42] 
+*
+ dxa=(-[bp31]*[dxm1]-[bp31]*[dxp1]-[ap31]*[dym1]+[ap31]*[dyp1])/_
+    (2.*([ap31]*[bp11]-[ap11]*[bp31]))
+ dtheta=-(-[bp11]*[dxm1]-[bp11]*[dxp1]-[ap11]*[dym1]+[ap11]*[dyp1])/_
+        (2.*([ap31]*[bp11]-[ap11]*[bp31]))
+ dya=-(-[bp41]*[dxm1]+[bp41]*[dxp1]-[ap41]*[dym1]-[ap41]*[dyp1])/_
+     (2.*([ap41]*[bp21]-[ap21]*[bp41]))
+ dphia=-([bp21]*[dxm1]-[bp21]*[dxp1]+[ap21]*[dym1]+[ap21]*[dyp1])/_
+       (2.*([ap41]*[bp21]-[ap21]*[bp41]))
+*
+ mess The magnet misaligment on BPM4A:
+ mess dX=[dxa]mm, dY=[dya]mm, dTheta=[dtheta]mrad, dPhi=[dphia]mrad
+ mess *****
+*
+ dxb=(-[bp32]*[dxm2]-[bp32]*[dxp2]-[ap32]*[dym2]+[ap32]*[dyp2])/_
+    (2.*([ap32]*[bp12]-[ap12]*[bp32]))
+ dthetb=-(-[bp12]*[dxm2]-[bp12]*[dxp2]-[ap12]*[dym2]+[ap12]*[dyp2])/_
+        (2.*([ap32]*[bp12]-[ap12]*[bp32]))
+ dyb=-(-[bp42]*[dxm2]+[bp42]*[dxp2]-[ap42]*[dym2]-[ap42]*[dyp2])/_
+     (2.*([ap42]*[bp22]-[ap22]*[bp42]))
+ dphib=-([bp22]*[dxm2]-[bp22]*[dxp2]+[ap22]*[dym2]+[ap22]*[dyp2])/_
+       (2.*([ap42]*[bp22]-[ap22]*[bp42]))
+*
+ mess The magnet misaligment on BPM4B:
+ mess dX=[dxb]mm, dY=[dyb]mm, dTheta=[dthetb]mrad, dPhi=[dphib]mrad
+
+
+
+
+RETURN

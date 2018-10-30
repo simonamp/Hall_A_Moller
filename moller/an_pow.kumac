@@ -1,0 +1,39 @@
+MACRO an_pow
+*
+***  Hall A Moller polarimeter analysing power and angular acceptance
+*
+* eb    - beam energy, GeV
+* ap    - analysing power
+* phi   - +/-PHI moller polarimeter acceptance
+* theta - +/-THETA moller polarimeter aceptance 
+
+np=17
+ve/cr eb([np])    r 0.8      1.2      1.0      1.5      2.0      2.5      3.0      3.5      4.0      _
+                    4.5      5.0      5.5      6.0      6.5      7.0      7.5      8.0
+ve/cr ap([np])    r 0.7694   0.7625   0.7649   0.7587   0.7565   0.7562   0.7561   0.7567   0.7570   _
+                    0.7579   0.7584   0.7593   0.7603   0.7614   0.7633   0.7665   0.7698
+ve/cr phi([np])   r 2.98     4.22     2.95     5.07     5.90     5.87     7.55     7.90     9.95     _
+                    10.01    12.17    12.67    13.88    14.88    16.92    18.91    19.07
+ve/cr theta([np]) r 7.38     10.98    9.95     11.80    12.00    12.44    12.79    12.23    11.98    _
+                    12.05    12.00    11.51    10.98    10.98    10.96    9.74     7.94
+
+zone
+set mtyp 20
+opt grid
+null 0.6 8.2 0.755 0.770 
+ve/pl ap%eb ! S
+atitle 'Beam energy, GeV' 'Analysing power'
+text 4.5 0.7706 'Moller polarimeter analisyng power' 0.45 0. C
+wait
+zone 1 2
+null 0.6 8.2 2.5  20.0 
+ve/pl phi%eb ! S
+atitle 'Beam energy, GeV' '+/-Phi, deg CM'
+text 4.5 21. 'Phi acceptance' 0.45 0. C
+
+null 0.6 8.2 7.0 13.3
+ve/pl theta%eb ! S
+atitle 'Beam energy, GeV' '+/-Theta, deg CM'
+text 4.5 13.5 'Theta acceptance' 0.45 0. C
+ve/de *
+RETURN

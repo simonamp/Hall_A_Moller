@@ -1,0 +1,156 @@
+MACRO run_scal run=0 clear=0 dirg=XX   gate=[gate]
+*
+* - attaches a scaler ntuple file with a given run number 
+* - starts with lun=51
+
+* -    lruns  - run numbers
+* -    mruns  - LUNs
+* -  ktyruns  - run type (=0 - normal, =1 - LED ...)
+
+ if [clear]>0 then
+   icur=$VLEN(lruns)
+   do j=1,[icur]
+     l=mruns([j])
+     if [l]>0 then
+       clo [l]
+     endif
+   enddo
+   nd=$VDIM(lruns,1)
+   ve/in lruns [nd]*0
+   ve/in mruns [nd]*0
+   ve/in ktyruns [nd]*0
+   mess Scaler runs/files closed and the vectors reset
+   exitm
+ endif
+
+ if [run]<1 then
+   mess "*** Wrong run number" run=[run]
+   exit
+ endif
+
+ fnamntu='moller_scal_'//[run]//'.nt'
+ fnamdat=[name]//'*'//'_'//[run]//'.nt'
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+*   dirg=/adaql1/data1/moller/
+   dirg=/adaq1/data1/moller/
+ elseif $INDEX([host],'haplix')>0 then
+   dirg=/data2c/user/gen/moller/exp
+ elseif $INDEX([host],'jlab')>0 .OR. $INDEX([host],'farm')>0 then
+   dirg=/data2c/user/gen/moller/exp
+ endif
+ dirn=[dirg]
+
+ nrun=10
+ lun1=51
+ lun2=[lun1]+[nrun]-1
+ if $VDIM(lruns)=0 .OR. $VDIM(mruns)=0 .OR. $VDIM(ktyruns)=0 then
+   ve/cr lruns([nrun]) i
+   ve/cr mruns([nrun]) i
+   ve/cr ktyruns([nrun]) i
+ endif
+ nact=$VDIM(lruns)
+
+ icur=$VLEN(lruns)
+ do j=1,[icur]
+   i=lruns([j])
+   if [i]=[run] then
+     l=mruns([j])
+     mess ' run_scal.kumac:' run=[run] is already attached to lun=[l] 
+     exitm
+   endif
+ enddo
+*
+* --- If there are too many files attached - release the first one
+*
+ if [icur]=[nrun] then
+   lun=mruns(1)
+   r=lruns(1)
+   mess Releasing the run [r] , lun=[lun]
+   clo [lun]
+   do i=2,[icur]
+     i1=[i]-1
+     ve/in lruns([i1]) lruns([i])
+     ve/in mruns([i1]) mruns([i])
+     ve/in ktyruns([i1]) ktyruns([i])
+   enddo
+   ve/in lruns([icur]) 0
+   ve/in mruns([icur]) 0
+   ve/in ktyruns([icur]) 0
+   icur=[icur]-1
+ endif
+*
+* --- Find an empty LUN in the allowed range
+*
+ icur=$VLEN(lruns)
+ lun=0
+ do l=[lun1],[lun2]
+   find=0
+   do i=1,[icur]
+     l1=mruns([i])
+*     mess loop1 [l1] [l
+     if [l1]=[l] then
+       find=1
+       breakl
+     endif
+   enddo
+*   mess loop2 [find] [l
+   if [find]=0 then
+     lun=[l]
+     breakl
+   endif
+ enddo
+ if [lun]=0 then
+   mess "*** Error: did not find any free LUN"
+   exitm
+ endif
+
+ icur=[icur]+1
+
+ try=0
+
+ mfindfile:
+
+ try=[try]+1
+
+ shell find [dirn] -name [fnamntu] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]>1 then
+   mess Strange... Several files for this run:
+   shell cat tmp.nam
+ endif 
+ if [nf]>0 then
+   nam=$SHELL('cat tmp.nam',1)
+ else   
+   if [try]>1 then
+     mess Error: missing ntuple for run [run], dir=[dirn] ,  file pattern=[fnamntu]
+     exitm
+   else
+*
+* ---   No scaler NTUPLE found: try to create one
+*
+     exec run run=[run]
+     exec asymwr run=[run] gate=[gate] delay=[delay]
+
+     goto mfindfile
+   endif   
+ endif 
+ shell rm -f tmp.nam
+
+
+ h/fil [lun] [nam]
+ ve/in lruns([icur]) [run]
+ ve/in mruns([icur]) [lun]
+ kty=0
+ i=$INDEX([nam],'_led_')
+ if $INDEX([nam],'_led_')>0  then
+    kty=1
+ endif
+ ve/in ktyruns([icur]) [kty]
+ mess Run=[run] is attached to lun=[lun]
+
+  ve/cr tlun(1) r
+  ve/input tlun(1) [lun]
+
+RETURN

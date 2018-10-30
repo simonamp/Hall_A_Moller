@@ -1,0 +1,44 @@
+MACRO spin_prec_15 
+*
+* Hall A Moller spin dance 05 April 2010
+ opt ndat
+ ebeam=1.06312
+ inject=0.05662
+ pass=1
+
+ set pmci 1
+ fort/fil 56 spin_prec_15.ps
+ meta 56 -112
+*Flipper vertical +88.82 Solenoid +90.746
+
+ np=5
+ ve/cr exx([np]) r 
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr bpol1([np]) r
+ ve/cr ebpol([np]) r
+ ve/in wang  -90.0   -59.0   -52.0   -30.0   40.0 
+ ve/in bpol  -72.99  -87.43  -87.30  -80.72   1.20  
+ ve/in ebpol   0.19    0.20    0.20    0.17   0.19
+ set fit 1111 
+ ve/cr ipfit(2) i
+ ve/in ipfit 0 0
+ ve/cr par(10) r
+ zone 
+ set csiz 0.5
+ null -100. 45.  -95. 5.0 
+ ve/fit wang bpol ebpol wave_1.f s  2  par
+ fu/pl wave_1.f -100 40 s
+ gr/hpl/err wang bpol exx ebpol [np] 20 0.2
+ atitle 'Wien Angle, deg' 'Beam Polarization, "Y#'
+
+ selnt 1
+ text 14.0 20.5 'Moller results for Spin Dance 04/05/2010' 0.4 0 C
+ selnt 10
+* a=par(1)
+* b=par(2)
+* mess a=[a] b=[b]
+
+ close 56
+
+RETURN

@@ -1,0 +1,197 @@
+MACRO asym_av10 run1=0 run2=0 scoil=1 pcut=-2. sign=0 kill=0 ich=3 ityp=3 atit=1 titl=1 coil=0 itarg=0
+*
+* ===  Averages asymmetries
+*
+ ve/cr as1(90) r
+ ve/cr es1(90) r
+ ve/cr xx(90) r
+ ve/cr ex(90) r
+
+ ve/cr kcol(5) i 1 2 3 4 6 
+ ve/cr krtar(80) i
+ ve/cr ktar(5) i
+ ve/cr mtar(5) i
+ * targets for the runs
+ ve/in krtar(1:48) _
+1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4  
+
+ titl ' '
+ tit='Polarization for runs '//[run1]//' - '//[run2]
+ if [titl]>0 then
+   titl [tit]
+ endif
+ if $VDIM(para)<10 then
+   ve/cr para(10) r
+ endif
+
+ ndd=$VDIM(resrun,1)
+ ndd=$SIGMA([ndd]/4)
+* mess ndd=[ndd]
+
+ k=0
+ apol=0.
+ apole=0.
+ apolmin=1.
+ apolmax=-1.
+ beam=0.
+ do irun=[run1],[run2]
+    if [irun]<2 .OR. [irun]>$VDIM(krunpnt,1) then
+       mess Error in asym_av.kumac : run=[irun] is out of range
+       exitm
+    endif
+    r=krunpnt([irun])
+    if [r]<1 then
+       mess Warning from asym_av.kumac : run=[irun] is missing
+       goto endrun
+    endif
+    a=resrun(1,[r])
+    sc=1
+    if [scoil].ne.0 then
+******
+******      hcoil=consrun(6,[r])
+      hcoil=-1.*consrun(6,[r])
+      if [hcoil]>0.5 then
+        sc=1.
+      elseif [hcoil]<-0.1 then
+        sc=-1.
+      endif
+      mess sc=[sc]
+    endif
+    
+    i=[ndd]*[ityp]+[ich]
+*    mess run=[irun] i=[i]
+    pol=resrun([i],[r])
+    epol=eresrun([i],[r])
+    pol=$SIGMA(-1.*[pol]*[sc])
+    ok=0
+    if [sign]=0 then
+       ok=1
+    else 
+       aa=[pol]*[sign]
+       if [aa]>0 then
+          ok=1
+       endif
+    endif
+    if [coil]<>0 then
+*       mess [coil] [hcoil]
+       tmp=$SIGMA([coil]*[hcoil])
+       if [tmp]<0 then
+          ok=0
+       endif
+    endif
+      
+    if [kill]>0 then
+      nkill=$VLEN(killrun,1)
+      if [nkill]>0 then
+         do ii=1,[nkill]
+           irunk=killrun([ii])
+           irk=krunpnt([irunk])
+*           mess [ii] [irunk] irk=[irk] [r]
+           if [irk]=[r]  then
+             ok=0
+           endif
+         enddo
+      else
+        mess No vector killrun [nkill] 
+      endif
+      mess irun=[irun] ok=[ok]
+    endif 
+    if [a]>100 .AND. [ok]>0 then
+      if [sign] .ne. 0 then
+        pol=$SIGMA(ABS([pol]))    
+      endif
+      mess pol=[pol]
+      if [pol].gt.[pcut] then
+          k=[k]+1
+          ve/in as1([k]) [pol]    
+          ve/in es1([k]) [epol] 
+          ve/in xx([k]) [k]
+          apol=[apol]+[pol]
+	  apole=[apole]+[pol]*[pol]
+          apolmin=$SIGMA(MIN([apolmin],[pol]))
+          apolmax=$SIGMA(MAX([apolmax],[pol]))
+          bbb=resrun(5,[r])
+          beam=[beam]+[bbb]
+      endif
+    endif
+    endrun:
+ enddo
+
+ set dmod 3
+ ve/in para(1) 0.5
+ ve/fit xx(1:[k]) as1(1:[k]) es1(1:[k]) p0 ! 1 para
+ set dmod 0 
+ ntarg=0
+
+* arrow 0.3 8.3 -0.87 -0.87 -0.35
+* text 2.7 -0.868 '2.0T' 0.35
+
+ do i=1,[k]
+    gr/set hcol 1
+    igset pmci 1
+    if [itarg]>0 then
+	kt=krtar([i])
+        mess kt=[kt]
+        if [kt]>0 .AND. [kt]<6 then
+           tset=mtar([kt])
+           if [tset]=0 then
+              ntarg=[ntarg]+1
+              ve/in mtar([kt]) [ntarg]
+              ve/in ktar([ntarg]) [kt]
+           endif
+        endif
+        col=kcol([kt])
+        gr/set hcol [col]
+        igset pmci [col]
+    endif
+    gr/hpl/err xx([i]:[i]) as1([i]:[i]) ex([i]:[i]) es1([i]:[i]) 1 20 0.2
+ enddo
+
+ if [itarg]>0 then
+   opt ntic
+   null 0 10 0 10 sab
+   opt tic
+   xp=2
+   yp=5
+   mess [xp] [yp]
+   do i=1,[ntarg]
+     kt=ktar([i])
+     col=kcol([kt])
+     gr/set hcol [col]
+     igset pmci [col]
+     igset txci [col]
+      mess i=[i] [kt] [col] [xp] [yp]
+     gr/set ksiz 0.2
+     gr/set csiz 0.3
+     gr/hpl/key [xp] [yp] 20 'target '//[kt] 0.15
+     yp=$SIGMA([yp]-0.6)
+   enddo 
+   gr/set hcol 1
+   igset pmci 1
+   igset txci 1
+   gr/set ksiz 0.28
+   gr/set csiz 0.4
+ endif
+
+*  gr/hpl/err xx(1:[k]) as1(1:[k]) ex(1:[k]) es1(1:[k]) [k] 20 0.2
+ gr/set hcol 1
+ igset pmci 1
+ if [atit]>0 then
+    atit 'run' 'Beam Polarization'
+ endif
+
+
+ if [k]>0 then
+   apol=[apol]/[k]
+   apole=[apole]/[k]
+   apole=[apole]-[apol]*[apol]
+   apole=$SIGMA(SQRT([apole]))
+   beam=[beam]/[k]
+   mess Average=[apol], RMS=[apole]
+   mess BCM=[beam]
+ endif
+
+
+RETURN 
+
+

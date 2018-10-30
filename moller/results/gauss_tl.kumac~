@@ -1,0 +1,11 @@
+
+ ve/re run,gauss,tl gauss-tl.dat
+ sigma gau=gauss*4.367
+
+ null 14559 14621 1.9 4.0
+ set mtyp 20
+ set pmci 1
+ ve/pl tl%run ! s
+ set mtyp 22     
+ set pmci 2      
+ ve/pl gau%run ! s

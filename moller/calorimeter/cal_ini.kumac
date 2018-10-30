@@ -1,0 +1,78 @@
+MACRO cal_ini attach=1
+
+ ve/cr ichlim(2,5) i 
+ ve/cr ilglim(2,5) i 
+
+   ve/in ichlim(1:2,3)  1  3 
+   ve/in ichlim(1:2,2)  6  9 
+   ve/in ichlim(1:2,1) 14 16 
+
+   ve/in ichlim(1:2,1)  1  8 
+   ve/in ichlim(1:2,2) 11 16 
+   ve/in ichlim(1:2,3) 17 17 
+
+   ve/in ilglim(1:2,1)  1  3 
+   ve/in ilglim(1:2,2)  4  6 
+   ve/in ilglim(1:2,3)  7  9 
+
+   ve/in ilglim(1:2,1)  1  1 
+   ve/in ilglim(1:2,2)  2  2 
+   ve/in ilglim(1:2,3) 20 20 
+
+*
+* --- Initializing of the calorimeter calibration
+*
+ if [attach]=0 then
+   goto eend
+ endif
+
+  close 31
+  h/fil 31 /data2/user/gen/moller/ntup/moller_data_cal_6347.nt
+  close 32
+  h/fil 32 /data2/user/gen/moller/ntup/moller_data_cal_6348.nt
+  close 33
+  h/fil 33 /data2/user/gen/moller/ntup/moller_data_cal_6349.nt
+  close 34
+*  h/fil 34 /data2/user/gen/moller/ntup/moller_data_cal_6350.nt
+  chain -colc1
+  chain colc1 //lun31 //lun32 //lun33 
+*//lun34 
+
+  close 35
+  h/fil 35 /data2/user/gen/moller/ntup/moller_data_cal_6351.nt
+  close 36
+  h/fil 36 /data2/user/gen/moller/ntup/moller_data_cal_6352.nt
+  chain -colc2
+  chain colc2 //lun35 //lun36
+
+  close 41
+  h/fil 41 /data2/user/gen/moller/ntup/moller_data_cal_6355.nt
+*  close 42
+*  h/fil 42 /data2/user/gen/moller/ntup/moller_data_cal_6356.nt
+  chain -colr1
+  chain colr1 //lun41 
+*//lun42
+
+  close 43
+  h/fil 43 /data2/user/gen/moller/ntup/moller_data_cal_6335.nt
+  chain -colr2
+  chain colr2 //lun43 
+
+  close 51
+  h/fil 51 /data2/user/gen/moller/ntup/moller_data_cal_6353.nt
+  close 52
+  h/fil 52 /data2/user/gen/moller/ntup/moller_data_cal_6354.nt
+  chain -coll1
+  chain coll1 //lun51 //lun52
+
+  eend:
+
+
+RETURN
+  
+
+
+  
+
+
+

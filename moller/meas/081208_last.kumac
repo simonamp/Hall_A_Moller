@@ -1,0 +1,82 @@
+*** Begin of history file: Mon Dec  8 16:18:19 2008
+exec sett_magp e0=5.892
+exec sett_magp e0=5.892 nq=2
+exec run run=12999
+exec lg_spectra run=12999
+loca
+exec lg_spectra run=12999 cut=0
+loca
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12999
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12995
+exec run run=12995
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12995
+exec run run=13000
+exec lg_spectra run=13000 cut=0
+loca
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13000
+call prunpri.f(10000,20000)
+call prunpri.f(10000,20000)
+exec run run=13001
+exec lg_spectra run=13001 cut=0
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13001
+call prunpri.f(10000,20000)
+exec run run=13002
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13002
+exec run run=13003
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=8 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=9 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=1 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=2 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=3 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=4 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=5 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=6 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=7 angl=20.0 tauto=0 ptar=0.0797 run=13003
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13003
+call prunpri.f(10000,20000)
+exec run run=13004
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13004
+exec asym_av run1=13001 run2=13004
+exec run run=13005
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13005
+call prunpri.f(10000,20000)
+ld //
+exec run run=13006
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13006
+call prunpri.f(10000,20000)
+exec run run=13007
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13007
+call prunpri.f(10000,20000)
+ld //
+nt/scan //lun30/1 nsca>0 ! ! ! nsca
+nt/scan //lun30/1 nsca>0 ! ! ! itrig(1) itrig(2) itrig(6) itrig(8) isca(3) isca(5)
+nt/scan //lun30/1 nsca>0 ! ! ! itrig(6) itrig(8) isca(3) isca(5)
+exec run run=13008
+exec run run=13008
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13008
+exec asym_av run1=13005 run2=13008
+exec time run=13008
+exec asym_av run1=13005 run2=13008
+zone 2 2
+exec asym_av run1=13005 run2=13008
+call prunpri.f(10000,20000)
+exec run run=13010
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13009
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13010
+exec run run=13011
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13011
+exec run run=13012
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13012
+call prunpri.f(10000,20000)
+exec run run=13013
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13013
+call prunpri.f(10000,20000)
+nt/scan //lun30/1 nsca>-1 ! ! ! itrig(1) itrig(6) itrig(8) isca(3) isca(5)
+nt/scan //lun30/1 nsca>-1 ! ! ! itrig(1) itrig(6) itrig(8)
+ld //
+call prunpri.f(10000,20000)
+exec asym_av run1=13010 run2=13013
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Mon Dec  8 20:08:16 2008

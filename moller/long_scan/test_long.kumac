@@ -1,0 +1,37 @@
+*** Begin of history file: Mon Feb  5 18:59:26 2007
+exec run_scal run=12291
+exec run_scal run=12292
+zone 2 2
+chain ch1 //lun51
+chain ch1 //lun52
+1dh 101 'asym' 400 -0.1 0.1
+1dh 102 'asym' 400 -0.1 0.1
+exec a_analyse lun=ch1 fill=1
+zone 2 2
+nt/pl //ch1/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)<0 -101
+h/fit 101 g
+nt/pl //ch1/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1 -102
+h/fit 102 g
+nt/pl //ch1/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)<0 -101
+h/fit 101 g
+nt/pl //ch1/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1 -102
+h/fit 102 g
+mess $sigma((0.04042-0.03935)/sqrt(.094e-3**2+.094e-3**2))
+nt/pl //lun52/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)<0
+h/fit 1000000 g
+nt/pl //lun52/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1
+h/fit 1000000 g
+mess $sigma((0.8494-0.8715)/sqrt(.33e-2**2+.37e-2**2))
+mess $sigma((0.04042-0.03935)/sqrt(.094e-3**2+.094e-3**2))
+
+exec run_scal run=12291
+exec run_scal run=12292
+exec a_analyse lun=lun51 fill=1
+nt/pl //lun51/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1
+nt/pl //lun51/1.a_asymm.f(3,0,1,-1,0,0,0) $30.and.$31.and.$32.and.$33
+.and.$35.and.a_tpos.f(2,1)>1
+nt/pl //lun51/1.a_asymm.f(3,0,1,-1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1
+exit
+*** End   of history file: Tue Feb  6 16:19:29 2007
+
+

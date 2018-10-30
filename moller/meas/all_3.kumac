@@ -1,0 +1,39 @@
+MACRO all_3
+
+   n=0
+   do i=3744,3752
+     exec run run=[i]
+     exec asymp run=[i] angl=25. ptar=0.076 norm=1 norm=1 norbcm=1 
+     n=[n]+1
+     if [n]=8 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+       cd //pawc
+       h/del 0
+     endif
+   enddo
+
+   n=0
+   do i=3753,3799
+     exec run run=[i]
+     exec asymp run=[i] angl=21. ptar=0.069 norm=1 norm=1 norbcm=1 
+     n=[n]+1
+     if [n]=8 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+       cd //pawc
+       h/del 0
+     endif
+   enddo
+
+
+
+RETURN
+
+

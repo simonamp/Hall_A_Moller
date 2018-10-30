@@ -1,0 +1,122 @@
+*** Begin of history file: Fri Jun 24 13:48:31 2005
+exec run run=11756
+exec run run=11755
+exec run run=11750
+exec run run=11751
+exec run run=11747
+exec run run=11748
+exec run run=11749
+exec run run=11752
+exec run run=11753
+exec run run=11754
+exec run run=11745
+exec run run=11746
+exec run run=11190
+h/fil 1 scal_11746.nt
+zone 2 2
+1dh 202 'bcm' 200 0 200
+1dh 203 'bcm' 200 0 200
+1dh 204 'bcm' 200 0 200
+1dh 201 'bcm' 200 0 200
+nt/pl //lun1/1.a_asymm.f(3,1,0)
+nt/pl //lun1/1.a_asymm.f(3,1,1)
+nt/pl //lun1/1.a_signal.f(3,1,0,0,0)
+nt/pl //lun1/1.ifzug
+nt/sca //lun1/1 ! ! ! ! ifzug
+nt/sca //lun1/1 ! ! ! ! ifzug jhel(1) jhel(2) jhel(3) jhel(4) jcnt(3,1) jcnt(3,2) jcnt(3,3) jcnt(3,4)
+exec asymwr run=11746 angl=20. delay=0
+h/fil 2 scal.nt
+nt/sca //lun2/1 ! ! ! ! ifzug jhel(1) jhel(2) jhel(3) jhel(4) jcnt(3,1) jcnt(3,2) jcnt(3,3) jcnt(3,4)
+nt/sca //lun2/1 ! ! ! ! ifzug jhel(1) jhel(2)  jcnt(3,1) jcnt(3,2)
+mess $sigma(sqrt(2*3*0.938+0.938**2))
+mess $sigma(sqrt(2*4*0.938+0.938**2))
+mess $sigma(2*3*0.938+0.938**2)
+ld //
+nt/sca //lun32/1 ! ! ! ! itrig(6) itrig(8) isca(3)
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8)
+mess $sigma(45*2*0.511e-3)
+mess $sigma(12.5**2/45*2*0.511e-3)
+mess $sigma(12.5**2/(45*2*0.511e-3))
+mess $sigma(12.5**2/(45*2*0.511e-3)**2)
+mess $sigma((12.5**2/(45*2*0.511e-3))**2)
+mess $sigma((12.5**2/(45*2*0.511e-3))**2*3e5/(10*6e23*10e-6/1.6e-14))
+mess $sigma((12.5**2/(45*2*0.511e-3))**2*3e25/(10*6e23*10e-6/1.6e-14))
+mess $sigma((10*6e23*10e-6/1.6e-14))
+mess $sigma((10*6e23*10e-6/1.6e-19))
+mess $sigma((10*6e13*10e-6/1.6e-19))
+mess $sigma((12.5**2/(45*2*0.511e-3))**2)
+mess $sigma((12.5**2/(45*2*0.511e-3))**2*3e5/3.75e8)
+mess $sigma((12.5**2/(45*2*0.511e-3)))
+mess $sigma((12.5**2/(45*2*0.511e-3))*150e-9)
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8)
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(6) itrig(8)
+nt/sca //lun32/1 nsca>0 ! ! ! isca(6) itrig(6) itrig(6) itrig(8)
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(6) itrig(8)
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(6) itrig(8) itick
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(6) itrig(8) itick-13039577
+mess $sigma(sqrt(2*12*0.511e-3))
+mess $sigma(sqrt(2*12*0.511e-3)/12)
+mess $sigma(sqrt(2*12*0.511e-3)/12*20)
+aexec asymwr run=11746 angl=20. delay=0
+ld //
+clo 2
+aexec asymwr run=11746 angl=20. delay=0
+exec asymwr run=11746 angl=20. delay=0
+exec asymwr run=11746 angl=20. delay=0
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(6) itrig(8) itick-13039577
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8) itick-13039577
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8) itick-13039577
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.079 nosubbg=1
+exec asyms run=11746 angl=20.0 delay=1 ptar=0.079 nosubbg=1
+exec asyms run=11746 angl=20.0 delay=2 ptar=0.079 nosubbg=1
+exec asyms run=11746 angl=20.0 delay=8 ptar=0.079 nosubbg=1
+exec asyms run=11746 angl=20.0 delay=9 ptar=0.079 nosubbg=1
+exec asyms run=11746 angl=20.0 delay=1 ptar=0.079 nosubbg=1
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8) itick-13039577
+exec run run=11190
+exec asyms run=11190 angl=22.5 delay=0 nosubbg=1
+exec asyms run=11190 angl=22.5 nosubbg=1
+exec asyms run=11190 angl=22.5 nosubbg=1 delay=8
+exec asyms run=11190 angl=22.5 nosubbg=1 delay=9
+nt/sca //lun33/1 ! ! ! ! nsca itrig(6) itrig(8) itick
+ld //
+clo 2
+exec asymwr run=11190 angl=22.5 delay=8
+exec asymwr run=11190 angl=22.5 delay=8
+nt/sca //lun33/1 ! ! ! ! nsca itrig(6) itrig(8) itick
+nt/sca //lun33/1 ! ! ! ! nsca itrig(6) itrig(8) itick
+exec asymwr run=11190 angl=22.5 delay=8
+h/fil 2 scal.nt
+nt/pl //lun2/1.a_signal.f(3,1,0,0,0)
+nt/pl //lun2/1.a_asymm.f(3,1,1)
+nt/pl //lun2/1.a_asymm.f(3,1,1) -0.1<a_asymm.f(3,1,1)<0.1
+nt/pl //lun2/1.a_signal.f(3,1,1,0,0)
+1dh 300 'sig' 1000 0 100
+nt/pl //lun2/1.a_signal.f(3,1,1,0,0) ! -300
+1dh 301 'sig' 1000 0 100
+nt/pl //lun2/1.a_signal.f(3,1,2,0,0) ! -301
+h/pl 300(201:400)
+set hcol 4
+h/pl 301(201:400) s
+nt/pri 2
+nt/pri 1
+nt/pl //lun2/1.a_asymm.f(3,1,1)/0.079/0.8 -0.1<a_asymm.f(3,1,1)<0.1
+nt/pl //lun2/1.a_asymm.f(3,1,1)/0.0795/0.76 -0.1<a_asymm.f(3,1,1)<0.1
+call prunpri.f(10000,20000)
+nt/pl //lun2/1.a_asymm.f(3,1,0) -0.1<a_asymm.f(3,1,1)<0.1
+mess $sigma(.0483/.76/.0795)
+mess $sigma(.0483/.76/.0795/cos(22.*3.1415/180.))
+nt/pl //lun1/1.a_asymm.f(3,1,0)/0.0795/0.76 -0.1<a_asymm.f(3,1,1)<0.1
+nt/sca //lun32/1 ! ! ! ! nsca itrig(6) itrig(8) itick
+ld //
+clo //lun2
+clo 2
+exec asymwr run=11190 angl=22.5 delay=0
+exec asymwr run=11746 angl=20. delay=0
+exec asymwr run=11746 angl=20. delay=0 nev=40
+exec asymwr run=11746 angl=20. delay=0 nev=40
+exec asymwr run=11746 angl=20. delay=0 nev=0
+exec asymwr run=11746 angl=20. delay=0 nev=0
+exec asymwr run=11746 angl=20. delay=0 nev=0
+exec asymwr run=11746 angl=20. delay=0 nev=0
+*** End   of history file: Fri Jun 24 18:31:50 2005

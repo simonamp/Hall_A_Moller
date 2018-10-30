@@ -1,0 +1,269 @@
+use aonl1-4 for running PAW
+exec hvlg e0=7.3 set=0
+lcd mag_optim
+exec sett_magp12 e0=7.37 
+exec anpow_set e0=7.37
+****************
+exec sett_magp e0=3.484 nq=2 p=1,2,3
+exec run run=14000
+exec lg_spectra run=14000
+exec lg_spectra run=14000 cut=11
+exec lg_spectra run=14000 icut=100
+exec lg_spectra run=11795 icut=100 cut=11
+exec lg_pedes run=14000
+exec time run=14000 
+exec asym11 run=14000
+call prunpri.f(10000,20000)
+exec asym_av run1=14000 run2=14004
+dbedit 2->9, 9->2
+run_daemon msqld &
+
+************
+***
+exec run run=14000
+exec help_run run=14000
+exec asym_avt (edit run numbers)
+exec help_runs
+nt/pl //lun51/1.(a_tpos.f(2,0)) ifzug=0
+ld //
+exec long_scan lun=51
+chain ch1 //lun51
+exec long_scan_ch ch=1
+beam charge/dead time
+Config: test_LED, Trigger LEDsetcoda2 
+Det HV ON
+1dh 101 'HWP IN' 200 -0.05 0.05
+nt/pl //ch1
+nt/pl //lun51/1.(a_asymm.f(5,0,0,0,0,0,0)) ifzug=0 -101
+h/fit 101 g ! 0 par5
+****************
+lcd summary
+ld //
+ve/cr vprec(8) r
+ve/in vprec(1:3) 0.5835 1 5
+ve/in vprec(1:5) 0.600  1 5  0  0
+fu/pl spinpred.f -90 90
+set hcol 2
+ve/in vprec(1:3) 0.5835 2 3
+fu/pl spinpred.f -90 90 s
+mess $sigma(0.5835*10+0.0656)
+mess $sigma((5.892-0.0656)/10)
+exec spin_prec_10
+mess $call('spinpred.f(54.)')
+ve/in vprec(1:5) 0.5835 1 5 0 0.012
+mess $call('spinpred.f(30.)')
+fu/pl cos((30+x)*3.1416/180) -50 50
+shell head -82 mollerrun_13679.set
+****************
+nt/pri 1
+nt/pri //lun51/1
+nt/pri //lun21/1
+nt/pl //lun26/1.iadc(1) nadc=12
+nt/pl //lun21/1.ihit(2)%ihit(5) nadc>0.and.$5.and.$6
+nt/sca //lun51/1 ! 10 1 ! izug ifzug jhel(1) jhel(2) itick(1) itick(2)
+nt/pl //lun51/1.nelem
+cd //pawc
+h/li
+****************************
+Beam charge asymmetry
+exec asym11 gate=0.0008 nevadc=0 run=15114 
+1dh 104 'Asym'  200 -0.005 0.005 
+ld //
+nt/pl //lun51/1.(a_asymm.f(5,0,0,0,0,0,0)) ifzug=0 idh=104
+set run=($1)
+set Nbin=($2) 
+set min=($3) 
+set max=($4)
+paw <&
+exec asym11 run=$run 
+1dh 104 'Asym'  $Nbin $min $max 
+nt/pl //lun51/1.(a_asymm.f(5,0,0,0,0,0,0)) ifzug=0 idh=104 &
+**********************
+hlal00
+ssh gla@acclogin.jlab.org
+key
+ssh gla@oprl00 / devl00
+mom address
+opfb1
+mymenu
+*********************
+cd bin/
+meas_copy.com 14501 14518 -n 01
+Monticello screen (edm)
+## ssh -X hacuser@hacweb7
+choose EDM
+Hall_A_Tools/NewTools
+from hacweb7 ssh hacuser@hlal00
+save strip charts data
+adaq 12daq:CODA3
+adev 12gev:CODA3
+a-onl onl_ana
+hlauser hlauser
+% To control Moller target
+% login to g@acclogin.jlab.org
+% key
+% login to hacuser@hlal00
+% hacuser hallA.rocks
+% MyMenu Jtabs
+Hall A screens list in /cs/opshome/edm/hlamain.edl
+Hall A tools screen : /cs/opshome/edm/HALLA/tools/tmpwrkDisplay.edl
+so type edmRun /cs/opshome/edm/hlamain.edl from any machine 
+with your accelerator account to access those.				
+**********************
+HV start
+* telnet hatsv5 2003
+* adaq
+* ceba
+* >1450 
+* vt100
+* slot 5
+telnet hatsv5
+root
+dbps
+who 
+kill tty=1
+quit
+
+ssh adev@adaq1
+12gev:CODA3
+ps -ef | grep BEAMLINE
+kill #pid
+***********************************
+%% iocsofthamol - Moller target controller. Call MCC for soft reboot.
+The controlling ioc is a soft ioc called iochahfm, which is running on the host
+machine hlal01.  Presently it is not showing in the jtabs ioc list, but it will be
+showing in the jtabs ioc list soon
+https://devweb.acc.jlab.org/twiki/bin/view/SWDocs/GnenralInfoOurInstruments
+call MCC and ask that "iocsofthabcm1" be rebooted (by software on call) Unser DVM
+%% Temple Moller magnet reboot: New IP Address: 129.57.243.43
+                         New Name: hareboot33
+The Temple  target controller: socket 5 of the reboot switch, hareboot6.
+
+******
+cebaF222
+HV GUI:
+adev@adaql5p gun
+hvgui_hrs
+2001 Slot 5 and 6
+******
+msqld &
+
+*******
+http://hallaweb.jlab.org/tech/Detectors/public_html/controls/ioc_portserver_reboot_locations.htm
+http://hareboot26
+HLAUSER/HLAUSER
+slot 1
+http://hareboot6
+hlauser/hlauserp gun
+slot 8
+******
+telnet 129.57.188.87 2008 or telnet hatsv12 2008
+--><start.all
+Ctrl]
+******
+accelerator: opsl00, opfb1
+ssh gla@oprl00 / devl00 hlal00
+******
+ssh adev@adaql3
+hvgui_hrs
+******
+Robert Norton 7331
+Cryo team     7405
+to pressurize JT valve for Moller magnet
+******
+New polarization sign convention:
+Magnet power Supply +
+Hall Probe          +
+Magnetic Field Bz   +  ---> (along the beam)
+Target Polarization -  <--- (vs the beam)
+To find and to kill HV runner:
+ps -ef | grep BEAMLINE
+adadl1,2, adaq1,2
+******************************
+*** 11GeV
+Q1=-6.55/-295.41  Q2=-5.9/-298.72  Q3=2.5/105.75  Q4=6.15/297.36  Dp=11.9/440A
+Theta=+/-3.5, Phi=+/-13.3, AnP=0.7736, Lev=0.007
+Q3=1.4/58.21  AnP=0.7730 Lev=0.0212
+Q3=0.5/20.55  AnP=0.7748 Lev=0.0057
+
+*** 10.983
+Q1=-6.55/-295.41  Q2=-5.9/-298.72  Q3=2.0/83.96  Q4=6.15/297.36  Dp=11.9/440A
+Theta=+/-3.6, Phi=+/-14.1, AnP=0.7732, Lev=0.99
+Q4=5.6/251.9  AnP=0.7734 Lev=2.02
+Q4=5.0/216.2  AnP=0.7755 Lev=0.32
+Q4=4.8/206.1  AnP=0.77556 Lev=-2.39
+
+*** 8.8GeV
+Q1=-5.27kG/-217.4, Q2=-3.96kG/-196.0, Q3=3.2kG/136.6, Q4=5.6kG/251.9, Dipole=11.9kG
+AnPow=0.76709 Lev=1.06
+Q3=1.8kG/75.3  AnPow=0.76347 Lev=2.18
+Q3=0.8kG/33.0  AnPow=0.77047 Lev=0.60
+
+*** 8.521GeV
+Q1=-5.1kG/-209.6, Q2=-3.5kG/-173.2, Q3=3.4kG/145.0, Q4=5.4kG/238.8, Dp=11.9kG/440
+     -36716          -30839           24590             38799
+AnPow=0.76747 Lev=1.03
+Q2=-2.5kG/-124.0(-22028) AnPow=0.77153  Lev=1.27
+Q2=-4.3kG/-213.1(-37887) AnPow=0.76406  Lev=1.32
+
+*** 10.6GeV
+Q1=-6.5kG/-291.3  Q2=-6.1/-310.4  Q3=3.0/127.7  Q4=6.15/297.4   0.77202  0.773
+Q1=-5.5/-228.5   0.77265   0.86
+Q2=-5.1/-254.6   0.77310   1.02
+Q3= 2.0/84.0     0.77179   1.66
+Q4= 5.4/238.8    0.77204   1.79
+-->
+Q1=-6.5/-291.3 Q2=-5.8/-293.0 Q3=3.0/127.7 Q4=6.1/292.5  0.77229  0.75
+Q1=-5.7/-238.9  .77281  0.92
+Q2=-5.2/-259.9  .77295  0.92
+Q3=2.2/92.64    .77158  0.92
+Q3=2.0/83.96    .77155  1.75p gun
+Q4=5.5/245.2    .77198  1.25
+Q4=5.3/232.8    .77201  1.85
+
+Pt(330K/50C) 
+2.5T=0.080047
+3.0T=0.08007
+3.5T=0.08010
+4.0T=0.08012
+******************************
+ Moller spectrometer elements:
+ 1st Moller quadrupole magnet - MQO1H02 
+ 2nd Moller quadrupole magnet - MQM1H02 
+ 3rd Moller quadrupole magnet - MQO1H03 
+ 4th Moller quadrupole magnet - MQO1H03A
+ Moller dipole magnet         - MMA1H01
+ BPMs:
+ BPM IPM1H01  - in front of the Moller target 1639.9 mm
+ BPM IPM1H04  - downstream of the Moller detector 8815.3 mm
+ BPM IPM1H04A - upstream of the Hall A target 9872.0 mm
+ BPM IPM1H04D - ipstream of the Hal7l A target 15018.0 mm.
+ new vertical corrector MCZ1H04V (new)
+ focusing quadrupole magnet MQAH04.
+***********************************
+NEW MAGNET7
+The command to clear a quench condition is
+QU 0 
+Note:  QU 1   triggers a quench!!
+Maximum Ramp Rate from 0 to 85A:       0.0254A/c (1.0V)
+Maximum Ramp Rate from 85A to 93.28A:  0.0031A/c (0.13V)
+Field to Current Ratio: 0.536 kG/A 
+External Gaussmeter Vs Magnet Current vs Magnet Field
+ +1.3kG    +15A     +8.04kG
+ +2.2kG    +25A    +13.40kG
+ +3.1 kG   +35A    +18.76kG
+ +4.0 kG   +45A    +24.12kG7
+ +4.9 kG   +55A    +29.48kG
+ +5.4 kG   +60A    +32.16kG
+ -1.3 kG   -15A     -8.04kG
+ -2.7 kG   -30A    -16.08kG
+ -4.0 kG   -45A    -24.12kG
+ -5.4 kG   -60A    -32.16kG
+           18.7A -> 10kG
+           37.3A -> 20kG
+           46.4A -> 25kG
+           56.0A -> 30kG
+           65.3A -> 35kG
+           74.6A -> 40kG
+           84.0A -> 45kG
+*****************************************

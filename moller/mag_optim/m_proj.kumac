@@ -1,0 +1,17 @@
+MACRO m_proj id=1000
+*
+* --- book and fill projections/slices for the optimization histograms
+*
+  nh=3
+  ve/cr idp([nh]) i 1 2 9
+
+  do i=1,[nh]
+    k=idp([i])
+    id1=[id]+[k]
+    nx=$HINFO([id1],'XBINS')
+    h/cre/sliy [id1] [nx]
+    h/proj [id1]
+  
+  enddo
+
+RETURN

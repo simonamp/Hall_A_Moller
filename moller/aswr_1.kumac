@@ -1,0 +1,24 @@
+MACRO aswr_1 ltmp=2 lout=3
+
+*  Write scaler ntiple for several runs 
+  n=8
+  ve/cr kr1([n]) i 10374 10375 10376 10377 10378 10379 10380 10381
+  ve/cr an1([n]) i [n]*163.5
+
+  do i=1,[n]
+    run=kr1([i])
+    exec run run=[run]
+    an=an1([i])
+    l1=[ltmp]
+    l2=0
+    if [i]>1 then
+      l1=-[ltmp]
+    endif
+    if [i]=[n] then
+      l2=[lout]
+    endif
+
+    exec asymwr run=[run] angl=[an] ltmp=[l1] lout=[l2]
+  enddo
+
+RETURN

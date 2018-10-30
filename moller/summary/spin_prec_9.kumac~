@@ -1,0 +1,18 @@
+MACRO spin_prec_9 
+*
+*
+*runs 12152-1217..
+ np=5
+ ve/cr wang([np]) r 
+ ve/cr bpol([np]) r 
+ ve/cr ebpol([np]) r
+ ve/in wang   -6.0   9.   24.   39.   54.  
+ ve/in bpol   80.1  82.2  85.4  83.3  80.5  
+ ve/in bpol    0.2   0.2   0.2   0.2   0.2
+
+ ve/cr ipfit(2) i
+ ve/in ipfit 0 0
+ ve/cr par(10) r
+ ve/in par(1:2) 0.85 24.
+
+ ve/fit wang bpol ebpol wang_1.f ! 2 par

@@ -1,0 +1,94 @@
+MACRO vsmooth nodes=3000 id=500 nav=0
+*
+* ---  Smooth the vector vtmp (spline) and store the result in vtmpf
+*      If nav=1 average each channel with +/- nav point around
+
+
+ nl=$VDIM(vtmp)
+ if [nl]<100 then
+    mess vsmooth.kumac nl=[nl] is too short
+    exitm
+ endif
+
+ if $VDIM(vtmp1,1)<>[nl] then
+   if $VDIM(vtmp1,1)>0 then
+     ve/del vtmp1
+   endif
+   ve/cr vtmp1([nl] r
+ endif
+ if $VDIM(vtmpf,1)<>[nl] then
+   if $VDIM(vtmpf,1)>0 then
+     ve/del vtmpf
+   endif
+   ve/cr vtmpf([nl] r
+ endif
+ ve/in vtmp1 [nl]*0
+ ve/in vtmpf [nl]*0
+
+
+ if [nav]=1 then
+
+   nl2=[nl]+2
+   if $VDIM(vv1,1)<>[nl2] then
+     if $VDIM(vv1,1)>0 then
+       ve/del vv1
+     endif
+     ve/cr vv1([nl2] r
+   endif
+
+   if $VDIM(vv2,1)<>[nl2] then
+     if $VDIM(vv2,1)>0 then
+       ve/del vv2
+     endif
+     ve/cr vv2([nl2] r
+   endif
+
+   if $VDIM(vv0,1)<>[nl2] then
+     if $VDIM(vv0,1)>0 then
+       ve/del vv0
+     endif
+     ve/cr vv0([nl2] r
+   endif
+
+   n1=[nl]+1
+   ve/cop vtmp(1:[nl]) vv1(1:[nl])
+   ve/cop vtmp(1:[nl]) vv0(2:[n1])
+   ve/cop vtmp(1:[nl]) vv2(3:[nl2])
+   an=$SIGMA(1./3.)
+
+   ve/op/vadd vv0 vv1 vv0
+   ve/op/vadd vv0 vv2 vv0
+   ve/op/vsca vv0 [an] vv0
+
+   ve/cop vv0(2:[n1]) vtmpf(1:[nl])
+   exitm
+   
+   ve/cop vtmp vtmpf
+   i1=1+[nav]
+   i2=[nl]-[nav]
+   do i=[i1],[i2]
+     j1=[i]-[nav]
+     j2=[i]+[nav]
+     a=0.
+     do j=[j1],[j2]
+       a1=vtmp([j])
+       a=$SIGMA([a]+[a1])
+     enddo
+     a=$SIGMA([a]/([nav]*2+1.))
+     ve/in vtmpf([i]) [a]
+   enddo
+   exitm
+ endif
+
+ if $HEXIST([id])>0 then
+   h/del [id]
+ endif 
+ 1dh [id] 'vec' [nl] 0 [nl]
+ h/put/con [id] vtmp
+ mess Start the spline procedure...
+ h/op/splin [id] 2 [nodes] 3
+ h/get/fun [id] vtmpf
+
+ ve/draw vtmpf
+
+RETURN

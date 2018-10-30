@@ -1,0 +1,367 @@
+MACRO point_p target=1 bop=20.0 foil_coor=0.0 plot=0 print=2 clear=0 init=0
+**********************************************************************************
+****  Aug 17,2005 R.P.: modified for low fields <265Gauss (15.08 Amps in Helmholtz Coils)
+****
+****  !!! I use cooefficient for low field calculation: 
+****      0.0569(A/Gauss)=( 15.08Amp/265Gauss)
+****   There is some nonlinearity between Field and Current in Hcoils:
+****   20.0Amp/356Gauss = 0.0562
+****   15.08Amp/265Gauss = 0.0569
+*
+*      init>0 - initialize the vector with the foil polarization (along the beam)
+*********************************************************************************
+
+if [plot]>0 then
+  set * 
+  opt nstat
+  opt ndate
+  opt grid
+  opt nbox
+endif
+
+* Accuracy: 0.1mm
+ffx=$FORMAT([foil_coor],F6.1)
+foil_coor=$WORD([ffx],1,1,' ')
+*mess [foil_coor]
+* exitm
+
+if $VDIM(tpolcur,1)<5 then
+  ve/cr tpolcur(5) r
+*
+* (1) - polarization, (2) - target number (or 0 if not initialized, (3) - bop, 
+* (4)>0 - poltarz vector initialized 
+*
+endif
+ve/in tpolcur 5*0.
+ve/in tpolcur(3) [bop]
+if $VDIM(tpolraw,1)<20 then
+  ve/cr tpolraw(20) r
+endif
+ve/in tpolraw 20*0.
+
+*read target ' Input target number (0-6)'
+if [target]=6 then
+   if [print]>0 then
+     mess  Target 6 = empty position (Right Limit)
+   endif
+   goto eend
+elseif [target]=5 then
+   if [print]>0 then
+     mess  Target 5:  6.8mkm Supermendure foil
+     mess  Supermendure made in Germany, rolled and annealed in Kharkov
+   endif
+   file=sup07
+   thik=6.8
+elseif [target]=4 then
+   if [print]>1 then
+     mess  Target 4:  9.3mkm pure Iron foil
+     mess  Iron made in Germany, rolled and annealed in Kharkov
+   endif
+   file=fe10
+   thik=9.3
+elseif [target]=3 then
+   if [print]>1 then
+*      mess  Target polarization information temporary is not available
+*      goto eend
+     mess  Target 3:  14.3mkm pure Iron foil
+     mess  Iron made in Germany, rolled and annealed in Kharkov
+   endif
+   file=fe14
+   thik=14.3
+elseif [target]=2 then
+   if [print]>1 then
+     mess  Target 2:  29.4mkm Supermendure foil   
+     mess  Supermendure delivered from SLAC E-158 
+   endif
+   file=sup30
+   thik=29.4
+elseif [target]=1 then
+   if [print]>1 then
+     mess  Target 1: 13 mkm Old Supermendur foil (short)
+     mess  Polarization=7.95%
+   endif
+   ve/in tpolcur(1) 0.0795
+   ve/in tpolcur(2) [target]
+   goto eend
+elseif [target]=0 then
+   if [print]>1 then
+     mess  Target 0: 16.5mkm Aluminum foil (Left Limit)
+   endif
+   goto eend
+endif
+
+if [foil_coor]<-25.0 then
+   mess Wrong foil coordinate. Must be -25.0 : +30.0
+   goto eend
+*   read foil_coor 'Input foil coordinate to calculate polarization (-25.0 : +30.0mm)' 
+*   goto fc
+endif
+
+if [foil_coor]>33.0 then
+   mess Wrong foil coordinate. Must be -25.0 : +30.0
+   goto eend
+*   read foil_coor 'Input foil coordinate to calculate polarization (-25.0 : +30.0mm)' 
+*   goto fc
+endif
+
+fnam=[target]//'_'//[file]//'fc.dat'
+***fnam=[target]//'_'//[file]//'scan3.dat'
+
+
+comn='cat '//[fnam]//' | wc -l |sed s"/ //"g'
+nl=$SHELL([comn])
+nl=$UNQUOTE([nl])
+mess lines=[nl]
+if [nl]>0 then
+  if $VDIM(p1,1)<[nl] then
+    ve/cr p1([nl]) r
+    ve/cr p2([nl]) r
+    ve/cr p3([nl]) r
+    ve/cr p4([nl]) r
+    ve/cr p5([nl]) r
+    ve/cr p6([nl]) r
+    ve/cr p7([nl]) r
+    ve/cr p8([nl]) r
+  endif
+endif
+*    ve/re p1,p2,p3,p4,p5,p6 [target]_[file]fc.dat ! ! -/*/
+*   *** add vectors: p7,p8 with foil polarization data for low(166Gs,100Gs) fields
+
+ve/read p1,p2,p3,p4,p5,p6,p7,p8 [fnam] ! ! -/*/
+
+sigma nc=nco(p1)
+cc=nc
+if $VDIM(poltarz,1)<[cc] then
+  ve/cr poltarz([cc]) r
+endif
+ve/in poltarz [cc]*0.
+
+** coordinate along the foil, relatively to the center, mm 
+
+**** 17-Aug-2005
+* sigma coor=array([cc],-25.0#30.0)
+sigma coor=array([cc],-250.0#300.0)
+sigma coor=coor/10.
+****
+ve/input coor(251) 0.0
+** calculation of the foil polarization for input BOP parameter
+
+* Find the point along the foil
+
+kp=0
+do i=1,[cc]
+   rr=coor([i])
+   if [foil_coor]=[rr] then
+*      rrr=poltarz([i])
+       kp=[i]
+      goto enc
+   endif
+enddo
+
+enc:
+if [kp]=0 then
+  mess No data for foil_coor=[foil_coor]
+  goto eend
+endif
+
+* mess [foil_coor] [kp]
+
+*  Field calculation
+abop1=-13.65
+abop2=19.62
+
+** cos20 correction (field along the foil)
+css20=$SIGMA(cos(3.141592/180.*20.))
+fild=$SIGMA([abop1]+[abop2]*[bop])
+fildc=$SIGMA([fild]*[css20])
+
+nbop=8
+if $VDIM(tpolarr,1)<[nbop] then
+  ve/cr tpolarr([nbop]) r
+endif
+if $VDIM(tpolbop,1)<[nbop] then
+  ve/cr tpolbop([nbop]) r
+endif
+if $VDIM(tpolfld,1)<[nbop] then
+  ve/cr tpolfld([nbop]) r
+endif
+* This is a crude setting (redefined later)
+ve/read tpolbop,tpolfld mag_fields.tab  ! ! -/*/
+* ve/in tpolbop  5.69  9.45 13.20 15.08 16.87 18.72 20.01 29.
+* ve/in tpolfld  100.0 166.0 232.0 265.0 298.0 332.0 354.0 597.0
+* redefine the bop points
+sigma tpolbop=(tpolfld-[abop1])/[abop2]
+
+
+kk=999
+nbops=$VLEN(tpolbop,1)
+do i=1,[nbops]
+  bp=tpolbop([i])
+  if [bop]<[bp] then
+    kk=[i]
+    goto ebop
+  endif
+enddo
+ebop:
+
+if [kk]=1 then
+   bp=tpolbop(1)
+   mess Input current must be more than [bp] Amp
+   goto eend
+elseif [kk]>[nbops] then
+   bp=tpolbop([nbop])
+   mess Input current must be less than [bp] Amp
+   goto eend
+else
+   i1=10-[kk]
+   i2=[i1]-1
+   b1=p[i1]([kp])   
+   b2=p[i2]([kp])   
+   polmin=[b1]   
+   polmax=[b2]
+   i1=[kk]-1   
+   i2=[i1]+1   
+   bopmin=tpolbop([i1])   
+   bopmax=tpolbop([i2])   
+endif
+
+* exitm
+   
+
+rc=([bopmax]-[bop])/([bop]-[bopmin])
+
+mess [kk] [nbops] [bopmin] [bopmax] [polmin] [polmax] [rc]
+
+sigma pres=([rc]*[polmin]+[polmax])/(1+[rc])
+** magnetic field calculation
+** coordinate along the foil, mm
+if $VDIM(pos,1)<9 then
+  ve/cr pos(9) r
+endif
+ve/in pos -40.543 -30.407 -20.271 -10.136 0. 10.136 20.271 30.407 40.543
+** field along the foil at BOP=10Amp, Gauss
+if $VDIM(mac,1)<9 then
+  ve/cr mac(9) r
+endif
+ve/in mac 225.68 209.56 197.23 188.29 182.57 182.26 190.13 201.71 215.19
+** field along the foil at BOP=20Amp, Gauss
+if $VDIM(m6c,1)<9 then
+  ve/cr m6c(9) r
+endif
+ve/in m6c 475.87 443.08 414.78 393.11 380.58 379.30 394.39 420.33 444.01
+
+if [print]>1 then
+  mess Input current              = [bop] Amp
+  mess Input field in foil center = [fild] Gauss (z-component)
+  mess Input field in foil center = [fildc] Gauss (along the foil)
+endif
+
+** coefficients for fit are taken from hall_a_field.kumac
+sigma fil1=172.429-0.182861*coor+0.0215181*coor**2-(4.15327E-5)*coor**3
+sigma fil2=359.981-0.481066*coor+0.045383*coor**2+(7.78626E-5)*coor**3 
+r1=fil1(251)
+r2=fil2(251)
+rc=([r2]-[fildc])/([fildc]-[r1])
+sigma fres=([rc]*fil1+fil2)/(1+[rc])
+
+i1=[kp]
+i2=[kp]
+if [init]>0 then
+  i1=1
+  i2=[cc]
+endif
+
+
+** magnetic field correction along the foil
+*mess [i1] [i2]
+do i=[i1],[i2]
+   fres1=fres([i])
+
+   kk=999
+   nbops=$VLEN(tpolfld,1)
+   do j=1,[nbops]
+      fres2=tpolfld([j])
+      if [fres1]<[fres2] then
+        kk=[j]
+        goto efld
+      endif
+   enddo
+   efld:
+
+   if [kk]=1 then
+     fl=tpolfld(1)
+     mess Input field must be more than [fl] Gs
+     goto eend
+   elseif [kk]>[nbops] then
+     fl=tpolfld([nbop])
+     mess Input field must be less than [fl] Gs
+     goto eend
+   else
+     m1=[nbops]+2-[kk]
+     m2=[m1]-1
+     b1=p[m1]([i])   
+     b2=p[m2]([i])   
+     polmin=[b1]
+     polmax=[b2]
+     m1=[kk]-1   
+     m2=[m1]+1   
+     fmin=tpolfld([m1])   
+     fmax=tpolfld([m2])   
+     zz=coor([i])
+*     mess [i] [zz] [fmin] [fmax] [polmin] [polmax]
+   endif
+
+   rc=$SIGMA(([fres1]-[fmin])/([fmax]-[fmin]))
+   resf=$SIGMA([polmin]*(1.-[rc])+[polmax]*[rc])
+   rrs=$SIGMA([resf]/100.)
+   ve/input poltarz([i]) [rrs]
+enddo
+* fc:
+
+rrs=poltarz([kp])
+rrr=$SIGMA([rrs]*100.)
+
+if [print]>1 then
+  mess Coordinate along the foil: [foil_coor]mm
+  mess Effective Foil Polarization: [rrr]%
+endif
+
+rnorm=$SIGMA([rrr]/100.)
+ve/in tpolcur(1) [rnorm]
+ve/in tpolcur(2) [target]
+
+* if [ps]=1 then
+*    close 56
+* endif
+
+if $VDIM(tarz,1)>0 then
+  ve/del tarz
+endif
+ve/op/vsca coor 0.1 tarz
+
+eend:
+
+if [clear]>0 then
+  do i=1,8
+    vv=p[i]
+    if $VDIM([vv],1)>0 then
+       ve/del [vv]
+    endif
+  enddo
+
+  if [clear]>1 then
+    ve/del poltarz
+    ve/del tarz
+  endif
+
+  ve/del coor
+  ve/del fil1
+  ve/del fil2
+  ve/del fres
+  ve/del pos
+  ve/del mac
+  ve/del m6c
+
+endif
+
+RETURN

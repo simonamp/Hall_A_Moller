@@ -1,0 +1,388 @@
+*** Begin of history file: Sun Feb 17 09:15:34 2002
+exec run run=10103
+exec lg_spectra run=10103 icut=100
+exec lg_spectra run=10103 icut=10
+loca
+exec lg_spectra run=10103 icut=10 cut=11
+exec run run=10105
+exec lg_spectra run=10105 icut=10 cut=0
+exec lg_spectra run=10105 icut=100 cut=0
+exec lg_spectra run=10105 icut=50 cut=0
+exec lg_spectra run=10105 icut=50 cut=11
+exec lg_spectra run=10105 icut=50 cut=0
+loca
+exec lg_spectra run=10105 icut=50 cut=11
+exec time run=10105
+exec run run=10106
+exec lg_spectra run=10106 icut=50 cut=0
+loca
+exec lg_spectra run=10106 icut=50 cut=11
+exec asymr angl=23.0 run=10106
+exec run run=10107
+exec lg_spectra run=10107 icut=50 cut=0
+exec lg_spectra run=10107 icut=50 cut=11
+exec asymr delay=0 angl=23.0 run=10107
+zone 2 2
+call prunpri.f(10000,12000)
+exec run run=10108
+exec asymr delay=0 angl=23.0 run=10108
+exec asymr delay=0 angl=23.0 run=10108 norbcm=0
+exec asymr delay=0 angl=23.0 run=10108 norbcm=0 norm=0
+exec asymr delay=0 angl=23.0 run=10108
+exec asymr delay=0 angl=23.0 run=10107 norbcm=0 norm=0
+exec asymr delay=0 angl=23.0 run=10107
+exec run run=10109
+exec asymr delay=0 angl=23.0 run=10109
+exec run run=10110
+exec asymr delay=0 angl=23.0 run=10110
+call prunpri.f(10000,12000)
+exec run run=10111
+exec asymr delay=0 angl=23.0 run=10111
+exec run run=10112
+exec asymr delay=0 angl=23.0 run=10112
+aaexec asym_av run1=
+call prunpri.f(10000,12000)
+exec asym_av run1=10107 run2=10112
+exec asymr delay=0 angl=23.0 run=10113
+exec run run=10113
+exec asymr delay=0 angl=23.0 run=10113
+exec asym_av run1=10107 run2=10113
+call prunpri.f(10000,12000)
+exec run run=10114
+exec asymr delay=0 angl=23.0 run=10114
+exec asym_av run1=10107 run2=10114
+call prunpri.f(10000,12000)
+exec run run=10115
+exec asymr delay=0 angl=90.0 run=10115
+call prunpri.f(10000,12000)
+exec run run=10116
+exec asymr delay=0 angl=90.0 run=10116
+call prunpri.f(10000,12000)
+exec targ_angl run1=10107 run2=10114 runn1=10115 runn2=10116 i=1
+exec targ_angl run1=10107 run2=10114 runn1=10115 runn2=10116 i=2
+exec targ_angl run1=10107 run2=10114 runn1=10115 runn2=10116 i=3
+call chngpol.f(76.07,23.,18.3)
+exec run run=10117
+exec asymr delay=0 angl=163.5 run=10118
+exec asymr delay=0 angl=163.5 run=10117
+exec run run=10118
+exec asymr delay=0 angl=163.5 run=10118
+exec run run=10119
+exec asymr delay=0 angl=163.5 run=10119
+exec run run=10120
+exec asymr delay=0 angl=163.5 run=10120
+exec asym_av run1=10117 run2=10120
+exec asym_av run1=10107 run2=10114
+exec asym_av run1=10117 run2=10120
+exec run run=10121
+exec asymr delay=0 angl=163.5 run=10121
+exec run run=10122
+exec asymr delay=0 angl=163.5 run=10122
+exec asym_av run1=10117 run2=10122
+call prunpri.f(10000,12000)
+exec run run=10123
+exec asymr delay=0 angl=163.5 run=10123
+exec run run=10124
+call prunpri.f(10000,12000)
+exec asymr delay=0 angl=163.5 run=10124
+exec asym_av run1=10117 run2=10124
+exec run run=10125
+exec asymr delay=0 angl=163.5 run=10125
+exec run run=10126
+exec asymr delay=0 angl=163.5 run=10126
+exec targ_angl run1=10117 run2=10124 runn1=10115 runn2=10116 i=3
+exec targ_angl run1=10117 run2=10124 runn1=10115 runn2=10116 i=1
+exec targ_angl run1=10117 run2=10124 runn1=10115 runn2=10116 i=2
+exec targ_angl run1=10117 run2=10124 runn1=10115 runn2=10116 i=3
+call chngpol.f(70.59,163.5,159.4)
+mess $sigma(.23/1.4)
+call prunpri.f(10000,12000)
+exec run run=10127
+exec asymr delay=0 angl=163.5 run=10127
+exec run run=10128
+exec asymr delay=0 angl=163.5 run=10128
+exec run run=10129
+exec asymr delay=0 angl=163.5 run=10129
+exec run run=10130
+exec asymr delay=0 angl=163.5 run=10130
+exec run run=10132
+exec asymr delay=0 angl=163.5 run=10132
+exec run run=10133
+exec asymr delay=0 angl=163.5 run=10133
+call prunpri.f(10000,12000)
+exec run run=10131
+exec asymr delay=0 angl=163.5 run=10131
+call prunpri.f(10000,12000)
+exec run run=10134
+exec asymr delay=0 angl=163.5 run=10134
+exec run run=10135
+exec asymr delay=0 angl=163.5 run=10135
+exec run run=10136
+exec asymr delay=0 angl=163.5 run=10136
+exec run run=10137
+exec asymr delay=0 angl=163.5 run=10137
+call prunpri.f(10000,12000)
+exec bcm_calib_1 n=4
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+ve/priu bcmr1
+ve/pri bcmr1
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec run run=10137
+exec run run=10138
+exec asymr delay=0 angl=163.5 run=10138
+exec run run=10139
+exec asymr delay=0 angl=163.5 run=10139
+exec run run=10140
+exec asymr delay=0 angl=163.5 run=10140
+exec run run=10141
+exec asymr delay=0 angl=163.5 run=10141
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+call prunpri.f(10000,12000)
+exec asymr delay=0 angl=163.5 run=10141
+exec asymr delay=0 angl=163.5 run=10141 norbcm=0
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+mess $sigma(6623./30./1.342)
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec asymr delay=0 angl=163.5 run=10141 norbcm=0
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec asymr delay=0 angl=163.5 run=10141 norbcm=1
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+exec bcm_calib_1 n=5
+loca
+mess $sigma(670/30)
+call prunpri.f(10000,12000)
+exec run run=10142
+exec asymr delay=0 angl=163.5 run=10142 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10143
+exec asymr delay=0 angl=163.5 run=10143 norbcm=0
+call prunpri.f(10000,12000)
+exec asym_av run1=10134 run2=10140
+exec asym_av run1=10134 run2=10141
+call prunpri.f(10000,12000)
+exec run run=10144
+exec asymr delay=0 angl=163.5 run=10144 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10145
+exec asymr delay=0 angl=163.5 run=10145 norbcm=0
+exec run run=10146
+exec asymr delay=0 angl=163.5 run=10146 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10147
+exec asymr delay=0 angl=163.5 run=10147 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10148
+exec asymr delay=0 angl=163.5 run=10148 norbcm=0
+exec run run=10149
+exec asymr delay=0 angl=163.5 run=10149 norbcm=0
+call prunpri.f(10000,12000)
+exec asymr delay=0 angl=163.5 run=10134 norbcm=0
+exec asymr delay=0 angl=163.5 run=10135 norbcm=0
+exec asymr delay=0 angl=163.5 run=10136 norbcm=0
+exec asymr delay=0 angl=163.5 run=10137 norbcm=0
+exec asymr delay=0 angl=163.5 run=10138 norbcm=0
+exec asymr delay=0 angl=163.5 run=10139 norbcm=0
+exec asymr delay=0 angl=163.5 run=10140 norbcm=0
+exec asymr delay=0 angl=163.5 run=10141 norbcm=0
+exec run run=10150
+exec asymr delay=0 angl=163.5 run=10150 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10151
+exec asymr delay=0 angl=163.5 run=10151 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10152
+exec asymr delay=0 angl=163.5 run=10152 norbcm=0
+exec run run=10153
+exec asymr delay=0 angl=163.5 run=10153 norbcm=0
+exec run run=10154
+exec asymr delay=0 angl=163.5 run=10154 norbcm=0
+call prunpri.f(10000,12000)
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+exec bcm_calib_1 n=8
+call prunpri.f(10000,12000)
+exec run run=10155
+exec asymr delay=0 angl=163.5 run=10155 norbcm=0
+call prunpri.f(10000,12000)
+exec bcm_calib_1 n=10
+call prunpri.f(10000,12000)
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+fu/pl 3.4+0.858*x+0.82e-5*x**2 -10000 20000 s
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+loca
+fu/pl 1.022*x-569. -10000 70000 s
+null -10000 20000 -10000 20000
+null -10000 20000 -10000 20000
+fu/pl 3.4+0.858*x+0.82e-5*x**2 -10000 20000 s
+fu/pl 1.022*x-569. -10000 70000 s
+exec run run=10156
+exec asymr delay=0 angl=163.5 run=10156 norbcm=0
+exec run run=10157
+exec asymr delay=0 angl=163.5 run=10157 norbcm=0
+exec asymr delay=0 angl=163.5 run=10158 norbcm=0
+exec run run=10158
+exec asymr delay=0 angl=163.5 run=10158 norbcm=0
+exec run run=10159
+exec asymr delay=0 angl=163.5 run=10159 norbcm=0
+exec run run=10160
+exec asymr delay=0 angl=163.5 run=10160 norbcm=0
+exec run run=10161
+exec asymr delay=0 angl=163.5 run=10161 norbcm=0
+call prunpri.f(10000,12000)
+exec asym_av run1=10134 run2=10141
+call prunpri.f(10000,12000)
+exec asym_av run1=10154 run2=10161
+mess $sigma(77.9/74.3)
+exec run run=10162
+exec asymr delay=0 angl=90. run=10162 norbcm=0
+exec run run=10163
+exec asymr delay=0 angl=90. run=10163 norbcm=0
+call prunpri.f(10000,12000)
+exec asym_av run1=10134 run2=10141
+call prunpri.f(10000,12000)
+call chngpol.f(74.26,163.5,159.4)
+exec asym_av run1=10154 run2=10161
+call chngpol.f(77.86,163.5,159.4)
+call prunpri.f(10000,12000)
+exec targ_angl run1=10154 run2=10161 runn1=10162 runn2=10163 i=1
+exec targ_angl run1=10154 run2=10161 runn1=10162 runn2=10163 i=2
+exec targ_angl run1=10154 run2=10161 runn1=10162 runn2=10163 i=3
+call chngpol.f(77.86,163.5,159.2)
+call chngpol.f(77.86,163.5,159.4)
+exec run run=10164
+exec asymr delay=0 angl=23. run=10164 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10165
+exec asymr delay=0 angl=23. run=10165 norbcm=0
+exec run run=10166
+exec asymr delay=0 angl=23. run=10166 norbcm=0
+exec run run=10167
+exec asymr delay=0 angl=23. run=10167 norbcm=0
+exec run run=10168
+exec asymr delay=0 angl=23. run=10168 norbcm=0
+exec run run=10169
+exec asymr delay=0 angl=23. run=10169 norbcm=0
+exec run run=10170
+exec asymr delay=0 angl=23. run=10170 norbcm=0
+exec run run=10171
+exec asymr delay=0 angl=23. run=10172 norbcm=0
+exec asymr delay=0 angl=23. run=10171 norbcm=0
+exec run run=10172
+exec asymr delay=0 angl=23. run=10172 norbcm=0
+call chngpol.f(77.86,163.5,159.2)
+exec asym_av run1=10164 run2=10172
+exec targ_angl run1=10164 run2=10172 runn1=10162 runn2=10163 i=1
+exec targ_angl run1=10164 run2=10172 runn1=10162 runn2=10163 i=2
+exec targ_angl run1=10164 run2=10172 runn1=10162 runn2=10163 i=3
+call chngpol.f(82.18,23.,17.5)
+call chngpol.f(82.18,23.,17.7)
+call chngpol.f(82.18,23.,17.5)
+exec run run=10173
+exec asymr delay=0 angl=23. run=10173 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10174
+exec asymr delay=0 angl=23. run=10174 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10175
+exec asymr delay=0 angl=23. run=10175 norbcm=0
+exec run run=10176
+exec asymr delay=0 angl=23. run=10176 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10177
+exec asymr delay=0 angl=23. run=10177 norbcm=0
+call prunpri.f(10000,12000)
+exec asym_av run1=10173 run2=10177
+exec run run=10178
+exec asymr delay=0 angl=23. run=10178 norbcm=0
+exec asym_av run1=10173 run2=10178
+mess $sigma(80.2/82.2)
+call chngpol.f(82.18,23.,17.5)
+call chngpol.f(82.18,23.,17.7)
+call prunpri.f(10000,12000)
+exec run run=10179
+exec asymr delay=0 angl=23. run=10179 norbcm=0
+exec run run=10180
+exec asymr delay=0 angl=23. run=10180 norbcm=0
+exec asym_av run1=10173 run2=10180
+exec targ_angl run1=10164 run2=10172 runn1=10162 runn2=10163 i=3
+mess $sigma(80.17/82.18)
+exec run run=10181
+exec asymr delay=0 angl=90. run=10181 norbcm=0
+exec run run=10182
+exec asymr delay=0 angl=90. run=10182 norbcm=0
+exec targ_angl run1=10173 run2=10180 runn1=10181 runn2=10182 i=1
+exec targ_angl run1=10173 run2=10180 runn1=10181 runn2=10182 i=2
+exec targ_angl run1=10173 run2=10180 runn1=10181 runn2=10182 i=3
+call chngpol.f(80.17,23.,17.7)
+exec run run=10183
+exec asymr delay=0 angl=163. run=10183 norbcm=0
+exec run run=10184
+exec asymr delay=0 angl=163. run=10184 norbcm=0
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec bcm_calib_1 n=12
+exec run run=10183
+exec run run=10185
+exec asymr delay=0 angl=163. run=10185 norbcm=0
+exec run run=10186
+exec asymr delay=0 angl=163. run=10186 norbcm=0
+exec run run=10187
+exec asymr delay=0 angl=163. run=10187 norbcm=0
+call prunpri.f(10000,12000)
+exec run run=10188
+exec asymr delay=0 angl=163. run=10188 norbcm=0
+exec run run=10189
+exec asymr delay=0 angl=163. run=10189 norbcm=0
+exec bcm_calib_1 n=12
+exec run run=10190
+exec asymr delay=0 angl=163. run=10190 norbcm=0
+call prunpri.f(10000,12000)
+mess $sigma(70*cos(15*3.14/180.))
+exec asym_av run1=10183 run2=10190
+exec targ_angl run1=10183 run2=10190 runn1=10181 runn2=10182 i=1
+exec targ_angl run1=10183 run2=10190 runn1=10181 runn2=10182 i=2
+exec targ_angl run1=10183 run2=10190 runn1=10181 runn2=10182 i=3
+call chngpol.f(73.55,163.5,159.2)
+mess $sigma((77.46+75.44)/(79.75+79.40))
+mess $sigma((77.46+75.44)/2)
+mess $sigma((79.75+79.40)/2)
+mess $sigma((77.86+82.18)/2)
+mess $sigma((73.55+80.17)/2)
+mess $sigma((77.46+75.44)/(79.75+79.40))
+call prunpri.f(10000,12000)
+exit
+*** End   of history file: Sun Feb 17 16:04:09 2002

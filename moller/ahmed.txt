@@ -1,0 +1,13 @@
+*** Begin of history file: Wed Jul 14 12:55:07 2010
+exec run run=14423
+ld //
+nt/pl //lun21/1.iadc nadc>0.and.timchan.f(1,100,110)>0
+zone 2 2
+nt/pl //lun21/1.iadc nadc>0.and.timchan.f(1,100,110)>0
+nt/pl //lun21/1.iadc nadc>0.and.timchan.f(1,100,110)>0
+nt/pl //lun21/1.iadc nadc>0.and.timchan.f(1,170,180)>0
+nt/pl //lun21/1.iadc(2) nadc>0.and.timchan.f(2,100,110)>0
+nt/pl //lun21/1.iadc(2) nadc>0.and.timchan.f(2,100,110)>0
+nt/pl //lun21/1.iadc(2) nadc>0.and.timchan.f(2,170,180)>0
+exit
+*** End   of history file: Wed Jul 14 12:58:31 2010

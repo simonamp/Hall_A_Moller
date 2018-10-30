@@ -1,0 +1,202 @@
+MACRO spin_prec_7
+
+* 
+mtxt=' E=4.588GeV '
+
+titl 'Hall A Moller Spin Precession Measurement, 4.588 GeV' 
+zone 2 2
+np=3
+
+ve/cr angle([np])  r -36.16 24.7 -7.
+ve/cr eangle([np]) r  0.5     0.5       0.5  
+ve/cr asymm([np])  r  0.692   0.537   0.715
+ve/cr easymm([np]) r  0.0015  0.0015  0.0015 
+
+ve/cr tang(2,[np])  r  
+ve/cr asymmt(2,[np])  r  
+ve/cr easymmt(2,[np]) r 
+ve/in    tang(1:2,1)  22.0     163.0  
+ve/in  asymmt(1:2,1)  0.6802  0.7005
+ve/in easymmt(1:2,1)  0.0022  0.0019
+ve/in    tang(1:2,2)  22.0     162.9  
+ve/in  asymmt(1:2,2)  0.5647  0.5067
+ve/in easymmt(1:2,2)  0.0021  0.0017
+ve/in    tang(1:2,3)  22.5     163.2  
+ve/in  asymmt(1:2,3)  0.7209  0.7151
+ve/in easymmt(1:2,3)  0.0022  0.0016
+
+ve/cr xerr([np]) r
+
+null -40 30 0.4 0.8 
+text -30 0.6 [mtxt] 0.25 0. !
+
+gr/hpl/err angle asymm eangle easymm [np] 20 0.1
+atit 'Angle ' 'Beam Polarization (preliminary)'
+set dmod 2
+ve/cr par(10) r 0.7 0.
+ve/cr epar(10) r 
+* f/pl  sin((x-28.6)/180*3.1415)*0.386 -180 180 s
+* f/pl -sin((x-39)/180*3.1415)*0.386 -180 180 s
+set dmod 3
+line -120 0 120 0
+
+ve/cr ipfit(1) i
+ve/in par(1:2) 0.7 -60. 
+set dmod 1
+n1=1
+ve/fit angle([n1]:[np]) asymm([n1]:[np]) easymm([n1]:[np]) wave.f s 2 par ! ! ! epar
+a=par(1)
+b=par(2)
+b=-[b]
+f/pl [a]*sin((x+[b])/180*3.1415) -120 120 s
+do ip=1,[np]
+  x=angle([ip])
+  ex=eangle([ip])
+  ep=$SIGMA([a]*SIN(([x]+[b])*3.1415/180.)*[ex]*3.1415/180.)
+  ep0=easymm([ip])
+  mess [a] [b] [ex] [ep] [ep0]
+  ep=$SIGMA(SQRT([ep]*[ep]+[ep0]*[ep0]))
+  mess [a] [b] [ex] [ep] [ep0]
+  ve/in easymm([ip]) [ep]
+enddo
+null -40 30 0.4 0.8 
+gr/hpl/err angle asymm eangle easymm [np] 20 0.1
+atit 'Angle ' 'Beam Polarization (preliminary)'
+set dmod 2
+ve/cr par(10) r 0.7 0.
+* f/pl  sin((x-28.6)/180*3.1415)*0.386 -180 180 s
+* f/pl -sin((x-39)/180*3.1415)*0.386 -180 180 s
+set dmod 3
+line -120 0 120 0
+
+ve/in par(1:2) 0.7 60. 
+set dmod 1
+n1=1
+ve/fit angle([n1]:[np]) asymm([n1]:[np]) easymm([n1]:[np]) wave.f s 2 par ! ! ! epar
+a=par(1)
+b=par(2)
+w0=[b]+90.
+ew0=epar(2)
+b=-[b]
+text -30 0.6 [mtxt] 0.25 0. !
+
+f/pl [a]*sin((x+[b])/180*3.1415) -120 120 s
+* exitm
+polrec=[a]
+
+ve/cr par(10) r
+ve/cr epar(12) r
+
+ ve/cr ipfit(10) i
+ ve/in ipfit(2) 0
+ ve/in ipfit(3) 0
+ ve/in ipfit(4) 0
+ ve/in ipfit(5) 2
+
+*
+* Comis routine to fit the superposition of the longitudinal and transverse polarizations
+* to the data. 
+*
+ Application COMIS quit
+      REAL FUNCTION POLZX(X)
+C
+C---    Superposition of the the longitudinal and transverse polarizations
+C---    X - taget angle in degrees
+C---    IPFIT(2)=0 : PAR(1) - full beam polarization
+C---            =1 :          Pz
+C
+      IMPLICIT NONE
+      REAL X
+      COMMON/PAWPAR/ PARA(10)
+      VECTOR PAR(10)
+      VECTOR IPFIT(10)
+C
+      INTEGER i
+      REAL rdeg,thb,tht,p1,p2,p3,tpolf,tht0,deadt
+C
+      rdeg=3.1415/180. 
+      tht=X*rdeg
+      p1=PAR(2)
+      p2=PARA(1)
+      p3=PAR(3)
+C      IF(IPFIT(5).GE.3) p3=PARA(3)
+C      IF(IPFIT(5).GE.2) p1=PARA(2)
+      IF(IPFIT(1).NE.0) THEN
+        p1=PAR(2)
+        p2=PAR(1)
+        p3=PAR(3)
+      ENDIF
+      thb=p2*rdeg
+      IF(IPFIT(2).NE.0) THEN
+         p1=p1/COS(thb)
+      ENDIF
+      tpolf=1.
+      IF(IPFIT(3).NE.0) THEN
+C---         Magnetization correction
+         tht0=20.*rdeg
+         tpolf=1.+(0.2/7.8)/(100./260.)*(COS(tht)/COS(tht0)-1.)
+      ENDIF
+      deadt=1.
+      IF(IPFIT(4).NE.0) THEN
+C---         Dead time correction
+         tht0=20.*rdeg
+C         IF(p3.NE.0.11) write(6,*) 'p1-3=',p1,p2,p3,p3,(PARA(i),i=1,3)
+         deadt=1.-p3*ABS(SIN(tht0)/SIN(tht))
+      ENDIF
+      POLZX=p1*tpolf*deadt*(COS(thb)+1./7.*SIN(thb)*TAN(tht))
+C
+      END
+ Quit
+
+ve/cr  eangle1([np]) r 
+ve/oper/vbias eangle1  [ew0] eangle1 
+ww0=-[w0]
+ve/oper/vbias angle  [ww0] angle1 
+ve/oper/vsca  angle1 -1. angle1 
+ve/cr  wang([np]) r
+ve/cr ewang([np]) r
+ve/cr  ta(2) r
+ve/cr  pp(1) r
+ve/cr epp(1) r
+
+do i=1,[np]
+  do j=1,2
+    a=tang([j],[i])
+    if [a]<90. then
+      a=-[a]
+    else
+      a=$SIGMA(180.-[a])
+    endif
+    ve/in ta([j]) [a]
+  enddo
+  ve/in par(1:2) 0. [polrec] 
+  ve/pri par
+  ve/in ipfit(1) 0
+  ve/fit ta(1:2) asymmt(1:2,[i]) easymmt(1:2,[i]) polzx 0 1 par ! ! ! epar
+*  null -25 25 0.4 0.8
+*  gr/hpl/err ta asymmt(1:2,[i]) err easymmt(1:2,[i]) 2 20 0.1
+*  ve/in ipfit(1) 1
+*  ve/in par(1:2) -45. [polrec] 
+*  fu/pl polzx -25 25 s
+  w=par(1)
+  ww=angle1([i])
+  mess [w] [ww] [w0] [ww0]
+  w=$SIGMA([w]+(-1.)*[ww])
+  ve/in  wang([i]) [w]
+  w=epar(1)
+  ww=eangle1([i])
+  w=$SIGMA(SQRT([w]**2+[ww]**2))
+  ve/in ewang([i]) [w]
+
+enddo
+
+null -60 60 -2.5 2.5
+gr/hpl/err angle1 wang eangle1 ewang 3 20 0.3
+atit 'Spin angle to Z (Wien) [Q]?WIEN!, deg' 'Spin angle from transv. [Q]?TRANSV!-[Q]?WIEN!, deg'
+set dmod 2
+line -60 0 60 0
+set dmod 2
+RETURN
+
+
+

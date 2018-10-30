@@ -1,0 +1,86 @@
+MACRO cal_lucite_fil i1=1 i2=5 id=1000 fill=1
+
+*
+*    Fill the histograms for the lucite counters
+*
+  titl 'Lucite 2cm x4cm Aug,20 1999'
+
+  if [fill]=0 then
+     goto plot
+  endif
+
+  cut $21 nadc>0.and.iadc(3)+iadc(4)<120.and.iadc(7)>200.and.iadc(8)>0
+  cut $31 nadc>0.and.iadc(7)+iadc(8)<120.and.iadc(3)>200.and.iadc(4)>0
+
+  cut $22 nadc>0.and.iadc(24)+iadc(28)<120.and.iadc(7)>200.and.iadc(8)>0
+  cut $32 nadc>0.and.iadc(7)+iadc(8)<120.and.iadc(28)>200.and.iadc(4)>0
+
+  cut $23 nadc>0.and.iadc(23)+iadc(27)<120.and.iadc(7)>200.and.iadc(8)>0
+  cut $33 nadc>0.and.iadc(7)+iadc(8)<120.and.iadc(27)>200.and.iadc(4)>0
+
+  cut $24 nadc>0.and.iadc(3)+iadc(4)<120.and.iadc(26)>200.and.iadc(8)>0
+  cut $34 nadc>0.and.iadc(22)+iadc(26)<120.and.iadc(3)>200.and.iadc(4)>0
+
+  cut $25 nadc>0.and.iadc(3)+iadc(4)<120.and.iadc(25)>200.and.iadc(8)>0
+  cut $35 nadc>0.and.iadc(21)+iadc(25)<120.and.iadc(3)>200.and.iadc(4)>0
+
+  p1=43.
+  p2=42.
+
+  do ip=[i1],[i2]
+    lun=pos//[ip]
+    id0=[id]+100*[ip]
+    x1=xhit([ip],1)
+    x2=[x1]+8.
+    ve/in xhit([ip],2) [x2]
+
+    do is=1,2
+      ccut=10+[ip]+[is]*10
+      x=xhit([ip],[is])
+      id00=[id0]+[is]*10
+
+      id1=[id00]+1
+      htit='Lucite 1 pos '//[ip]//' x='//[x]
+      1dh [id1] [htit] 150 0 300
+      id2=[id00]+2
+      htit='Lucite 2 pos '//[ip]//' x='//[x]
+      1dh [id2] [htit] 150 0 300
+
+      nt/pl //[lun]/1.iadc(30)-[p1] $[ccut].and.iadc(29)>60 ! ! ! N [id1]
+      nt/pl //[lun]/1.iadc(29)-[p2] $[ccut].and.iadc(30)>60 ! ! ! N [id2]
+
+      do j=1,2
+        idd=[id00]+[j]
+        amx=$HINFO([idd],'MAX')
+        ve/in par(1:3) [amx] 30 12.
+        ve/pri par
+        h/fit [idd] g ' ' 3 par ! ! ! err 
+	a=par(2)
+        e=err(2)
+        if [j]=1 then
+          ve/in  ahit1([ip],[is]) [a]
+          ve/in eahit1([ip],[is]) [e]
+        else
+          ve/in  ahit2([ip],[is]) [a]
+          ve/in eahit2([ip],[is]) [e]
+        endif
+      enddo
+
+    enddo    
+  enddo
+
+
+  plot:
+ 
+  n=5
+  n1=2
+  null 0 52 10 60
+  atit 'Distance from the PM, cm' 'Amplitude (lucite)'
+  do j=1,2
+   s=20
+   gr/hpl/err xhit([n1]:[n],[j]) ahit1([n1]:[n],[j]) exhit([n1]:[n],[j]) eahit1([n1]:[n],[j]) [n] [s] 0.2
+   s=24
+   gr/hpl/err xhit([n1]:[n],[j]) ahit2([n1]:[n],[j]) exhit([n1]:[n],[j]) eahit2([n1]:[n],[j]) [n] [s] 0.2
+  enddo
+
+RETURN

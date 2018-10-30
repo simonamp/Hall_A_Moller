@@ -1,0 +1,8 @@
+*** Begin of history file: Sat May  5 10:39:04 2012
+exec asym11 run=15434
+exec asym_avt1
+exec spin_prec_17
+exec spin_prec_17
+mess $sigma(87.19-180)
+exit
+*** End   of history file: Sat May  5 11:09:14 2012

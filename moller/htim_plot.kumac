@@ -1,0 +1,8 @@
+MACRO htim_plot lun=0 ch=1
+* plots timing histo from TDC channel = [ch]
+
+1dh 210 'time' 1000 0 1000
+nt/loop //[lun]/1 nadc>0.and.gettim.f([ch],210)>0 
+h/pl 210
+
+RETURN

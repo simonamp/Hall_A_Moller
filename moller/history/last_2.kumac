@@ -1,0 +1,81 @@
+*** Begin of history file: Wed Jun 22 14:07:12 2005
+exec run run=11756
+aexec asyms run=11756
+zone 2 2
+exec asyms run=11756 delay=0
+shell
+exec asyms run=11756 angl=20.0 delay=0
+exec asyms run=11755 angl=20.0 delay=0
+exec run run=11755
+exec asyms run=11755 angl=20.0 delay=0
+call prunpri.f(11000,12000)
+exec run run=11750
+exec run run=11751
+exec asyms run=11750 angl=20.0 delay=0
+exec asyms run=11751 angl=20.0 delay=0
+call prunpri.f(11000,12000)
+exec run run=11747
+exec run run=11748
+exec run run=11749
+exec asyms run=11747 angl=20.0 delay=0 ptar=0.08212
+exec asyms run=11748 angl=20.0 delay=0 ptar=0.08212
+exec asyms run=11749 angl=20.0 delay=0 ptar=0.08212
+call prunpri.f(11000,12000)
+exec run run=11752
+exec run run=11753
+exec run run=11754
+exec asyms run=11752 angl=20.0 delay=0 ptar=0.07426
+exec asyms run=11753 angl=20.0 delay=0 ptar=0.07426
+exec asyms run=11754 angl=20.0 delay=0 ptar=0.07426
+call prunpri.f(11000,12000)
+exec run run=11745
+exec run run=11746
+exec asyms run=11745 angl=20.0 delay=0 ptar=0.07965
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965
+call prunpri.f(11000,12000)
+mess $sigma(2/131.)
+mess $sigma(6.28/180.*20.)
+mess $sigma(3.1416/180.*20.)
+mess $sigma(cos(.35)/sin(.35))
+mess $sigma(0.01/2.7)
+mess $sigma(0.01/2.7*cos(.35))
+mess $sigma(0.01/2.7)
+mess $sigma(9./42)
+mess $sigma(1301/4551.)
+mess $sigma(1301/4870./(1319/4867.))
+mess $sigma(cos(.35))
+call prunpri.f(11000,12000)
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.07965
+call prunpri.f(11000,12000)
+exec lg_spectra run=11755 cut=11
+exec lg_spectra run=11755 icut=200 cut=11
+exec lg_spectra run=11756 icut=200 cut=11
+exec lg_spectra run=11755 icut=200 cut=11
+exec time run=11755
+exec time run=11756
+exec time run=11755 n1=150 n2=190
+exec time run=11756 n1=150 n2=190
+exec time run=11755 n1=150 n2=190 clear=0
+cd //pawc
+h/li
+h/pl 1175501
+h/pl 11755201
+zone 2 2
+h/pl 11755201
+h/pl 11755201(1:250)
+h/pl 11755201(1:250)
+h/pl 11755201(1:250)
+h/pl 11755201(1:250)
+h/pl 11755203(1:250)
+opt logy
+h/pl 11755201(1:250)
+h/pl 11755201(1:250)
+h/pl 11755201(1:250)
+h/pl 11756201(1:250)
+h/pl 11755202(1:250)
+h/pl 11756202(1:250)
+exec run run=11190
+exec asyms run=11190 angl=20.0
+call prunpri.f(11000,12000)
+exit
+*** End   of history file: Wed Jun 22 18:20:09 2005

@@ -1,0 +1,18 @@
+MACRO all_av
+
+   n1=4385
+   n2=4413
+   nn=[n2]-[n1]+1
+
+   ve/cr killrun([nn]) i 
+
+   k=0
+   do i=[n1],[n2]
+     if [i].GT.4393 .AND. [i].LT.4402 then
+       k=[k]+1 
+       ve/in killrun([k]) [i]
+     endif
+   enddo
+
+     exec asym_av run1=[n1] run2=[n2] kill=1 iofs=4000
+RETURN

@@ -1,0 +1,35 @@
+*** Begin of history file: Tue Sep 29 19:17:17 2009
+exec run run=13583
+exec lg_spectra run=13583
+exec lg_spectra run=13583
+exec lg_spectra run=13583 icut=0
+shell less lg_spectra.kumac
+exec lg_spectra run=13583 icut=0 ped=0
+exec run run=13584
+exec lg_spectra run=13584 icut=0 ped=0
+ld //
+nt/pl //lun22/1.iadc(7) nadc>0
+zone 2 2
+nt/pl //lun22/1.iadc(7) nadc>0
+nt/pl //lun22/1.iadc(1) nadc>0
+nt/pl //lun22/1.iadc(3) nadc>0
+nt/pl //lun22/1.iadc(3) nadc>0
+nt/pl //lun22/1.iadc(2) nadc>0
+nt/pl //lun22/1.iadc(4) nadc>0
+nt/pl //lun22/1.iadc(5) nadc>0
+nt/pl //lun22/1.iadc(6) nadc>0
+nt/pl //lun22/1.iadc(7) nadc>0
+nt/pl //lun22/1.iadc(8) nadc>0
+exec run run=13585
+exec lg_spectra run=13585 icut=0 ped=0
+nt/pl //lun22/1.iadc(8) nadc>0
+zone 2 2
+nt/pl //lun22/1.iadc(8) nadc>0
+nt/pl //lun23/1.iadc(8) nadc>0
+exec run run=13586
+exec lg_spectra run=13586 icut=0 ped=0
+nt/pl //lun24/1.iadc(8) nadc>0
+zone 2 2
+nt/pl //lun24/1.iadc(8) nadc>0
+exit
+*** End   of history file: Tue Sep 29 19:42:16 2009

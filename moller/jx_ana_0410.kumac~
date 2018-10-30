@@ -1,0 +1,10 @@
+MACRO temp1  run1=14845 run2=14889
+
+     do i=[run1],[run2]
+   exec asym10 anpow=0.760  run=[i] 
+     enddo
+
+RETURN
+
+
+

@@ -1,0 +1,63 @@
+MACRO hv_4
+
+*
+* === HV calibration,  Oct,2000
+* ===                  June,2001 nm=5-7
+  nm=7
+  nl=8
+
+  ve/cr ena([nm]) r
+  ve/cr hva([nl],[nm]) r
+  ve/cr ampa([nl],[nm]) r
+  ve/cr lampae([nm],[nl]) r
+  ve/cr lhva([nm],[nl]) r
+
+
+  ve/in ena(1:7) 4*4.615 3*5.738
+  ve/in  hva(1:8,1) 8*1800
+  ve/in ampa(1:8,1)   64 293 280 446 429 430 273 200
+  ve/in  hva(1:8,2) 8*1850
+  ve/in ampa(1:8,2)   94 420 420 641 607 607 383 306
+  ve/in  hva(1:8,3) 8*1900
+  ve/in ampa(1:8,3)  150 594 594 887 798 866 535 480
+  ve/in  hva(1:8,4) 1987 1803 1808 1744 1744 1751 1814 1846
+  ve/in ampa(1:8,4)  285  251  250  242  217  220  250  272 
+  ve/in  hva(1:8,5) 1964 1786 1791 1737 1746 1751 1794 1824
+  ve/in ampa(1:8,5)  195. 194. 193. 202. 216. 201. 254. 169.
+  do i=1,8
+    a=hva([i],5)
+    a=$SIGMA([a]+50)
+    ve/in hva([i],6) [a]
+  enddo
+  ve/in ampa(1:8,6)  284.  275.  283.  294.  310.  306.  358.  261
+  do i=1,8
+    a=hva([i],6)
+    a=$SIGMA([a]+50)
+    ve/in hva([i],7) [a]
+  enddo
+  ve/in ampa(1:8,7)  398.  397.  421.  433.  446.  469.  510.  386.
+  
+*  do il=1,[nl]
+*    a=hva([il],1)
+*    b=[a]+25
+*    c=[a]+50
+*    ve/in hva([il],2) [b]
+*    ve/in hva([il],3) [c]
+*  enddo
+
+  do im=1,[nm]
+    e=ena([im]) 
+    do il=1,[nl]
+      a=ampa([il],[im])
+      h=hva([il],[im])
+      b=$SIGMA(LOG10([a]/[e]))
+      ve/in lampae([im],[il]) [b]
+      b=$SIGMA(LOG10([h]))
+      ve/in lhva([im],[il]) [b]
+    enddo
+  enddo
+
+RETURN
+
+
+

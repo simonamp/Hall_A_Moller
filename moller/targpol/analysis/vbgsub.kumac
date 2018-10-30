@@ -1,0 +1,237 @@
+MACRO vbgsub nd=1000 da=0 tune=0 nshift=21 dastep=0.2E-4 spline=0 n1=0 n2=0 
+*
+* ---  Fro magnetic measurements: ADC spectra analysis
+* --- Subtract the background
+*
+
+ nl=$VDIM(vtmp)
+ if [nl]<3 then
+    mess vbgsub.kumac nl=[nl] is too short. Skipped.
+    exitm
+ endif
+
+ if [n1]=0 .AND. [n2]=0 then
+  * Get the peaks position if needed (n1=n2=0)
+   exec vpeaks
+
+   p=vtmppk(1,1)
+   w=vtmppk(2,1)
+   ip1=$SIGMA(INT([p]+0.5))
+   n1=$SIGMA(INT([p]-[w]*100+0.5))
+
+   p=vtmppk(1,2)
+   w=vtmppk(2,2)
+   ip2=$SIGMA(INT([p]+0.5))
+   n2=$SIGMA(INT([p]+[w]*100+0.5))
+
+   if [n1]<1 .OR. [n1]>[nl] .OR. [n2]<=[n1] .OR. [n2]>[nl] then
+      mess vbgsub.kumac wrong n1,n2 = [n1] [n2]
+      exitm
+   endif
+ endif
+
+ mess Limits [n1] [n2] 
+
+* n1=1000 
+* n2=1001
+
+ if [nd]<500 .OR. $SIGMA(MOD([nd],500))>0 then
+    mess vbgsub.kumac  nd = [nd] is not the regular one
+*    exitm
+ endif
+ 
+ if $VDIM(vtmpp,1)<>[nd] then
+   if $VDIM(vtmpp,1)>0 then
+     ve/del vtmpp
+   endif
+   ve/cr vtmpp([nd]) r
+   ve/cr vtmpps([nd]) r
+   ve/cr vtmpp1([nd]) r
+ endif
+ ve/in vtmpps [nd]*0
+
+ if $VDIM(vtmps,1)<>[nl] then
+   if $VDIM(vtmps,1)>0 then
+     ve/del vtmps
+   endif
+   ve/cr vtmps([nl]) r
+ endif
+ ve/in vtmps [nl]*0
+
+ if [tune]>0 then
+   if $VDIM(vtmpss,1)<>[nshift] then
+     if $VDIM(vtmpss,1)>0 then
+       ve/del vtmpss
+     endif
+     ve/cr vtmpss([nshift]) r
+   endif
+   if $VDIM(vtmpbs,1)<>[nshift] then
+     if $VDIM(vtmpbs,1)>0 then
+       ve/del vtmpbs
+     endif
+     ve/cr vtmpbs([nshift]) r
+   endif
+   dastep=$SIGMA([dastep]*[nd])
+   da2=$SIGMA(([nshift]-1)/2.*[dastep])
+   da1=-[da2]
+   da=[da1]
+ endif
+
+ kmx=$SIGMA(INT(real([nl])/[nd])+2)
+
+ ishif=0
+ 
+
+ loopshift:
+
+ if [tune]>0 then
+   ishif=[ishif]+1
+ endif
+
+ nkk=0
+ ve/in vtmpps [nd]*0
+
+ kadd=0
+ jadd=0
+
+ k1=1
+ do i=1,[kmx]
+   k2=[k1]+[nd]-1
+   if [k2]>[nl] then
+     goto endloop1
+   endif
+   if [k2]<[n1] .OR. [k1]>[n2] then
+     nkk=[nkk]+1
+     ve/cop vtmp([k1]:[k2]) vtmpp
+     ve/op/vadd vtmpp vtmpps vtmpps
+   endif
+   k1=[k2]+1
+   kadd=[kadd]+1
+   if [da]<>0. then
+*     add=$SIGMA([da]*[kadd])
+     add=[da]*[kadd]
+     iadd=$SIGMA(1*INT([add]))
+*     mess iadd=[iadd]= jadd=[jadd]=
+     iadda=$SIGMA(1*abs([iadd]))
+     jadda=$SIGMA(1*abs([jadd]))
+*       mess i=[i] k1=[k1] [da] [add] [iadd] [jadd] [iadda] [jadda]
+     IF [iadda]>[jadda] then
+*       madd=$SIGMA(SIGN(1,[jadd]))
+       madd=$SIGMA([iadd]-[jadd])
+*       mess Shift k1=[k1] by [i] [da] [madd] [add] [iadd] [jadd] [iadda] [jadda]
+       k1=$SIGMA([madd]+[k1])
+       jadd=[iadd]
+     endif
+   endif
+ enddo
+ endloop1:
+
+ sca=$SIGMA(1./[nkk])
+ ve/op/vsca vtmpps [sca] vtmpps
+ mess BG averaged over [nkk] intervals
+
+ if [spline]>0 then
+   
+   if $VDIM(vtmp2,1)<>[nl] then
+     ve/del vtmp2
+   endif
+   ve/cop vtmp vtmp2
+   ve/del vtmp
+   ve/cop vtmpps vtmp
+   nodes=$SIGMA(INT([nd]/6.+0.1))
+   exec vsmooth nodes=[nodes]
+   ve/del vtmp
+   ve/cop vtmp2 vtmp
+   ve/cop vtmpf vtmpps
+ endif
+
+ kadd=0
+ jadd=0
+
+ k1=1
+ do i=1,[kmx]
+   k2=[k1]+[nd]-1
+   nd1=[nd]
+   if [k2]>[nl] then
+     k2=[nl]
+     nd1=[k2]-[k1]+1
+   endif
+   ve/cop vtmpps(1:[nd1]) vtmps([k1]:[k2])
+   k1=[k2]+1
+
+   kadd=[kadd]+1
+   add=$SIGMA([kadd]*([da]))
+   iadd=$SIGMA(INT([add]))
+   IF $SIGMA(ABS([iadd]))>$SIGMA(ABS([jadd])) then
+*     madd=$SIGMA(SIGN(1,[jadd]))
+     madd=$SIGMA([iadd]-[jadd])
+*     mess Shift k1=[k1] by [madd] , fill [k1] if needed
+     if [madd]>0 .AND. [k1]<=[nl] then
+       ve/in vtmps([k1]) vtmpps(1) 
+     endif
+     k1=$SIGMA([madd]+[k1])
+     jadd=[iadd]
+   endif
+
+   if [k1]>[nl] then
+     goto endloop2
+   endif
+ enddo
+ endloop2:
+
+ if $VDIM(vtmp1,1)<>[nl] then
+   if $VDIM(vtmp1,1)>0 then
+     ve/del vtmp1
+   endif
+   ve/cr vtmp1([nl]) r
+ endif
+
+ ve/op/vsub vtmp vtmps vtmp1
+
+* Find the average and RMS of the BG part
+ if [n1]>0 then
+   nbg=[n1]+[nl]-[n2]+1
+   if $VDIM(vtmpbg,1)<>[nbg] then
+     ve/cr vtmpbg([nbg]) r
+   endif
+   n11=[n1]+1
+   ve/cop vtmp1(1:[n1]) vtmpbg(1:[n1])
+   ve/cop vtmp1([n2]:[nl]) vtmpbg([n11]:[nbg])
+   av=$SIGMA(vsum(vtmpbg)/[nbg])
+   if $VDIM(vtmpb2,1)<>[nbg] then
+     ve/cr vtmpb2([nbg]) r
+   endif
+   ve/op/vmul vtmpbg vtmpbg vtmpb2
+   rms=$SIGMA(SQRT(vsum(vtmpb2)/[nbg]-[av]**2))
+
+   avs=$SIGMA((-.1)*vsum(vtmpps)/[nd])
+   adv=$SIGMA(MAX(ABS(vmin(vtmpps)-[avs]),ABS(vmax(vtmpps)-[avs])))
+ endif
+* mess adv=[adv] 
+
+ if [tune]>0 then
+   mess Shift $FORMAT([ishif],I3) $FORMAT([da],F7.3) $FORMAT([av],E12.4) $FORMAT([rms],E12.4)
+   ve/draw vtmpps
+   if [ishif]<=[nshift] then
+     ve/in vtmpss([ishif]) [rms]
+   endif
+   if [ishif]<[nshift] then
+     da=$SIGMA([da]+[dastep])
+     goto loopshift
+   elseif [ishif]=[nshift] then
+     is=$SIGMA(lvmin(vtmpss))
+     da=$SIGMA([da1]+([is]-1)*[dastep])
+     goto loopshift
+   endif
+
+   mess Optimal shift=[da] ishift=[is] rms=[rms]
+
+ endif
+    
+ if $VDIM(vstatus,1)>2 then
+*  Relative shift in the 60Hz noise period with respect to the ADC clock
+   a=$SIGMA([da]/[nd])
+   ve/in vstatus(3) [a]
+ endif
+
+RETURN

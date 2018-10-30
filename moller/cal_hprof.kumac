@@ -1,0 +1,16 @@
+MACRO cal_hprof lun=lun21 t1=190 t2=205 id=800 cut=0
+  
+   1dh [id] 'Hodoscope profile' 16 1 17
+   id1=[id]+10
+   1dh [id1] 'Hodoscope multiplicity' 16 1 17
+
+   if [cut]=0 then
+     nt/loop //[lun]/1 nadc>0.and.cal_hprof.f([t1],[t2],[id])>-1
+     nt/pl //[lun]/1.cal_hmul.f(17,32,[t1],[t2]) nadc>0 -[id1]
+   else
+     nt/loop //[lun]/1 nadc>0.and.$[cut].and.cal_hprof.f([t1],[t2],[id])>-1
+     nt/pl //[lun]/1.cal_hmul.f(17,32,[t1],[t2]) nadc>0.and.$[cut] -[id1]
+   endif
+   h/pl [id]
+
+RETURN

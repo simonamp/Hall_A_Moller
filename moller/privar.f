@@ -1,0 +1,19 @@
+      REAL FUNCTION PRIVAR(IPR)
+C
+C=== Prints some variables from ntuple
+C
+      IMPLICIT NONE
+      INTEGER IPR
+      INCLUDE ?
+C
+      PRIVAR=1.
+      IF(NADC.EQ.0) THEN
+         WRITE(6,1000) IDNEVT,ITRIG,ITICK,'Clock=',ISCA(15)
+      ELSE
+         WRITE(6,1000) IDNEVT,ITRIG,ITICK,'Helic=',IADC(12)
+      ENDIF
+C
+ 999  CONTINUE
+ 1000 FORMAT(2X,I5,2X,8I2,2X,I10,2X,A6,I10)
+      END
+

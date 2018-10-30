@@ -1,0 +1,36 @@
+MACRO plot_all lun=1 id0=0 adc=0
+  
+  ve/cr idd0(1) i [id0]
+
+ if [adc]>0 then
+  do i=1,12
+    id=[id0]+100+[i]
+    tit='ADC '//[i]//' close to pedestal' 
+    1dh [id] [tit] 150 0. 150.
+    nt/pl //lun[lun]/1.iadc([i]) nadc=12 -[id]
+    id=[id0]+120+[i]
+    1dh [id] 'ADC wide' 256 0. 1024.
+    nt/pl //lun[lun]/1.iadc([i]) nadc=12 -[id]
+  enddo
+ endif
+
+  do i=1,32
+    id=[id0]+200+[i]
+    1dh [id] 'time' 1100 0. 1100.
+  enddo
+  do i=1,32
+    id=[id0]+300+[i]
+    1dh [id] 'time min hit' 300 0. 300.
+  enddo
+  do i=1,32
+    id=[id0]+400+[i]
+    1dh [id] 'TDC hits per channel' 17 0. 17.
+  enddo
+  id=[id0]+340
+  1dh [id] 'total hits in each channel' 32 1. 33.
+  id=[id0]+350
+  2dh [id] 'time min 1 vs 2 ' 100 100. 200. 100 100. 200. 16000.
+
+  nt/loop //lun[lun]/1 rdntup.f(1.)>0 
+
+RETURN

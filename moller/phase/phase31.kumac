@@ -1,0 +1,28 @@
+MACRO phase
+
+ ve/re run,phase,bcur  phase31.dat
+
+ fort/fil 56 phase31.ps
+ meta 56 -112
+
+ zone 
+ opt nbox
+ opt nstat
+ nr=$sigma(NCO(run))
+ sigma err=array([nr],0.1#0.1)
+ set mtyp 20
+
+ null -178. -133. -0.05 5.5
+ set xlab 1.4
+ ve/pl bcur%phase ! s
+ atitle 'Laser Phase, deg' 'Beam Current, uAmp' 
+ itx -162. 0.4 'regular'
+ arrow -163.3 -163.3 0.3 0.6 0.11 
+ selnt 1
+ text 10. 18.5 'Hall A laser phase dependence' 0.4 0 C 
+ text 10.  6.0 'Attenuator=100 Slit=23.7' 0.4 0 C  
+ selnt 10
+
+ close 56
+
+RETURN

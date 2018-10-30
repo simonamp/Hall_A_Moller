@@ -1,0 +1,169 @@
+MACRO compton_moller
+*
+* === Comparison of the Compton and Moller results
+*
+  mxex=1  
+  mxpn=160
+
+  ve/cr datm([mxpn],[mxex]) r  
+  ve/cr datc([mxpn],[mxex]) r  
+  ve/cr  rmol([mxpn],[mxex]) r  
+  ve/cr ermol([mxpn],[mxex]) r  
+  ve/cr  rcom([mxpn],[mxex]) r  
+  ve/cr ercom([mxpn],[mxex]) r  
+
+  ve/cr xerr([mxpn]) r
+
+  ngep=300
+  ve/cr vd1([ngep]) i 
+  ve/cr vd2([ngep]) i 
+  ve/cr vd3([ngep]) i 
+  ve/cr vd4([ngep]) i 
+  ve/cr vd5([ngep]) i 
+  ve/cr po1([ngep]) r
+  ve/cr po2([ngep]) r
+
+*   --------  GeP
+  iexgep=1
+
+  ve/read vd1,vd2,vd3,vd4,vd5,po1,po2 'compton_gep.out' '1X,2I3,I5,2I3,2X,2F5.1'  
+
+  nc=$VLEN(vd3,1)
+  do i=1,[nc]
+    a1=vd1([i])
+    a2=vd2([i])
+    a4=vd4([i])
+    a5=vd5([i])
+    a=$SIGMA(([a1]-1)+([a2]-11)*30+[a4]/24.+[a5]/60./24.)
+    ve/in datc([i],[iexgep]) [a]
+    a=po1([i])
+    a=$SIGMA(ABS([a]))
+    ve/in rcom([i],[iexgep]) [a]
+    a=po2([i])
+    ve/in ercom([i],[iexgep]) [a]
+  enddo
+
+  ve/in vd3 [ngep]*0
+  ve/read vd1,vd2,vd3,vd4,vd5,po1,po2 'moller_gep.out' '1X,2I3,I5,2I3,2X,2F5.1'  
+
+  nm=$VLEN(vd3,1)
+  do i=1,[nm]
+    a1=vd1([i])
+    a2=vd2([i])
+    a4=vd4([i])
+    a5=vd5([i])
+    at=$SIGMA(([a1]-1)+([a2]-11)*30+[a4]/24.+[a5]/60./24.)
+    ve/in datm([i],[iexgep]) [at]
+    a=po1([i])
+    a=$SIGMA(ABS([a]))
+    ve/in rmol([i],[iexgep]) [a]
+    b=po2([i])
+*    Increase the error for the laser leak
+*    if [at]<36 then
+*      b=$SIGMA(SQRT([b]**2+([a]*0.06)**2))
+*    elseif [at]<45 then
+*      b=$SIGMA(SQRT([b]**2+([a]*0.02)**2))
+*    endif
+    ve/in ermol([i],[iexgep]) [b]
+  enddo
+
+  set xmgl 3.
+  set asiz 0.35
+  set xlab 1.8
+  set csiz 0.35
+  set xwin 3
+  opt ndat
+  titl ' '
+
+  null 0 50 60 85
+  text 25 84 'GE?P!(II)' 0.4 0 'C'
+  atit 'Day, started from Nov,1 2000' 'Beam Polarization, "Y#'
+  igset pmci 2
+  set   hcol 2
+  gr/hpl/err datc(1:[nc],[iexgep]) rcom(1:[nc],[iexgep]) xerr(1:[nc]) ercom(1:[nc],[iexgep]) [nc] 20 0.15  
+  set ksiz 0.15
+  gr/hpl/key 5 83 20 'Compton A'
+*
+* ---   Average Compton over 3 periods
+*
+  ve/cr ncomav(3) i  
+  ve/cr dcomav(3) r
+  ve/cr rcomav(3) r
+  ve/cr ercomav(3) r
+  do i=1,[nc]
+    at=datc([i],[iexgep])
+    if [at]<25 then
+      k=1
+    elseif [at]<42.3 then
+      k=2
+    else
+      k=3
+    endif
+    p=rcom([i],[iexgep])
+    ep=ercom([i],[iexgep])
+    a=ncomav([k])
+    a=[a]+1
+    ve/in ncomav([k]) [a]
+    a=dcomav([k])
+    a=$SIGMA([a]+[at])
+    ve/in dcomav([k]) [a]
+    a=rcomav([k])
+    a=$SIGMA([a]+[p])
+    ve/in rcomav([k]) [a]
+    a=ercomav([k])
+    a=$SIGMA([a]+[ep]**2)
+    ve/in ercomav([k]) [a]
+  enddo
+  do k=1,3
+    n=ncomav([k])
+    a=dcomav([k])
+    a=$SIGMA([a]/[n])
+    ve/in dcomav([k]) [a]
+    a=rcomav([k])
+    a=$SIGMA([a]/[n])
+    ve/in rcomav([k]) [a]
+    a=ercomav([k])
+    a=$SIGMA(SQRT([a])/[n])
+    ve/in ercomav([k]) [a]
+  enddo
+  igset pmci 3
+  set   hcol 3
+  gr/hpl/err dcomav rcomav xerr ercomav 3 20 0.2  
+  set ksiz 0.2
+  gr/hpl/key 30 83 20 'Averaged'
+
+  igset pmci 4
+  set   hcol 4
+  gr/hpl/err datm(1:[nm],[iexgep]) rmol(1:[nm],[iexgep]) xerr(1:[nm]) ermol(1:[nm],[iexgep]) [nm] 21 0.2  
+  set ksiz 0.2
+  gr/hpl/key 5 82 21 'Moller A'
+
+*  Correct for the laser leak
+  nm1=0
+  do i=1,[nm]
+    at=datm([i],[iexgep])
+    a=rmol([i],[iexgep])
+    if [at]<45 then
+      nm1=[nm1]+1
+      coef=1.016
+      if [at]<36 then
+        coef=1.06
+      endif
+      a=$SIGMA([a]*[coef])      
+      ve/in po1([nm1]) [a]
+    endif
+  enddo
+
+  gr/hpl/err datm(1:[nm1],[iexgep]) po1(1:[nm1],[iexgep]) xerr(1:[nm1]) ermol(1:[nm1],[iexgep]) [nm1] 25 0.2  
+  set ksiz 0.2
+  gr/hpl/key 5 81 25 'Moller A, injector leak estimated'
+
+  igset pmci 1
+  set   hcol 1
+  set csiz 0.3
+  set ksiz 0.28
+  set xwin 2
+  opt date
+
+RETURN
+

@@ -1,0 +1,40 @@
+MACRO asym_av run1=0 run2=0 iofs=2000 scoil=0 pcut=0.
+*
+* ===  Averages asymmetries
+*
+ ve/cr as1(20) r
+ ve/cr es1(20) r
+ ve/cr xx(20) r
+ ve/cr ex(20) r
+
+ r1=[run1]-[iofs]
+ r2=[run2]-[iofs]
+
+ k=0
+ ve/pri coil
+ do r=[r1],[r2]
+    a=resrun(1,[r])
+    sc=0
+    if [scoil].ne.0 then
+      sc=coil([r])
+      mess sc=[sc]
+    endif
+    if [a]>100 then
+      pol=resrun(13,[r])
+      pol=$SIGMA(ABS([pol]))    
+      if [scoil].eq.0 .or. [scoil].eq.[sc] then
+*      if [scoil]=0 .OR. [scoil]=[sc] then
+        if [pol].gt.[pcut] then
+          k=[k]+1
+          e=resrun(14,[r])
+          ve/in as1([k]) [pol]    
+          ve/in es1([k]) [e] 
+          ve/in xx([k]) [k]
+        endif
+      endif
+    endif
+ enddo
+
+ ve/fit xx(1:[k]) as1(1:[k]) es1(1:[k]) p0 
+
+RETURN 

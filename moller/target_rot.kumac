@@ -1,0 +1,140 @@
+MACRO target_rot
+*
+* 14 Dec 98:  measurements of the target angle
+*
+ n=19
+ ve/cr an1i([n]) r [n]*25.5
+ ve/cr an1m([n]) r 21.1   20.2  22.8  22.5  22.9  22.5  23.5  23.8  23.7  23.5  22.8  22.6  23.4  23.0  22.8  23.9  24.2  23.6  23.5
+ ve/cr an2i([n]) r [n]*155.
+ ve/cr an2m([n]) r 152.5 153.7 153.0 152.7 152.7 152.7 151.2 151.5 149.9 152.4 152.6 151.3 152.0 150.9 151.1 151.1 152.9 151.9 151.6
+
+ ve/cr pol1i([n]) r 70.8  71.5  74.0  74.2  74.1  75.4  74.6  73.5  75.2  71.1  72.4  72.8  72.4  74.1  74.0  71.7  73.0  71.6  72.7
+ ve/cr pol2i([n]) r 65.2  65.3  69.7  69.4  70.9  71.0  70.6  70.1  71.1  69.1  69.3  68.2  69.3  69.9  71.5  70.3  73.3  70.6  71.5
+ ve/cr pol1m([n]) r 68.5  69.1  72.4  72.5  72.6  73.7  73.4  72.5  74.1  70.0  70.9  71.2  71.2  72.7  72.5  70.8  72.2  70.5  71.6
+ ve/cr pol2m([n]) r 66.6  66.0  70.9  70.8  72.7  72.4  73.0  72.3  74.5  70.6  70.7  70.5  71.1  72.5  74.0  72.8  74.6  72.5  73.7
+ ve/cr pol1e([n]) r  0.6   0.4   0.3   0.3   0.3   0.3   0.3   0.3   0.4   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3
+ ve/cr pol2e([n]) r  0.7   0.5   0.3   0.3   0.3   0.3   0.3   0.3   0.4   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3   0.3
+ ve/cr polame([n]) r  
+
+ ve/cr pmott([n]) r  2*72.0      3*71.6            3*73.3            72.06 73.8  5*74.1  4*72.4 
+ nm=7  
+ nmp1=[nm]+1
+ ve/cr pmota([nm])   r        72.0  71.6  73.3  72.06 73.8  74.1  72.4  
+ ve/cr pmote([nm])   r         0.6   0.4   0.6   1.0   0.9   1.3   0.5
+ ve/cr pmotx([nmp1]) r  0     2.5   5.5   8.5   9.5    10.5  14.5 19.5
+ ve/cr pener([nm])   r        1.72  3.40  4.25  0.86   2.58  2.58  5.07
+
+ ve/cr xxx([n]) r 
+ ve/cr exx([n]) r 
+ do i=1,[n]
+   ve/in xxx([i]) [i]
+   e1=pol1e([i])
+   e2=pol2e([i])
+   e=$sigma(1./sqrt(1./[e1]**2+1./[e2]**2))
+   ve/in polame([i]) [e] 
+ enddo
+
+ ve/oper/vsub an1i an1m an1d
+ ve/oper/vsub an2i an2m an2d
+ ve/oper/vsub an2d an1d an21d
+ ve/oper/vadd an2d an1d an21s
+
+ ve/oper/vadd pol1i pol2i polai
+ ve/oper/vsca polai 0.5 polai
+ ve/oper/vadd pol1m pol2m polam
+ ve/oper/vsca polam 0.5 polam
+ ve/oper/vsub polai polam polad
+ ve/oper/vsub pol2m pol1m pol21m
+ ve/oper/vsca pol1e 1.41 pol1ee
+
+ nx=80
+ 1dh 21 'Target angle difference 1' [nx] 0 8
+ 1dh 22 'Target angle difference 2' [nx] 0 8
+ 1dh 23 'Target angle difference 2-1' [nx] -4 4
+ 1dh 24 'Target angle difference 2+1' [nx] 2 10
+
+ ve/hfill an1d 21 
+ ve/hfill an2d 22
+ ve/hfill an21d 23
+ ve/hfill an21s 24
+
+
+ nx=40
+ 1dh 31 'Polarization av1-av2' [nx] -2 2
+ 1dh 32 'Polarization 2m-1m' [nx] -3 1
+
+ ve/hfill polad 31 
+ ve/hfill pol21m 32 
+
+* h/pl 21
+* h/pl 22 
+* h/pl 23
+* h/pl 31
+* h/pl 32
+* zone 2 1
+ n1=[n]+1
+* null 0 [n1] -4 1
+* gr/hpl/err xxx pol21m exx pol1ee [n] 20 0.3
+
+ ymn=66.
+ ymx=77.
+ ymn1=[ymn]+1.5
+ null 0 [n1] [ymn] [ymx] 
+ atit 'Measurement' 'Beam polarization, "Y#'
+ gr/hpl/key 7. 67.  24 'Dial angles'
+ gr/hpl/key 7. 66.5 20 'Measured angles'
+ gr/hpl/err xxx polam exx polame [n] 20 0.2
+ gr/hpl/err xxx polai exx polame [n] 24 0.2
+
+ set fais 3
+ set fasi 144
+ do i=1,[nm]
+    ip1=[i]+1
+    x1=pmotx([i])
+    x2=pmotx([ip1])
+    y=pmota([i])
+    e=pmote([i])
+    y1=[y]-[e]
+    y2=[y]+[e]
+    gr/prim/box [x1] [x2] [y1] [y2]
+    line [x1] [y] [x2] [y]
+    yc=[ymx]-0.9
+    if [i] .NE. 5 .AND. [i] .LT. [nm] then
+      line [x2] [ymn1] [x2] [ymx]
+    endif
+    if [i] .NE. 5  then
+      xc=$sigma([x1]*0.4+[x2]*0.6)
+      t=pener([i])
+      mess [xc] [yc]
+      text [xc] [yc] [t] 0.3 90.  
+    endif
+    if [i] .EQ. [nm] then
+      xc=$sigma(([x1]+[x2])/2.+1.3)
+      t=GeV
+      text [xc] [yc] [t] 0.3 0. c 
+    endif
+ enddo
+ set fais 0
+
+
+ t1=25.5
+ t2=155.
+ dt1=2.79
+ dt2=2.96
+ t1=[t1]-[dt1]
+ t2=[t2]-[dt2]
+* t2=180.-[t2]
+
+ tt1=[t1]*3.1415/180.
+ tt2=[t2]*3.1415/180.
+ dtt1=3.1415/180.*[dt1]
+ dtt2=3.1415/180.*[dt2]
+
+ a1=$SIGMA((cos([tt1])/cos([tt1]+[dtt1])))
+ a2=$SIGMA((cos([tt2])/cos([tt2]+[dtt2])))
+ a=$SIGMA(([a1]+[a2])/2.)
+ mess [a]
+
+ 
+RETURN
+

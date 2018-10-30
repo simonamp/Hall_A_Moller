@@ -1,0 +1,32 @@
+zone
+opt ndat
+opt nstat
+ve/cr vprec(8) r
+
+fort/fil 56 0902spinpred.ps
+meta 56 -112
+
+null 5. 100. 0.67 1.02
+atitle 'Wien Filter, deg.' 'Beam Polarization, ru'
+selnt 1
+text 13.0 20.5 'Spin Precession for Halls A and C' 0.4 0. C
+selnt 10
+set hcol 2
+set txci 2
+text 37. 0.85 '"L#--- Eb=5892MeV' 0.35 0
+linac0=$sigma((5892-65.64)/(5*2.)/1000.)
+mess linac0=[linac0]
+ve/in vprec(1:5) [linac0] 1  5  0.  0.0
+fu/pl spinpred.f 0. 100. s
+set hcol 4
+set txci 4
+ve/in vprec(1:5) [linac0] 1  5  0.  0.008
+fu/pl spinpred.f 0. 100. s
+text 52.0 0.8 'Eb=5892MeV, Linacs asym=0.8"Y# ---"G#' 0.35 0
+set hcol 1
+set txci 1
+ve/in vprec(1:5) [linac0] 3  5  0.  0.008
+fu/pl spinpred.f 0. 100. s
+text 27.0 0.7 '"L#--- Hall C"j# Eb=5892MeV, Linacs asym=0.8' 0.35 0
+
+close 56

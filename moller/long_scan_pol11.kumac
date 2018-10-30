@@ -1,0 +1,45 @@
+MACRO long_scan_pol11 lun=lun51
+* calculation of asymmetry along the foil 1kHz helicity
+
+ opt *
+ opt ndat
+ opt nbox
+ opt stat
+ ve/cr par(5) r
+ ve/cr yasym(55) r
+ ve/cr yasym1(55) r
+ sigma coy=array(55,-25.0#29.0) 
+ nc=1   
+*  1dh 101 'asym' 200 -1.0 1.0
+  1dh 101 'asym' 200 -0.98 0.98
+    do ny=-250,290,10
+    nmin=[ny]/100
+    nmax=([ny]+10)/100
+ mess nmin=[nmin] nmax=[nmax]
+* nt/pl //[lun]/1.a_asymm10.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos11.f(2,1)>[nmin].and.a_tpos11.f(2,1)<[nmax] -101
+ nt/pl //[lun]/1.a_asymm10.f(3,0,1,1,0,0,0) a_tpos11.f(2,1)>[nmin].and.a_tpos11.f(2,1)<[nmax] -101
+* wait
+ h/fit 101 g S 0 par
+* ve/pr par
+* wait
+ yasym1=$HINFO(101,'MEAN')
+ yasym=par(2)
+* mess yasym=[yasym] 
+ ve/input yasym([nc]) [yasym]
+ ve/input yasym1([nc]) [yasym1]
+ nc=[nc]+1
+    enddo
+
+* ve/pr yasym
+ opt nstat
+ zone
+ set mtyp 20
+ ve/pl yasym%coy
+* ve/pl yasym%coy ! sl
+ set pmci 2
+ set plci 2
+ ve/pl yasym1%coy ! sl
+ set pmci 1
+ set plci 1
+
+RETURN

@@ -1,0 +1,90 @@
+macro rate_plot
+* test taken on Apr 30,2010 with using of generator as input source of signal for single arm and aperture channels.
+* plots counting rate(normalized on clock counter) vs generator frequency(F.gener, Hz) 
+*run       14469    14482     14481     14470     14471     14472        14473     14475     14476      14478       14479      14480
+*F.gener   6600.    25720.   51200.   126000.    305000.   532000.    770000.    1510000.   2500000.   10550000.   21050000.   40500000.  
+*left      6556.6   25536.1  50712.6  197426.0   605500.0  1056724.6  1526705.9  2997044.0  4952349.5  20926028.0  41815504.0  79952936.0
+*right     6556.6   25536.1  50712.6  197426.0 	 605500.0  1056724.5  1526705.9  2997044.0  4952349.0  20926028.0  41815504.0  79952936.0
+*coinc     6556.6   25536.1  50712.6  197426.0   605500.0  1056724.4  1526705.9  2997044.0  4952349.5  20926028.0  41815504.0  79952936.0
+*clock     99423.4  99420.4  99422.6  157065.1   198852.9  198848.9   198838.2   198867.6    198847.1  198852.9    198835.1    198808.8
+*LG        6835.1   26622.8  52870.5  206465.8   633779.4  1106356.8  1597970.5  3137117.5  5184957.0  21905132.0  43775652.0  83694344.0
+*RG        6835.1   26623.1  52870.8  206466.0   633764.7  1106358.1  1597985.3  3137146.8  5184956.0  21905086.0  43775648.0  83694312.0
+*LA        6835.0   26622.8  52870.6  206465.8   633779.4  1106356.8  1597970.5  3137117.5  5184957.0  21905132.0  43775660.0  83694328.0
+*RA        6835.1   26623.0  52870.6  206465.6   633764.7  1106357.6  1597985.3  3137132.3  5184953.5  21905074.0  43775656.0  83694320.0
+
+ve/cre gen(12) r 6600.    25720.   51200.   126000.    305000.   532000.    770000.    1510000.   2500000.   10550000.   21050000.   40500000.
+ve/cre larm(12) r 6556.6   25536.1  50712.6  197426.0   605500.0  1056724.6  1526705.9  2997044.0  4952349.5  20926028.0  41815504.0  79952936.0
+ve/cre rarm(12) r 6556.6   25536.1  50712.6  197426.0 	605500.0  1056724.5  1526705.9  2997044.0  4952349.0  20926028.0  41815504.0  79952936.0
+ve/cre coi(12) r 6556.6   25536.1  50712.6  197426.0   605500.0  1056724.4  1526705.9  2997044.0  4952349.5  20926028.0  41815504.0  79952936.0
+ve/cre clk(12) r 99423.4  99420.4  99422.6  157065.1   198852.9  198848.9   198838.2   198867.6    198847.1  198852.9    198835.1    198808.8
+ve/cre lg(12) r 6835.1   26622.8  52870.5  206465.8   633779.4  1106356.8  1597970.5  3137117.5  5184957.0  21905132.0  43
+775652.0  83694344.0
+ve/cre rg(12) r 6835.1   26623.1  52870.8  206466.0   633764.7  1106358.1  1597985.3  3137146.8  5184956.0  21905086.0  43775648.0  83694312.0
+ve/cre la(12) r 6835.0   26622.8  52870.6  206465.8   633779.4  1106356.8  1597970.5  3137117.5  5184957.0  21905132.0  43775660.0  83694328.0
+ve/cre ra(12) r 6835.1   26623.0  52870.6  206465.6   633764.7  1106357.6  1597985.3  3137132.3  5184953.5  21905074.0  43775656.0  83694320.0
+
+* normalize on clock
+ve/operat/vdiv larm clk nlarm
+ve/operat/vdiv rarm clk nrarm
+ve/operat/vdiv coi clk ncoi
+ve/operat/vdiv lg clk nlg
+ve/operat/vdiv rg clk nrg
+ve/operat/vdiv la clk nla
+ve/operat/vdiv ra clk nra
+ve/operat/vdiv ra clk nra
+
+scale=100000
+ve/operat/vscale nlarm [scale] nlarm
+ve/operat/vscale nrarm [scale] nrarm
+ve/operat/vscale ncoi [scale] ncoi
+ve/operat/vscale nlg [scale] nlg
+ve/operat/vscale nrg [scale] nrg
+ve/operat/vscale nla [scale] nla
+ve/operat/vscale nra [scale] nra
+
+
+ve/cre err(12) r 12*500.
+
+*opt logx
+*opt logy
+opt fit
+
+set mtyp 24
+set pmci 3
+*ve/pl nlg%gen 
+
+set mtyp 27
+set pmci 2
+*ve/pl nrg%gen ! s
+
+set mtyp 25
+set pmci 3
+ve/pl nlarm%gen 
+set mtyp 24
+set pmci 2
+ve/pl nrarm%gen ! s
+set mtyp 26
+set pmci 4
+ve/pl ncoi%gen ! s
+
+
+ve/cre par(3) r
+
+ve/fit gen ncoi err p1 s 3 par
+
+*ve/fit gen nrg err p1 s 3 par
+opt *
+set *
+zone 1 1
+opt grid
+null 0. 50000000. 0. 50000000.
+atitle 'Generator rate, Hz' 'DAQs rate, Hz'
+text 1000. 50000200. 'DAQ rate test from generator' 0.35
+igset pmci 1
+key 100. 80.5 20
+text 110. 80.5 'Sup 30mk' 0.3
+igset pmci 3
+key 100. 81.5 21
+text 110. 81.5 'Fer 14mk' 0.3
+
+

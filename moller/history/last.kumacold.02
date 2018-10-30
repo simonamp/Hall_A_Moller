@@ -1,0 +1,147 @@
+*** Begin of history file: Fri Apr 11 16:27:03 2008
+exec run run=12702
+exec lg_spectra run=12702 icut=100
+exec time run=12702
+exec run run=12703
+exec lg_spectra run=12703 icut=100
+loca
+ve/lis
+ve/pri pedes
+exec lg_spectra run=12703 icut=100 ped=0
+exec lg_spectra run=12703 icut=100
+loca
+exec lg_spectra run=12703 icut=0
+loca
+exec lg_spectra run=12703 icut=100 cut=11
+exec run run=12704
+exec lg_spectra run=12704 icut=100 cut=11
+loca
+exec time run=12704
+exec lg_spectra run=12704 icut=100 cut=11
+exec run run=12705
+exec lg_spectra run=12705 icut=100 cut=11
+loca
+zone 2 2
+exec asymt run=12705
+exec asymt run=12705
+exec asymt run=12705 tauto=0
+exec asymt run=12706
+exec asymt run=12706 tauto=0
+exec run run=12706
+exec asymt run=12706 tauto=0
+exec run run=12707
+exec asymt run=12707 tauto=0
+exec run run=12708
+exec asymt run=12708 tauto=0
+exec asym_av run1=12705 run2=12706
+exec asym_av run1=12707 run2=12708
+exec run run=12709
+exec asymt run=12709 tauto=0 ptar=0.0744
+exec run run=12710
+exec asymt run=12710 tauto=0 ptar=0.0744
+exec asym_av run1=12709 run2=12710
+exec run run=12711
+exec asymt run=12711 tauto=0 ptar=0.0762
+exec run run=12712
+exec asymt run=12712 tauto=0 ptar=0.0762
+exec asymt run=12712 tauto=0 ptar=0.0762
+exec asym_av run1=12711 run2=12712
+exec run run=12713
+exec asymt run=12713 tauto=0 ptar=0.0762
+exec run run=12714
+exec asymt run=12712 tauto=0 ptar=0.0762
+exec asym_av run1=12713 run2=12714
+exec asymt run=12714 tauto=0 ptar=0.0762
+exec asym_av run1=12713 run2=12714
+call prunpri.f(12705,12720)
+exec run run=12715
+exec asymt run=12715 tauto=0 ptar=0.0821
+exec run run=12716
+exec asymt run=12716 tauto=0 ptar=0.0821
+exec asym_av run1=12715 run2=12716
+exec asym_av run1=12705 run2=12716
+call prunpri.f(12705,12720)
+mess $sigma(66*0.025)
+mess $sigma(66*0.03)
+ld //
+nt/sca //lun25/1 nsca>0 20 1 ! nsca isca(1) isca(42) isca(43)
+nt/sca //lun25/1 nsca>0 20 1 ! nsca isca(1) isca(26) isca(27)
+nt/sca //lun26/1 nsca>0 20 1 ! nsca isca(1) isca(26) isca(27)
+mess $sigma(419662-415053))
+mess $sigma(419662-415053)
+mess $sigma(424271-419662)
+mess $sigma(427037-422428)
+ld //
+opt ndat
+zone 2 2
+exec asym_av run1=12705 run2=12716
+zone 2 2
+exec asym_av run1=12705 run2=12716 titl=0
+zone 2 2
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+zone 2 2
+zone 2 2
+exec asym_av run1=12705 run2=12716 titl=0
+graph/set hwid 4
+graph/set bwid 4
+graph/set pwid 2
+graph/set fwid 2
+graph/set xwid 2
+graph/set ywid 2
+graph/set vfon -40
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+shell pwd
+shell cat asym_av.kumac
+help igset
+igset plci 2
+exec asym_av run1=12705 run2=12716 titl=0
+set hcol 2
+exec asym_av run1=12705 run2=12716 titl=0
+igset pmci 2
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+opla
+exec asym_av run1=12705 run2=12716 titl=0
+igset pmci 1
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+help gr/hpl/key
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+help gr/hpl/key
+help igset
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+zone 2 2
+opla
+clops
+opla
+exec asym_av run1=12705 run2=12716 titl=0 itarg=1
+clops
+exit
+*** End   of history file: Fri Apr 11 23:39:39 2008

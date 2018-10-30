@@ -1,0 +1,54 @@
+*
+kuip/last 50
+* 100 last.kumac
+*
+os=$SHELL('uname')
+
+graph/opt *
+graph/set *
+set_show/recording 10
+set_show/host_shell /bin/bash
+
+* KUIP/SET_SHOW/FILECASE KEEP
+graph/opt stat
+zone 1
+graph/opt nbox
+graph/set xsiz 27.5
+graph/set ysiz 21.5
+graph/set hwid 2
+graph/set bwid 2
+graph/set stat 1111111
+graph/opt tic
+graph/opt date
+
+graph/set hwid 4
+graph/set bwid 4
+graph/set pwid 2
+graph/set fwid 2
+graph/set xwid 2
+graph/set ywid 2
+graph/set vfon -40
+
+titl 'Moller Polarimeter'
+*
+* -- Aliases
+*
+mess ' === Aliases: '
+mess ' opla [name] : opens a landscape PostScript metafile paw.ps, lun=77' 
+alias/create opla 'exec ~/paw/olpla.kumac'
+mess ' oppo [name] : opens a portrait PostScript metafile paw.ps, lun=77' 
+alias/create oppo 'exec ~/paw/olppo.kumac'
+mess ' clops : closes the PostScript metafile, lun=77' 
+alias/create clops 'exec ~/paw/cllops.kumac'
+
+mess ' prx1 [name] : prints a PostScript file, named paw.ps on phyx1 (CEBAF center, A wing)' 
+alias/create prx1 'shell pdq -P phyx1 paw.ps'
+
+* 
+* --- kuip redefinition
+*
+kuip/set_show/host_pager less
+ku/set/col 160
+
+*  --- Moller initialization
+exec ini

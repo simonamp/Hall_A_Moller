@@ -1,0 +1,10 @@
+MACRO foil_center_all fill=1
+  if [fill]>0 then
+    do i=1,13
+       exec foil_center set=[i]
+    enddo
+  endif
+  do i=1,13
+     ve/wri irsettmp(1,[i]),tcenx(5,[i]),tcenx(4,[i]),tcenx(3,[i]),tcenx(2,[i]) ! 'I8,6F10.1'
+  enddo
+RETURN

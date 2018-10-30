@@ -1,0 +1,50 @@
+MACRO all_1
+
+   do i=3541,3546
+     exec run run=[i]
+     exec asymp run=[i] angl=21. ptar=0.0715 norm=1 
+   enddo
+   ve/del lrun
+   clo 0
+   cd //pawc
+   h/del 0
+
+   do i=3551,3555
+     exec run run=[i]
+     exec asymp run=[i] angl=21. ptar=0.0715 norm=1 
+   enddo
+   ve/del lrun
+   clo 0
+   cd //pawc
+   h/del 0
+
+   do i=3556,3558
+     exec run run=[i]
+     exec asymp run=[i] angl=21. ptar=0.0715 norm=1 
+   enddo
+   do i=3559,3561
+     exec run run=[i]
+     exec asymp run=[i] angl=21. ptar=0.076 norm=1 
+   enddo
+   ve/del lrun
+   clo 0
+   cd //pawc
+   h/del 0
+
+   do i=3562,3572
+     exec run run=[i]
+     exec asymp run=[i] angl=29. ptar=0.076 norm=1 
+   enddo
+   ve/del lrun
+   clo 0
+   cd //pawc
+   h/del 0
+
+   do i=3578,3588
+     exec run run=[i]
+     exec asymp run=[i] angl=29. ptar=0.076 norm=1 
+   enddo
+
+RETURN
+
+

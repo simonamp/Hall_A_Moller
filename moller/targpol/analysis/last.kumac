@@ -1,0 +1,1253 @@
+*** Begin of history file: Fri Mar 24 17:47:43 2006
+exec vmeas stage=3 file=s07_04_80a_b0
+zone 1 2
+exec vsmooth nav=1
+ve/pl vtmpf(30001:60000)
+ve/dr vtmpf(30001:60000)
+ve/cop vtmp vtmpa
+ve/cop vtmpf vtmp
+exec vsmooth nav=1
+ve/dr vtmpf(30001:60000)
+ve/cop vtmpf vtmp
+ve/dr vtmp(30001:60000)
+exec vbgsub nd=1711 tune=1 dastep=0.0001 nshift=41 da=0 spline=0
+exec vbgsub nd=1711 tune=0 dastep=0.0001 nshift=0 da=2 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0001 nshift=0 da=3 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0001 nshift=0 da=4 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1715 tune=0 dastep=0.0001 nshift=0 da=4 spline=0
+exec vbgsub nd=1715 tune=0 dastep=0.0001 nshift=0 da=0 spline=0
+ve/dr vtmpps
+ve/cop vtmpps v1
+exec vbgsub nd=1713 tune=0 dastep=0.0001 nshift=0 da=0 spline=0
+ve/dr vtmpps
+set hcol 2
+ve/dr v1 ! s
+null 0 60000 -0.5e-4 0.5e-4
+ve/dr vtmp(1:60000)
+null 0 60000 -0.5e-4 0.5e-4
+ve/dr vtmp(1:60000) ! s
+set hcol 4
+ve/dr vtmps(1:60000) ! s
+ve/dr vtmp(1:20000)
+set hcol 2
+ve/dr vtmps(1:20000) ! s
+ve/dr vtmp1(1:20000) ! s
+null 0 60000 -0.5e-4 0.5e-4
+ve/dr vtmp1(1:60000) ! s
+exec vmeas stage=4 file=s07_04_80a_b0
+exec vmeas stage=4 file=s07_04_80a_b0
+mess $sigma(14/3000.*sqrt(16e-4/10)*17)
+exec vmeas stage=3 file=s07_04_80a_b0
+exec vmeas stage=4 file=s07_04_80a_b0
+ve/dr vtmp1(1:60000)
+ve/dr vtmp(1:60000)
+ve/dr vtmps(1:60000)
+ve/dr vtmp00(1:60000)
+exec vmeas stage=3 file=s07_04_80a_b0
+ve/dr vtmp(1:60000)
+ve/dr vtmp1(1:60000)
+ve/dr vtmp1(30001:60000)
+ve/pl vtmp1(1:60000)
+ve/pl vtmp1(30001:60000)
+exec vmeas stage=4 file=s07_04_80a_b0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmp1(30001:60000)
+ve/dr vtmpps
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmp1(30001:60000)
+ve/dr vtmp1(1:20000)
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vtmp1(1:60000) ! s
+ve/dr vtmp1(30001:50000)
+ve/dr vtmp1(1:60000)
+loca
+ve/pl vtmp1(1:6000)
+mess $sigma(.14e-4/sqrt(6000))
+ve/pl vtmp1(1:6000)
+ve/pl vtmp1(6001:12000)
+ve/pl vtmp1(12001:18000)
+ve/pl vtmp1(30001:36000)
+ve/pl vtmp1(36001:42000)
+ve/pl vtmp1(42001:48000)
+ve/pl vtmp1(22001:25000)
+ve/dr vtmp1(22001:25000)
+loca ! i
+h/pl 12345
+1dh 101 ' ' 60000 0 60000
+h/put_vec/con 101 vtmp1
+h/pl 101(22001:25000)
+h/pl 101(22001:25000)
+zone 1 1
+h/pl 101(22001:25000)
+loca ! i
+zone 1 2
+h/pl 101(22001:25000)
+loca ! i
+mess $sigma(0.33)
+mess $sigma(0.3e-6*6e3)
+mess $sigma(0.33/.0018)
+mess $sigma(.0018/.33)
+h/pl 101(22001:27000)
+h/pl 101(25001:27000)
+loca ! i
+h/pl 101(26501:27000)
+h/pl 101(26501:36500)
+h/pl 101(26501:46500)
+h/pl 101(1:22000)
+h/pl 101(5001:22000)
+h/pl 101(10001:22000)
+h/pl 101(26501:36500)
+h/pl 101(10001:12000)
+h/pl 101(10001:10200)
+ve/wri vtmp1 s07_04_80a_b0.proc.4
+exec vfget new=1
+h/pl vv7(1:34000)
+h/pl vv0(1:34000)
+h/pl vv1(1:34000)
+ve/pl vv7(1:34000)
+ve/dr vv7(1:34000)
+h/pl 101(10001:10200)
+ve/dr vv7(1:34000)
+h/pl 101(10001:12000)
+loca ! s
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+h/pl 101(10001:12000)
+shell pwd
+ld //
+shell pwd
+lcd ~/paw/analysis_moller/happ_old/moller/
+exec run run=8703
+lcd ~/paw/analysis_moller/happ_new/moller/
+exec run run=8703
+exec asyms angl=20.
+exec asyms angl=20. run=8703
+mess $sigma(1911*1910.)
+mess $sigma(1./sqrt(1911*1910.))
+mess $sigma(1911*1490.)
+mess $sigma(1./sqrt(1911*1490.))
+mess $sigma(1911*1490./45200)
+mess $sigma(1./sqrt(45000*60*1))
+mess $sigma(1./sqrt(45000*60*1))
+mess $sigma(1./sqrt(40000*60*1))
+exec lg_spectra run=8703
+exec lg_spectra run=8703 icut=10
+exec lg_spectra run=8703 icut=100
+exec lg_spectra run=8703 icut=100 cut=11
+exec lg_spectra run=8703 icut=100
+exec run run=8704
+exec lg_spectra run=8704 icut=100
+exec run run=10420
+exec lg_spectra run=10420 icut=100
+exec lg_spectra run=10420 icut=1
+exec lg_spectra run=10420 icut=100
+exec lg_spectra run=10420 icut=100 cut=11
+cut $0
+shell pwd
+exec lg_spectra run=10420 icut=100
+cut $11 nadc>11.and.nhcha>3.and.ihit(1)>0.and.ihit(2)>0.and.ihit(4)>0.and.ihit(5)>0
+exec lg_spectra run=10420 icut=100 cut=11
+exec lg_spectra run=10420 icut=100 cut=0
+exec lg_spectra run=10420 icut=100
+exec lg_spectra run=10420 icut=10
+exec lg_spectra run=10420 icut=1
+exec lg_spectra run=10420 icut=1 log=1
+opt logy
+exec lg_spectra run=10420 icut=1 log=1
+exec lg_spectra run=10420 icut=1 log=1 cut=11
+cut $12 nadc>11.and.nhcha>3.and.(ihit(1)=0.or.ihit(2)=0.or.ihit(4)=0.or.ihit(5)=0)
+exec lg_spectra run=10420 icut=1 log=1 cut=12
+cut $13 nadc>11.and.nhcha>3.and.(ihit(1)=0.or.ihit(2)=0)
+exec lg_spectra run=10420 icut=1 log=1 cut=13
+cut $14 nadc>11.and.nhcha>3.and.ihit(1)=0
+exec lg_spectra run=10420 icut=1 log=1 cut=14
+cut $14 nadc>11.and.nhcha>3.and.ihit(1)=0.and.ihit(5)>0
+exec lg_spectra run=10420 icut=1 log=1 cut=14
+ld //
+zone 2 2
+opt liny
+nt/pl //lun23/1.iadc(2)%iadc(6) $11
+nt/pl //lun23/1.iadc(1)%iadc(6) $11
+nt/pl //lun23/1.iadc(3)%iadc(6) $11
+nt/pl //lun23/1.iadc(4)%iadc(6) $11
+nt/pl //lun23/1.iadc(1)%iadc(5) $11
+nt/pl //lun23/1.iadc(2)%iadc(5) $11
+nt/pl //lun23/1.iadc(3)%iadc(5) $11
+nt/pl //lun23/1.iadc(4)%iadc(5) $11
+nt/pl //lun23/1.iadc(1)%iadc(7) $11
+nt/pl //lun23/1.iadc(2)%iadc(7) $11
+nt/pl //lun23/1.iadc(3)%iadc(7) $11
+nt/pl //lun23/1.iadc(4)%iadc(7) $11
+nt/pl //lun23/1.iadc(1)%iadc(8) $11
+nt/pl //lun23/1.iadc(2)%iadc(8) $11
+nt/pl //lun23/1.iadc(3)%iadc(8) $11
+nt/pl //lun23/1.iadc(4)%iadc(8) $11
+nt/pl //lun23/1.iadc(6)%iadc(5) $11
+nt/pl //lun23/1.iadc(6)+iadc(5) $11
+nt/pl //lun23/1.iadc(6)+iadc(5)*0 $11
+nt/pl //lun23/1.iadc(6)*0+iadc(5)*1 $11
+nt/pl //lun23/1.iadc(5) $11
+nt/pl //lun23/1.iadc(5) $11.and.iadc(5)>100
+nt/pl //lun23/1.iadc(6) $11.and.iadc(6)>100
+nt/pl //lun23/1.iadc(7) $11.and.iadc(7)>100
+nt/pl //lun23/1.iadc(8) $11.and.iadc(8)>100
+mess $sigma(498+85.8)
+exec run run=11965
+shell pwd
+lcd ../
+shell pwd
+lcd ../
+shell pwd
+lcd ../
+shell pwd
+lcd moller
+exec asymt run=11965
+mess $sigma(0.0433*7)
+mess $sigma(0.0433*7*cos(20*3.14/180.)/sin(20*3.14/180.))
+ld //
+shell pwd
+exec asymt run=11965
+ld //
+exec run clear=1 run=11965
+ld //
+exec run run=12406
+exec run run=12406
+exec run run=12406
+exec run run=12406
+exec run run=12406
+exec run run=12406
+exec lg_spectra run=12406 cut=150
+ld //
+cut $0
+exec lg_spectra run=12406 icut=150
+exec time run=12406
+exec time run=12406
+exec time run=12406
+exec time run=12406
+1dh 201 'adc' 250 200 1200
+nt/pl //lun21/1.iadc(13) nadc>0
+zone 2 2
+nt/pl //lun21/1.iadc(13) nadc>0 -201
+nt/pl //lun21/1.iadc(14) nadc>0 -201
+nt/pl //lun21/1.iadc(15) nadc>0 -201
+nt/pl //lun21/1.iadc(16) nadc>0 -201
+exec run run=12407
+exec time run=12407
+exec lg_spectra run=12407 icut=150
+nt/pl //lun22/1.iadc(13) nadc>0 -201
+zone 2 2
+nt/pl //lun22/1.iadc(13) nadc>0 -201
+nt/pl //lun22/1.iadc(14) nadc>0 -201
+nt/pl //lun22/1.iadc(15) nadc>0 -201
+nt/pl //lun22/1.iadc(16) nadc>0 -201
+nt/pl //lun22/1.iadc(13) nadc>0 -201
+opt logy
+nt/pl //lun22/1.iadc(13) nadc>0 -201
+nt/pl //lun22/1.iadc(14) nadc>0 -201
+nt/pl //lun22/1.iadc(15) nadc>0 -201
+exec run run=12408
+nt/pl //lun23/1.iadc(15) nadc>0 -201
+nt/pl //lun23/1.iadc(13) nadc>0 -201
+nt/pl //lun23/1.iadc(14) nadc>0 -201
+exec run run=12412
+nt/pl //lun24/1.iadc(13) nadc>0 -201
+nt/pl //lun24/1.iadc(14) nadc>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0 -201
+nt/pl //lun24/1.iadc(16) nadc>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)>300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)<300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(3)>300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(4)>300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(30,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(20,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(26,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(29,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(25,180,220)>0 -201
+opt liny
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.timchan.f(25,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)>300.and.timchan.f(25,180,220)>0 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(3)>300.and.timchan.f(25,180,220)>0 -201
+1dh 51 'hodo' 33 0 33
+nt/loop //lun24/1 nadc>0.and.cal_hprof.f(180,220,51)>-1
+h/pl 51
+1dh 51 'hodo' 32 1 33
+nt/loop //lun24/1 nadc>0.and.cal_hprof.f(180,220,51)>-1
+h/pl 51
+1dh 210 'time' 1000 0 1000
+nt/loop //lun24/1 nadc>0.and.gettim.f(20,210)
+nt/loop //lun24/1 nadc>0.and.gettim.f(20,210)>-1
+h/pl 210
+nt/loop //lun24/1 nadc>0.and.gettim.f(21,210)>-1
+h/pl 210
+nt/loop //lun24/1 nadc>0.and.gettim.f(36,210)>-1
+h/pl 210
+nt/loop //lun24/1 nadc>0.and.gettim.f(37,210)>-1
+h/pl 210
+nt/loop //lun24/1 nadc>0.and.gettim.f(38,210)>-1
+h/pl 210
+h/pl 51
+h/pl 210(151:250)
+nt/loop //lun24/1 nadc>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(1)%iadc(2) nadc>0
+loca
+nt/loop //lun24/1 nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)>250.and.iadc(2)>250.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)>250.and.iadc(2)>250.and.cal_hprof.f(190,200,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)>250.and.iadc(2)>250.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.timchan.f(9,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.timchan.f(9,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.gettim.f(9,210)>-1
+h/pl 210
+nt/pl //lun24/1.timchan.f(9,190,210) nadc>0
+nt/pl //lun24/1.timchan.f(25,190,210) nadc>0
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.timchan.f(25,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.iadc(15)>300.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.iadc(16)>300.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.iadc(15)>400.and.timchan.f(25,190,205)>0.and.cal_hprof.f(190,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>0.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(2)>300.and.iadc(15)400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+nt/loop //lun24/1 nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.timchan.f(25,190,210)>0.
+nt/pl //lun24/1.iadc(15) nadc>0.and.nadc>0.and.iadc(1)>0.and.iadc(15)>0.and.timchan.f(25,190,210)>0.
+nt/loop //lun24/1 nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1 -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.nadc>0.and.iadc(1)>0.and.iadc(15)>0.and.timchan.f(25,190,210)>0. -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(2)>300.and.iadc(15)>0.and.timchan.f(25,190,210)>0. -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)+iadc(2)>300.and.iadc(15)>0.and.timchan.f(25,190,210)>0. -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>0.and.timchan.f(25,190,210)>0. -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>0.and.timchan.f(25,190,210)>-1. -201
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(1)*1+iadc(2)*1>300.and.iadc(15)>0.and.timchan.f(25,190,210)>-1. -201
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*1>300.and.iadc(15)>400.and.timchan.f(25,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*1>300.and.iadc(15)>400.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>0.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(22,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(23,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(24,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*0>300.and.iadc(15)>400.and.timchan.f(26,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(15)%iadc(1)*1+iadc(2)*1 nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1)*1+iadc(2)*0 nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1)*0+iadc(2)*1 nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1)*1+iadc(2)*1 nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1) nadc>0.and.iadc(15)>400.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(2) nadc>0.and.iadc(15)>400.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(2) nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1) nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(3) nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/pl //lun24/1.iadc(15)%iadc(1)*1+iadc(2)*1 nadc>0.and.iadc(15)>0.and.timchan.f(25,190,210)>-1.
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*1>300.and.iadc(15)>400.and.timchan.f(17,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.iadc(1)*1+iadc(2)*1>300.and.iadc(15)>400.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+exec run run=12372
+nt/loop //lun25/1 nadc>0.and.iadc(1)*1+iadc(2)*1>0.and.timchan.f(18,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(1)*1+iadc(2)*1>0.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(1)*1+iadc(2)*1>0.and.timchan.f(19,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(1)*1+iadc(2)*1>0.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(20,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(17,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(17,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(19,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(22,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(23,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(24,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(27,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(28,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(29,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(31,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(32,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(33,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(34,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(35,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(36,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(38,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.$11.and.timchan.f(38,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.$11.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(38,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(9)>250.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(9)>250.and.iadc(10)>250.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1.iadc(9) nadc>0
+nt/pl //lun25/1.iadc(9) nadc>0
+nt/pl //lun25/1.iadc(10) nadc>0
+nt/loop //lun25/1 nadc>0.and.iadc(9)>500.and.iadc(10)>500.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun25/1.iadc(1)%iadc(8) nadc>0
+nt/pl //lun25/1.iadc(1)%iadc(7) nadc>0
+nt/pl //lun25/1.iadc(1)%iadc(6) nadc>0
+nt/pl //lun25/1.iadc(1)%iadc(7) nadc>0
+nt/loop //lun25/1 nadc>0.and.iadc(1)>300.and.iadc(7)+iadc(8)>400.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.iadc(1)>300.and.iadc(7)+iadc(8)>400.and.timchan.f(39,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.$11.and.and.iadc(1)>300.and.iadc(7)+iadc(8)>400.and.timchan.f(39,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)+iadc(8)>400.and.timchan.f(39,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)+iadc(8)*0>400.and.timchan.f(39,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(39,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(40,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(41,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(42,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(43,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(44,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun25/1.ntdc nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210).and.cal_hprof.f(190,210,51)>-1
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210
+h/pl 210(161:220)
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(18,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210(161:220)
+nt/pl //lun25/1.ntdc nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+ku/set/col
+help ku/set/col
+ku/set/col 0
+ku/set/col 160
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210
+h/pl 210(161:220)
+loca ! i
+res 210
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210(161:220)
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0
+h/pl 210(161:220)
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1
+nt/pl //lun25/1.timchan.f(45,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1
+nt/pl //lun25/1.timchan.f(18,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1
+h/pl 210
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1
+h/pl 210
+h/pl 210(161:220)
+loca ! i
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(18,210)>-1
+h/pl 210(161:220)
+loca ! i
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(19,210)>-1
+h/pl 210(161:220)
+loca ! i
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(17,210)>-1
+h/pl 210(161:220)
+loca ! i
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(20,210)>-1
+h/pl 210(161:220)
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210(161:220)
+h/pl 51
+loca ! i
+h/pl 210
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(5)>300.and.iadc(3)*0+iadc(4)*1>400.and.timchan.f(45,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(5)>300.and.iadc(3)*0+iadc(4)*1>400.and.timchan.f(45,190,210)>-1.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(45,190,210)>-1.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+ld //
+ku/set/col 200
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(33,190,210)>-1.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(33,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(17,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(18,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(19,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,300,320)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+loca ! i
+nt/pl //lun25/1.cal_hclu.f(190,210,3,0,0,999) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun25/1.cal_hclu.f(190,210,3,0,0,999) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun25/1.cal_hclu.f(190,210,3,0,0,999) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(45,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210
+h/pl 51
+loca
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.gettim.f(43,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 210
+nt/pl //lun25/1.cal_hmul.f(190,210,41,46) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(190,210,41,46) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+h/pl 51
+nt/pl //lun25/1.cal_hmul.f(190,210,25,29) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(25,29,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(22,29,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(22,32,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(22,29,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.
+nt/pl //lun25/1.cal_hmul.f(1,32,190,210) nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.timchan.f(43,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.cal_hmul.f(25,29,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(24,190,210)>0.and.cal_hmul.f(25,29,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(21,190,210)>0.and.cal_hmul.f(25,29,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.cal_hmul.f(25,29,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(22,190,210)>0.and.cal_hmul.f(25,29,190,210)>-1.and.cal_hprof.f(190,210,51)>-1
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(22,190,210)>0.and.cal_hmul.f(25,29,190,210)>-2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(21,190,210)>0.and.cal_hmul.f(25,29,190,210)>-2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(18,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.iadc(1)>300.and.iadc(7)*0+iadc(8)*1>400.and.timchan.f(19,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(19,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(20,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(21,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(22,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(23,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(24,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(25,190,210)>0.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(25,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(24,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(23,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(18,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(19,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(19,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(20,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(25,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun25/1.cal_hclu.f(190,210,1,2,1,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,1,2,2,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,2,2,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,2,1,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,2,3,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,3,2,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,3,3,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/pl //lun25/1.cal_hclu.f(190,210,2,2,2,999) nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun25/1 nadc>0.and.$11.and.timchan.f(27,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+ld //
+nt/loop //lun24/1 nadc>0.and.timchan.f(27,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(27,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)=2.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)=3.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(25,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(26,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(27,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(28,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(29,190,210)>0.and.cal_hmul.f(1,32,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(2) nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(2) nadc>0.and.timchan.f(29,190,210)>-1
+nt/pl //lun24/1.iadc(2) nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(1) nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(3) nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(2) nadc>0.and.timchan.f(29,190,210)>-1.and.cal_hmul.f(12,14,190,210)>1.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(2) nadc>0.and.cal_hmul.f(12,14,190,210)>1.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(13) nadc>0.and.cal_hmul.f(12,14,190,210)>1.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(14) nadc>0.and.cal_hmul.f(12,14,190,210)>1.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,14,190,210)>1.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>1.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+nt/pl //lun24/1.iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1.and.iadc(16)>400
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1.and.iadc(15)>400
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1.and.iadc(15)>40
+nt/pl //lun24/1.iadc(13) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400.and.cal_hprof.f(195,205,51)>-1.and.iadc(13)>40
+nt/pl //lun24/1.iadc(13)%iadc(14) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400
+ld //
+nt/pl //lun24/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400
+nt/pl //lun24/1.iadc(15)+iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>0.and.iadc(2)>400
+nt/pl //lun24/1.iadc(15)+iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(2)>400
+nt/pl //lun24/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(2)>400
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(2)>400
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(2)>400.and.iadc(15)>250
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(15)>300.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(12,14,190,210)>-2.and.iadc(15)>450.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(1,32,190,210)=2.and.iadc(15)>450.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(195,205,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(1,32,190,210)>-2.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(1)+iadc(2) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(2)%iadc(3) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(1) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(2) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(3) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(1) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(1)+iadc(2) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(15)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(1,32,190,210)>1.and.iadc(1)+iadc(2)>450.and.cal_hprof.f(190,210,51)>-1
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,30,190,210)>0.and.iadc(1)+iadc(2)>450
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,32,190,210)>0.and.iadc(1)+iadc(2)>450
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,32,190,210)>0.and.iadc(1)+iadc(2)>450
+h/pl 201
+h/pl 202
+1dh 202 'adc' 70 300 1000
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,32,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(8,8,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(6,6,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(30,30,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(25,25,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(28,28,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(14,14,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)+iadc(2)>450 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)+iadc(2)>450.and.cal_hprof.f(190,210,51)>-1 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)+iadc(2)>450.and.cal_hprof.f(190,210,51)>-1 -202
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(20,20,190,210)>-1.and.iadc(1)+iadc(2)>450.and.iadc(15)>400.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/loop //lun24/1 nadc>0.and.cal_hmul.f(20,20,190,210)>-1.and.iadc(1)>400.and.iadc(15)>400.and.cal_hprof.f(190,210,51)>-1
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)+iadc(2)*0>450.and.cal_hprof.f(190,210,51)>-1 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)+iadc(2)*0>450.and.cal_hprof.f(190,210,51)>-1 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)*0+iadc(2)>450.and.cal_hprof.f(190,210,51)>-1 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-1 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>1.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(20,20,190,210)>-2.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(8,8,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(9,9,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(9,10,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(11,11,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(12,12,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(9,11,190,210)>0.and.iadc(1)*0+iadc(2)>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(9,11,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/pl 51
+nt/pl //lun24/1.iadc(15) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(15)<200
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(15)<100
+nt/pl //lun25/1.iadc(15) nadc>0.and.iadc(15)<100
+nt/pl //lun25/1.iadc(15) nadc>0.and.iadc(15)<100.iadc(4)>300
+nt/pl //lun25/1.iadc(15) nadc>0.and.iadc(15)<100.and.iadc(4)>300
+nt/pl //lun24/1.iadc(15) nadc>0.and.iadc(15)<100.and.iadc(4)>300
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit g 202
+h/fit 202 g
+mess $sigma(21./442)
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(9,9,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit 202 g
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(11,11,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(12,12,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit 202 g
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit 202 g
+mess $sigma(30./442)
+nt/pl //lun24/1.iadc(16) nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit 202 g
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2 -202
+h/fit 202 g
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(15,15,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2 -202
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(15,15,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2 -202
+1dh 203 'adc' 140 300 1000
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 203 g
+h/fit 203 g
+mess $sigma(17./438)
+h/pl 51
+nt/pl //lun24/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,7,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+ld //
+exec run run=12413
+exec run run=12414
+chain rht //lun24
+chain rht //lun26
+chain rht //lun27
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,7,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(16./435)
+mess $sigma(1)
+mess $sigma(16./435*sqrt(2.075/2*0.89))
+mess $sigma(sqrt((16./435*sqrt(2.075/2*0.89))**2-0.02**2))
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(8,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((15./441*sqrt(2.075/2*0.89))**2-0.02**2))
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(18,18,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(8,8,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 51
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(18,18,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(8,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 51
+h/fit 203 g
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(18,18,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(9,9,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(8,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,7,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(9,9,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(19,19,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((15./440*sqrt(2.075/2*0.89))**2-0.02**2))
+shell pwd
+mess $sigma(sqrt((15./440*sqrt(2.075/2*0.92))**2-0.02**2))
+mess $sigma(sqrt((15.3/440*sqrt(2.075/2*0.92))**2-0.02**2))
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((15.3/440*sqrt(2.075/2*0.92))**2-0.02**2))
+mess $sigma(sqrt(436/440.)
+mess $sigma(436/440.)
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(16,16,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(7,14,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+h/pl 51
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(16,16,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(10,10,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(452/440.)
+mess $sigma(452/440./(4*0.017))
+mess $sigma(452/440./(1+4*0.017))
+nt/pl //rht/1.iadc(15)-66 nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-66 nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<1600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.cal_hmul.f(13,13,190,210)>-1.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<1600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(3)%iadc(4) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)+iadc(2)%iadc(3)+iadc(4) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16)%iadc(15) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)<400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0
+nt/pl //rht/1.iadc(16) nadc>0 iadc(1)>400
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>400
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(13,13,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<600.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)<400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16) nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((26.1/613*sqrt(2.075/2*0.92))**2-0.02**2))
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(5,5,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((22./597*sqrt(2.075/2*0.92))**2-0.02**2))
+mess $sigma(sqrt((22./597*sqrt(2.075/2*0.92))**2-0.02**2))
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<1300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)+iadc(4)>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*0+iadc(4)>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 51
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)*1+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)*0+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(10,10,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 51
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(3,3,190,210)>0.and.iadc(3)*0+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(26,30,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(25.9/614.)
+mess $sigma(1.21/614)
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*0+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(13,30,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(13,30,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+h/pl 51
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*1>400.and.iadc(15)<300.and.cal_hmul.f(19,20,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(24.6/573.)
+mess $sigma(sqrt((24.6/573.)**2-0.025**2))
+mess $sigma(sqrt((24.6/573.)**2-0.025**2)/sqrt(1.1))
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(19,20,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(19,20,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(8,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(6,6,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((22.4/579.)**2-0.025**2)/sqrt(1.1))
+exec sett_magp e0=2.075
+exec sett_magp e0=2.075 nq=2
+exec sett_magp e0=2.075 nq=2 p=1
+exec sett_magp e0=2.075 nq=2 p=2
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(7,7,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((25.5/575.)**2-0.016**2)/sqrt(1.))
+nt/pl //rht/1.iadc(16)-250 nadc>0.and.cal_hmul.f(10,10,190,210)>0.and.iadc(3)*1+iadc(4)*0>400.and.iadc(15)<300.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(30,30,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<300.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(30,30,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<300.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(30,30,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(28,28,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)%ia-40dc(16)-250 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40%iadc(16)-250 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-40%iadc(16)-250 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hmul.f(8,8,190,210)>-10.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-40%iadc(16)-250 nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)+iadc(2) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(20,20,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*1>0.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1) nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(22,22,190,210)>-3.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<30000.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<300.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-40 nadc>0.and.cal_hmul.f(22,22,190,210)>0.and.iadc(1)*1+iadc(2)*0>400.and.iadc(16)<300.and.cal_hprof.f(190,210,51)>-2 -203
+h/fit 203 g
+mess $sigma(sqrt((18.3/444.)**2-0.013**2)/sqrt(1.))
+mess $sigma(sqrt((25.5/575.)**2-0.016**2)/sqrt(1.4))
+mess $sigma(sqrt((25.5/575.)**2-0.020**2)/sqrt(1.4))
+mess $sigma(sqrt((25.5/575.)**2-0.025**2)/sqrt(1.4))
+mess $sigma(sqrt((25.5/575.)**2-0.017**2)/sqrt(1.4))
+mess $sigma(sqrt((25.5/575.)**2-0.016**2)/sqrt(1.4))
+mess $sigma(sqrt((25.5/575.)**2-0.016**2)/sqrt(1.))
+mess $sigma(sqrt((18.3/444.)**2-0.013**2)/sqrt(0.88))
+mess $sigma(sqrt((18.3/444.)**2-0.014**2)/sqrt(0.88))
+nt/pl //rht/1.iadc(15) nadc>0 iadc(15)<200
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(15)<200
+loca
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.iadc(15)<200
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(22,22,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(17,17,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(13,13,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(12,12,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(11,11,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(14,14,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(15,15,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(12,12,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(13,13,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(14,14,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(16,16,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(12,12,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(11,11,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(10,10,190,210)>0
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.cal_hmul.f(15,15,190,210)>0
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1) nadc>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>250.and.iadc(2)>250.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>280.and.iadc(2)>280.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(8,8,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(8,8,190,210)>-2.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(1)%iadc(2) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+h/pl 51
+nt/pl //rht/1.iadc(15)%iadc(16) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(14) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>200.and.iadc(2)>200.and.cal_hmul.f(12,12,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+opt logy
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+set hcol 2
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 ! ! ! s
+nt/pl //rht/1.iadc(2) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(3) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(4) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(5) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(4) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(8) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(5) nadc>0.and.iadc(1)>400.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+mess $sigma(100e-9*5e6*500)
+mess $sigma(100e-9*2e6*500)
+nt/pl //rht/1.iadc(5) nadc>0.and.iadc(1)>0.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(5) nadc>0.and.iadc(1)>0.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-2.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>0.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-2.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>0.and.iadc(15)<250.and.cal_hmul.f(12,12,190,210)>-2.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>0.and.iadc(15)<100.and.cal_hmul.f(12,12,190,210)>-2.and.cal_hprof.f(190,210,51)>-2
+mess $sigma(sqrt((18.3/(444.-25.))**2-0.014**2)/sqrt(0.88))
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(12,12,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(28,28,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(28,28,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+opt liny
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>200.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -203
+h/pl 51
+h/fit 203 g
+mess $sigma(sqrt((21.1/(448.))**2-0.014**2)/sqrt(0.88))
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+1dh 204 ' ' 120 0 240
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -204
+1dh 205 ' ' 100 0 100
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -205
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(3)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -205
+mess $sigma(sqrt(21**2-10**2))
+mess $sigma(sqrt((18./(448.))**2-0.014**2)/sqrt(0.88))
+mess $sigma(sqrt((18./(448.))**2-0.014**2)*sqrt(0.88))
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(3)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(3)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+opt logy
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(3)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -203
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(3)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(4)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2
+set hcol 4
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 ! ! ! s
+1dh 206 'adc' 80 0 800
+1dh 207 'adc' 80 0 800
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(4)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>-1.and.cal_hprof.f(190,210,51)>-2 -206
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 206
+mess $sigma(710/13500.)
+add 206 206 208 0. 0.0526
+h/pl 208
+set hcol 2
+h/pl 207 s
+g/fit 207 g
+h/fit 207 g
+h/fit 207(41:90) g
+h/fit 207(31:50) g
+h/fit 207(31:55) g
+set hcol 4
+h/pl 208 s
+h/fit 207(21:65) g
+h/fit 207(21:65) g+p0
+ve/cr par(10) r
+ve/in par(1:4) 60 450 22 0
+h/fit 207(21:65) g+p0 ! 4 par
+set hcol 2
+h/pl 208 s
+h/fit 207(16:80) g+p0 ! 4 par
+mess $sigma(300e-9*1e6*500)
+ld //
+exec asymt delay=9 run=12412
+nt/scan //lun24/1 nsca>0 ! ! ! itick isca(1) isca(2) isca(3) isca(10)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(10)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(10)-159401
+mess $sigma(171/120.)
+mess $sigma(77850/1e5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(10)-159401 isca(5)
+exec asymt delay=9 run=12412 nocut=1
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(10)-159401 isca(5)
+ld //
+nt/scan //lun25/1 nsca>0 ! ! ! itick isca(1) isca(2) isca(3) isca(10) isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1) isca(2) isca(3) isca(10)-163542 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick isca(1) isca(2) isca(3) isca(12) isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1) isca(2) isca(3) isca(12)-334072 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(12) isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) isca(12)-319230 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) (isca(12)-319230)1.e5 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1) isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1) isca(2) isca(3) isca(12)-334072 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2) isca(3) (isca(12)-334072)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3) (isca(12)-334072)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)-19824
+nt/scan //lun25/1 nsca>0 ! ! ! itick-351402 isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)-19824
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)
+nt/scan //lun24/1 nsca>0 ! ! ! itick-21331181 isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)-18593
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)-18593
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)-18593 isca(21) isca(24)
+nt/scan //lun24/1.nsca
+nt/pl //lun24/1.nsca
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 isca(2) isca(3) (isca(12)-319230)/1.e5 isca(5)-18593 isca(21) isca(24)
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 (isca(12)-319230)/1.e5 isca(5)-18593 isca(21) isca(24)
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 (isca(12)-319230)/1.e5 isca(5)-18593 isca(21)-352029 isca(24)-668902
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 (isca(12)-319230) isca(5)-18593 isca(21) isca(24)
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 (isca(12)-319230) isca(5)-18593 isca(21) isca(24)
+nt/scan //lun24/1 nsca>0 ! ! ! (itick-21331181)/120. isca(1)-306097 (isca(12)-319230) isca(5)-18593 isca(21)-352029 isca(24)-668902
+mess $sigma(300e-9*170e3*500)
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)-19824 isca(21) isca(24)
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)-19824 isca(21)-1097953 isca(24)
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 isca(2) isca(3) (isca(12)-334072)/1.e5 isca(5)-19824 isca(21) isca(24)
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 isca(2)-741473 isca(3)-300371 (isca(12)-334072)/1.e5 isca(5)-19824 isca(21)-1097953 isca(24)-2886154
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 isca(2) isca(3) (isca(12)-334072)/1.e5 isca(5)-19824 isca(21)-1097953 isca(24)-2886154
+nt/scan //lun25/1 nsca>0 ! ! ! isca(1)-936607 (isca(12)-334072)/1.e5 isca(5)-19824 isca(21)-1097953 isca(24)-2886154
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+1dh 51 'hodo' 33 0 33
+nt/pl //rht/1.iadc(15)-25 nadc>0.and.iadc(1)>300.and.iadc(2)>0.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+nt/pl //rht/1.iadc(13) nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //rht/1.iadc(16) nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+mess $sigma(300e-9*200e3*500)
+mess $sigma(300e-9*500e3*500)
+mess $sigma(300e-9*800e3*500)
+nt/pl //rht/1.iadc(13) nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //rht/1.iadc(14) nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //rht/1.iadc(15) nadc>0.and.iadc(1)>300.and.iadc(15)>400.and.cal_hmul.f(24,24,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+ld //
+nt/pl //lun23/1.iadc(14) nadc>0.and.iadc(1)>0.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+mess $sigma(1.5/1.3*10)
+mess $sigma(1.5/1.33*10)
+opt logy
+nt/pl //lun23/1.iadc(14) nadc>0.and.iadc(1)>0.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+chain lht //lun22
+chain lht //lun23
+nt/pl //lht/1.iadc(14) nadc>0.and.iadc(1)>0.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(14) nadc>0.and.iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(14) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(14) nadc>0.and.iadc(7)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(14) nadc>0.and.iadc(8)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+loca
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(8)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(1)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(20,30,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(24,24,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(24,30,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(20,30,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(20,30,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(26,36,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(13)>700.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(13)>700.and.iadc(5)>300.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)+iadc(5)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(13)>7500.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(13)>750.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(13)>0.and.cal_hmul.f(9,10,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(13)>0.and.cal_hmul.f(9,10,190,210)>0.and.cal_hmul.f(15,17,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+h/pl 51
+h/pl 207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(5)+iadc(6)>300.and.iadc(13)>0.and.cal_hmul.f(9,10,190,210)>0.and.cal_hmul.f(15,17,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lht/1.iadc(13) nadc>0.and.iadc(6)>300.and.iadc(13)>0.and.cal_hmul.f(9,10,190,210)>0.and.cal_hmul.f(15,17,190,210)>0.and.cal_hprof.f(190,210,51)>-2 -207
+opt liny
+h/pl 207
+nt/scan //lun22/1 nsca>0 ! ! ! isca(1) (isca(12)-0)/1.e5 isca(5) isca(21) isca(24)
+nt/scan //lun22/1 nsca>0 ! ! ! isca(1) (isca(12)-0)/1 isca(5) isca(21) isca(24)
+nt/scan //lun22/1 nsca>0 ! ! ! isca(1)-33362 (isca(12)-327742)/1.e5 isca(5)-19144 isca(21)-43923 isca(24)-335123
+nt/scan //lun22/1 nsca>0 ! ! ! isca(2) (isca(12)-0)/1 isca(5) isca(21) isca(24)
+nt/scan //lun22/1 nsca>0 ! ! ! isca(2)-216629 (isca(12)-327742)/1.e5 isca(5)-19144 isca(21)-43923 isca(24)-335123
+nt/scan //lun25/1 nsca>0 ! ! ! isca(2)-216629 (isca(12)-327742)/1.e5 isca(5)-19144 isca(21)-43923 isca(24)-335123
+exec run run=12409
+nt/scan //lun25/1 nsca>0 ! ! ! isca(2) (isca(12)-0)/1 isca(5) isca(21) isca(24)
+nt/scan //lun25/1 nsca>0 ! ! ! isca(2)-741473 (isca(12)-334072)/1 isca(5)-19824 isca(21)-1097953 isca(24)-2886154
+nt/scan //lun25/1 nsca>0 ! ! ! isca(2)-741473 (isca(12)-334072)/1e5 isca(5)-19824 isca(21)-1097953 isca(24)-2886154
+nt/scan //lun22/1 nsca>0 ! ! ! isca(2)-216629 (isca(12)-327742)/1.e5 isca(5)-19144 isca(21)-43923 isca(24)-335123
+mess $sigma(18/5.)
+mess $sigma(25/4.5)
+mess $sigma(11.5/(1.5*1.6))
+mess $sigma(25/5)
+mess $sigma(8.5/(1.5*1.6))
+mess $sigma(60*3/42)
+mess $sigma(300*2e5*500)
+mess $sigma(300e-9*2e5*500)
+exec run run=12392
+nt/scan //lun29/1 nsca>0 ! ! ! isca(2) (isca(12)-0)/1 isca(5) isca(21) isca(24)
+nt/pl //lun29/1.iadc(13) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lun29/1.iadc(13) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/scan //lun29/1 nsca>0 ! ! ! isca(1) isca(2) (isca(12)-0)/1 isca(5) isca(21) isca(24)
+nt/scan //lun29/1 nsca>0 ! ! ! isca(1) isca(2) (isca(12)-326764)/1 isca(5) isca(21) isca(24)
+nt/scan //lun29/1 nsca>0 ! ! ! isca(1) isca(2) (isca(12)-326764)/1e5 isca(5) isca(21) isca(24)
+nt/pl //lun29/1.iadc(14) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lun29/1.iadc(15) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+nt/pl //lun29/1.iadc(16) nadc>0.and.iadc(6)>0.and.iadc(15)>0.and.cal_hmul.f(26,26,190,210)>-2.and.cal_hprof.f(190,210,51)>-2 -207
+ld //
+shell pwd
+exec sett_magp e=0.85
+exec sett_magp e=0.85 p=1
+exec sett_magp e=0.85 p=2
+exec sett_magp e=0.362 p=2
+exec sett_magp e=0.85 p=2
+exit
+*** End   of history file: Thu Aug 10 16:20:47 2006

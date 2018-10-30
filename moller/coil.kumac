@@ -1,0 +1,14 @@
+MACRO coil
+* - Polarization dependence on the coils
+
+ve/cr coila(4) r 2. 5. 7. 9.
+ve/cr ecoila(4) r
+ve/cr polar(4)  r 61.6 66.1 67.2 66.9
+ve/cr epolar(4) r 0.26 0.27 0.2 0.3
+ve/oper/vsca polar 0.0005537 polar 
+ve/oper/vsca epolar 0.0005537 epolar 
+
+null 0 10 0.033 0.038
+gr/hpl/err coila polar ecoila epolar 4 20 0.1
+atit 'Coil current, A' 'Measured Asymmetry'
+RETURN

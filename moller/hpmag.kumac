@@ -1,0 +1,15 @@
+MACRO hpmag run1=0 run2=0
+nn=[run2]-[run1]+1
+ve/cr runn([nn]) r
+k=1
+	do nk=[run1],[run2]
+	  run=[nk]
+          exec get_settings_2009 run=[run]
+	  ve/in runn([k]) [run]
+ ve/write runn([k]),run_sett(26),run_sett(27),run_sett(28),run_sett(29)  mag.dat (1(F6.0),4(2X,F10.6))
+ shell cat  mag.dat >> magsum.dat
+ k=[k]+1
+	enddo
+ ve/de runn
+
+RETURN

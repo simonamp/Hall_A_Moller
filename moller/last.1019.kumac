@@ -1,0 +1,22 @@
+*** Begin of history file: Mon Oct 18 09:31:20 2010
+ve/cr vprec(8) r
+mess $sigma((5551.76-62.26)10.)
+mess $sigma((5551.76-62.26)/10.)
+ve/in vprec(1:3) 0.54895 1 5
+fu/pl spinpred.f -90 90
+mess $call('spinpred.f(29.2)')
+mess $sigma((5549.4-61.76)/10.)
+ve/in vprec(1:3) 0.54764 1 5
+set hcol 2
+fu/pl spinpred.f -90 90 s
+mess $call('spinpred.f(29.2)')
+set hcol 3
+mess $sigma((5548.91-61.76)/10.)
+ve/in vprec(1:3) 0.548715 1 5
+fu/pl spinpred.f -90 90 s
+mess $call('spinpred.f(29.2)')
+mess $sigma(78.09/99.4)
+mess $sigma(78.09/94.3)
+mess $sigma(78.09/96.7)
+exit
+*** End   of history file: Mon Oct 18 09:40:49 2010

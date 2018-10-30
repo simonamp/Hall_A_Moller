@@ -1,0 +1,12 @@
+*** Begin of history file: Tue Feb 10 10:37:02 2009
+exec help
+call prunpri.f(13114,20000)
+call prunpri.f(13114,20000)
+exec asym_av run1=13152 run2=13161
+exec asym_av run1=13162 run2=13165
+exec asym_av run1=13162 run2=13165
+exec asym_av run1=13166 run2=13170
+exec asym_av run1=13166 run2=13170
+exec asym_av run1=13152 run2=13170
+exit
+*** End   of history file: Tue Feb 10 10:53:22 2009

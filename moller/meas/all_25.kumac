@@ -1,0 +1,128 @@
+MACRO all_25 fill=1
+
+   ngr=1
+   ve/cr iru(2,3,[ngr]) i
+   ve/cr ang(3,[ngr]) r 
+
+   ve/in iru(1:2,1,1) 10202 10203 
+   ve/in ang(1,1) 90.
+   ve/in iru(1:2,2,1) 10194 10201 
+   ve/in ang(2,1) 23.
+   ve/in iru(1:2,3,1) 10204 10211 
+   ve/in ang(3,1) 163.5
+
+
+
+   if [fill]=0 then
+     goto eend
+   endif
+
+   do igr=1,[ngr]
+     do iang=1,3
+       r1=iru(1,[iang],[igr])
+       r2=iru(2,[iang],[igr])
+       angl=ang([iang],[igr])
+       do ir=[r1],[r2]
+         exec run run=[ir]
+         exec asymr delay=0 run=[ir] angl=[angl]
+       enddo
+     enddo  
+   enddo
+
+   eend:
+
+   opt fit
+   set fit 1111
+   set csiz 0.5
+*   zone 2 4
+
+*   exec asym_av run1=10107 run2=10114
+*   exec asym_av run1=10117 run2=10124
+
+*   null 0 1 0 1
+*   exec asym_av run1=10134 run2=10141
+   
+*   exec asym_av run1=10165 run2=10172
+*   exec asym_av run1=10154 run2=10161
+
+*   exec asym_av run1=10173 run2=10180
+*   exec asym_av run1=10183 run2=10190
+
+
+   titl 'Moller polarization'
+   if $VDIM(polmea)<2 then
+     ve/cr polmea(2,2) r
+   endif
+   do igr=1,[ngr]
+     zone 2 2
+     i90=1
+     rp1=iru(1,1,[igr])
+     rp2=iru(2,1,[igr])
+     if [rp1]=0 .OR. [rp2]=0 then
+        i90=0
+     endif
+     iav=1
+     do iang=2,3
+       r1=iru(1,[iang],[igr])
+       r2=iru(2,[iang],[igr])
+       if [r1]=0 .OR. [r2]=0 then
+          null 0 1 0 1
+          iav=0
+       else
+         exec asym_av run1=[r1] run2=[r2] atit=0 titl=0
+         pol=para(1)
+         mess Pol=[pol]
+         i1=[iang]-1
+         ve/in polmea([i1],1) [pol]
+         angl=ang([iang],[igr])
+         txt='Runs '//[r1]//' '//[r2]//' angle '//[angl]
+         atit [txt] ''
+         if [i90]>0 then
+           exec targ_angl run1=[r1] run2=[r2] runn1=[rp1] runn2=[rp2] i=1
+           a1=targcal(1)
+           exec targ_angl run1=[r1] run2=[r2] runn1=[rp1] runn2=[rp2] i=2
+           a2=targcal(1)
+           angl=$RSIGMA([angl])
+           angl1=$RSIGMA(([a1]+[a2])/2.)
+           if [angl]>100. then
+             angl1=$RSIGMA(180.-[angl1])
+           endif
+           cmnd='chngpol.f('//[pol]//','//[angl]//','//[angl1]//')'
+           pol1=$CALL([cmnd])
+           ve/in polmea([i1],2) [pol1]
+           null 0 10 0 10
+           txt='Angle initial ='//[angl]//' Polar='//[pol]
+           text 1 8 [txt] 0.25 0
+           txt='Angles ='//[a1]//', '//[a2]//' aver='//[angl1]
+           text 1 7 [txt] 0.25 0
+           txt=' Polar='//[pol1]
+           text 1 6 [txt] 0.25 0
+         endif
+       endif
+     enddo
+     if [iav]>0 then
+       p1=polmea(1,1)
+       p2=polmea(2,1)
+       polav1=$SIGMA(([p1]+[p2])/2.)
+       p1=polmea(1,2)
+       p2=polmea(2,2)
+       polav2=$SIGMA(([p1]+[p2])/2.)
+       txt='Average polarizations '//[polav1]//' , '//[polav2]
+       text 1 3 [txt] 0.25 0
+       polavav=$SIGMA(([polav1]+[polav2])/2.)
+       txt='Average of averages '//[polavav]
+       text 1 2 [txt] 0.25 0
+
+     endif
+  
+   enddo
+
+RETURN
+
+
+
+
+
+
+
+

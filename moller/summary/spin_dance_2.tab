@@ -1,0 +1,5 @@
+ hall   spin_prec(/2pi) angle_sift(deg)      energy_shift
+    1        22.168      -7.1+/- 0.2     -0.00089+/- 0.00003
+    2         7.169      -2.0+/- 2.6     -0.00077+/- 0.00101
+  Energy shift from 2 halls:             -0.00095+/- 0.00048
+

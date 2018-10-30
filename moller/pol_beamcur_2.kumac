@@ -1,0 +1,24 @@
+MACRO pol_beamcur_2
+*
+* Polarization at different beam currents, 2.0056 GeV, 09 Oct 2002
+*
+ np=3
+ ve/cr bcur([np])  r 0.29 0.46 0.95
+ ve/cr bcmr([np])  r 3900 6450 14060
+ ve/cr polb([np])  r 76.0 76.3 75.3
+ ve/cr epolb([np]) r 0.1  0.1 0.1 
+ ve/cr ebcur([np]) r
+
+ ve/cr par(10) r 70. 0.
+ null 0 1.1 72. 82.
+ atit 'Beam [m]A' 'Polarization'
+ gr/hpl/err bcur polb ebcur epolb [np] 20 0.3
+ null 0 16000. 72. 82.
+ atit 'BCM' 'Polarization'
+ gr/hpl/err bcmr polb ebcur epolb [np] 20 0.3
+ ve/fit bcmr polb epolb p1 s 2 par
+ a=par(1)
+ b=par(2)
+ mess [a] [b]
+ fu/pl [b]*x+[a] 0. 16000. s 
+RETURN

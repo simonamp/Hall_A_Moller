@@ -1,0 +1,34 @@
+ MACRO long_scan_ch ch=1
+ ve/cr parch(10) r
+ exec a_analyse lun=ch[ch] fill=1
+ wait
+ opt ndat
+ zone 1 2
+*nt/pl //ch[ch]/1.a_asymm.f(3,4,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.0.and.a_tpos.f(2,1)<0
+*h/fit 1000000 g
+*wait
+*nt/pl //ch[ch]/1.a_asymm.f(3,4,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1.and.a_tpos.f(2,1)<2.5
+ nt/pl //ch[ch]/1.abs(a_asymm.f(3,4,1,2,0,0,0)) $30.and.$31.and.$32.and.$33.and.$35.and.-2.45<a_tpos.f(2,1)<0.0.and.abs(a_asymm.f(3,4,1,2,0,0,0))<2.
+ h/fit 1000000 g ! 0 parch
+ left=$HINFO(1000000,'MEAN')
+ left1=parch(2)
+ wait
+ nt/pl //ch[ch]/1.abs(a_asymm.f(3,4,1,2,0,0,0)) $30.and.$31.and.$32.and.$33.and.$35.and.0.0<a_tpos.f(2,1)<2.95.and.abs(a_asymm.f(3,4,1,2,0,0,0))<2.
+ h/fit 1000000 g ! 0 parch
+ right=$HINFO(1000000,'MEAN')
+ right1=parch(2)
+ wait
+*nt/pl //ch[ch]/1.a_asymm.f(3,4,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1.and.a_tpos.f(2,1)<2.5
+*nt/pl //ch[ch]/1.abs(a_asymm.f(3,0,1,2,0,0,0)) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.4.and.a_tpos.f(2,1)<2.9
+*h/fit 1000000 g ! 0 parch
+*wait
+ nt/pl //ch[ch]/1.abs(a_asymm.f(3,4,1,2,0,0,0)) $30.and.$31.and.$32.and.$33.and.$35.and.-2.45<a_tpos.f(2,1)<2.95.and.abs(a_asymm.f(3,4,1,2,0,0,0))<2.
+ h/fit 1000000 g ! 0 parch
+ full=$HINFO(1000000,'MEAN')
+ full1=parch(2)
+
+ mess Left=[left] Right=[right] Full=[full]
+ mess Left1=[left1] Right1=[right1] Full1=[full1] parch
+*ve/de *
+*hi/de *
+RETURN

@@ -1,0 +1,22 @@
+MACRO meas_030207 fill=1 fillscal=0
+*
+* --- measurement 07 Feb 2003
+*
+*     Define the data set
+   ngr=1
+   ve/cr iru(2,3,[ngr]) i
+   ve/cr ang(3,[ngr]) r 
+* Run ranges for 3 target angle measurements
+
+   ve/in iru(1:2,1,1) 10571 10572 
+   ve/in ang(1,1) 90.
+
+   ve/in iru(1:2,2,1) 10565 10570 
+   ve/in ang(2,1) 23.0
+
+   ve/in iru(1:2,3,1) 10573 10578
+   ve/in ang(3,1) 163.0
+
+   exec analyze_set ngr=[ngr] fill=[fill] fillscal=[fillscal] nevadc=3 delay=9
+
+RETURN

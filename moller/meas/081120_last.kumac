@@ -1,0 +1,162 @@
+*** Begin of history file: Thu Nov 20 01:01:12 2008
+exec run run=12935
+exec lg_spectra run=12935
+exec lg_spectra run=12935
+exec lg_spectra run=12935 cut=11
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12935
+call prunpri.f(10000,20000)
+exec run run=12936
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12936
+exec run run=12937
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12937
+call prunpri.f(10000,20000)
+exec run run=12938
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12938
+call prunpri.f(10000,20000)
+exec asym_av run1=12935 run2=12938
+exec run run=12939
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12939
+call prunpri.f(10000,20000)
+mess $sigma(84925/9308)
+mess $sigma(127400/9949)
+exec run run=12940
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12940
+call prunpri.f(10000,20000)
+exec run run=12941
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12941
+call prunpri.f(10000,20000)
+exec run run=12942
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12942
+call prunpri.f(10000,20000)
+exec asym_av run1=12939 run2=12942
+exec lg_spectra run=12942 cut=11
+exec lg_spectra run=12942 cut=0
+exec lg_spectra run=12942 cut=11
+exec run run=12943
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12943
+call prunpri.f(10000,20000)
+exec lg_spectra run=12943 cut=0
+exec lg_spectra run=12943 cut=11
+exec run run=12944
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12944
+exec lg_spectra run=12943 cut=11
+call prunpri.f(10000,20000)
+exec run run=12945
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12945
+call prunpri.f(10000,20000)
+exec lg_spectra run=12944 cut=11
+exec lg_spectra run=12944 cut=0
+exec time run=12944 cut=0
+loca
+exec run run=12946
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12946
+call prunpri.f(10000,20000)
+exec asym_av run1=12943 run2=12946
+exec run run=12947
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12947
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12947 nocut=1
+exec lg_spectra run=12947 cut=0
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12947 nocut=1 norbcm=0 nococut=1
+exec time run=12947
+exec run run=12948
+exec lg_spectra run=12948 cut=0
+exec lg_spectra run=12948 cut=0
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12948
+exec time run=12948
+exec lg_spectra run=12948 cut=0
+exec lg_spectra run=12948 cut=11
+ld //
+nt/pl //lun22/1.iadc(9) nadc>0
+1dh 201 ' ' 200 0 1000
+nt/pl //lun22/1.iadc(9) nadc>0 -201
+nt/pl //lun22/1.iadc(10) nadc>0 -201
+nt/pl //lun25/1.iadc(10) nadc>0 -201
+nt/pl //lun24/1.iadc(10) nadc>0 -201
+nt/pl //lun25/1.iadc(9) nadc>0 -201
+nt/pl //lun24/1.iadc(9) nadc>0 -201
+nt/pl //lun24/1.iadc(9) nadc>0 -201
+nt/pl //lun25/1.iadc(9) nadc>0 -201
+exec run run=12949
+nt/pl //lun25/1.iadc(9) nadc>0 -201
+nt/pl //lun25/1.iadc(10) nadc>0 -201
+nt/pl //lun25/1.iadc(10) nadc>0.and.$11 -201
+nt/pl //lun24/1.iadc(10) nadc>0.and.$11 -201
+nt/pl //lun26/1.iadc(10) nadc>0.and.$11 -201
+nt/pl //lun26/1.iadc(10) nadc>0 -201
+nt/pl //lun26/1.iadc(9) nadc>0 -201
+nt/pl //lun26/1.iadc(9) nadc>0.and.$11 -201
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12949
+call prunpri.f(10000,20000)
+exec run run=12950
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12950
+call prunpri.f(10000,20000)
+exec time run=12940
+exec time run=12950
+exec run run=12951
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12951
+call prunpri.f(10000,20000)
+exec lg_spectra run=12951 cut=0
+1dh 201 ' ' 200 0 1000
+nt/pl //lun27/1.iadc(9) nadc>0 -201
+zone 2 2
+nt/pl //lun27/1.iadc(9) nadc>0 -201
+ld //
+nt/pl //lun22/1.iadc(9) nadc>0 -201
+1dh 202 ' ' 200 0 1000
+nt/pl //lun27/1.iadc(9) nadc>0 -202
+h/pl 201 s
+exec run run=12952
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12952
+call prunpri.f(10000,20000)
+exec asym_av run1=12949 run2=12952
+exec run run=12954
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12954
+call prunpri.f(10000,20000)
+exec run run=12955
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12955
+call prunpri.f(10000,20000)
+exec time run=12955
+exec asym_av run1=12954 run2=12955
+exec run run=12957
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=12957
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12957
+call prunpri.f(10000,20000)
+exec run run=12958
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12958
+call prunpri.f(10000,20000)
+exec run run=12959
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12959
+call prunpri.f(10000,20000)
+exec run run=12960
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=12960
+call prunpri.f(10000,20000)
+exec asym_av run1=12957 run2=12960
+exec run run=12961
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12961
+call prunpri.f(10000,20000)
+exec run run=12962
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12962
+call prunpri.f(10000,20000)
+exec run run=12963
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12963
+call prunpri.f(10000,20000)
+exec run run=12964
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=12964
+exec asym_av run1=12961 run2=12964
+exec run run=12965
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12965
+call prunpri.f(10000,20000)
+exec run run=12966
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12966
+call prunpri.f(10000,20000)
+exec run run=12967
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12967
+call prunpri.f(10000,20000)
+exec run run=12967
+exec run run=12968
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=12968
+call prunpri.f(10000,20000)
+exec asym_av run1=12965 run2=12968
+mess $sigma((74.76+74.37+72.78+74.46)/4)
+exit
+*** End   of history file: Thu Nov 20 03:36:20 2008

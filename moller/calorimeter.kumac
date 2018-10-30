@@ -1,0 +1,31 @@
+MACRO calorimeter
+
+ve/re run,asym,a_cal,res,eres  april22.dat ! ! -/*/
+ 
+ zone 
+ opt nstat
+ opt nbox
+ opt ndat
+ nch=$sigma(NCO(run))
+ mess nch=[nch]
+ sigma run=array([nch],14357#14417)
+ sigma er1=array([nch], 0.1#0.1)
+ sigma err=asym*eres/100.
+ null 14394.5 14412.5 0.0548 0.0572
+ gr/hpl/err run asym  er1 err [nch] 20 0.3
+ gr/hpl/key 14397 0.0554 20 'Calorimeter+Aperture'
+ atitle 'Runs 14395-14412'   'Beam Asymmetry, "Y#' 
+ text 14397 0.0550 '(Calor+Apert)/Calor=1.0018' 0.4 0 
+ set pmci 2
+ set txci 2 
+ gr/hpl/err run a_cal  er1 err [nch] 24 0.3
+ gr/hpl/key 14397 0.0552 24 'Calorimeter' 
+ set pmci 1
+ set txci 1
+* wait
+* sigma difd=asym-a_cal
+* opt stat
+* ve/pl difd(39:53)
+
+
+RETURN

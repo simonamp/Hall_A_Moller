@@ -1,0 +1,126 @@
+MACRO asym id0=-1 nlun=0 run=0 ncha=6000 n1=1 n2=999999 nevadc=10
+*
+* --- Asymmetry calculation
+*
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- n1,n2 - the range of the scaler cycles to accept
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+*
+ ve/cr ichis(10) i 1 2 3 4 5 6 7 8 9 10
+ ve/cr nnlim(2) i [n1] [n2]
+
+ if [nlun]=0 then
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run=irun(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   nlun=lun//[lun]
+ else
+   run=[nlun]
+ endif
+ if [id0]=-1 then
+   id0=[run]*100
+   mess Set id0 to [id0]
+ endif
+
+ tit='Moeller run='//[run]
+ titl [tit]
+
+* if $VDIM(casym)=0 then
+   ve/cr casym(50) r
+   ve/cr easym(50) r
+   ve/cr nasym(50) i
+* endif
+
+ if $VDIM(parrun)=0 then
+   ve/cr parrun(16,1000) r
+ endif
+
+ id=[id0]
+ tith=[tit]//' raw asymmetry'
+ x2=[ncha]+1
+ 1dh [id] [tith] [ncha] 1 [x2]
+
+ tith=[tit]//' counting rates'
+ do i=1,10
+   k=ichis([i])
+   id1=[id0]+[k]
+   1dh [id1] [tith] 1000 0 10000 
+   id1=[id0]+[k]+30
+   1dh [id1] [tith] 8000 1 8001 
+   id1=[id0]+[k]+40
+   if [k]<6 then
+     1dh [id1] [tith] 8000 1 8001 
+   endif
+ enddo
+ tith=[tit]//' isca(11) increments'
+ id1=[id0]+20
+ h/cop [id] [id1] [tith] 
+ tith=[tit]//' adc events'
+ id1=[id0]+21
+ h/cop [id] [id1] [tith]
+
+ id1=[id0]+60
+ 1dh [id1] 'Ticks between cycles' 100 0. 100. 
+ 
+ nt/loop //[nlun]/1 asymmet.f([id],[nevadc])>0.  
+
+ h/pl [id](1000:[ncha])
+
+ noff=2000
+ if [run]<2000 then
+   noff=1000
+ endif
+ drun=[run]-[noff]
+ av=nasym(1)
+ ev=nasym(2)
+ mess ' Finished. Full number of cycles=' [av] ' useful cycles=' [ev]
+ mess ' Cycles lost due to various reasons: '
+ ve/pri nasym(3:14)
+ av=casym(21)
+ ev=easym(21)
+ mess 'Asymmetry=' [av] '+/-' [ev]
+ ve/in parrun(11:12,[drun]) [av] [ev]
+ av=casym(22)
+ ev=easym(22)
+ ve/in parrun(13:14,[drun]) [av] [ev]
+ mess 'Polarization=' [av] '+/-' [ev]
+ av=casym(1)
+ ev=easym(1)
+ aa=[av]/0.03
+ mess 'Left =' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in parrun(1,[drun]) [aa] 
+ av=casym(2)
+ ev=easym(2)
+ aa=[av]/0.03
+ mess 'Right=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in parrun(2,[drun]) [aa] 
+ av=casym(3)
+ ev=easym(3)
+ aa=[av]/0.03
+ mess 'Coinc=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in parrun(3,[drun]) [aa] 
+ av=casym(4)
+ ev=easym(4)
+ aa=[av]/0.03
+ mess 'Accid=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in parrun(4,[drun]) [aa] 
+
+RETURN
+ 
+ 
+
+
+
+
+
+
+
+
+

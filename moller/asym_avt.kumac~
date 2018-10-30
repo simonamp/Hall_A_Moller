@@ -1,0 +1,40 @@
+MACRO asym_avt run1=1 run2=50  k=1  n1=1 n2=4
+
+ nr=6
+ ve/cr bp([nr]) r  88.25 87.45 88.05 87.18 88.01 87.98
+ ve/cr bp2([nr]) r  
+ ve/cr err([nr]) r  0.45 0.41 0.43 0.41 0.42  0.41
+* 89.75 89.60 89.35 89.24 89.29 89.67
+* 0.36 0.36 0.37 0.38 0.37 0.36
+* 87.44 87.92 87.99 87.48 88.03
+* 0.38 0.37 0.37 0.37 0.38
+* sigma bp=(bp1+bp2)/2 
+ opt ndat
+ opt nbox
+
+ set pmci 2
+ zone
+* fort/fil 56 moller_15653-15665.ps
+* meta 56 -112
+
+ sigma er1=array([nr],0.001#0.001)
+ sigma rn=array([nr],1#[nr])
+* sigma rn=array([nr],5#2)
+* sigma rn=array([nr],16105#16130)
+ ve/cr parv(5) r
+ set dmod 3
+ ve/fit  rn  bp err  p0 ! 1 parv
+ set dmod 0
+* null 14417 14460 -92.0   -87.0
+ gr/hpl/err rn bp  er1 err [nr] 20 0.3
+* gr/hpl/err q3 bp er1 err [nr] 20 0.3
+ atitle 'Runs'   'Beam Polarization, "Y#'  
+* atitle 'Moller Target Number'   'Beam Polarization, "Y# 
+ selnt 1
+ text 13.5 20.5 'Preliminary Moller result, 12/07/2016' 0.5 0 C
+
+ selnt 10
+* close 56
+
+RETURN 
+

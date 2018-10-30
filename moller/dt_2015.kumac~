@@ -1,0 +1,24 @@
+MACRO dt_2015 rt=373.
+* Dead time analysis, needs the LED dt, polarization and the L/R rates
+* runs 15827-15832 24 April 2015 
+* crn- beam current, uA, rt - Right arm single rate, kHz,
+* led - LED dead time
+
+ ve/cr crn(5) r 0.22 0.33 0.44 0.47 0.67
+ ve/cr rat(5) r 268. 404. 533. 568. 729.
+ ve/cr led(5) r 0.55 0.89 1.18 1.36 1.81
+ ve/cr par(10) r 
+ opt ndat
+ opt nbox
+ zone
+ nr=$sigma(NCO(rat))
+ sigma err=array([nr],0.01#0.01)
+* ve/fit  rat led   err  p1  !  4 par
+* wait
+ null 100 800 0.1 2.0
+ gr/hpl/err rat led  err err [nr] 20 0.2 s
+ fu/pl  -0.20684+0.27275E-02*x 100.  800. s
+ atitle  'Right arm rate, kHz' 'Dead time correction, "Y#'
+ dt=-0.20684+0.27275E-02*[rt]
+ mess Right arm rate=[rt]kHz,   dead time=[dt]%
+RETURN

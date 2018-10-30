@@ -1,0 +1,44 @@
+MACRO quad2.kumac
+
+  ve/cr field(20) r 10555. 14000. 13000. 12000. 11000. 10000. 9000.  8000.  7000.
+  ve/cr singl(20) r 127130 105373 122054 136991 143720 140700 144837 148004 153229
+  ve/cr coinc(20) r 18818  18636  16533  19197  20131  19757  20245  19934  16662
+  ve/cr accid(20) r 291    214    279    340    365    353    363    375    389
+
+  ve/cr err(20) r
+  ve/cr y(20) r
+
+  null 6000. 15000. 0. 2
+  np=9
+
+  an=singl(1)
+  do i=1,[np]
+    a=singl([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 24
+  gr/hplo/key 7000. 0.1 24 'single' 0.3
+
+  an=coinc(1)
+  do i=1,[np]
+    a=coinc([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 25
+  gr/hplo/key 7000. 0.2 25 'coinc' 0.3
+
+  an=accid(1)
+  b=coinc(1)
+  an=[an]/[b]
+  do i=1,[np]
+    a=accid([i])
+    b=coinc([i])
+    a=[a]/[b]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 21
+  gr/hplo/key 7000. 0.3 21 'accid' 0.4
+   
+RETURN

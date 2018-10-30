@@ -1,0 +1,91 @@
+MACRO 11gev
+* eb - beam energy, GeV
+* thl/thc - theta left arm/coincidence CM, deg (RMS)
+* phl/phc - phi left arm/coincidence CM, deg (RMS)
+* apl/apc - analyzing power left/coincidence
+* ral/rac - rate (hits/10000) left arm/coincidence
+np=10
+ve/cr eb([np])  r 2.4   3.0    4.0   5.0   6.0   7.0   8.0   9.0  10.0  10.8
+ve/cr thl([np]) r 10.2  10.2   9.0   8.7   7.9   7.5   7.3   7.1   6.3   5.3
+ve/cr thc([np]) r 7.7   7.4    7.4   7.1   6.5   5.9   5.4   4.8   3.9   3.2
+ve/cr phl([np]) r 5.5   6.6    7.5   8.5   9.9  11.2  12.4  13.5  14.5  14.9
+ve/cr phc([np]) r 4.9   5.1    6.4   7.7   9.2  10.7  12.1  12.5  12.3  11.8
+ve/cr apl([np]) r .739  .739  .744  .749  .753  .754  .754  .753  .756  .763
+ve/cr apc([np]) r .756  .757  .758  .760  .763  .765  .768  .770  .772  .774
+ve/cr ral([np]) r 2496  3130  3692  4095  4529  4996  5476  5603  4868  3676
+ve/cr rac([np]) r 1463  1999  2524  2997  3397  3664  3842  3514  2834  2191
+nev=10000
+
+opt nbox
+opt nstat 
+opt grid
+zone
+**********************     THETA    *****************************
+null 2.2 11.0 2.8 11.0
+atitle 'Beam Energy, GeV' 'Acceptance [Q], deg'
+set mtyp 20
+ve/pl thl%eb ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Moller Polarimeter [Q](moller) Angle, CM' 0.4 0 C
+key 5.0 6.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl thc%eb ! s
+selnt 1
+key 5.0 5.0 [mt] '- Coincidence'
+selnt 10
+wait
+********************      PHI      ******************************
+null 2.2 11.0 2.8 15.5
+atitle 'Beam Energy, GeV' 'Acceptance [F], deg'
+set mtyp 20
+ve/pl phl%eb ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Moller Polarimeter [F] Angle, CM' 0.4 0 C
+key 5.0 16.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl phc%eb ! s
+selnt 1
+key 5.0 15.0 [mt] '- Coincidence'
+selnt 10
+wait
+*****************   Analysing power   *****************************
+null 2.2 11.0 .73  .78
+atitle 'Beam Energy, GeV' 'An. Power'
+set mtyp 20
+ve/pl apl%eb ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Moller Polarimeter Analysing Power ' 0.4 0 C
+key 5.0 16.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl apc%eb ! s
+selnt 1
+key 5.0 15.0 [mt] '- Coincidence'
+selnt 10
+wait
+*****************   Counting Rate   *****************************
+null 2.2 11.0 1200  6000
+atitle 'Beam Energy, GeV' 'Counting Rate, rel.un.'
+set mtyp 20
+ve/pl ral%eb ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Moller Polarimeter Counting Rate' 0.4 0 C
+key 15.0 6.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl rac%eb ! s
+selnt 1
+key 15.0 5.0 [mt] '- Coincidence'
+selnt 10
+
+RETURN

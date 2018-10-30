@@ -1,0 +1,11 @@
+MACRO slitvsbcur
+*** Slit vs. Beam current Attenuator=100
+ve/cr slit(11) r  50   45   40   35   30   28  26  24  22  20  18
+ve/cr bcur(11) r 10.5 10.5 10.5 10.3  9.1 8.4 7.3 6.2 4.9 3.2 1.8
+
+ zone
+ set mtyp 20
+ ve/pl bcur%slit
+ atitle 'Slit' 'Beam current, [m]Amp'
+
+RETURN

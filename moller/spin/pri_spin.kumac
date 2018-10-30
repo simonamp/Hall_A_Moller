@@ -1,0 +1,10 @@
+MACRO pri_spin lun=6
+  ve/cr vprec1(8) r 0.423 3 5 1 2 [lun]
+  call spin_ab.f(0.0)
+  ve/in vprec1 0.423 3 5 1 1 [lun]
+  call spin_ab.f(0.001)
+  ve/in vprec1 0.500 5 4 1 1 [lun] 
+  call spin_ab.f(0.0)
+  ve/in vprec1 0.500 5 4 1 1 [lun]
+  call spin_ab.f(0.001)
+RETURN

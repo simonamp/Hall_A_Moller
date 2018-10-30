@@ -1,0 +1,97 @@
+MACRO all_19
+
+   clo 0
+   ve/del lrun
+   cd //pawc
+   h/del 0
+
+   n=0
+   coil=-1
+   do i=5896,5897
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=89.5 ptar=0.076 anpow=0.76 nevadc=10 coil=[coil]
+     n=[n]+1
+     if [n]=1 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+     coil=[coil]*(-1)
+   enddo
+
+   n=0
+   coil=-1
+   do i=5898,5903
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=157. ptar=0.076 anpow=0.76 nevadc=10 coil=[coil]
+     n=[n]+1
+     if [n]=1 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+     coil=[coil]*(-1)
+   enddo
+
+   n=0
+   coil=-1
+   do i=5904,5909
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=146.5 ptar=0.076 anpow=0.76 nevadc=10 coil=[coil]
+     n=[n]+1
+     if [n]=1 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+     coil=[coil]*(-1)
+   enddo
+
+   n=0
+   coil=-1
+   do i=5910,5915
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=37.0 ptar=0.076 anpow=0.76 nevadc=10 coil=[coil]
+     n=[n]+1
+     if [n]=1 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+     coil=[coil]*(-1)
+   enddo
+
+   n=0
+   coil=-1
+   do i=5916,5921
+     exec run run=[i]
+     exec asymp run=[i] norm=1 norbcm=0 angl=23.0 ptar=0.076 anpow=0.76 nevadc=10 coil=[coil]
+     n=[n]+1
+     if [n]=1 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+     endif
+     coil=[coil]*(-1)
+   enddo
+
+
+RETURN
+
+
+
+
+
+
+
+

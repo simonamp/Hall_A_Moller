@@ -1,0 +1,73 @@
+MACRO correl_1 run1=0 run2=0 angl=22.5 i1=1 i2=3 i3=0 i4=0 n1=1
+*
+* === Look for correlations in the polarization results
+*
+
+ if [i1]<1 then
+   goto eend
+ endif
+ nr=$VDIM(resrun,2)
+ if [nr]<1 then
+   goto eend
+ endif
+ if $VDIM(resrun,1)<[i1] .OR. $VDIM(resrun,1)<[i2] then
+   mess Wrong i1,i2 [i1] [i2]
+   goto eend
+ endif
+ if $VDIM(xmeas,1)<[nr] then
+   ve/cr xmeas([nr]) r
+   ve/cr exmeas([nr]) r
+   ve/cr ymeas([nr],6) r
+   ve/cr eymeas([nr]) r
+ endif
+
+ np=0
+ 
+ do run=[run1],[run2]
+   ir=krunpnt([run])
+   if [ir]>0 then
+     k=resrun(3,[ir])
+     an=consrun(1,[ir])
+     an1=$SIGMA(ABS([an]-[angl]))
+     coil=consrun(6,[ir])
+     coil1=$SIGMA(ABS([coil]))
+     thr=runset(3,[ir])
+     if [k]>10 .AND. [an1]<2. .AND. [coil1]>0.5 .AND. [thr]>60 then
+       np=[np]+1
+       ve/in xmeas([np]) [run] 
+       a1=resrun([i1],[ir])
+       a1=$SIGMA(ABS([a1]))
+       a2=1.
+       if [i2]>0 then
+         aa=resrun([i2],[ir])
+         aa=$SIGMA(ABS([aa]))
+         if [aa]>0 then
+           a2=[aa] 
+         endif
+       endif
+       a3=1.
+       if [i3]>0 then
+         aa=resrun([i3],[ir])
+         aa=$SIGMA(ABS([aa]))
+         if [aa]>0 then
+           a3=[aa] 
+         endif
+       endif
+       a4=1.
+       if [i4]>0 then
+         aa=resrun([i4],[ir])
+         aa=$SIGMA(ABS([aa]))
+         if [aa]>0 then
+           a4=[aa] 
+         endif
+       endif
+       af=$SIGMA([a1]/[a2]*[a3]/[a4])
+       ve/in ymeas([np],[n1]) [af]
+     endif
+   endif
+ enddo
+
+ mess Number of points= [np]
+ eend:
+RETURN
+

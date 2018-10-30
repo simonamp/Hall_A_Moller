@@ -1,0 +1,196 @@
+MACRO asymo id0=-1 nlun=0 run=0 ncha=-1 n1=1 n2=999999 nevadc=10 angl=20. anpow=0.73 ptar=0.082 
+* ===   1 sec cycle, random helicity signal
+*
+* --- Asymmetry calculation
+*
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- ncha > 0 - number of bins, <0 - automatic = 0 - no hist
+* --- n1,n2 - the range of the scaler cycles to accept
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+* --- angl   - target angle
+* --- anpow  - Moller analysing power
+* --- ptar   - target polarizarion
+*
+ ve/cr ichis(10) i 1 2 3 4 5 6 12
+ ve/cr nnlim(2) i [n1] [n2]
+
+ if [nlun]=0 then
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run=irun(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   nlun=lun//[lun]
+ else
+   run=[nlun]
+ endif
+ if [id0]=-1 then
+   id0=[run]*100
+   mess Set id0 to [id0]
+ endif
+
+ tit='Moeller run='//[run]
+ titl [tit]
+
+* if $VDIM(casym)=0 then
+   ve/cr casym(50) r
+   ve/cr easym(50) r
+   ve/cr nasym(50) i
+* endif
+
+ if $VDIM(parrun)=0 then
+   ve/cr parrun(16,1000) r
+ endif
+ if $VDIM(resrun)=0 then
+   ve/cr resrun(30,1000) r
+ endif
+
+ ve/cr limsca(2,16) i
+ nt/pl //[nlun]/1.isca(11) nsca>0.and.asymlim.f(1)>0.
+ 
+  
+ if [ncha]<0 then
+   ncha=$HINFO(1000000,'XMAX')
+ endif
+
+ id=[id0]
+ tith=[tit]//' raw asymmetry'
+ x2=[ncha]+1
+ if [ncha]>0 then
+   1dh [id] [tith] [ncha] 1 [x2]
+   tith=[tit]//' isca(11) increments'
+   id1=[id0]+20
+*   h/cop [id] [id1] [tith] 
+   tith=[tit]//' adc events'
+   id1=[id0]+21
+*   h/cop [id] [id1] [tith]
+ endif
+
+ tith=[tit]//' counting rates'
+ do i=1,10
+   k=ichis([i])
+   if [k]>0 then
+*---        Get the limits
+*	
+     l1=limsca(1,[k])     
+     l2=limsca(2,[k])
+     xmn=$SIGMA(INT([l1]/200))
+     xmn=[xmn]*200
+     xmx=$SIGMA(INT([l2]/200))     
+     xmx=([xmx]+1)*200
+     nx=[xmx]-[xmn]
+     nx=$SIGMA(MIN([nx],200))
+     mess chan=[k] nch,xmin,xmax=[nx],[xmn],[xmx]
+
+
+     id1=[id0]+[k]
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     id1=[id0]+[k]+60
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     id1=[id0]+[k]+80
+     1dh [id1] [tith] [nx] [xmn] [xmx]
+     if [k]=3 then
+        id1=[id0]+88
+        2dh [id1] 'coin H+ vs coin H-' [nx] [xmn] [xmx] [nx] [xmn] [xmx] 510.
+     endif
+     if [ncha]>0 then
+       id1=[id0]+[k]+30
+       1dh [id1] [tith] [ncha] 1 [ncha]
+     endif 
+   endif 
+ enddo
+
+ id1=[id0]+50
+ 1dh [id1] 'Ticks between cycles' 100 0. 100. 
+ id1=[id0]+51
+ 1dh [id1] 'Ticks between the last ADC and scalers' 1000 0. 1000. 
+ id1=[id0]+52
+ 1dh [id1] 'Ticks between the 1-st and last ADC' 20 0. 20. 
+
+ id1=[id0]+55
+ 1dh [id1] '2 scalers - arm L increment diff' 800 -400. 400. 
+ id1=[id0]+56
+ 1dh [id1] '2 scalers - arm R increment diff' 800 -400. 400. 
+ id1=[id0]+57
+ 1dh [id1] '2 scalers - coinc increment diff' 800 -400. 400. 
+ id1=[id0]+58
+ 1dh [id1] '2 scalers - accid increment diff' 800 -400. 400. 
+ id1=[id0]+59
+ 2dh [id1] '2 scalers - coi vs L increment diff' 100 -400. 400. 700 0. 7000. 255. 
+ 
+ nt/loop //[nlun]/1 asymmeto.f([id],[nevadc],[angl],[anpow],[ptar])>0.  
+ ve/in nasym(1:50) 50*0
+ nt/loop //[nlun]/1 asymmeto.f([id],[nevadc],[angl],[anpow],[ptar])>0.  
+
+ h/pl [id](500:[ncha])
+
+ noff=2000
+ if [run]<2000 then
+   noff=1000
+ endif
+ drun=[run]-[noff]
+ ve/in resrun(17:19,[drun]) [angl] [anpow] [ptar]
+ av=nasym(1)
+ ev=nasym(2)
+ mess ' Finished. Full number of cycles=' [av] ' useful cycles=' [ev]
+ av=nasym(16)
+ ev=nasym(17)
+ mess ' H+ cycles' [av] ' H- cycles=' [ev]
+ av=nasym(18)
+ ev=nasym(19)
+ mess ' H+ BCM' [av] ' H- BCM=' [ev]
+ mess ' Cycles lost due to various reasons: '
+ ve/pri nasym(3:14)
+ av=casym(21)
+ ev=easym(21)
+ mess 'Asymmetry=' [av] '+/-' [ev]
+ ve/in resrun(11:12,[drun]) [av] [ev]
+ av=casym(22)
+ ev=easym(22)
+ ve/in resrun(13:14,[drun]) [av] [ev]
+ mess 'Polarization=' [av] '+/-' [ev]
+ av=casym(23)
+ ev=easym(23)
+ ve/in resrun(21:22,[drun]) [av] [ev]
+ mess 'Polarization Left  arm=' [av] '+/-' [ev]
+ av=casym(24)
+ ev=easym(24)
+ ve/in resrun(23:24,[drun]) [av] [ev]
+ mess 'Polarization Right arm=' [av] '+/-' [ev]
+ av=casym(1)
+ ev=easym(1)
+ aa=[av]/0.03
+ mess 'Left =' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(1,[drun]) [aa] 
+ av=casym(2)
+ ev=easym(2)
+ aa=[av]/0.03
+ mess 'Right=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(2,[drun]) [aa] 
+ av=casym(3)
+ ev=easym(3)
+ aa=[av]/0.03
+ mess 'Coinc=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(3,[drun]) [aa] 
+ av=casym(4)
+ ev=easym(4)
+ aa=[av]/0.03
+ mess 'Accid=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(4,[drun]) [aa]
+ av=casym(5)
+ ev=easym(5)
+ aa=[av]/0.03
+ mess 'BCM=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(5,[drun]) [aa]
+ av=casym(6)
+ ev=easym(6)
+ aa=[av]/0.03
+ mess 'Timer=' [av] '+/-' [ev] 'per cycle ' [aa] 'per sec'
+ ve/in resrun(6,[drun]) [aa] 
+
+RETURN

@@ -1,0 +1,121 @@
+MACRO sett_acc e0=1. p=3  par=1
+
+*
+* --- prints a table with accelerator magnet settings
+* 
+* e0 - beam energy, GeV
+* par=1 - accelerator average setting (from mollerrun_[run].set)
+*    =2 - accelerator maximal setting (from mollerrun_[run].set)
+*    =3 - moller quads setting from sett_magp.kumac nq=2
+* p=1 - settings in GL(kGs) or BdL(kGs cm)
+*  =2 - settings in B(kGs)
+*  =3 - settings in I(Amps)
+ve/de *
+
+read e0 'Input beam energy, GeV'
+read p  'Input p: 1-GL, 2-B, 3-I'
+read par 'Input par: 1-accel aver, 2-accel max, 3-sett_magp'
+
+e0mi=0.8
+e0ma=8.0
+  if [e0]<[e0mi] then
+mess 'Beam energy must be > 0.8 GeV'
+  goto eend
+  endif
+
+  if [e0]>[e0ma] then
+mess 'Beam energy must be < 8.0 GeV'
+  goto eend
+  endif
+
+ve/cr q1ave(4) r  26.451    66.154  -12.239      0.93994E-01
+ve/cr q1max(4) r  27.775    66.603  -12.536      0.13555 
+ve/cr q1gen(4) r  24.961    60.328  -10.683      0.37126E-03 
+ve/cr q3ave(4) r  -4.4955   18.201    1.8045    -0.38393E-01 
+ve/cr q3max(4) r  -4.3851   21.073    0.36725    0.16148 
+ve/cr q3gen(4) r  -5.0298   18.849    1.2452    -0.49479E-02 
+ve/cr dipol(4) r  -0.14253  63.998   -0.042901   0.27513E-02 
+q2ave=1.2
+q2max=2.4
+q2gen=0.0
+
+par1=-dipol(1)
+par2=dipol(2)
+par3=-dipol(3)
+par4=dipol(4)
+dipole=-[par1]+[par2]*[e0]-[par3]*[e0]*[e0]+[par4]*[e0]*[e0]*[e0]
+
+   if [par]=1 then
+par1=q1ave(1)
+par2=q1ave(2)
+par3=-q1ave(3)
+par4=q1ave(4)
+q1amp=[par1]+[par2]*[e0]-[par3]*[e0]*[e0]+[par4]*[e0]*[e0]*[e0]
+q2amp=[q2ave]
+par1=-q3ave(1)
+par2=q3ave(2)
+par3=q3ave(3)
+par4=-q3ave(4)
+q3amp=-[par1]+[par2]*[e0]+[par3]*[e0]*[e0]-[par4]*[e0]*[e0]*[e0]
+   goto info
+   elseif [par]=2 then
+par1=q1max(1)
+par2=q1max(2)
+par3=-q1max(3)
+par4=q1max(4)
+q1amp=[par1]+[par2]*[e0]-[par3]*[e0]*[e0]+[par4]*[e0]*[e0]*[e0]
+q2amp=[q2max]
+par1=-q3max(1)
+par2=q3max(2)
+par3=q3max(3)
+par4=-q3max(4)
+q3amp=-[par1]+[par2]*[e0]+[par3]*[e0]*[e0]-[par4]*[e0]*[e0]*[e0]
+   goto info
+   elseif [par]=3 then
+par1=q1gen(1)
+par2=q1gen(2)
+par3=-q1gen(3)
+par4=q1gen(4)
+q1amp=[par1]+[par2]*[e0]-[par3]*[e0]*[e0]+[par4]*[e0]*[e0]*[e0]
+q2amp=[q2gen]
+par1=-q3gen(1)
+par2=q3gen(2)
+par3=q3gen(3)
+par4=-q3gen(4)
+q3amp=-[par1]+[par2]*[e0]+[par3]*[e0]*[e0]-[par4]*[e0]*[e0]*[e0]
+   goto info
+   endif
+
+  info:
+
+   if [par]=1 then
+mess '            accelerator average setting'
+   elseif [par]=2 then
+mess '            accelerator maximal setting'
+   elseif [par]=3 then
+mess '            setting from sett_magp.kumac'
+   endif
+  
+   if [p]=3 then
+mess '                        I(Amps)'
+mess ' GeV        Q1          Q2          Q3          Dipole'
+mess [e0]       [q1amp]      [q2amp]       [q3amp]        [dipole]
+   elseif [p]=2 then
+q1amp=[q1amp]*0.0202996
+q3amp=[q3amp]*0.0241587  
+dipole=[dipole]*0.0272632
+mess '                       B(kGs)'
+mess ' GeV        Q1          Q2          Q3          Dipole'
+mess [e0]       [q1amp]      [q2amp]       [q3amp]        [dipole]
+   elseif [p]=1 then
+q1amp=[q1amp]*183.146
+q3amp=[q3amp]*175.239  
+dipole=[dipole]*4478.69
+mess '                   GL(kGs) or BdL(kGs cm)'
+mess ' GeV        Q1          Q2          Q3          Dipole'
+mess [e0]       [q1amp]      [q2amp]       [q3amp]        [dipole]   
+   endif 
+
+  eend:
+
+RETURN

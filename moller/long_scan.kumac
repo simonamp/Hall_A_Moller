@@ -1,0 +1,51 @@
+MACRO long_scan run=13428 lun=51
+* exec run run=[run]
+* exec asymwr run=[run]
+ ve/cr par5(10) r
+* exec run_scalu run=[run]
+* exec asymv run=[run]
+ exec asym11 angl=20.0 delay=9 run=[run]
+ lun=tlun(1)
+ mess lun=[lun]
+ exec a_analyse lun=lun[lun] fill=1 
+ wait
+ opt ndat
+ 1dh 105 'asym' 300 -2.0 2.00
+ zone 1 2
+* nt/pl //lun[lun]/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.5.and.a_tpos.f(2,1)<0.0 -101
+* h/fit 1000000 g
+*wait
+* nt/pl //lun[lun]/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>0.0.and.a_tpos.f(2,1)<3.0 -101
+* h/fit 1000000 g
+*wait
+***** Left part of the foil
+ nt/pl //lun[lun]/1.a_asymm.f(3,4,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.-2.45<a_tpos.f(2,1)<0.0 -105
+ h/fit 105 g ! 0 par5
+ left=$HINFO(105,'MEAN')
+ left1=par5(2)
+wait
+ nt/pl //lun[lun]/1.a_asymm.f(3,4,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.-1.0<a_tpos.f(2,1)<1.0 -105
+ h/fit 105 g ! 0 par5
+ center=$HINFO(105,'MEAN')
+ center1=par5(2)
+wait
+****** right part of the foil
+ nt/pl //lun[lun]/1.a_asymm.f(3,4,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.0.0<a_tpos.f(2,1)<2.95 -105
+ h/fit 105 g ! 0 par5
+ right=$HINFO(105,'MEAN')
+ right1=par5(2)
+wait
+* nt/pl //lun[lun]/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.5.and.a_tpos.f(2,1)<0 -101
+* h/fit 1000000 g
+*wait
+ nt/pl //lun[lun]/1.a_asymm.f(3,4,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.-2.45<a_tpos.f(2,1)<2.95 -105
+ h/fit 105 g ! 0 par5
+ full=$HINFO(105,'MEAN')
+ full1=par5(2)
+
+* mess Left=[left] Center=[center]  Right=[right]   Full=[full] Mean
+ mess Left1=[left1] Center1=[center1]   Right1=[right1]  Full1=[full1] par5
+* ve/de *
+* hi/de *
+
+RETURN

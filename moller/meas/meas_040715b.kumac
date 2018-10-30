@@ -1,0 +1,37 @@
+MACRO meas_040715b fill=1 fillscal=0
+*
+* --- measurement 15 July 2004 . Beam Spin is along Y !
+*
+*     Define the data set
+   ngr=1
+*   ve/cr killrun(2) i 11188 11189
+   ve/cr iru(2,3,[ngr]) i
+   ve/cr ang(3,[ngr]) r 
+* Run ranges for 3 target angle measurements
+   if [fill]>0 then
+      do ir=11222,11243
+        exec run run=[ir]
+        exec asyms run=[ir] angl=12.0 delay=9 anpow=0.1085 
+      enddo
+   endif
+
+   ve/in iru(1:2,1,1) 11250 11251
+   ve/in ang(1,1) 90.
+
+   ve/in iru(1:2,2,1) 11246 11249
+   ve/in ang(2,1) 23.0
+
+   ve/in iru(1:2,3,1) 11252 11255
+   ve/in ang(3,1) 163.0
+
+*   exec analyze_set ngr=[ngr] fill=[fill] fillscal=[fillscal] delay=9 nevadc=3
+
+RETURN
+
+
+
+
+
+
+
+

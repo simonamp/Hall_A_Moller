@@ -1,0 +1,105 @@
+MACRO dtim_lin 
+
+*
+* -- Dead time studies
+*
+  ve/cr cbm(10,19) r
+  ve/cr ecbm(10,19) r
+  ve/cr rt1(19) r
+  ve/cr rt2(10,19) r
+
+  do jj=1,6
+
+    if [jj]=1 then
+      r1=7955
+      r2=7960
+    elseif [jj]=2 then
+      r1=7965
+      r2=7972
+    elseif [jj]=3 then
+      r1=7977
+      r2=7984
+    elseif [jj]=4 then
+      r1=7856
+      r2=7856
+    elseif [jj]=5 then
+      r1=7858
+      r2=7858
+    elseif [jj]=6 then
+      r1=7859
+      r2=7859
+    endif
+  
+    do r=[r1],[r2]
+      kr=krunpnt([r])
+      if [kr]>0 then
+        b=resrun(3,[kr])
+        a=resrun(4,[kr])
+        c=$SIGMA([b]-[a])
+        ve/in resrun(18,[kr]) [c]
+        b=resrun(1,[kr])
+        a=resrun(6,[kr])
+        c=$SIGMA([b]-[a])
+        ve/in resrun(19,[kr]) [c]
+      endif
+    enddo
+
+    do i=1,19
+      cc=0.
+      cc2=0.
+      nn=0
+      do r=[r1],[r2]
+        kr=krunpnt([r])
+        if [kr]>0 then
+          b=resrun(5,[kr])
+          a=resrun([i],[kr])
+          c=$SIGMA([a]/[b])
+          nn=[nn]+1
+          cc=$SIGMA([cc]+[c])
+        endif
+      enddo
+      if [nn]>0 then
+        cc=$SIGMA([cc]/[nn])
+      endif
+      do r=[r1],[r2]
+        kr=krunpnt([r])
+        if [kr]>0 then
+          b=resrun(5,[kr])
+          a=resrun([i],[kr])
+          c=$SIGMA([a]/[b]-[cc])
+          cc2=$SIGMA([c]*[c])
+        endif
+      enddo
+      if [nn]>0 then
+        cc2=$SIGMA(sqrt([cc2]/[nn]))
+        ve/in  cbm([jj],[i]) [cc]
+        ve/in ecbm([jj],[i]) [cc2]
+      endif
+    enddo
+  enddo
+
+  do i=1,19
+    a=cbm(1,[i])
+    b=cbm(2,[i])
+    ea=ecbm(1,[i])
+    eb=ecbm(2,[i])
+    c=$SIGMA([b]/[a])
+    ve/in rt1([i]) [c]
+  enddo
+
+  do i=1,19
+    a=cbm(5,[i])
+    b=cbm(4,[i])
+    c=$SIGMA([b]/[a])
+    ve/in rt2(1,[i]) [c]
+    b=cbm(6,[i])
+    c=$SIGMA([b]/[a])
+    ve/in rt2(2,[i]) [c]
+  enddo
+
+RETURN
+
+
+
+
+

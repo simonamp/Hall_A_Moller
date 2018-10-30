@@ -1,0 +1,149 @@
+*** Begin of history file: Fri Nov  3 15:35:52 2006
+exec run run=12632
+exec lg_spectra run=12632
+exec run run=12632 run=11
+exec run run=12632 cut=11
+exec run run=12632 cut=0
+exec lg_spectra run=12632 cut=11
+loca
+exec time run=12632
+exec asymt delay=9 run=12632
+call prunpri.f(10000,14000)
+exec run run=12633
+exec asymt delay=9 run=12633
+zone 2 2
+exec run run=12634
+exec asymt delay=9 run=12634
+call prunpri.f(10000,14000)
+exec run run=12635
+exec asymt delay=9 run=12635
+call prunpri.f(10000,14000)
+exec asym_av run1=12632 run2=12635
+exec run_scal run=12636
+nt/pl //lun51/1.a_signal.f(3,1,0,0,0,0,0)%a_tpos.f(1,1) ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2
+nt/pl //lun51/1.a_signal.f(3,1,0,0,0,0,0)%a_tpos.f(1,1) ifzug=0.and.-2.2<a_tpos.f(1,1)<2.2
+exec run_scal run=12599
+nt/pl //lun52/1.a_signal.f(3,1,0,0,0,0,0)%a_tpos.f(1,1) ifzug=0.and.-2.2<a_tpos.f(1,1)<2.2
+nt/pl //ch2/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2
+nt/pl //lun51/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2
+h/fit 1000000 g
+exec run_scal run=12637
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2
+h/fit 1000000 g
+1dh 102 'pol' 200 -0.5 1.5
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+chain ch1 //lun51
+chain ch1 //lun53
+nt/pl //ch1/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+set csiz 0.4
+nt/pl //ch1/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exec run run=12638
+ld //
+exec run_scal run=12632
+exec run_scal run=12633
+exec run_scal run=12634
+exec run_scal run=12635
+chain ch2 //lun54
+chain ch2 //lun55
+chain ch2 //lun56
+chain ch2 //lun57
+nt/pl //ch2/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exec asymt delay=9 run=12638
+exec run run=12639
+exec asymt delay=9 run=12639
+exec run run=12640
+exec asymt delay=9 run=12640
+exec run run=12641
+exec asymt delay=9 run=12641
+exec asym_av run1=12638 run2=12641
+exec run_scal run=12642
+1dh 102 'pol' 200 -0.5 1.5
+nt/pl //lun58/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+nt/pl //lun58/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exec run_scal run=12643
+nt/pl //lun59/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+chain ch3 //lun58
+chain ch3 //lun59
+nt/pl //ch3/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+nt/pl //ch3/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.<a_tpos.f(1,1)<1. -102
+h/fit 102 g
+nt/pl //ch3/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+h/fit 102 g
+exec run run=12644
+exec asymt delay=9 run=12644
+exec run run=12645
+exec asymt delay=9 run=12645
+exec asym_av run1=12644 run2=12645
+exec run run=12646
+exec run_scal run=12646
+nt/pl //lun60/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+1dh 102 'pol' 200 -0.5 1.5
+nt/pl //lun60/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exec run_scal run=12647
+nt/pl //lun51/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+chain
+chain ch4 //lun60
+chain ch4 //lun51
+nt/pl //ch4/1.abs(a_asymm.f(3,4,1,0,0,0))*17.56 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+call prunpri.f(10000,14000)
+exec run run=12648
+exec asymt delay=9 run=12648
+call prunpri.f(10000,14000)
+exec run run=12649
+exec asymt delay=9 run=12649
+exec asym_av run1=12648 run2=12649
+exec run_scal run=12650
+nt/pl //lun52/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+1dh 102 'pol' 200 -0.5 1.5
+nt/pl //lun52/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+h/fit 102 g
+exec run_scal run=12651
+nt/pl //lun53/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+h/fit 102 g
+chain ch5 //lun52
+chain ch5 //lun53
+nt/pl //ch5/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+h/fit 102 g
+call prunpri.f(10000,14000)
+chain
+chain ch4
+ld //
+exec run_scal run=12642
+exec run_scal run=12643
+chain ch6 //lun58
+chain ch6 //lun59
+nt/pl //ch6/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-0.9<a_tpos.f(1,1)<0.9 -102
+h/fit 102 g
+nt/pl //ch6/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+nt/pl //ch6/1.abs(a_asymm.f(3,0,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exec run_scal run=12638
+exec run_scal run=12639
+exec run_scal run=12640
+exec run_scal run=12641
+exec run_scal run=12639
+exec run_scal run=12640
+exec run_scal run=12641
+ld //
+chain ch7 //lun54
+chain ch7 //lun55
+chain ch7 //lun56
+chain ch7 //lun57
+nt/pl //ch7/1.abs(a_asymm.f(3,4,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+nt/pl //ch7/1.abs(a_asymm.f(3,0,1,0,0,0))*18.43 ifzug=0.and.-1.2<a_tpos.f(1,1)<1.2 -102
+h/fit 102 g
+exit
+*** End   of history file: Fri Nov  3 19:07:08 2006

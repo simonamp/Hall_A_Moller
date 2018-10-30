@@ -1,0 +1,42 @@
+MACRO avt_sum  
+ lev=-4.24
+ nr=1
+ ve/cr bp([nr]) r  
+ ve/cr rt([nr]) r  
+ ve/cr er([nr]) r  
+ 
+* ve/cr bp1(nr]) r
+* ve/cr bp2(nr]) r
+* sigma bp=(bp1+bp2)/2.
+ 
+ opt ndat
+ opt nbox
+ set pmci 4
+ zone
+* fort/fil 56 moller_15653-15665.ps
+* meta 56 -112
+
+ sigma er1=array([nr],0.001#0.001)
+ sigma rn=array([nr],1#[nr])
+* sigma rn=array([nr],5#2)
+* sigma rn=array([nr],12102#12105)
+ ve/cr parv(5) r
+ set dmod 3
+ sigma bp=abs(bp)
+ sigma rtn=rt/1000.
+ sigma dt=-0.10015+0.13583E-02*rtn
+ sigma bpf=bp/(1+dt/100.)/(1+[lev]/100.)
+ ve/fit  rn  bpf er  p0 ! 1 parv
+ set dmod 0
+* null 14417 14460 -92.0   -87.0
+ gr/hpl/err rn bpf  er1 er [nr] 20 0.3
+ atitle 'Runs'   'Beam Polarization, "Y#'  
+* atitle 'Moller Target Number'   'Beam Polarization, "Y# 
+ selnt 1
+ text 13.5 20.5 'Moller result, 04/24/2015' 0.5 0 C
+ selnt 10
+ ve/pr bpf
+
+* close 56
+
+RETURN 

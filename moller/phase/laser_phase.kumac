@@ -1,0 +1,22 @@
+MACRO laser_phase file=xxxxx
+* Laser phase: read the table from halla_laser_phase.com
+
+ nt=100
+ ve/cr pha([nt]) r 
+ ve/cr cur([nt]) r 
+ ve/cr err([nt]) r
+
+ ve/read pha,cur [file] '(26X,F4.0,F10.3)'
+
+ np=$VLEN(pha)
+* null -25 25 0 0.8
+ null  -30 30 0 0.9
+ atit 'Laser A phase, deg' 'Beam current, [m]A'
+ gr/hpl/err pha cur err err [np] 20 0.15
+
+* text -20 0.7 'Slit 16.2' 0.25
+* gr/prim/arrow 8.6 8.6 0.8 0.7 0.2
+* gr/prim/arrow 4.0 4.0 0.8 0.7 0.2
+* gr/prim/arrow 8.2 4.6 0.75 0.75 0.2
+
+RETURN

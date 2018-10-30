@@ -1,0 +1,106 @@
+*** Eb=4.8GeV 
+*** Quads scan test  
+*** Q1 
+ Q1  Field=-2.50kG     Cur.=-115.73Amp  116457.  74187
+ Q1  Field=-2.40kG     Cur.=-111.10Amp  117577.  78267
+ Q1  Field=-2.30kG     Cur.=-106.47Amp  117725.  80919
+ Q1  Field=-2.20kG     Cur.=-101.84Amp  117969.  83403
+ Q1  Field=-2.10kG     Cur.=-97.21Amp   117598.  85410
+ Q1  Field=-2.00kG     Cur.=-92.58Amp   117687.  87765 <-
+ Q1  Field=-1.90kG     Cur.=-87.95Amp   117660.  90017
+ Q1  Field=-1.80kG     Cur.=-83.32Amp   117581.  92121
+ Q1  Field=-1.75kG     Cur.=-81.01Amp
+ Q1  Field=-1.70kG     Cur.=-78.69Amp   117226.  93589
+ Q1  Field=-1.68kG     Cur.=-77.77Amp   117291.  93900
+ Q1  Field=-1.65kG     Cur.=-76.38Amp   117255.  94323 *
+ Q1  Field=-1.62kG     Cur.=-74.99Amp   117238.  94205 *
+ Q1  Field=-1.60kG     Cur.=-74.06Amp   117244.  94134 
+ Q1  Field=-1.59kG     Cur.=-73.60Amp   116966.  93803
+ Q1  Field=-1.56kG     Cur.=-72.21Amp   117043.  94043
+ Q1  Field=-1.55kG     Cur.=-71.75Amp
+ Q1  Field=-1.50kG     Cur.=-69.44Amp   116289.  92828
+ Q1  Field=-1.45kG     Cur.=-67.12Amp
+ Q1  Field=-1.40kG     Cur.=-64.81Amp   116125.  91849
+ Q1  Field=-1.35kG     Cur.=-62.49Amp
+ Q1  Field=-1.30kG     Cur.=-60.18Amp   115129.  90118
+ Q1  Field=-1.20kG     Cur.=-55.55Amp   113844.  88058 <-
+ Q1  Field=-1.10kG     Cur.=-50.92Amp   113038.  86739
+ Q1  Field=-1.00kG     Cur.=-46.29Amp   111524.  84658
+ Q1  Field=-0.90kG     Cur.=-41.66Amp
+ Q1  Field=-0.80kG     Cur.=-37.03Amp
+ Q1  Field=-0.70kG     Cur.=-32.40Amp
+ Q1  Field=-0.60kG     Cur.=-27.77Amp
+ Q1  Field=-0.50kG     Cur.=-23.15Amp
+*** Q2 scan
+ Q2  Field=1.10kG     Cur.=55.40Amp  110056.  65891
+ Q2  Field=1.15kG     Cur.=57.92Amp
+ Q2  Field=1.20kG     Cur.=60.43Amp  115874.  80744
+ Q2  Field=1.25kG     Cur.=62.95Amp
+ Q2  Field=1.30kG     Cur.=65.47Amp  116962.  86606
+ Q2  Field=1.35kG     Cur.=67.99Amp  117004.  88940
+ Q2  Field=1.40kG     Cur.=70.51Amp  117010.  91277
+ Q2  Field=1.45kG     Cur.=73.02Amp  117189.  92665
+ Q2  Field=1.50kG     Cur.=75.54Amp  117173.  94223
+ Q2  Field=1.53kG     Cur.=77.05Amp  117115.  94116
+ Q2  Field=1.55kG     Cur.=78.06Amp  116602.  93077
+ Q2  Field=1.60kG     Cur.=80.58Amp  116777.  92697
+ Q2  Field=1.65kG     Cur.=83.10Amp  115880.  90885
+ Q2  Field=1.70kG     Cur.=85.61Amp  114688.  88430
+ Q2  Field=1.75kG     Cur.=88.13Amp
+ Q2  Field=1.80kG     Cur.=90.65Amp  112874.  85819
+*** Q3 scan
+ Q3  Field=0.40kG     Cur.=19.52Amp  102861.  55184
+ Q3  Field=0.45kG     Cur.=21.96Amp
+ Q3  Field=0.50kG     Cur.=24.40Amp  113664.  79079
+ Q3  Field=0.55kG     Cur.=26.84Amp
+ Q3  Field=0.60kG     Cur.=29.28Amp  117106.  88874
+ Q3  Field=0.65kG     Cur.=31.73Amp  
+ Q3  Field=0.70kG     Cur.=34.17Amp  116971.  91827
+ Q3  Field=0.75kG     Cur.=36.61Amp  117378.  93681
+ Q3  Field=0.80kG     Cur.=39.05Amp  117121.  94557
+ Q3  Field=0.85kG     Cur.=41.49Amp  117048.  94122
+ Q3  Field=0.90kG     Cur.=43.93Amp  116580.  92802
+ Q3  Field=0.95kG     Cur.=46.37Amp
+ Q3  Field=1.00kG     Cur.=48.81Amp  115429.  90348
+ Q3  Field=1.05kG     Cur.=51.25Amp
+ Q3  Field=1.10kG     Cur.=53.69Amp  114099.  87872
+ Q3  Field=1.15kG     Cur.=56.13Amp
+ Q3  Field=1.20kG     Cur.=58.57Amp  112042.  84840
+*** Q4 scan
+ Q4  Field=1.50kG     Cur.=71.96Amp   95250.  46206
+ Q4  Field=1.55kG     Cur.=74.36Amp
+ Q4  Field=1.60kG     Cur.=76.76Amp  106520.  69411
+ Q4  Field=1.65kG     Cur.=79.16Amp
+ Q4  Field=1.70kG     Cur.=81.56Amp  117033.  91329
+ Q4  Field=1.75kG     Cur.=83.96Amp
+ Q4  Field=1.80kG     Cur.=86.36Amp  117317.  93359
+ Q4  Field=1.85kG     Cur.=88.75Amp
+ Q4  Field=1.90kG     Cur.=91.15Amp  117088.  94052
+ Q4  Field=1.95kG     Cur.=93.55Amp             **
+ Q4  Field=2.00kG     Cur.=95.95Amp  117160.  94050
+ Q4  Field=2.05kG     Cur.=98.35Amp
+ Q4  Field=2.10kG     Cur.=100.75Amp  116060.  92343
+ Q4  Field=2.15kG     Cur.=103.15Amp
+ Q4  Field=2.20kG     Cur.=105.55Amp  115122.  91031
+ Q4  Field=2.25kG     Cur.=107.94Amp
+ Q4  Field=2.30kG     Cur.=110.34Amp  114023.  89670
+*** Dipole scan
+ Dip  Field=6.3kG     Cur.=231.0Amp
+ Dip  Field=6.5kG     Cur.=238.3Amp
+ Dip  Field=6.8kG     Cur.=249.3Amp
+ Dip  Field=7.0kG     Cur.=256.7Amp
+ Dip  Field=7.3kG     Cur.=267.7Amp
+ Dip  Field=7.5kG     Cur.=275.0Amp
+ Dip  Field=7.8kG     Cur.=286.0Amp
+ Dip  Field=8.0kG     Cur.=293.3Amp
+ Dip  Field=8.3kG     Cur.=304.3Amp
+ Dip  Field=8.5kG     Cur.=311.7Amp
+
+
+
+
+
+
+
+
+

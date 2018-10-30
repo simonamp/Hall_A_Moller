@@ -1,0 +1,54 @@
+MACRO hv_2
+
+*
+* === HV calibration,  March 1999
+*
+  nm=5
+  nl=8
+
+  ve/cr ena([nm]) r
+  ve/cr hva([nl],[nm]) r
+  ve/cr ampa([nl],[nm]) r
+  ve/cr lampae([nm],[nl]) r
+  ve/cr lhva([nm],[nl]) r
+
+
+  ve/cr hva1(3) r 1750 1800 1850
+  ve/cr ampa1(3,[nl]) r 109 181 276  207 326 498  186 310 497  198 315 528  225 347 544  178 311 505  _
+                        160 260 406  108 203 327
+  
+*      Oct 1998
+  do im=1,3
+    ve/in ena([im]) 1.72
+    do il=1,[nl]
+      ve/in  hva([il],[im])  hva1([im])
+      ve/in ampa([il],[im]) ampa1([im],[il])
+    enddo
+  enddo
+
+*      Feb 1999
+  ve/in      ena(4) 1.731
+  ve/in  hva(1:8,4) 1890 1830 1837 1802 1807 1818 1836 1860 
+  ve/in ampa(1:8,4) 8*300
+
+*      March 1999
+  ve/in      ena(5) 4.252
+  ve/in  hva(1:8,5) 1790 1730 1750 1720 1694 1724 1720 1770
+  ve/in ampa(1:8,5) 8*300
+
+  do im=1,5
+    e=ena([im]) 
+    do il=1,[nl]
+      a=ampa([il],[im])
+      h=hva([il],[im])
+      b=$SIGMA(LOG10([a]/[e]))
+      ve/in lampae([im],[il]) [b]
+      b=$SIGMA(LOG10([h]))
+      ve/in lhva([im],[il]) [b]
+    enddo
+  enddo
+
+RETURN
+
+
+

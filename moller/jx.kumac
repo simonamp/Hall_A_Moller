@@ -1,0 +1,7 @@
+MACRO jx run=0 replay=1 nbin=200 min=-0.01 max=0.01 lun=51
+* 0 reply+plot, 1 plot only
+ if ([replay]>0) then
+   exec asym11 run=[run] 
+ endif
+ 1dh 104 'Asym' [nbin] [min] [max]
+ nt/pl //lun[lun]/1.a_asymm.f(5,0,0,0,0,0,0) ifzug=0 idh=104

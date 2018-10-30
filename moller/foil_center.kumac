@@ -1,0 +1,174 @@
+MACRO foil_center lun=0 id=88888 sig=1 set=0 targ=-1
+*
+* --- find the foil center using a lun (say, lun51) or a chain (lun=scan1)
+* --- if lun=0 and set>0 - use the prepared set of runs 
+*
+
+  if $VDIM(irsettmp,1)>0 then
+    ve/del irsettmp
+  endif
+  if $VDIM(itsettmp,1)>0 then
+    ve/del itsettmp
+  endif
+  nset=20
+  nrmx=10
+
+  if $VDIM(tcenx,1)<>6 .OR. $VDIM(tcenx,1)<>6 then
+    ve/cr tcenx(6,[nset]) r
+  endif
+
+  ve/cr irsettmp([nrmx],[nset]) i
+  ve/cr itsettmp([nset]) i
+
+  ve/in itsettmp(1) 3 
+  ve/in irsettmp(1:6,1) 11979 11980 11981 11982 11983 11984 
+
+  ve/in itsettmp(2) 4 
+  ve/in irsettmp(1:2,2) 11993 11994
+ 
+* raster off
+  ve/in itsettmp(3) 5 
+  ve/in irsettmp(1:2,3) 12054 12057
+
+  ve/in itsettmp(4) 5 
+  ve/in irsettmp(1:4,4) 12102 12103 12104 12105
+
+  ve/in itsettmp(5) 4 
+  ve/in irsettmp(1:4,5) 12110 12111 12112 12113
+
+  ve/in itsettmp(6) 3 
+  ve/in irsettmp(1:6,6) 12118 12119 12120 12121 12122 12123
+
+  ve/in itsettmp(7) 2 
+  ve/in irsettmp(1:6,7) 12133 12134 12135 12136 12137 12138
+
+  ve/in itsettmp(8) 5 
+  ve/in irsettmp(1:4,8) 12230 12231 12232 12233
+
+  ve/in itsettmp(9) 3 
+  ve/in irsettmp(1:2,9) 12236 12237
+
+  ve/in itsettmp(10) 5 
+  ve/in irsettmp(1:2,10) 12251 12252
+
+  ve/in itsettmp(11) 5 
+  ve/in irsettmp(1:2,11) 12265 12266
+
+  ve/in itsettmp(12) 4 
+  ve/in irsettmp(1:2,12) 12267 12268
+
+  ve/in itsettmp(13) 3 
+  ve/in irsettmp(1:2,13) 12270 12271
+
+  ve/in itsettmp(14) 2 
+  ve/in irsettmp(1:2,14) 12272 12273
+
+  iset=0
+  if [lun]=0 then
+    if [set]<1 .OR. [set]>[nset] then
+      mess No file or set defined ( [lun] , [set] ). Exiting...
+      exitm
+    endif
+    
+    chain -scan0
+    do i=1,[nrmx]
+      ir=irsettmp([i],[set])
+      if [ir]>0 then
+	exec run_scal run=[ir]
+	exec getrun_scal run=[ir]
+        lunc=iluns(1)
+        if [lunc]>0 then
+          chain scan0 //lun[lunc]
+        else
+          mess Run [ir] is missing
+        endif
+      endif   
+    enddo
+    chain scan0
+    lun=scan0
+    if [targ]<0 then
+      targ=itsettmp([set])
+      iset=[set]
+    endif
+  endif
+
+  if $HEXIST([id])>0 then
+    mess Histogram [id] will be deleted
+    h/del [id]
+  endif
+ 
+  db=5.
+  nb=2000
+  x1=2000
+  x2=$SIGMA([x1]+[nb]*[db])
+  h/cr/prof [id] ' ' 2000 [x1] [x2] 0 300
+
+  nt/pl //[lun]/1.a_signal.f(5,0,0,0,0,0,0) a_signal.f(5,0,0,0,0,0,0)>30 ! ! ! N
+  bav=$HINFO(1000000,'MEAN')
+  blim=$SIGMA([bav]/2.)
+  mess Beam limit = [blim]
+  nt/pl //[lun]/1.a_signal.f([sig],1,0,0,0,0,0)%jcnt(26,1) a_signal.f(5,0,0,0,0,0,0)>[blim] ! ! ! N [id]
+  
+  smx=$HINFO([id],'MAX')
+  av=$HINFO([id],'MEAN')
+  smxh=$SIGMA([smx]/2.)
+
+  ve/cr vetmp(2) r
+
+  if $VDIM(par,1)>0 .AND. $VDIM(par,1)<>10 then
+    ve/del par
+  endif
+  if $VDIM(par,1)=0 then
+    ve/cr par(10) r
+  endif
+
+  ve/cr yytmp([nb]) r
+  h/get_vec/con [id] yytmp
+
+  fav=0.
+  iv=0
+  do idir=-1,1,2
+    iv=[iv]+1
+    i=$SIGMA(INT(([av]-[x1])/[db]))
+    scanb:
+      i=$SIGMA([i]+1*[idir])
+      a=yytmp([i])
+*      mess XX [i] [a] [smxh]
+      if [a]>[smxh] then
+        goto scanb
+      endif
+    i1=[i]-2
+    i2=[i]+3
+
+    ve/in par(1:2) [smxh] 0
+   
+    mess [i1] [i2]
+    
+    h/fit [id]([i1]:[i2]) p1 0 2 par
+    h/pl [id]([i1]:[i2])
+
+    xc=$SIGMA([x1]+[db]*([i]-1))
+    a=par(1)
+    b=par(2)
+    if [b].NE.0. then
+      xc=$SIGMA(([smxh]-[a])/[b])
+    endif
+    ve/in vetmp([iv]) [xc]
+    fav=$SIGMA([fav]+[xc])
+  enddo
+  fav=$RSIGMA([fav]/2.)
+
+  ve/pri vetmp
+  if [iset]>0 then
+    ve/in tcenx([targ],[iset]) [fav]
+  endif
+
+  mess Foil center = [fav]
+  mess          it1=[targ]
+  mess          xyten(1,it1)=[fav]
+
+  ve/del vetmp
+  ve/del yytmp
+  h/del [id]
+    
+RETURN

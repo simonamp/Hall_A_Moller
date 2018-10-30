@@ -1,0 +1,111 @@
+*** Begin of history file: Tue Apr  8 09:44:43 2008
+exec run run=12697
+exec lg_spectra run=12697
+exec time run=12697
+exec sett_magp e0=1193
+exec sett_magp e0=1.193
+exec sett_magp e0=1.193 p=1
+exec sett_magp e0=1.193 p=2
+exec sett_magp e0=1.193 p=3
+exec time run=12699
+exec run run=12699
+exec lg_spectra run=12699
+exec lg_spectra run=12699 icut=100
+loca
+loca
+exec run run=12700
+exec lg_spectra run=12700 icut=10
+exec lg_spectra run=12700
+ld //
+nt/pl //lun23/1.iadc(1)
+nt/pl //lun23/1.iadc(1) nadc>0
+zone 2 2
+nt/pl //lun23/1.iadc(1) nadc>0
+nt/pl //lun23/1.iadc(2) nadc>0
+nt/pl //lun23/1.iadc(4) nadc>0
+nt/pl //lun23/1.iadc(3) nadc>0
+nt/pl //lun23/1.iadc(1) nadc>0
+1dh 20 'ped' 100 0 200
+nt/pl //lun23/1.iadc(1) nadc>0 -20
+loca
+loca
+nt/pl //lun23/1.iadc(2) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(3) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(4) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(5) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(6) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(7) nadc>0 -20
+loca
+nt/pl //lun23/1.iadc(8) nadc>0 -20
+loca
+exec lg_spectra run=12700
+h/pri 12700121
+ve/pri pedes
+nt/pl //lun23/1.iadc(9) nadc>0 -20
+zone 2 2
+nt/pl //lun23/1.iadc(9) nadc>0 -20
+nt/pl //lun23/1.iadc(8) nadc>0 -20
+1dh 21 'ped' 200 0 400
+nt/pl //lun23/1.iadc(9) nadc>0 -21
+loca
+nt/pl //lun23/1.iadc(10) nadc>0 -21
+loca
+nt/pl //lun23/1.iadc(11) nadc>0 -21
+1dh 22 'ped' 400 0 800
+nt/pl //lun23/1.iadc(11) nadc>0 -22
+loca
+nt/pl //lun23/1.iadc(12) nadc>0 -22
+exec lg_spectra run=12700
+exec lg_spectra run=12699
+zone 2 2
+h/pl 12699121
+ld //
+nt/pl //lun22/1.iadc(1) nadc>0
+loca
+exec lg_spectra run=12699
+exec lg_spectra run=12699 icut=50
+exec lg_spectra run=12699 icut=60
+loca
+zone 2 2
+exec time run=12699
+zone 2 2
+exec asymt  run=12699
+exec asymt  run=12699 ptar=0.079
+exec asymt  run=12699 ptar=0.079 delay=9
+exec asymt  run=12699 ptar=0.079 delay=8
+exec asymt  run=12699 ptar=0.079 delay=0
+exec asymt  run=12699 ptar=0.079 tauto=0
+ve/cr vprec(8) r
+ve/in vprec(1:3) 0.5 1 1
+mess $sigma((1193-63)/2)
+ve/in vprec(1:3) 0.565 1 1
+fu/pl spinpred.f 0 90
+loca
+ve/in vprec(1:3) 0.565 3 5 s
+ve/in vprec(1:3) 0.565 3 5
+ve/in vprec(1:3) 0.565 3 5
+fu/pl spinpred.f 0 90 s
+fu/pl spinpred.f 0 90
+mess $sigma(.565*2*5+0.063)
+ve/in vprec(1:3) 0.565 2 5
+fu/pl spinpred.f 0 90
+null -90 90 -1.1 1.1
+fu/pl spinpred.f 0 90 s
+fu/pl spinpred.f -90 90 s
+fu/pl spinpred.f -90 90 s
+fu/pl spinpred.f -90 90 s
+ve/in vprec(1:3) 0.565 3 5
+fu/pl spinpred.f -90 90 s
+ve/in vprec(1:3) 0.565 1 1
+fu/pl spinpred.f -90 90 s
+loca
+fu/pl spinpred.f -90 90 s
+loca
+mess $sigma(.66/.75)
+exit
+*** End   of history file: Tue Apr  8 21:41:52 2008

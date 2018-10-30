@@ -1,0 +1,21 @@
+MACRO ptarg_all fill=1
+*
+* --- Plot the polarization for the new targets 
+*
+ np=50
+ nt=5
+ if $VDIM(pt_b_all,1)<[np] .OR. $VDIM(pt_b_all,2)<[nt] then
+   fill=1
+   ve/cr pt_b_all([np],[nt]) r
+   ve/cr pt_p_all([np],[nt]) r
+ endif
+ np=$VDIM(pt_b_all,1)
+ nt=$VDIM(pt_b_all,2)
+
+ nel=[np]*[nt]
+ if [fill]>0 then
+   ve/cr pt_b_all [nel]*0 
+   ve/cr pt_p_all [nel]*0 
+ endif
+
+RETURN

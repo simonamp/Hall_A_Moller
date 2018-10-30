@@ -1,0 +1,272 @@
+*** Begin of history file: Thu Apr  1 18:52:56 2010
+exec run run=14213
+exec lg_spectra run=14213
+exec lg_spectra run=14213 cut=11
+cut $0
+exec lg_spectra run=14213
+exec lg_spectra run=14213 cut=11
+exec time run=14213
+exec asym10 run=14213
+exec run run=12707
+exec lg_spectra run=12707 cut=11
+exec lg_spectra run=12707 cut=11 icut=50
+exec lg_spectra run=14213 cut=11 icut=50
+exec lg_spectra run=12707 cut=11 icut=50
+exec lg_spectra run=14213 cut=11 icut=50
+exec lg_spectra run=12707 cut=11 icut=50
+exec lg_spectra run=14213 cut=11 icut=50
+exec run run=14208
+exec lg_spectra run=14208 cut=11 icut=50
+exec run run=14207
+exec lg_spectra run=14207 cut=11 icut=50
+exec run run=14209
+exec lg_spectra run=14209 cut=11 icut=50
+exec lg_spectra run=14207 cut=11 icut=50
+exec run run=14212
+exec lg_spectra run=14212 cut=11 icut=50
+exec lg_spectra run=14212 icut=50
+exec lg_spectra run=14213 icut=50
+exec lg_spectra run=14212 icut=50
+exec lg_spectra run=14213 icut=50
+mess $sigma((2.3/2.)*7)
+mess $sigma((2.2/2.)*7)
+shell
+exec hv_4
+shell less hv_4.kumac
+ve/pri lhva
+shell less hv_4.kumac
+shell
+exec hv_tune
+shell
+exec hv_plot
+shell
+exec hv_2_plot
+mess $sigma((1.85-1.1)/(3.315-3.263))
+shell
+exec hv_2_plot
+fu/pl -40+13*x 3.2 3.3 s
+fu/pl -40.62+13.01*x 3.2 3.3 s
+mess $sigma(1.72*10.**(3.277*14.36-45.18))
+shell
+exec hv_2_plot ener=1.062
+shell
+exec run run=9255
+exec lg_spectra run=9255
+exec lg_spectra run=9255 icut=50
+shell
+exec run run=10631
+exec lg_spectra run=10631 icut=50
+exec run run=10645
+exec lg_spectra run=10645 icut=50
+exec run run=10637
+exec lg_spectra run=10637 icut=50
+exec lg_spectra run=10637 icut=50 cut=11
+shell
+ld //
+exec lg_spectra run=14213 icut=50 cut=11
+exec asym10 run=14213
+exec run run=12772
+exec asymv run=14213
+exec asymu run=14213
+zone 2 2
+exec asymv run=12772
+shell
+exec asymwr run=14213
+shell less asymwr.kumac
+shell
+exec asymwr run=14213 lenzug=2
+exec asymwr run=14213 lenzug=3
+exec asymwr run=14213 lenzug=4
+shell
+exec run_scal run=14213
+ld //
+nt/pri //lun51/1
+nt/li //lun51
+nt/lis //lun51
+exec asymwr run=14213
+nt/lis //lun51
+nt/pri //lun51/1
+nt/lis //lun51
+nt/lis //lun51
+nt/pri //lun51/1
+nt/sca //lun51/1 ! 10 1 ! nelem izug ifzug
+nt/sca //lun51/1 ! 10 1 ! nelem izug ifzug nscal
+nt/sca //lun51/1 ! 10 1 ! izug ifzug jhel(1) jhel(2) itick(1) itick(2)
+nt/sca //lun51/1 ! 10 1 ! izug ifzug jhel(1) jhel(2) jtick(1) jtick(2)
+nt/pl //lun51/1.ifzug
+opt logy
+nt/pl //lun51/1.ifzug
+opt liny
+shell
+ld //
+nt/pri //lun22/1
+nt/pri //lun22/1 nsca>0 40 1 ! itick itrig(1) itrig(6) itrig(8)
+nt/sca //lun22/1 nsca>0 40 1 ! itick itrig(1) itrig(6) itrig(8)
+nt/sca //lun22/1 nsca>0 40 1 ! itick itrig(2) itrig(6) itrig(8)
+nt/sca //lun22/1 nsca>0 40 1 ! itick itrig(1) itrig(6) itrig(8)
+ld //
+nt/sca //lun21/1 nsca>0 40 1 ! itick itrig(1) itrig(6) itrig(8)
+nt/sca //lun22/1 nsca>0 40 1 ! itick itrig(1) itrig(6) itrig(8)
+shell
+exec asymwr run=14213
+exec asymwr10 run=14213
+exec asymwr10 run=14218
+exec lg_spectra run=14218
+exec run run=14219
+exec lg_spectra run=14219
+exec run run=14220
+exec lg_spectra run=14220
+exec run run=14221
+exec lg_spectra run=14221
+h/prin
+h/list
+ld //
+nt/pl //lun26/1.iadc(1) nadc=12
+nt/pl //lun26/1.iadc(2) nadc=12
+nt/pl //lun26/1.iadc(3) nadc=12
+nt/pl //lun24/1.iadc(1) nadc=12
+nt/pl //lun24/1.iadc(2) nadc=12
+nt/pl //lun24/1.iadc(3) nadc=12
+nt/pl //lun25/1.iadc(1) nadc=12
+nt/pl //lun25/1.iadc(2) nadc=12
+nt/pl //lun25/1.iadc(3) nadc=12
+zone 1 3
+nt/pl //lun24/1.iadc(6) nadc=12
+nt/pl //lun25/1.iadc(6) nadc=12
+nt/pl //lun26/1.iadc(6) nadc=12
+nt/pl //lun24/1.iadc(6) nadc=12
+nt/pl //lun25/1.iadc(6) nadc=12
+nt/pl //lun26/1.iadc(6) nadc=12
+exe olpla.kumac
+nt/pl //lun26/1.iadc(6) nadc=12
+nt/pl //lun25/1.iadc(6) nadc=12
+nt/pl //lun24/1.iadc(6) nadc=12
+exe cllops
+exec run run=11324
+exec lg_spectra run=11324
+exec run run=11385
+exec run run=13385
+exec lg_spectra run=13385
+exec lg_spectra run=13385
+exec run run=13386
+exec lg_spectra run=13386
+exec run run=14083
+exec lg_spectra run=14083
+exec run run=14087
+exec lg_spectra run=14087
+exec lg_spectra run=14087
+exec lg_spectra run=14222
+exec run run=14222
+exec lg_spectra run=14222
+exec lg_spectra run=14222
+exec lg_spectra run=14087
+exec lg_spectra run=14222
+ld //
+exec lg_spectra run=13385
+exec lg_spectra run=13386
+exec lg_spectra run=13385
+exec lg_spectra run=13385
+exec lg_spectra run=13385
+exe olpla.kumac
+exec lg_spectra run=13385
+exe clla.kumac
+exe cllop.kumac
+exe cllops.kumac
+exec lg_spectra run=14222
+exe olpla.kumac
+exec lg_spectra run=14222
+exe cllops.kumac
+exe olpla.kumac
+exec lg_spectra run=14087
+exe cllops.kumac
+exec run run=14225
+exec lg_spectra run=14225
+exe olpla.kumac
+exec lg_spectra run=14225
+exe cllops.kumac
+ld //
+exec run run=11786
+exec lg_spectra run=11786
+exec lg_spectra run=11786
+exec lg_spectra run=11786
+exec run run=11933
+exec lg_spectra run=11933
+exec run run=11931
+exec lg_spectra run=11931
+exec run run=12142
+exec lg_spectra run=12142
+exec run run=12300
+exec lg_spectra run=12300
+exec run run=12303
+exec lg_spectra run=12303
+exec run run=14209
+exec lg_spectra run=14209
+exec lg_spectra run=14209
+exec run run=12656
+exec lg_spectra run=12656
+exec lg_spectra run=12656
+exec run run=12657
+exec lg_spectra run=12657
+exec run run=12767
+exec lg_spectra run=12767
+exe olpla.kumac
+exec lg_spectra run=12767
+exe cllops.kumac
+exec run run=14226
+exec lg_spectra run=14226
+exe olpla.kumac
+exec lg_spectra run=14226
+exe cllops.kumac
+exec run run=13286
+exec lg_spectra run=13286
+exec run run=12836
+exec lg_spectra run=12836
+exec lg_spectra run=12836
+exec run run=12835
+exec lg_spectra run=12835
+exec run run=12837
+exec lg_spectra run=12837
+exec asym10 run=14213
+exec run_sacl10 run=14213
+exec run_sacal10 run=14213
+exec run_scal10 run=14213
+nt/pl //lun51/1.a_asymm10.f(3,0,0,0,0,0,0,0) ifzug=0
+nt/pl //lun51/1.a_asymm10.f(3,0,0,0,0,0,0) ifzug=0
+ld //
+nt/pl //lun51/1.a_asymm10.f(3,0,0,0,0,0,0) ifzug=0
+exec asym10 run=14197
+exec asym10 run=14212
+exec asym10 run=14211
+exec asym10 run=14196
+exec asym10 run=14200
+exec asym10 run=14202
+exec asym10 run=14215
+exec asym10 run=14215 delay=17 gate=0.04
+nt/pl //lun51/1.a_signal.f(3,0,0,0,0,0,0) ifzug=0
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0) ifzug=0
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0) ifzug=0 ! ! s
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0) ifzug=0 ! ! ! s
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0) ifzug=0 ! s
+nt/pl //lun51/1.a_signal.f(3,0,0,0,0,0,0) ifzug=0
+help nt/pl
+help nt/pl
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0) ifzug=0 ! ! ! s
+nt/pl //lun51/1.a_signal.f(3,0,2,0,0,0,0) ifzug=0 ! ! ! s
+nt/pl //lun51/1.a_signal.f(3,0,0,1,0,0,0) ifzug=0 ! ! ! s
+nt/pl //lun51/1.a_signal.f(3,0,0,1,0,0,0) ifzug=0 ! ! !
+nt/pl //lun51/1.a_signal.f(3,0,0,0,0,0,0) ifzug=0 ! ! !
+nt/pl //lun51/1.a_signal.f(3,0,1,0,0,0,0)%izug ifzug=0
+nt/pl //lun51/1.a_signal.f(3,0,2,0,0,0,0)%izug ifzug=0 ! ! ! s
+nt/pl //lun51/1.a_signal.f(1,0,2,0,0,0,0)%izug ifzug=0 ! ! !
+nt/pl //lun51/1.a_signal.f(1,0,2,0,0,0,0)%a_signal.f(2,0,2,0,0,0,0) ifzug=0 ! ! !
+nt/pl //lun51/1.a_signal.f(1,0,2,0,0,0,0)%a_signal.f(4,0,2,0,0,0,0) ifzug=0 ! ! !
+mess $sigma(log(3e6/8e2)/log(3000/700))
+mess $sigma((2.2/2)**5.7)
+mess $sigma((2.2/2)**7)
+mess $sigma((2.3/2)**7)
+mess $sigma((2.3/2)**14)
+mess $sigma((2.3/2)**7)
+mess $sigma((2.3/2.)**7)
+mess $sigma((8)**(1/7.))
+mess $sigma((1.34)**7)
+*** End   of history file: Fri Apr  2 17:19:34 2010

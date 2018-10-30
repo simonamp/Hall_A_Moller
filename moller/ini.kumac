@@ -1,0 +1,38 @@
+MACRO ini link=0
+*
+* -- initialization
+*
+  opt fit
+  opt stat
+  set csiz 0.35
+
+  ve/cr pedes(12) r
+  ve/cr pedcut(12) r
+  ve/read pedes,pedcut pedes.dat
+
+  ve/cr calib(12) r
+  ve/read calib calib.dat
+
+  ve/cr par(20) r
+  ve/cr err(20) r
+
+  do i=1,9
+    id=69+[i]
+    1dh [id] 'Energy' 200 0 2.00
+  enddo
+
+  2dh 80 'Energy L (Y) vs Energy R (X)' 60 0. 1.2 60 0 1.2
+  2dh 81 'Energy L (Y) vs Energy R (X)' 60 0. 1.2 60 0 1.2
+
+  2dh 90 'Pos L (Y) vs Pos R (X)' 50 0. 5. 50 0. 5.
+  2dh 91 'Pos L (Y) vs Pos R (X)' 50 0. 5. 50 0. 5.
+
+  if [link]>0 then
+    exec run run=1227 dir=/net/farms0/work1/com98/moller/unpol_01/
+    exec run run=1228 dir=/net/farms0/work1/com98/moller/unpol_01/
+    chain lr //lun21 //lun22
+  endif
+
+  cut $11 nadc>11.and.nhcha>3.and.ihit(1)>0.and.ihit(2)>0.and.ihit(4)>0.and.ihit(5)>0
+
+RETURN

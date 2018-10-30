@@ -1,0 +1,62 @@
+#! /bin/bash
+#
+# ---  Combines 2 table in otder to give the sign to polarization
+#      (for HAPPEX)
+# parameters: 1 - the filename for the table with most info, 
+              2 - filename
+
+ fil=$1
+
+ ntot=`cat $1 | wc | awk '{print $1}' `
+ n=0
+ echo $ntot
+ while n=`expr $n + 1` ; [ $n -le $ntot ]; do
+   lin=`cat $1 | head -$n | tail -1`
+#   echo "$lin"
+   r1=`echo $lin | awk '{print $4}'`
+   r2=`echo $lin | awk '{print $5}'`
+   fset=~/paw/moller/Info/mollerrun_$r2.set
+   ad=
+#   echo $fset
+   latta=x
+   lslia=x
+   bcura=x
+   hwave=x
+   lmodb=x
+   lmodc=x
+   if test -f $fset ; then
+      lpowa=`cat $fset | grep IGL1I00DAC0 | cut -d: -f2 | awk '{print $1}'`
+#      echo $lpowa
+      latta=`cat $fset | grep comm11      | cut -d: -f2 | awk '{print $1}'`
+      lslia=`cat $fset | grep SMRPOSA     | cut -d: -f2 | awk '{print $1}'`
+      bcura=`cat $fset | grep hac_bcm_average | head -1 | cut -d: -f2 | awk '{print $1}'`
+      hwave=`cat $fset | grep IGL1I00OD16_16   | cut -d: -f2 | awk '{print $1}'`
+      if [ "$hwave" = "ON" ]; then
+         hwave="1"
+      else
+         hwave="0"
+      fi
+      lmodb=`cat $fset | grep IGL1I00HALLBMODE | cut -d: -f2 | awk '{print $1}'`
+      if [ "$lmodb" = "CW" ]; then
+         lmodb="1"
+      else
+         lmodb="0"
+      fi
+      lmodc=`cat $fset | grep IGL1I00HALLCMODE | cut -d: -f2 | awk '{print $1}'`
+      if [ "$lmodc" = "CW" ]; then
+         lmodc="1"
+      else
+         lmodc="0"
+      fi
+   fi   
+   ad=`echo "$bcura" " " "$lpowa" " " "$latta" " " "$lslia" " " "$hwave" " " "$lmodb" " " "$lmodc" " "`
+   echo "$lin" " " "$ad"
+#   if [ "$n" -eq "$ntot" -a "$r0" -gt 0 ]; then
+#     echo $namf0
+#   fi
+ done
+
+
+
+
+

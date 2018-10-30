@@ -1,0 +1,54 @@
+*** Begin of history file: Thu Apr 30 15:35:36 2009
+exec run run=13303
+exec asymu delay=0 run=13303
+call prunpri.f(13291,20000)
+exec run run=13304
+exec asymu delay=0 run=13304
+call prunpri.f(13291,20000)
+exec run run=13305
+exec asymu delay=0 run=13305
+exec run run=13305
+call prunpri.f(13291,20000)
+exec asymu delay=0 tauto=0 tpol=0.0803 hcoil=-15.9 run=13305
+call prunpri.f(13291,20000)
+exec run run=13306
+exec asymu delay=0 tauto=0 tpol=0.0803 hcoil=15.4 run=13306
+call prunpri.f(13291,20000)
+exec run run=13308
+exec asymu delay=0 run=13308
+call prunpri.f(13291,20000)
+exec run run=13309
+exec asymu delay=0 run=13309
+call prunpri.f(13291,20000)
+exec asym_av run1=13303 run2=13306
+mess $sigma((84.71+84.89+85.72+84.25)/4)
+exec asym_av run1=13303 run2=13304
+exec asym_av run1=13303 run2=13306
+shell
+exec run run=13310
+exec asymu delay=0 run=13310
+call prunpri.f(13291,20000)
+exec run run=13311
+exec asymu delay=0 run=13311
+exec run run=13312
+exec asymu delay=0 run=13312
+call prunpri.f(13291,20000)
+exec asym_av run1=13309 run2=13312
+exec run run=13313
+exec asymu delay=0 run=13313
+call prunpri.f(13291,20000)
+exec run run=13314
+exec asymu delay=0 run=13314
+call prunpri.f(13291,20000)
+mess $sigma((84.71+84.89+84.76+84.57)/4)
+exec run run=13315
+exec asymu delay=0 run=13315
+call prunpri.f(13291,20000)
+exec run run=13316
+exec asymu delay=0 run=13316
+exec asym_av run1=13313 run2=13316
+call prunpri.f(13291,20000)
+mess $sigma((84.56+83.94)/3.)
+mess $sigma((84.56+83.94)/2.)
+exit
+*** End   of history file: Thu Apr 30 16:45:23 2009

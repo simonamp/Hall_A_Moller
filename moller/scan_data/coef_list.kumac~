@@ -1,0 +1,52 @@
+file2='sup30'
+file3='fe14'
+file4='fe10'
+file5='sup07'
+fort/fil 55 coef_list.ps
+meta 55 -111
+opt nstat
+opt ndate
+opt grid
+opt nbox
+
+
+	do i=2,5
+mess file=[file[i]]
+ve/re  np,coef     [i]_[file[i]]_800g.dat
+ve/re  nn,coor,av  [i]_co_av.dat
+ve/re  nn,coor,sc  [i]_coef.dat
+sigma e1=vmin(sc)
+sigma e2=vmax(sc)
+min=e1*0.98
+max=e2*1.01
+
+null -25. 30. [min] [max]
+set mtyp 20
+set pmci 1
+mt=20
+Atitle 'Coordinate along Foil, mm' 'Thickness Coefficient'
+selnt 1
+text 10.0 18.5 'Target Thickness Coefficients'  0.4 0 C
+selnt 10
+ve/pl coef%coor ! s
+selnt 1
+key 3.0 4.0 [mt] '- stand'
+selnt 10
+set mtyp 22
+set pmci 3
+mt=22
+ve/pl sc%coor ! s
+selnt 1
+key 3.0 4.5 [mt] '- scan 3mm'
+selnt 10
+set mtyp 24
+set pmci 4
+mt=24
+ve/pl av%coor ! s
+selnt 1
+key 3.0 5.0 [mt] '- scan+stand'
+selnt 10
+wait
+	enddo
+
+close 55

@@ -1,0 +1,71 @@
+MACRO daily
+*=== daily Moller measurement results
+
+ ve/re run,fctr,acal,adet,pcal,pdet,err   meas/res.dat.14890-14925 ! ! -/*/ 
+ ve/cr kcol(5) i 1 2 3 4 6 
+ ve/cr krtar(50) i
+ ve/cr ktar(5) i
+ ve/cr mtar(5) i
+ * targets for the runs
+ ve/in krtar(1:36) 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1   2  2  2  2  3  3  3  3  4 4 4 4  3 3 3 3 3 3
+
+ opt nbox
+ opt ndat
+ run1=14899
+ run2=14925
+ rn1=[run1]-1
+ rn2=[run2]+1
+
+ fort/fil 56 moll_101027.ps
+ meta 56 -112
+
+ null [rn1] [rn2] 71.0 75.0
+ ntarg=0
+ do i=10,36
+    gr/set hcol 1
+    igset pmci 1
+	kt=krtar([i])
+        mess kt=[kt]
+        if [kt]>0 .AND. [kt]<6 then
+           tset=mtar([kt])
+           if [tset]=0 then
+              ntarg=[ntarg]+1
+              ve/in mtar([kt]) [ntarg]
+              ve/in ktar([ntarg]) [kt]
+           endif
+        endif
+        col=kcol([kt])
+        gr/set hcol [col]
+        igset pmci [col]
+    gr/hpl/err run([i]:[i]) pdet([i]:[i]) err([i]:[i]) err([i]:[i]) 1 20 0.3
+ enddo
+  selnt 1
+   xp=10
+   yp=8
+   mess [xp] [yp]
+   do i=1,4
+     kt=ktar([i])
+     col=kcol([kt])
+     gr/set hcol [col]
+     igset pmci [col]
+     igset txci [col]
+      mess i=[i] [kt] [col] [xp] [yp]
+     gr/set ksiz 0.2
+     gr/set csiz 0.3
+     gr/hpl/key [xp] [yp] 20 'target '//[kt] 0.15
+     yp=$SIGMA([yp]-0.6)
+   enddo 
+   text 10.0 20. 'Moller results on Oct.27, 2010' 0.4
+   selnt 10
+   gr/set hcol 1
+   igset pmci 1
+   igset txci 1
+   gr/set ksiz 0.28
+   gr/set csiz 0.4
+   gr/set hcol 1
+   igset pmci 1
+   atit 'run' 'Beam Polarization, "Y#'
+
+   close 56
+
+RETURN

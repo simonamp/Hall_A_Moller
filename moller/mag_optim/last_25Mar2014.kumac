@@ -1,0 +1,34 @@
+*** Begin of history file: Tue Mar 25 10:11:50 2014
+exec kgtoa q=1 fi=-1.63
+exec kgtoa q=1 fi=-1.71
+exec kgtoa q=1 fi=-2.25
+exec kgtoa q=1 fi=-2.84
+exec kgtoa q=1 fi=-3.08
+exec kgtoa q=2 fi=1.50
+exec kgtoa q=2 fi=1.31
+exec kgtoa q=2 fi=0.77
+exec kgtoa q=2 fi=0.15
+exec kgtoa q=2 fi=-0.01
+exec kgtoa q=3 fi=0.82
+exec kgtoa q=3 fi=0.96
+exec kgtoa q=3 fi=1.33
+exec kgtoa q=3 fi=1.60
+exec kgtoa q=3 fi=1.69
+exec kgtoa q=4 fi=1.93
+exec kgtoa q=4 fi=2.06
+exec kgtoa q=4 fi=2.43
+exec kgtoa q=4 fi=2.86
+exec kgtoa q=4 fi=2.85
+exec 1-11func e0=6.0
+exec kgtoa q=1 fi=2.95
+exec 1-11func e0=7.27
+exec kgtoa q=5 fi=7.27
+exec kgtoa q=5 fi=7.57
+exec kgtoa q=5 fi=8.30
+exec kgtoa q=5 fi=9.02
+exec kgtoa q=5 fi=9.20
+exec scan_help
+exec scan_help
+exec scan_help
+exit
+*** End   of history file: Tue Mar 25 14:34:55 2014

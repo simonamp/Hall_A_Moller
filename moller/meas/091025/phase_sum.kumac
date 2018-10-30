@@ -1,0 +1,83 @@
+MACRO phase
+
+ ve/re run,phase,bcur,rate,bp1,bp2,er,fl          phase.dat
+ ve/re run2,phase2,bcur2,rate2,bp12,bp22,er2,fl2  phase2.dat
+ ve/re run3,phase3,bcur3                          phase31.dat
+
+ fort/fil 56 phase_sum.ps
+ meta 56 -112
+
+ zone 2 2
+ opt nbox
+ opt nstat
+ nr=$sigma(NCO(run))
+ nr2=$sigma(NCO(run2))
+ nr3=$sigma(NCO(run3))
+ sigma err=array([nr],0.1#0.1)
+ sigma err2=array([nr2],0.1#0.1)
+ sigma err3=array([nr3],0.1#0.1)
+ set mtyp 20
+ null -185. -135. 300. 80000.
+ ve/pl rate%phase  ! s 
+ set pmci 2
+ set txci 2
+ ve/pl rate2%phase2 ! s
+ itx -182. 70000. 'Att=165 Slit=15.45'
+ set txci 1
+ set pmci 1
+ set xlab 1.75
+ atitle 'Laser Phase, deg' 'Coincidence Rate'
+ itx -162. 30000. 'regular'
+ itx -182. 75000. 'Att=165 Slit=14.6'
+ arrow -163.3 -163.3 20000. 50000 0.11 
+ selnt 1
+ text 10. 18.5 'Laser phase dependence' 0.4 0 C 
+ selnt 10
+
+ null -185. -135. -0.01 5.0
+ set xlab 1.4
+ ve/pl bcur%phase ! s
+ itx -182. 4.5 'Att=165 Slit=14.6'
+ set pmci 2
+ set txci 2
+ ve/pl bcur2%phase2 ! s
+ itx -182. 4.0 'Att=165 Slit=15.45'
+ set pmci 4
+ set txci 4
+ ve/pl bcur3%phase3 ! s
+ itx -182. 3.5 'Att=100 Slit=23.7'
+ set pmci 1
+ set txci
+ atitle 'Laser Phase, deg' 'Beam Current, uAmp' 
+ itx -162. 0.4 'regular'
+ arrow -163.3 -163.3 0.3 0.6 0.11 
+
+ null -185. -135. 72. 98.
+ gr/hpl/err  phase bp1  err er [nr] 20 0.2 
+ atitle 'Laser Phase, deg' 'Beam Polarization, "Y#'
+ itx -162. 94. 'regular'
+ itx -180. 78. 'Att=165 Slit=14.6'
+ arrow -163.3 -163.3 95.  90.2 0.11
+ set pmci 2
+ gr/hpl/err  phase2 bp12  err2 er2 [nr] 24 0.2
+ set txci 2
+ itx -180. 75. 'Att=165 Slit=15.45'
+ set pmci 1
+ set txci 1
+
+ null -185. -135. 55. 98.
+ gr/hpl/err  phase bp2  err er [nr] 20 0.2 
+ atitle 'Laser Phase, deg' 'Beam Polarization, "Y#' 
+ itx -162. 75. 'regular'
+ itx -180. 65. 'Att=165 Slit=15.45'
+ arrow -163.3 -163.3  70.  80. 0.11
+ set pmci 2
+ gr/hpl/err  phase2 bp22  err2 er2 [nr] 24 0.2
+ set txci 2
+ itx -180. 60. 'Att=165 Slit=15.45'
+ set pmci 1
+ set txci 1
+
+ close 56
+
+RETURN

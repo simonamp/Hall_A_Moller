@@ -1,0 +1,50 @@
+MACRO spin_dance_sim1 elin=0.420 hall=1 pass=2 
+*
+* --- Simulate the spin dance - get the wien angles from wang vector
+*
+
+*  ve/cr wang(4) r -100. -10. 26. 90.
+*  ve/cr wang(4) r -73. -30. 35. 90.
+  ve/cr wang(5) r -85 -70 -55 25 80. 
+  np=$VLEN(wang,1)
+
+  ve/cr par(10) r
+  ve/cr epol([np]) r
+  ve/cr exx([np]) r
+
+  ve/cr vprec(7) r [elin] [hall] [pass] 0 0 0 0
+
+  do ip=1,[np]
+
+    a=wang([ip])
+    if $INDEX([a],'.')=0 then
+      a=[a]//'.'
+    endif
+    fun='spinpred.f('//[a]//')'
+    mess a,fun= [a] [fun]
+    p=$CALL([fun])
+    mess a,p= [a] [p]
+    ep=$SIGMA(ABS([p])*0.015)
+    ve/in pol([ip]) [p]
+    ve/in epol([ip]) [ep]
+  enddo
+
+  ve/in par(1:3) 0.7 0. 1. 
+  ve/fit wang pol epol wave.f ' ' 2 par ! ! ! erpar
+  gr/hpl/err wang pol exx epol [np] 20 0.1
+  
+RETURN
+
+
+
+
+
+
+
+
+
+
+
+
+
+

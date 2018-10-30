@@ -1,0 +1,217 @@
+MACRO tangle_nt run1=0 run2=0 lun=lun1 idn=1
+*
+* == Calculates the polarizations and the target angles in a set of runs
+*
+* == Looks for 90 degrees runs, looks for a set of previous runs
+*
+* -- Select good runs
+
+
+  cutv=''
+  if [run1]>0 then
+    cutv='.and.irun.ge.'//[run1]
+  endif  
+  if [run2]>0 then
+    cutv=[cutv]//'.and.irun.le.'//[run2]
+  endif
+  cutt='irun>0.and.ncount>0.and.npolr>0.and.npolpar>0'//[cutv]
+  cut $1 [cutt]
+
+* -- Exclude "bad" runs 
+
+  exec runs_exclude cut=13
+
+* -- Get the number of useful entries in the NTUPLE at 90 degrees 
+
+  cut $2 $1.and.$13.and.nthrer>0.and.nplur>0.and.ithrer(1)>110.and.ithrer(2)>110
+  cut $3 abs(polpar(1)-90.)<5.
+  cut $8 $1.and..not.$3
+  cut $9 $1.and.$3
+  nt/loop //[lun]/[idn] $9.and.stat_nt.f(irun,polpar(1))>0
+
+  nt=ntstat(1)
+  if [nt]<1 then
+    mess Error in tangl_nt.kumac : only [nt] 90 degrees measurements in NTUPLE [lun]
+    exitm
+  endif
+
+  if $VDIM(irunv,1) .NE. [nt] then
+    if $VDIM(irunv,1)>0 then
+      ve/del irunv
+    endif
+    ve/cr  irunv([nt]) i
+  endif
+  ve/oper/vbias intval(1:[nt]) 0 irunv
+
+  nt/loop //[lun]/[idn] $9.and.stat_nt.f(idatr(5)+60*(idatr(4)+24*(idatr(3)+31*idatr(2))),polpar(1))>0
+
+  if $VDIM(idatev,1) .NE. [nt] then
+*    if $VDIM(idatev,1)>0 then
+*      ve/del idatev
+*    endif
+    ve/cr  idatev([nt]) i
+  endif
+  ve/oper/vbias intval(1:[nt]) 0 idatev
+
+* -- The adjacent runs are considered for the angle/polarization measurements
+
+  if $VDIM(irunmv,1) .NE. [nt] then
+*    if $VDIM(irunmv,1)>0 then
+*      ve/del irunmv
+*    endif
+    ve/cr  irunmv([nt]) i
+  endif
+  ve/in irunmv [nt]*0
+
+  nmeas=0
+  ir=0
+  ida=0
+  do i=1,[nt]
+    ir1=irunv([i])
+    ida1=idatev([i])
+    ird=[ir]+5
+    idd=[ida]+60
+    if [ir1]>[ird] .OR. [ida1]>[idd] then
+       nmeas=[nmeas]+1
+       ve/in irunmv([nmeas]) [i]
+    endif
+    ir=[ir1]
+    ida=[ida1]
+  enddo
+  mess nmeas=[nmeas]
+
+  if $VDIM(irunm,1) .NE. [nmeas] then 
+    ve/cr irunm([nmeas]) i    
+    ve/cr idatcm([nmeas]) i    
+    ve/cr idatem([nmeas],5) i    
+    ve/cr idatem([nmeas],5) i    
+    ve/cr ithrem([nmeas],2) i    
+    ve/cr iplu3m([nmeas],3) i    
+    ve/cr ntangm([nmeas])   i    
+    ve/cr tanglm([nmeas],16) r    
+    ve/cr irtanm([nmeas],8,2) i    
+  endif
+
+  do m=1,[nmeas]
+    i=irunmv([m])
+    irc=irunv([i])
+    ve/in irunm([m]) [irc]
+    datc=idatev([i])
+    ve/in idatcm([m]) [datc]
+  enddo
+
+  do m=1,[nmeas]
+
+    irc=irunm([m])
+    datc=idatcm([m])
+
+    do j=1,5
+      nt/loop //[lun]/[idn] irun=[irc].and.$9.and.stat_nt.f(idatr([j])+0,0.)>0
+      nt=ntstat(1)
+      if [nt]=1 then 
+        ve/in idatem([m],[j]) intval(1)
+      else
+        mess No match for run=[irc]
+        ve/in idatem([m],[j]) 0
+      endif
+    enddo     
+    do j=1,2
+      nt/loop //[lun]/[idn] irun=[irc].and.$9.and.stat_nt.f(ithrer([j]),0.)>0
+      ve/in ithrem([m],[j]) intval(1)
+    enddo     
+    do j=1,3
+      nt/loop //[lun]/[idn] irun=[irc].and.$9.and.stat_nt.f(iplur([j],3),0.)>0
+      ve/in iplu3m([m],[j]) intval(1)
+    enddo     
+*
+* ---   Find the angles in the vicinity of the 90 deg run
+*
+    ir1=[irc]-50
+    ir2=[irc]+51
+    if [m]>1 then
+       i=[m]-1
+       ira=irunm([i])
+       ir1=$SIGMA(MAX([ir1],[ira]))
+    endif       
+    if [m]<[nmeas] then
+       i=[m]+1
+       ira=irunm([i])
+       ir2=$SIGMA(MIN([ir2],[ira]))
+    endif       
+    datcd=120
+    cut $21 -
+    cut $21 abs(idatr(5)+60*(idatr(4)+24*(idatr(3)+31*idatr(2)))-[datc])<[datcd]
+    t1=ithrem([m],1)
+    t2=ithrem([m],2)
+    p1=iplu3m([m],1)
+    p2=iplu3m([m],2)
+    p3=iplu3m([m],3)
+    cut $22 -
+    cut $22 ithrer(1)=[t1].and.ithrer(2)=[t2].and.iplur(1,3)=[p1].and.iplur(2,3)=[p2].and.iplur(3,3)=[p3]
+    cut $23 -
+    cut $23 [ir1]<irun<[ir2]
+
+    nt/loop //[lun]/[idn] $8.and.$21.and.$22.and.$23.and.stat_nt.f(irun,polpar(1))>0
+
+    nt=ntstat(1)
+    if [nt]<1 then
+      mess Meas=[meas] number of useful runs different from 90 degrees =[nt]    
+      goto endmeas
+    endif
+    nang=0
+    mess Meas=[m] not 90 deg runs=[nt] date=[datc]
+    do j=1,[nt]
+*      ve/pri tanglm([m],1:5)
+      match=0
+      t=rntval([j])
+      if [nang]>0 then
+        do i=1,[nang]
+          t1=tanglm([m],[i])
+          dt=$SIGMA(abs([t]-[t1]))
+*          mess i=[i] [t] [t1] [dt]
+          if [dt]<1 then
+            match=1
+          endif
+        enddo
+      endif
+      if [match]=0 then
+        if [nang]<16 then
+          nang=[nang]+1
+        else
+          mess Error meas=[m] too many angles [nang]
+        endif
+        ve/in tanglm([m],[nang]) [t]
+      endif       
+    enddo
+    ve/in ntangm([m]) [nang]
+*exitm
+    do it=1,[nang]
+      t=tanglm([m],[it])
+      cut $24 -
+      cut $24 abs(polpar(1)-[t])<1.5
+      nt/loop //[lun]/[idn] $8.and.$21.and.$22.and.$23.and.$24.and.stat_nt.f(irun,count(1))>0
+      nt=ntstat(1)
+      if [nt]<1 then
+        mess Meas=[meas] number of useful runs at a target angle [t] is [nt]    
+        goto endmeas
+      endif
+      
+    enddo
+
+    endmeas:
+  enddo
+    
+
+*  if $VDIM(,1)
+*  nv=$VDIM(iruntv,1)
+*  if [nv]<[nt] then
+*    ve/cr iruntv([nt]) i
+*  else
+*    ve/in iruntv [nv]*0
+*  endif
+
+*  nt/loop //[lun]/[idn] $1.and.$13.and.stat_nt.f>0
+
+
+RETURN
+

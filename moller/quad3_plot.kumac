@@ -1,0 +1,53 @@
+MACRO quad3_plot r1=0 r2=0 amax=20000.
+
+  ve/cr yy(20,10) r
+  ve/cr ey(20,10) r
+  ve/cr xx(20,2) r
+  ve/cr ex(20,2) r
+
+  j=0
+  do ir=[r1],[r2]
+    j=[j]+1
+    a=parrun(1,[ir])
+    ve/in xx([j],1) [a]
+    a=parrun(2,[ir])
+    ve/in xx([j],2) [a]
+    do m=1,6
+      a=resrun([m],[ir])
+      ve/in yy([j],[m]) [a]
+    enddo
+    a=resrun(13,[ir])
+    a=$SIGMA(ABS([a]))
+    ve/in yy([j],7) [a]
+    a=resrun(14,[ir])
+    ve/in ey([j],7) [a]
+    
+    a=yy([j],1)
+    if [a]>0 then
+      b=yy([j],3)
+      a=[b]/[a]
+      ve/in yy([j],8) [a]
+    endif
+  enddo
+
+  null 0 [amax] 0 4.E5
+  atit 'Q3 GL' 'Single rates'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],1) ex(1:[j],1) ey(1:[j],1) [j] 20 0.2   
+  gr/hpl/err xx(1:[j],1) yy(1:[j],2) ex(1:[j],1) ey(1:[j],2) [j] 24 0.2   
+  gr/hpl/key 6000. 100000. 20 'Left'
+  gr/hpl/key 6000.  80000. 24 'Right'
+
+  null 0 [amax] 0 1.E5
+  atit 'Q3 GL' 'Coincidence rates'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],3) ex(1:[j],1) ey(1:[j],3) [j] 20 0.2   
+
+  null 0 [amax] 0 0.4
+  atit 'Q3 GL' 'Coincidence/single(L) rates'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],8) ex(1:[j],1) ey(1:[j],8) [j] 20 0.2   
+
+  null 0 [amax] 0.20 0.40
+  atit 'Q3 GL' 'Polarization'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],7) ex(1:[j],1) ey(1:[j],7) [j] 20 0.2   
+
+
+RETURN

@@ -1,0 +1,142 @@
+MACRO get_settings run=0 clear=0
+*
+* --- Get the settings into a vector run_sett(100)
+* --- If the vector is already filled - do not refill it (if clear>0 - always refill)
+*
+
+ if $VDIM(run_sett,1)<120 then
+   ve/cr run_sett(120) r
+ endif
+ nl=$VDIM(run_sett,1)
+ runold=run_sett(100)
+ runold=$SIGMA(INT([runold]+0.1))
+
+ if [run]>0 .AND. [runold]=[run] .AND. [clear]=0 then
+    mess Use the existing vector with the run settings data
+    exitm
+ endif
+
+ ve/in run_sett [nl]*0.
+
+ if [run]<1 then
+   mess Error in get_settings.kumac : run number [run] is out of range
+   exitm
+ endif
+
+*  Find the settings file
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp
+ endif
+ fmong='mollerrun_'//[run]//'.set'
+ shell find [dirm] -name [fmong] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]<1 then
+   mess Setting file [fmong] has not been found. Exiting...
+   exitm
+ endif
+ 
+ fmon=$SHELL('cat tmp.nam | head -1',1) 
+ mess Settings file [fmon]
+
+* Template file
+ ftab=run_settings.tab
+ if $FEXIST([ftab])=0 then
+   mess The file with a table of the variables [ftab] is missing. Exiting ...
+   exitm
+ endif
+ comn='cat '//[ftab]//' | wc -l'
+ nv=$SHELL([comn],1)
+
+* mess nv=[nv]
+* nv=2
+
+ do iv=1,[nv]
+
+   shell head -[iv] [ftab]//' | tail -1' > tmp.nam
+   type=$SHELL('cat tmp.nam | awk ''{print $1}''',1)
+   iw=$SHELL('cat tmp.nam | awk ''{print $2}''',1)
+   wrt=$SHELL('cat tmp.nam | cut -c9-40',1)
+*   Truncate trailing blanks
+   lwr=$LEN([wrt])
+   l=[lwr]
+   do i=1,[lwr]
+     c=$SUBSTRING([wrt],[l],1)
+     if $INDEX([c],' ')=1 then
+       l=[l]-1
+     endif
+   enddo
+   wr=$SUBSTRING([wrt],1,[l])
+*   mess [wr]
+   if $INDEX([type],'r')=1 then
+     comn='grep "'//[wr]//'" '//[fmon]//' | awk ''{print $NF}'' | sed s/,//g | awk ''{s += $1;a+=1.}END{if(a>0.){print s/a}{print 0}}''' 
+     val=$SHELL([comn],1)
+*     mess [iv] [iw] [wr] [val]
+     ve/in run_sett([iw]) [val]
+   elseif $INDEX([type],'D')=1 then
+     nwr=$WORDS([wr],' ')
+     comn='grep "^'//[wr]//'" '//[fmon]
+     val=$SHELL([comn],1)
+*     mess [comn] [val]
+     comn='echo "'//[val]//'" | gawk -v t='//[nwr]//' ''{for(i=t+1;i<NF+1;i++) printf("%s ",$i);printf("\n")}''' 
+     val=$SHELL([comn],1)
+*     mess com=[comn]
+*     mess val=[val]
+     comn='date +''%Y %m %d %H %M %S'' -d "'//[val]//'"'
+*     mess comn=[comn]
+     val=$SHELL([comn],1)
+     nwv=$WORDS([val],' ')
+     do i=1,[nwv]
+       v=$WORD([val],[i],1,' ')
+       j=[iw]+[i]-1
+       ve/in run_sett([j]) [v]
+*       mess [j] [v]
+     enddo
+   elseif $INDEX([type],'c')=1 then
+     comn='grep "'//[wr]//'" '//[fmon]//' | awk ''{print}''' 
+*     mess comn=[comn]
+     lin=$SHELL([comn],1)
+     len=$LEN([lin])
+     i1=$INDEX([lin],':')
+     i1=[i1]+2
+     if [i1]>2 .AND. [i1]<=[len] then
+        i2=[len]-[i1]+1
+        val1=$SUBSTRING([lin],[i1],[i2])
+        val=0
+*        mess [iv] [iw] [wr] val=[val1]
+*         
+        if $INDEX([val1],'null')=1 then
+           val=0
+        elseif $INDEX([val1],'OUT')=1 then
+           val=0
+        elseif $INDEX([val1],'OFF')=1 then
+           val=0
+        elseif $INDEX([val1],'IN')=1 then
+           val=1
+        elseif $INDEX([val1],'CW MODE')=1 then
+           val=1
+        endif
+     else
+        val=0
+     endif
+     ve/in run_sett([iw]) [val]
+   endif
+ enddo
+* ve/pri run_sett(30:35)
+*
+**      The real current is 2 times larger than the measurement (the scale factor for the ADC)
+*
+ a=run_sett(79)
+ a=$SIGMA([a]*2.)
+ ve/in run_sett(79) [a]
+
+ ve/in run_sett(100) [run]
+
+
+ call targpos.f([run])
+
+RETURN
+

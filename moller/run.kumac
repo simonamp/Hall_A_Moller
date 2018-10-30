@@ -1,0 +1,254 @@
+MACRO run run=0 reload=0 clear=0 name=moller_data dirg=XX rawext=dat  
+*
+* - attaches a file with a given run number 
+* - starts with lun=21
+
+* -    lrun  - run numbers
+* -    mrun  - LUNs
+* -  ktyrun  - run type (=0 - normal, =1 - LED ...)
+
+*   reload>0 - if the file has been attached - release it and re-attach
+*   clear>0  - close all the files 
+
+ nact=$VDIM(lrun)
+ nfil=$VLEN(lrun)
+
+ if [clear]>0 .AND. [nfil]>0 then
+   mess Close all the ntuple files: [nfil]
+   do j=1,[nfil]
+     l=mrun([j])
+     if [l]>0 then
+       clo [l]
+     endif
+   enddo
+   ve/in lrun [nact]*0
+   ve/in mrun [nact]*0
+   ve/in ktyrun [nact]*0
+   exitm
+ endif
+
+ if [run]<1 then
+   mess "*** Wrong run number" run=[run]
+   exitm
+ endif
+
+ fnamntu='"'//[name]//'*'//'_'//[run]//'.nt'//'"'
+ fnamdat='"'//[name]//'*'//'_'//[run]//'.'//[rawext]//'"'
+
+* mess [fnamntu]
+* exitm
+ dext=0
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+*   dirg=/adaql1/data1/moller/
+       if [run]<9000 then
+          dirg=/work/halla/moller/disk1/exp
+          dext=1
+       else
+    dirg=/adaq1/data1/moller/ 
+       endif
+ elseif $INDEX([host],'aonl')>0 then
+    dirg=/adaq1/data1/moller/
+ elseif $INDEX([host],'hamoller')>0 then
+    dirg=/adaq1/data1/moller/
+ elseif $INDEX([host],'haplix')>0 then
+   dirg=/data2c/user/gen/moller/exp
+   dext=1
+ elseif $INDEX([host],'jlab')>0 .OR. $INDEX([host],'farm')>0 then
+   dirg=/w/halla/moller/exp
+   dext=1
+ elseif $INDEX([host],'ch-dom')>0 then
+   dirg=/v3/user/gen/data/moller/exp
+   dext=1
+ endif
+ dirn=[dirg]
+ dirr=[dirg]
+
+ nrun=10
+ lun1=21
+ lun2=[lun1]+[nrun]-1
+ if $VDIM(lrun)=0 .OR. $VDIM(mrun)=0 .OR. $VDIM(ktyrun)=0 then
+   ve/cr lrun([nrun]) i
+   ve/cr mrun([nrun]) i
+   ve/cr ktyrun([nrun]) i
+ endif
+
+ nact=$VDIM(lrun)
+ nfil=$VLEN(lrun)
+ icur=0
+ icurlun=0
+
+ do j=1,[nfil]
+   i=lrun([j])
+   if [i]=[run] then
+     l=mrun([j])
+     if [reload]=0 then
+       mess ' run.kumac:' run=[run] is already attached to lun=[l] 
+       exitm
+     else
+       mess ' run.kumac:' run=[run] is already attached to lun=[l] - release it
+       clo [l]
+       j1=[j]+1
+       icur=[j]
+       icurlun=[l]
+       ve/in mrun([j]) 0
+       ve/in lrun([j]) 0
+       ve/in ktyrun([j]) 0
+     endif
+   endif
+ enddo
+
+* if [compress]>0 then
+*   k=0
+*   if $VDIM(tmp,1)<[icur] then
+*      ve/cr tmp([icur]) i
+*   endif
+*   do j=1,[icur]
+*     l=mrun([j])
+*     r=lrun([j])
+*     if [l]>0 .AND. [r]>0 then
+*       k=[k]+1
+*       ve/in tmp([k]) [j]
+*     endif
+*   enddo
+*   do i=1,[nact]
+*     if [i]<=[k] then
+*       j=tmp([i])
+*       ve/in lrun([i]) lrun([j])
+*       ve/in mrun([i]) mrun([j])
+*       ve/in ktyrun([i]) ktyrun([j])
+*     else	
+*       ve/in lrun([i]) 0
+*       ve/in mrun([i]) 0
+*       ve/in ktyrun([i]) 0
+*     endif
+*   enddo
+*   ve/del tmp
+* endif
+
+*
+* --- If there are too many files attached - release the first one
+*
+ if [nfil]=[nrun] .AND. [icur]=0 then
+   lun=mrun(1)
+   r=lrun(1)
+   mess Releasing the run [r] , lun=[lun]
+   clo [lun]
+   do i=2,[nfil]
+     i1=[i]-1
+     ve/in lrun([i1]) lrun([i])
+     ve/in mrun([i1]) mrun([i])
+     ve/in ktyrun([i1]) ktyrun([i])
+   enddo
+   ve/in lrun([nfil]) 0
+   ve/in mrun([nfil]) 0
+   ve/in ktyrun([nfil]) 0
+   nfil=[nfil]-1
+ endif
+*
+* --- Find an empty LUN in the allowed range
+*
+ if [icurlun]=0 then
+   nfil=$VLEN(lrun)
+   lun=0
+   do l=[lun1],[lun2]
+     find=0
+     do i=1,[nfil]
+       l1=mrun([i])
+*       mess loop1 [l1] [l
+       if [l1]=[l] then
+         find=1
+         breakl
+       endif
+     enddo
+*     mess loop2 [find] [l
+     if [find]=0 then
+       lun=[l]
+       breakl
+     endif
+   enddo
+ else
+   lun=[icurlun]
+ endif
+ if [lun]=0 then
+   mess "*** Error: did not find any free LUN"
+   exitm
+ endif
+
+ if [icur]=0 then
+   nfil=[nfil]+1
+   icur=[nfil]
+ endif
+
+ try=0
+
+ mfindfile:
+
+ try=[try]+1
+
+ shell find [dirn] -name [fnamntu] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]>1 then
+   mess Strange... Several files for this run:
+   shell cat tmp.nam
+ endif 
+ if [nf]>0 then
+   nam=$SHELL('cat tmp.nam',1)
+ else   
+   if [try]>1 then
+     mess Error: missing ntuple for run [run], file pattern [dirn]/[fnamntu]
+     exitm
+   else
+*
+* ---   No NTUPLE found: try to process the raw data file
+*
+*     mess dir=[dirr] nam=[fnamdat]
+     shell find [dirr] -name [fnamdat] > tmp.nam
+*     exitm
+     nf=$SHELL('cat tmp.nam | wc -l ',1)
+     if [nf]>1 then
+       mess Strange... Several files for this run:
+       shell cat tmp.nam
+     endif 
+     if [nf]<1 then
+       mess Error: missing raw data for run [run], file pattern [dirr]/[fnamdat]
+       exitm
+     else
+       
+       nam=$SHELL('cat tmp.nam',1)
+*       mess nam=[nam]
+       draw=[dirr]
+       if [dext]=0 then
+         dirn=[dirr]
+       else
+         d1=$SHELL('dirname `head -1 tmp.nam`',1)
+         cmnd='dirname '//[d1]
+         d2=$SHELL([cmnd],1)
+*         d1=$SHELL('head -1 tmp.nam | sed s"%/% %"g | awk ''{print $(NF-3)}''',1)
+*         d2=$SHELL('head -1 tmp.nam | sed s"%/% %"g | awk ''{print $(NF-2)}''',1)
+         draw=[d1]
+         dirn=[d2]//'/ntu'
+*         mess d1=[d1] d2=[d2]
+       endif
+* ---    Process the file
+       mess Process the raw file
+*         mess rawext=[rawext] draw=[draw] dirn=[dirn]
+       shell rawrd.com -R [run] -e [rawext] -d [draw] -n [dirn]
+       goto mfindfile
+     endif
+   endif   
+ endif 
+ shell rm -f tmp.nam
+
+
+ h/fil [lun] [nam]
+ ve/in lrun([icur]) [run]
+ ve/in mrun([icur]) [lun]
+ kty=0
+ i=$INDEX([nam],'_led_')
+ if $INDEX([nam],'_led_')>0  then
+    kty=1
+ endif
+ ve/in ktyrun([icur]) [kty]
+ mess Run=[run] is attached to lun=[lun]
+RETURN

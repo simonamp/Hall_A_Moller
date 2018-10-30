@@ -1,0 +1,34 @@
+MACRO temp_plot_8
+*
+* --- Plots the temperature curves 
+*
+ opt liny
+ opt linx
+ set csiz 0.3
+ set ylab 1.2
+ opt ndat
+ opt nbox
+
+* zone 2 1
+ 
+ next
+ 
+* titl 'Target heating for 50[m]A, on a 1[m]m thick target'  
+ titl ' '
+ null 0.0  0.0011 0.0 62.0
+ exec temp_get5 dir=f5_t_0.0010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_rast-0.03-0.03_v-02/ same=0 zone=1 col=2 t1=4
+ igset pmci 2
+ gr/hpl/key 0.0001 55.0 20 'raster 0.6mm x 0.6mm 25 x 23 kHz'
+ exec temp_get5 dir=f5_t_0.0010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_rast-0.05-0.05_v-02/ same=1 zone=1 col=4 t1=4
+ igset pmci 4
+ gr/hpl/key 0.0001 50.0 20 'raster 1.0mm x 1.0mm 25 x 23 kHz'
+ exec temp_get5 dir=f5_t_0.0010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_rast-0.07-0.07_v-02/ same=1 zone=1 col=3 t1=4
+ igset pmci 3
+ gr/hpl/key 0.0001 45.0 20 'raster 1.4mm x 1.4mm 25 x 23 kHz'
+
+ text 500e-6 65 '50[m]A, RMS=30[m]m' 0.3 0 'C'
+
+ igset pmci 1
+ titl 'Target heating for 50[m]A, on a 1[m]m thick target'  
+ opt date
+

@@ -1,0 +1,48 @@
+MACRO all_23
+
+   goto l11
+
+   do i=9990,9993
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=23. norbcm=0   
+   enddo
+   do i=9994,10001
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=33.5 norbcm=0   
+   enddo
+   do i=10002,10004
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=90. norbcm=0   
+   enddo
+   do i=10005,10010
+     exec run run=[i]
+     exec asymr delay=0 run=[i] angl=153.0 norbcm=0   
+   enddo
+ l11:
+   do i=10011,10012
+     exec run run=[i] dir=/adaql1/work1/moller/
+     exec asymr delay=0 run=[i] angl=153.0 norbcm=0   
+   enddo
+   do i=10013,10016
+     exec run run=[i] dir=/adaql1/work1/moller/
+     exec asymr delay=0 run=[i] angl=163.5 norbcm=0   
+   enddo
+   do i=10017,10019
+     exec run run=[i] dir=/adaql1/work1/moller/
+     exec asymr delay=0 run=[i] angl=90. norbcm=0   
+   enddo
+
+   exec asym_av run1=9990 run2=9993
+   exec asym_av run1=9994 run2=10001
+   exec asym_av run1=10012 run2=10016
+
+
+RETURN
+
+
+
+
+
+
+
+

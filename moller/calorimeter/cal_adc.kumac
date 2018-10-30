@@ -1,0 +1,39 @@
+MACRO cal_adc run=0 lun=lun21 cut=0 id=-1 i1=13 n=16 nc=1120 x1=0 x2=1120
+
+ run0=0
+ if $VDIM(irun,1)>0 then
+   run0=irun(1)
+ endif
+ if [run]>0 then
+   exec getrun run=[run] 
+   lun=ilun(1)
+   run=irun(1)
+
+   if [lun]=0 then
+     mess Abort ...
+     exitm
+   endif
+   lun=lun//[lun]
+ endif
+ if [id]=-1 then
+   id=[run]*1000+800 
+   mess Set id to [id0]
+ endif
+
+
+  jmx=[i1]-1+[n]
+  do i=1,[n]
+    j=[i1]-1+[i]
+
+    id1=[id]+[j]
+    tit='ADC '//[j]
+    1dh [id1] [tit] [nc] [x1] [x2] 
+    if [cut]=0 then
+       nt/pl //[lun]/1.iadc([j]) nadc>=[jmx] -[id1]
+    else
+       nt/pl //[lun]/1.iadc([j]) nadc>=[jmx].and.$[cut] -[id1]
+    endif
+
+  enddo
+
+RETURN

@@ -1,0 +1,52 @@
+*** Begin of history file: Fri Jun 24 12:46:24 2005
+exec run run=11756
+exec run run=11755
+exec run run=11750
+exec run run=11751
+exec run run=11747
+exec run run=11748
+exec run run=11749
+exec run run=11752
+exec run run=11753
+exec run run=11754
+exec run run=11745
+exec run run=11746
+exec run run=11190
+exec asymwr run=11746 angl=20. delay=0
+ld //
+h/fil 1 scal.nt
+nt/list //lun1
+nt/pri //lun1/1
+nt/pri //lun1/1.jcnt(5,1)
+nt/pl //lun1/1.jcnt(5,1)
+1dh 201 'bcm' 200 0 200
+nt/pl //lun1/1.jcnt(5,1) ! -201
+nt/pl //lun1/1.nscal
+nt/pl //lun1/1.jcnt(5,1)%izug
+nt/pl //lun1/1.izug
+nt/pl //lun1/1.izug jcnt(5,1)<100
+nt/pl //lun1/1.izug jcnt(5,1)<10
+nt/pl //lun1/1.jcnt(5,1)%izug
+nt/pl //lun1/1.izug jcnt(5,1)<10.and.izug<800
+nt/pl //lun1/1.jcnt(5,1) ! -201
+nt/pl //lun1/1.jcnt(5,1) izug<800 -201
+zone 2 2
+nt/pl //lun1/1.jcnt(5,1) izug<800 -201
+nt/pl //lun1/1.jcnt(5,2) izug<800 -201
+nt/pl //lun1/1.jcnt(5,3) izug<800 -201
+nt/pl //lun1/1.jcnt(5,4) izug<800 -201
+nt/pl //lun1/1.jcnt(5,4)%izug izug<800
+ld //
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.079 nosubbg=1
+h/pl 1174605
+nt/pl //lun1/1.jcnt(5,4) izug<800 -201
+h/pl 1174605
+set hcol 4
+h/pl 201 s
+1dh 202 'bcm' 200 0 200
+1dh 203 'bcm' 200 0 200
+1dh 204 'bcm' 200 0 200
+nt/pri //lun1/1
+nt/pl //lun1/1.nelem
+nt/pl //lun1/1.jhel(1)
+*** End   of history file: Fri Jun 24 13:39:30 2005

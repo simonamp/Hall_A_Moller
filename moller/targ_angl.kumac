@@ -1,0 +1,57 @@
+MACRO targ_angl run1=0 run2=0 runn1=0 runn2=0 bcm=1 i=3 deadt=0.
+*
+* ===  Target angle calculation for run1-run2, if 
+*      runn1-runn2 are taken at 90 degrees
+*      deadt - estimated dead time fraction (say 0.01 for 1%) for run1-run2 
+
+
+ co1=0.
+ co2=0.
+
+ k=0
+ do r=[run1],[run2]
+    ir=krunpnt([r])
+    if [ir]>0 then
+      a=resrun([i],[ir])
+      b=resrun(5,[ir])
+      if [bcm]=0 then
+        b=1.
+      endif
+*      b=50.
+      if [a]>1000 then
+        k=[k]+1
+        co1=$SIGMA([co1]+[a]/[b])
+      endif
+    endif
+ enddo
+ co1=[co1]/[k]
+ mess [co1],[k]
+
+ k=0
+ do r=[runn1],[runn2]
+    ir=krunpnt([r])
+    if [ir]>0 then
+      a=resrun([i],[ir])
+      b=resrun(5,[ir])
+      if [bcm]=0 then
+        b=1.
+      endif
+*      b=50.
+      if [a]>1000 then
+        co2=[co2]+[a]/[b]
+        k=[k]+1
+      endif
+    endif
+ enddo
+ co2=[co2]/[k]
+ mess [co2]
+
+ ang=$SIGMA(ASIN([co2]/([co1]*(1+[deadt])))*180./3.1415)
+ mess The target angle = [ang]
+ if $VDIM(targcal)<1 then
+   ve/cr targcal(1) r
+ endif
+ ve/in targcal(1) [ang] 
+RETURN 
+
+

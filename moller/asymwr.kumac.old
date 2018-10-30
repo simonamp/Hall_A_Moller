@@ -1,0 +1,151 @@
+MACRO asymwr nlun=0 run=0 coil=0 angl=20.0 nevadc=-1 delay=8 helfla=0 dtick=4. ltmp=2 lout=3 nev=99999999 lenzug=0 scalcopy=1 ptar=2.
+*
+* --- Write asymmetry ntuple: scaler increments and flags, "train"-wise
+*
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- coil =0 - use the Helmholtz coil value from the info files
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+* --- angl   - target angle
+* --- delay  > =-1 - automatical evaluation, =0 - forced (no delay), =8 - delay
+* --- helfla=0 - check all helicity info, +1 - ignore adc, +10 - ignore scaler itrig(6), +100 - ignore scaler(10)
+* --- ltmp<>0 - write train date to a file and then create an ntuple, >0 - open the file
+* --- lout>0 - write train date to an ntuple
+* --- nev - number of events to read
+* --- lenzug >0 length of the zug (<2 - it is measured using the data)
+* --- ptar < 1 -  foil polarization, >1 - get the foil polarization automatically 
+*
+
+ opt liny
+
+ if [run]<1 then
+   mess Error in asymq.kumac : run number [run] is out of range
+   goto fill
+   exitm
+ endif
+
+*  Load the settings data
+ exec get_settings run=[run]
+ nl=$VLEN(run_sett,1)
+ if [nl]<1 then
+   mess Setting data have not been found. Exiting...
+   exitm
+ endif  
+
+ hcoil=run_sett(79)
+ coil=$RSIGMA([hcoil])
+ itarg=run_sett(101)
+ ydifcm=run_sett(103)
+
+ mess hcoil=[hcoil] coil=[coil]
+
+* -- Find the target polarization
+ if [ptar]>1. then
+   exec get_targpol hcoil=[hcoil] target=[itarg] zcm=[ydifcm] print=2
+   ptar=tpolcur(1)
+ endif
+ ve/in run_sett(104) [ptar]
+
+ dtick=$RSIGMA([dtick])
+ angl=$RSIGMA([angl])
+
+ run0=0
+ if $VDIM(irun,1)>0 then
+   run0=irun(1)
+ endif
+ rnamefl=0
+ if [nlun]=0 then
+   try=0
+   tryfind:
+   exec getrun run=[run] lun=[lun]
+   lun=ilun(1)
+   run1=irun(1)
+   kty=irty(1)
+
+   if [lun]=0 then
+     if [try]=0 then
+        exec run run=[run]
+        try=[try]+1
+        goto tryfind
+     endif
+     mess Abort ...
+     exitm
+   endif
+   run=[run1]
+   nlun=lun//[lun]
+   rname=$SHELL('cat tmp.runname',1)
+   if $INDEX([rname],'nt')>0 then 
+     mess filename [rname]
+     i1=$INDEX([rname],'moller_data')
+     if [i1]>0 then
+        i11=[i1]-1
+        i12=[i1]+11
+        len=$LEN([rname])
+        rname1=$SUBSTRING([rname],1,[i11])//'moller_scal'//$SUBSTRING([rname],[i12],[len])
+        rnamefl=1
+     endif
+   endif
+ else
+   run=[nlun]
+ endif
+
+ fill:
+
+ ltmp1=$SIGMA(ABS([ltmp]))
+
+ if [ltmp]>0 then
+   clo [ltmp]
+   if $FEXIST('/tmp/moller_scal.dat')>0 then
+     shell rm -f /tmp/moller_scal.dat
+   endif
+   call atopen.f([ltmp],1)
+ endif
+*
+* --- Find the zug length, if required
+*
+ if [lenzug]<2 then
+   idz=888888
+   if $HEXIST([idz])>0 then
+     h/del [idz]
+   endif
+   1dh [idz] ' ' 10 -0.5 9.5
+    nt/pl //[nlun]/1.itrig(8)+0.1 nsca>0 ! ! ! N [idz]
+   av=$HINFO([idz],'MEAN')
+   if [av]>0. .AND. [av]<1. then
+     if [av]<=0.5 then
+* --       normal: more 0-s than 1-s (or 0=1 - doublets)
+        lenzug=$SIGMA(INT((1.-[av])/[av]+0.5)+1)
+     else
+* --       abnormal: more 1-s than 0-s (inverted signal?) use negative length
+        lenzug=$SIGMA(INT([av]/(1.-[av])+0.5)+1)
+        lenzug=$SIGMA((-1)*[lenzug])
+     endif      
+   else
+     mess "Wrong QRT signal, average= " [av]
+   endif
+   mess Helicity train length is [lenzug]
+ endif
+
+ nt/loop //[nlun]/1 zugtofile.f([delay],[helfla],[nevadc],[lenzug],[dtick],[angl],[coil],[ltmp1])>-1. [nev] 1
+
+ if [ltmp1]>0 then
+   if [lout]>0 then
+*       call atclose.f([ltmp])
+*       call atopen.f([ltmp],0)
+     clo [lout]
+     if $FEXIST('scal.nt')>0 then
+       shell rm scal.nt
+     endif
+     if [rnamefl]=0 then
+       shell 'ln -sf moller_scal_'//[run]//'.nt scal.nt'
+     else
+       shell 'ln -sf '//[rname1]//' scal.nt'
+     endif
+     mess Writing scaler ntuple to scal.nt ....
+     call antwri.f([ltmp1],[lout])
+   endif
+ endif
+
+
+RETURN
+

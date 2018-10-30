@@ -1,0 +1,71 @@
+MACRO run_set_sum run1=0 run2=0
+ host=$SHELL('hostname')
+*** if $INDEX([host],'adaq')>0 then
+ if $INDEX([host],'jlabl')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+*** if $INDEX([host],'jlab')>0 then
+*** dirm=/home/moller/paw/analysis/RunInfo/
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp/*/*/mon/
+ endif
+
+ runs=[run2]-[run1]+1
+ ve/cr run_num([runs]) r
+ ve/cr beam_en([runs]) r
+ ve/cr quad1([runs])   r
+ ve/cr quad2([runs])   r
+ ve/cr quad3([runs])   r
+ ve/cr dipol([runs])   r
+ 
+ n=1
+
+ do run=[run1],[run2]
+ fmon=[dirm]//'mollerrun_'//[run]//'.set'
+
+ mess Run Number=[run]
+ ve/in run_num([n]) [run]
+ 
+* day='fgrep Date '//[fmon]
+* dayt=$SHELL([day])
+* mess [dayt]
+
+ enr='fgrep "Beam energy, MeV Hall A " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+ ener=$SHELL([enr])
+ mess Hall A Energy=[ener] MeV
+  ve/in beam_en([n]) [ener]
+
+ q1='fgrep "Quad Q1 (Amps) " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+ qq1=$SHELL([q1])
+ mess Quad1=[qq1] Amp
+  ve/in quad1([n]) [qq1]
+
+ q2='fgrep "Quad Q2 (Amps) " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+ qq2=$SHELL([q2])
+ mess Quad2=[qq2] Amp
+ ve/in quad2([n]) [qq2]
+
+ q3='fgrep "Quad Q3 (Amps)  " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+ qq3=$SHELL([q3])
+ mess Quad3=[qq3] Amp
+  ve/in quad3([n]) [qq3]
+
+ dp='fgrep "Dipole  (Amps)  " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+ dip=$SHELL([dp])
+ mess Dipole=[dip] Amp
+  ve/in dipol([n]) [dip]
+
+n=[n]+1
+
+* ta='fgrep "Target rotary position  " '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+* tang=$SHELL([ta])
+* mess Target angle=[tang] 
+
+*  comn='fgrep Hcoil '//[fmon]//' | awk ''{printf"%.1f\n",$NF}'''
+*  hcoil=$SHELL([comn])
+*  mess Hcoil=[hcoil]
+
+enddo
+
+ve/write run_num,beam_en,quad1,quad2,quad3,dipol set_sum.dat (7(2x,F8.2))
+
+RETURN

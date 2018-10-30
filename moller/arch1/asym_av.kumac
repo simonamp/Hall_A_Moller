@@ -1,0 +1,108 @@
+MACRO asym_av run1=0 run2=0 iofs=8000 scoil=1 pcut=-2. sign=0 kill=0 
+*
+* ===  Averages asymmetries
+*
+ ve/cr as1(90) r
+ ve/cr es1(90) r
+ ve/cr xx(90) r
+ ve/cr ex(90) r
+
+ r1=[run1]-[iofs]
+ r2=[run2]-[iofs]
+
+
+ tit='Polarization for runs '//[run1]//' - '//[run2]
+ titl [tit]
+ k=0
+ apol=0.
+ apole=0.
+ apolmin=1.
+ apolmax=-1.
+ beam=0.
+ do r=[r1],[r2]
+    
+    a=resrun(1,[r])
+    sc=1
+    if [scoil].ne.0 then
+      sc=resrun(29,[r])
+      mess sc=[sc]
+    endif
+    pol=resrun(13,[r])
+    pol=$SIGMA(-1.*[pol]*[sc])
+    ok=0
+    if [sign]=0 then
+       ok=1
+    else 
+       aa=[pol]*[sign]
+       if [aa]>0 then
+          ok=1
+       endif
+    endif
+    if [kill]>0 then
+      nkill=$VLEN(killrun,1)
+      if [nkill]>0 then
+         do ii=1,[nkill]
+           irk=killrun([ii])
+           irk=[irk]-[iofs]
+           mess irk=[irk] [r]
+           if [irk]=[r]  then
+             ok=0
+           endif
+         enddo
+      else
+        mess No vector killrun [nkill] 
+      endif
+    endif 
+    if [a]>100 .AND. [ok]>0 then
+      if [sign] .ne. 0 then
+        pol=$SIGMA(ABS([pol]))    
+      endif
+      mess pol=[pol]
+        if [pol] .gt. [pcut] then
+          k=[k]+1
+          e=resrun(14,[r])
+          ve/in as1([k]) [pol]    
+          ve/in es1([k]) [e] 
+          ve/in xx([k]) [k]
+          apol=[apol]+[pol]
+	  apole=[apole]+[pol]*[pol]
+          apolmin=$SIGMA(MIN([apolmin],[pol]))
+          apolmax=$SIGMA(MAX([apolmax],[pol]))
+          bbb=resrun(5,[r])
+          beam=[beam]+[bbb]
+        endif
+      endif
+    endif
+ enddo
+
+ set dmod 3
+ ve/fit xx(1:[k]) as1(1:[k]) es1(1:[k]) p0
+ set dmod 0
+ gr/hpl/err xx(1:[k]) as1(1:[k]) ex(1:[k]) es1(1:[k]) [k] 24 0.2
+ atit 'run' 'Beam Polarization'
+
+
+ if [k]>0 then
+   apol=[apol]/[k]
+   apole=[apole]/[k]
+   apole=[apole]-[apol]*[apol]
+   apole=$SIGMA(SQRT([apole]))
+   beam=[beam]/[k]
+   mess Average=[apol], RMS=[apole]
+   mess BCM=[beam]
+ endif
+
+ goto exitm
+ set fit 1111
+
+ k1=[k]+1
+ apolmin=$SIGMA(INT([apolmin]*100.-1.)/100.)
+ apolmax=$SIGMA(INT([apolmax]*100.+1.)/100.)
+ null 0 [k1] [apolmin] [apolmax]
+ gr/hpl/err xx(1:[k]) as1(1:[k]) ex(1:[k]) es1(1:[k]) [k] 24 0.2
+
+exitm:
+
+RETURN 
+
+

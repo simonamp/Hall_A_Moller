@@ -1,0 +1,21 @@
+MACRO all_21
+
+   do i=8205,8207
+     exec run run=[i]
+     exec asymq run=[i] angl=163.5 anpow=0.77 
+   enddo
+   do i=8208,8209
+     exec run run=[i]
+     exec asymq run=[i] angl=90.5 anpow=0.77 
+   enddo
+
+
+RETURN
+
+
+
+
+
+
+
+

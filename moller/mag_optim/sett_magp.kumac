@@ -1,0 +1,76 @@
+MACRO sett_magp e0=1. de=0.5 n=1 p=1 
+
+*
+* --- prints a table with optimized magnet settings
+* 
+
+ if $VDIM(qmfiel,1)<3 then
+   ve/cr qmfiel(4,3) r
+ endif
+ if $VDIM(magn)<1 then
+   ve/cr magn(1) i
+ endif
+
+application COMIS quit
+      SUBROUTINE MAGPRI(IPR,IHEAD,E)
+      IMPLICIT NONE
+      INTEGER IPR,IHEAD
+      REAL E
+
+      VECTOR QMFIEL(4,3)
+      INTEGER i
+C
+      IF(IHEAD.NE.0) THEN
+	 IF(IPR.EQ.1) THEN
+           WRITE(6,FMT='(/20X,''GL(Gs) or BdL(Gs cm)'')') 
+         ELSE IF(IPR.EQ.2) THEN
+           WRITE(6,FMT='(/20X,''Bmx(kGs)'')') 
+         ELSE IF(IPR.EQ.3) THEN
+           WRITE(6,FMT='(/20X,''I(Amps)'')') 
+         ENDIF
+         WRITE(6,1010)
+ 1010    FORMAT(4X,' GeV        Q1       Q2       Q3       Dipole')
+      ELSE
+         IF(IPR.EQ.1) THEN
+           WRITE(6,1100) E,(QMFIEL(i,IPR),i=1,4)	
+ 1100      FORMAT(2X,F7.3,2X,3F9.0,2X,F9.0)
+         ELSE IF(IPR.EQ.2) THEN
+           WRITE(6,1200) E,(QMFIEL(i,IPR),i=1,4)	
+ 1200      FORMAT(2X,F7.3,2X,3F9.3,2X,F9.3)
+         ELSE IF(IPR.EQ.3) THEN
+           WRITE(6,1300) E,(QMFIEL(i,IPR),i=1,4)	
+ 1300      FORMAT(2X,F7.3,2X,3F9.1,2X,F9.1)
+         ENDIF
+      ENDIF
+C
+      END
+quit
+
+ call magpri([p],1,0.)
+ e=[e0]
+ do ie=1,[n]
+  if $INDEX([e],'.')=0 then
+    e=[e]//'.'
+  endif
+   do m=1,4
+     ve/in magn(1) [m]
+     fun='sett_mag.f('//[e]//')'
+     a=$CALL([fun])
+     ve/in qmfiel([m],2) [a]
+   enddo
+   
+   exec mag 2 qmfiel(1,2) qmfiel(2,2) qmfiel(3,2) qmfiel(4,2) 0
+
+   ve/del qmfiel
+   ve/cop gma qmfiel
+
+   do i=1,3,2
+     do j=1,4
+     enddo
+   enddo
+   call magpri([p],0,[e])
+   e=[e]+[de]
+ enddo
+
+RETURN
+

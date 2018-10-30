@@ -1,0 +1,69 @@
+MACRO rate.kumac
+
+  ve/cr current(10) r   0.57   1.97   3.09   4.5
+  ve/cr singl(20)   r   98400  324000 548000 761400 
+  ve/cr coinc(20)   r   32800  108500 176000 244000
+  ve/cr accid(20)   r   184    2044   5680   10880
+
+  ve/cr err(20) r
+  ve/cr y(20) r
+
+  null 0. 5. 0. 10.
+  np=4
+
+  an=singl(1)
+  do i=1,[np]
+    a=singl([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err current(1:[np]) y(1:[np]) err err [np] 24
+  gr/hplo/key 4. 1 24 'single' 0.3
+
+  an=coinc(1)
+  do i=1,[np]
+    a=coinc([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err current(1:[np]) y(1:[np]) err err [np] 25
+  gr/hplo/key 4. 2 25 'coinc' 0.3
+
+  ve/cr co1(20) r
+  ve/cr ac1(20) r
+
+  a=accid(1)
+  c=coinc(1)
+  s=singl(1)
+  cn1=[c]/[s]
+  an1=[a]/[s]
+  an=[a]/[c]
+  
+  do i=1,[np]
+    ax=accid([i])
+    cx=coinc([i])
+    cx=[cx]+[ax]
+    sx=singl([i])
+    aa=[ax]/[cx]/[an]
+    ve/in y([i]) [aa]
+    aa=([cx]+[ax])/[sx]/[cn1]
+    ve/in co1([i]) [aa]
+    aa=[ax]/[sx]/[an1]
+    ve/in ac1([i]) [aa]
+  enddo
+  gr/hplo/err current(1:[np]) y(1:[np]) err err [np] 21
+  gr/hplo/key 4. 3 21 'accid' 0.4
+   
+*  null 0. 5. 0.8 1.2
+  null 0. 5. 0. 10
+  gr/hplo/err current(1:[np]) co1(1:[np]) err err [np] 21
+  gr/hplo/key .5 8 21 'coin' 0.4
+  gr/hplo/err current(1:[np]) ac1(1:[np]) err err [np] 22
+  gr/hplo/key .5 9 22 'accid' 0.4
+  null 0. 5. 0.8 1.2
+  gr/hplo/err current(1:[np]) co1(1:[np]) err err [np] 21
+  gr/hplo/key .5 8 21 'coin' 0.4
+
+
+RETURN
+

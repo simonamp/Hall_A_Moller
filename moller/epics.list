@@ -1,0 +1,80 @@
+  1 f MBSY1C_energy.VAL         Beam energy, MeV Hall A              
+  2 f MMSINJEGAIN               Injector energy, MeV                 
+  3 f MMSLIN1EGAIN              South linac energy, MeV              
+  4 f MMSLIN2EGAIN              North linac energy, MeV              
+  5 c MMSHLAPASS                Passes Hall A                        
+  6 c MMSHLBPASS                Passes Hall B                        
+  7 c MMSHLCPASS                Passes Hall C                        
+  8 f SLD1H03                   Target Ion Chamber, rad              
+  9 f hac_bcm_average           Beam Current Average  
+ 10 f hac_unser_current         Current on Unser monitor             
+ 11 f hac_bcm_dvm1_current      Current on Upstream bcm              
+ 12 f hac_bcm_dvm2_current      Current on Downstream bcm            
+ 13 f IBC0L02Current            Injector Full Current Monitor 02
+ 14 f hac_bcm_A1                Upstream Cavity Coefficient          
+ 15 f hac_bcm_A2                Downstream Cavity Coefficient        
+ 16 f IBCxxxxCRCUR1             Injector Full Current Monitor        
+ 17 f IBCxxxxCRCUR2             Injector Current Monitor Hall A        
+ 18 f IBCxxxxCRCUR3             Injector Current Monitor Hall B        
+ 19 f IBCxxxxCRCUR4             Injector Current Monitor Hall C        
+ 20 f IPM1H01.XPOS              Beam Position BPM01  X, mm           
+ 21 f IPM1H01.YPOS              Beam Position BPM01  Y, mm           
+ 22 f IPM1P03A.XPOS             Beam Position BPM03A X, mm           
+ 23 f IPM1P03A.YPOS             Beam Position BPM03A Y, mm           
+ 24 f IPM1H04A.XPOS             Beam Position BPM04A X, mm           
+ 25 f IPM1H04A.YPOS             Beam Position BPM04A Y, mm           
+ 26 f MQM1H02M                  Quad Q1 (Amps)                       
+ 27 f MQO1H03M                  Quad Q2 (Amps)                       
+ 28 f MQO1H03AM                 Quad Q3 (Amps)                       
+ 29 f MMA1H01M                  Dipole  (Amps)                       
+ 30 f HAMOL_ENC2                Target Lifting Position(V)                
+ 31 f HAMOL1_SM.MCCW            Lifting Up Limit Switch                     
+ 32 f HAMOL1_SM.MCW             Lifting Down Limit Switch                   
+ 33 f HAMOL1_SM.HMSW            Lifting Home(Center) Switch                 
+ 34 c HAMOL_MESS                Motor  status                 
+ 35 f HAMOL_ENC1                Target Linear Position(V)
+ 36 f HAMOL2_SM.MCCW            Linear Right Limit Switch                   
+ 37 f HAMOL2_SM.MCW             Linear Left Limit switch                   
+ 38 f HAMOL2_SM.HMSW            Linear target on beam switch                 
+ 39 c IGL1I00HALLAMODE          Laser mode  Hall A                   
+ 40 c IGL1I00HALLBMODE          Laser mode  Hall B                   
+ 41 c IGL1I00HALLCMODE          Laser mode  Hall C                   
+ 42 f IGL1I00DAC0               Laser power Hall A                   
+ 43 f IGL1I00DAC2               Laser power Hall B                   
+ 44 f IGL1I00DAC4               Laser power Hall C                   
+ 45 f psub_aa_pos               Laser attenuation Hall A             
+ 46 f psub_ab_pos               Laser attenuation Hall B             
+ 47 f psub_ac_pos               Laser attenuation Hall C             
+ 48 f SMRPOSA                   Slit Position Hall A                 
+ 49 f SMRPOSB                   Slit Position Hall B                 
+ 50 f SMRPOSC                   Slit Position Hall C                 
+ 51 c IGL1I00OD16_16            Laser 1/2 wave plate                 
+ 52 f WienAngle                 Wien filter angle, deg               
+ 53 c IGL1I00OD16_5             Helicity Mode ON/OFF Random/Toggle   
+ 54 f IGL1I00AI7                Pockels Cell Voltage 1               
+ 55 f IGL1I00AI8                Pockels Cell Voltage 2               
+ 56 f IGL1I00AI13               Seed Temperature ADC Hall A          
+ 57 f IGL1I00AI14               Seed Temperature ADC Hall B          
+ 58 f IGL1I00AI15               Seed Temperature ADC Hall C          
+ 59 f R00LPMESA                 Laser A RF phase degrees
+ 60 f enlk4A:floatspare1        Laser A source current uA
+ 61 f MWF1I04.BDL               Wien BdL
+ 62 f IGL1I00DAC6               Wien field
+ 63 f IPM1P02A.XPOS             Beam Position BPM02A X, mm           
+ 64 f IPM1P02A.YPOS             Beam Position BPM02A Y, mm           
+ 65 f IPM1P02B.XPOS             Beam Position BPM02B X, mm           
+ 66 f IPM1P02B.YPOS             Beam Position BPM02B Y, mm           
+ 67 f IPM1H04B.XPOS             Beam Position BPM04B X, mm           
+ 68 f IPM1H04B.YPOS             Beam Position BPM04B Y, mm           
+ 69 f MF2b1461_5ch0property.F   Moller Detector measured HV ch 1
+ 70 f MF2b1461_5ch1property.F   Moller Detector measured HV ch 2
+ 71 f MF2b1461_5ch2property.F   Moller Detector measured HV ch 3  
+ 72 f MF2b1461_5ch3property.F   Moller Detector measured HV ch 4
+ 73 f MF2b1461_5ch4property.F   Moller Detector measured HV ch 5
+ 74 f MF2b1461_5ch5property.F   Moller Detector measured HV ch 6
+ 75 f MF2b1461_5ch6property.F   Moller Detector measured HV ch 7
+ 76 f MF2b1461_5ch7property.F   Moller Detector measured HV ch 8
+ 77 f MF2b1461_5ch8property.F   Moller Detector measured HV ch 9
+ 78 f MF2b1461_5ch9property.F   Moller Detector measured HV ch 10
+ 79 f EHAR_IXPEAK               Beam Raster magnet X, peak A
+ 80 f EHAR_IYPEAK               Beam Raster magnet Y, peak A

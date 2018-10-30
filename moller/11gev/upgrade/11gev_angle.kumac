@@ -1,0 +1,93 @@
+MACRO 11gev_anle
+*** Dependence of Moller aceptance of dipole bending angle
+*** at beam energy 10.8 GeV
+* ang - dipole bending angle, deg
+* thl/thc - theta left arm/coincidence CM, deg (RMS)
+* phl/phc - phi left arm/coincidence CM, deg (RMS)
+* apl/apc - analyzing power left/coincidence
+* ral/rac - rate (hits/10000) left arm/coincidence
+np=6
+ve/cr ang([np]) r  7.3   7.2   7.1   7.0   6.9   6.5
+ve/cr thl([np]) r  5.3   5.3   5.3   5.3   5.3   5.0
+ve/cr thc([np]) r  3.2   3.2   3.2   3.2   3.2   2.8
+ve/cr phl([np]) r 14.9  14.9  14.9  14.9  14.9  15.1
+ve/cr phc([np]) r 11.8  11.8  11.8  11.7  11.8  10.7
+ve/cr apl([np]) r .763  .763  .763  .763  .763  .762
+ve/cr apc([np]) r .774  .774  .774  .774  .774  .775
+ve/cr ral([np]) r 3676  3661  3671  3645  3673  3232
+ve/cr rac([np]) r 2191  2180  2188  2182  2163  1343
+nev=10000
+
+opt nbox
+opt nstat 
+opt grid
+zone
+**********************     THETA    *****************************
+null 6.4 7.4 2.6  5.5
+atitle 'Dipole Angle, deg' 'Acceptance [Q], deg'
+set mtyp 20
+ve/pl thl%ang ! S
+mt=20
+selnt 1
+text 13.0 20.0 '[Q](moller) at 10.8 GeV' 0.4 0 C
+key 10.0 10.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl thc%ang ! s
+selnt 1
+key 10.0 9.0 [mt] '- Coincidence'
+selnt 10
+wait
+********************      PHI      ******************************
+null 6.4 7.4 10.0 15.5
+atitle 'Dipole Angle, deg' 'Acceptance [F], deg'
+set mtyp 20
+ve/pl phl%ang ! S
+mt=20
+selnt 1
+text 13.0 20.0 '[F] Angle at 10.8 GeV' 0.4 0 C
+key 10.0 11.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl phc%ang ! s
+selnt 1
+key 10.0 12.0 [mt] '- Coincidence'
+selnt 10
+wait
+*****************   Analysing power   *****************************
+null 6.4 7.4 .76  .777
+atitle 'Dipole Angle, deg' 'An. Power'
+set mtyp 20
+ve/pl apl%ang ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Analysing Power at 10.8 GeV' 0.4 0 C
+key 10.0 11.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl apc%ang ! s
+selnt 1
+key 10.0 10.0 [mt] '- Coincidence'
+selnt 10
+wait
+*****************   Counting Rate   *****************************
+null 6.4 7.4 1200  4000
+atitle 'Dipole angle, deg' 'Counting Rate, rel.un.'
+set mtyp 20
+ve/pl ral%ang ! S
+mt=20
+selnt 1
+text 13.0 20.0 'Counting Rate at 10.8 GeV' 0.4 0 C
+key 15.0 10.0 [mt] '- Singe-arm'
+selnt 10
+set mtyp 25
+mt=24
+ve/pl rac%ang ! s
+selnt 1
+key 15.0 9.0 [mt] '- Coincidence'
+selnt 10
+
+RETURN

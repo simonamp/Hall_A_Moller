@@ -1,0 +1,59 @@
+MACRO get_pol_nt lun=1 file=pol_runs.nt idn=1
+*
+* === Attaches the ntuple polarization "d-base" 
+*
+
+  if $FEXIST([file])=0 then
+    mess Error in get_pol_nt : no file [file]
+    exitm
+  endif
+
+  clo [lun]
+
+  h/fil [lun] [file]
+
+  nt/pri //lun[lun]/[idn] 
+
+  nev=$HINFO([idn],'ENTRIES')
+  mxev=10000
+  if [nev]<1 .OR. [nev]>[mxev] then 
+    mess Error in get_pol_nt : file [file] - number of entries [nev] is out of range 
+    exitm
+  endif
+
+  mess NTUPLE file [file] with [nev] entries is attached
+
+  nv=$VDIM(ievsel,1)
+  if $VDIM(ievsel,1)>0 then
+    ve/del ievsel
+  endif
+  if $VDIM(intval,1)>0 then
+    ve/del intval
+  endif
+  if $VDIM(rntval,1)>0 then
+    ve/del rntval
+  endif
+  ve/cr ievsel([nev]) i
+  ve/cr intval([nev]) i
+  ve/cr rntval([nev]) r
+
+  fnam='inc/v_evsel.inc'
+  if $FEXIST([fnam]) then
+    shell rm -f [fnam]
+  endif
+  fmess 'C == Vectors of NTUPLE entry numbers' [fnam]
+  inam='      INTEGER MXEVNT'
+  fmess [inam] [fnam]
+  inam='      PARAMETER (MXEVNT='//[nev]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR IEVSEL('//[nev]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR INTVAL('//[nev]//')'
+  fmess [inam] [fnam]
+  inam='      VECTOR RNTVAL('//[nev]//')'
+  fmess [inam] [fnam]
+
+  nt/loop //lun[lun]/[idn] stat_nt.f(irun,polpar(1))>0.
+
+RETURN
+

@@ -1,0 +1,151 @@
+MACRO get_settings run=0 clear=0
+
+*** Jan 2009 AG: modified for beam position correction
+*
+* --- Get the settings into a vector run_sett(100)
+* --- If the vector is already filled - do not refill it (if clear>0 - always refill)
+*
+
+
+ if $VDIM(run_sett,1)<120 then
+   ve/cr run_sett(120) r
+ endif
+ nl=$VDIM(run_sett,1)
+ runold=run_sett(100)
+ runold=$SIGMA(INT([runold]+0.1))
+
+ if [run]>0 .AND. [runold]=[run] .AND. [clear]=0 then
+    mess Use the existing vector with the run settings data
+    exitm
+ endif
+
+ ve/in run_sett [nl]*0.
+
+ if [run]<1 then
+   mess Error in get_settings.kumac : run number [run] is out of range
+   exitm
+ endif
+
+*  Find the settings file
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp
+ elseif $INDEX([host],'ch-dom')>0 then
+   dirm=/v3/user/gen/data/moller/exp
+ endif
+ fmong='mollerrun_'//[run]//'.set'
+ shell find [dirm] -name [fmong] > tmp.nam
+ nf=$SHELL('cat tmp.nam | wc -l ',1)
+ if [nf]<1 then
+   mess Setting file [fmong] has not been found. Exiting...
+   exitm
+ endif
+ 
+ fmon=$SHELL('cat tmp.nam | head -1',1) 
+ mess Settings file [fmon]
+ 
+*
+* ---  Fix the date format
+*
+* shell 'cat '//[fmon]//' | sed s''/\\n//''g |  grep -v ''^\# Date '' | grep -v ''^End Run Time'' > tmp.mon' 
+ shell 'cat '//[fmon]//' |  grep -v ''^\# Date '' | grep -v ''^End Run Time'' > tmp.mon' 
+ comn='cat '//[fmon]//' | grep ''^\# Date '' | cut -c8-32'
+ date=$SHELL([comn])
+ comn='date +''%Y %m %d %H %M %S'' -d "'//[date]//'"'
+ date1=$SHELL([comn],1)
+ shell 'echo ''# Date                                                    : '''//[date1]//' >> tmp.mon'
+ comn='cat '//[fmon]//' | grep "^End Run Time" | cut -c16-43'
+ date=$SHELL([comn])
+ comn='date +''%Y %m %d %H %M %S'' -d "'//[date]//'"'
+ date1=$SHELL([comn],1)
+ shell 'echo ''End Run Time                                              : '''//[date1]//' >> tmp.mon'
+
+*** !!!!!
+* Jan 2009: modified for different run_settings.tabs
+
+* Template file
+ if [run]<12180 then
+   ftab=run_settings.tab.old
+mess run_settings.tab.old
+ elseif [run]<12852 then 
+   ftab=run_settings.tab.old.1
+mess run_settings.tab.old.1
+ elseif [run]<15500 then
+   ftab=run_settings_2009.tab
+mess run_settings_2009.tab
+ elseif [run]>15500 then
+   ftab=run_settings_2014.tab
+   mess run_settings_2014.tab
+ endif
+
+**  goto stop
+
+ if $FEXIST([ftab])=0 then
+   mess The file with a table of the variables [ftab] is missing. Exiting ...
+   exitm
+ endif
+
+ shell ln -sf [ftab] fort.1
+ shell ln -sf tmp.mon fort.2
+
+ for/clo 1
+ for/clo 2
+
+ call get_sett.f 
+
+* shell rm -f fort.1
+* shell rm -f fort.2
+* shell rm -f tmp.mon
+* shell rm -f tmp.nam
+*
+**      The real current is 2 times larger than the measurement (the scale factor for the ADC)
+*
+ a=run_sett(79)
+* Something wrong here - the line commented out ! ??
+ a=$SIGMA([a]*2.)
+ ve/in run_sett(79) [a]
+
+ ve/in run_sett(100) [run]
+
+* Corrections
+ if $VDIM(irs_corr,1)>0 then
+   ve/del irs_corr
+   ve/del krs_corr
+   ve/del vrs_corr
+ endif
+ ve/read irs_corr,krs_corr,vrs_corr run_sett_corrections.dat 'I6,1X,I3,1X,E12.4' 'OC' -/*/
+ nr=$VDIM(irs_corr,1)
+ if [nr]>0 then
+   ve/del irs_corr
+   ve/del krs_corr
+   ve/del vrs_corr
+   ve/cr  irs_corr([nr]) i
+   ve/cr  krs_corr([nr]) i
+   ve/cr  vrs_corr([nr]) r
+ endif
+ ve/read irs_corr,krs_corr,vrs_corr run_sett_corrections.dat 'I6,1X,I3,1X,E12.4' 'OC' -/*/
+* ve/wr irs_corr,krs_corr,vrs_corr ! 'I6,1X,I3,1X,E12.4'
+ do i=1,[nr]
+   ir=irs_corr([i])
+*   mess RUNS [i] [ir] [run]
+   if [ir]=[run] then
+      k=krs_corr([i])
+      v=vrs_corr([i])
+      ve/in run_sett([k]) [v]
+   endif
+ enddo
+ if [clear]>0 then
+   ve/del irs_corr
+   ve/del krs_corr
+   ve/del vrs_corr
+ endif
+
+**  stop:
+ 
+ call targpos.f([run])
+
+RETURN
+

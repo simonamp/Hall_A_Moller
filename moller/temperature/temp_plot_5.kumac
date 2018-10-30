@@ -1,0 +1,153 @@
+MACRO temp_plot_5 plot=1
+*
+* --- Plots the temperature curves 
+*
+* plot=1 - plot t-dependence and store the stable values
+*     =2 - plot the rep rate dependence
+ opt liny
+ opt linx
+ set csiz 0.3
+
+ zone 2 2
+ 
+ next
+ 
+ titl 'Target temperature for beam 3.0E11 spot x/y RMS 0.1cm 50[m]m foil'  
+
+ nd=10
+ if $VDIM(icol,1)<[nd] then
+   ve/cr icol([nd]) i
+ endif
+ ve/in icol [nd]*0
+ ve/in icol(1:7) 2 3 4 6 5 7 1 
+
+ if $VDIM(rrate,1)<[nd] then
+   ve/cr rrate([nd]) r
+ endif
+ ve/in rrate [nd]*0
+ ve/in rrate(1:4) 120. 60. 30. 15.
+
+ if $VDIM(rfac,1)<[nd] then
+   ve/cr rfac([nd]) r
+ endif
+ ve/in rfac [nd]*0
+ ve/in rfac(1:4) 0.1 0.2 0.4 0.8
+
+ y2=300
+ dy=0.05
+ if $VDIM(ywr,1)<[nd] then
+   ve/cr ywr([nd]) r
+ endif
+ ve/in ywr [nd]*0
+ do i=1,[nd]
+   y=$SIGMA([y2]*(1-[dy]*(0.5+[i])))
+   ve/in ywr([i]) [y]
+ enddo
+ 
+ if [plot]=1 then
+
+   if $VDIM(tmprf,1)>0 then
+     ve/del tmprf
+   endif
+   ve/cr tmprf(5,4) r
+   if $VDIM(etmprf,1)>0 then
+     ve/del etmprf
+   endif
+   ve/cr etmprf(5,4) r 20*1
+   do i=1,4
+     ve/in etmprf(5,[i]) 0.1
+   enddo
+
+   do ir=1,4
+     rf=rfac([ir])
+     null 0 2100 0 [y2]
+     atit 'Time, sec' 'Temperature rise, K'
+ 
+     do i=1,4
+       col=icol([i])
+       yc=ywr([i])
+       rr=rrate([i])
+       rr=$RSIGMA([rr])
+       rrf=$FORMAT([rr],F4.0)
+       dir='t_2000._beam-3.0x'//[rr]//'-0.1_foil-0.005_rad-'//[rf]//'_dtv-0.5/'
+       exec temp_get dir=[dir] same=1 zone=1 col=[col]
+       igset pmci [col]
+       txt=[rrf]//'Hz rad.coef='//[rf]
+       gr/hpl/key 500 [yc] 20 [txt]
+       n=$VLEN(ttmp,1)
+       ve/in tmprf([i],[ir]) ttmp([n])
+     enddo
+   enddo
+
+ elseif [plot]>1 then
+   opt ndat
+   opt nfit
+   set ksiz 0.2
+   titl ' '
+   zone 2 1
+   y2=250
+   null 0 140 0 [y2]
+   atit 'Rep. rate, Hz' 'Temperature rise, K'
+   if $VDIM(tpar,1)>0 then
+     ve/del tpar
+   endif
+   ve/cr tpar(3) r
+   if $VDIM(tpara,1)>0 then
+     ve/del tpara
+   endif
+   ve/cr tpara(3,4) r
+   do ir=1,4
+     rf=rfac([ir])
+     col=icol([ir])
+     igset pmci [col]
+     igset plci [col]
+     gr/hpl/sym rrate tmprf(1:4,[ir]) 4 20 0.15
+     ve/in tpar 0 1 0
+     ve/fit rrate tmprf(1:5,[ir]) etmprf(1:5,[ir]) p2 s 3 tpar
+     do j=1,3
+       a=tpar([j])
+       ve/in tpara([j],[ir]) [a] 
+     enddo
+     yc=$SIGMA([y2]*(1-0.05-[ir]*0.03))
+     txt='50[m]m foil, rad.coef='//[rf]
+     gr/hpl/key 30 [yc] 20 [txt]
+   enddo
+     
+   y2=2.
+   null 0 1 0 [y2]
+   atit 'Radiation coefficient' '[D]T(90Hz)/[D]T(57.6Hz)'
+   if $VDIM(tmprf1,1)>0 then
+     ve/del tmprf1
+   endif
+   ve/cr tmprf1(4) r
+*   if $VDIM(tpara,1)>0 then
+*     ve/del tpara
+*   endif
+*   ve/cr tpara(3,4) r
+   do ir=1,4
+     a0=tpara(1,[ir])
+     a1=tpara(2,[ir])
+     a2=tpara(3,[ir])
+     rr=57.6
+     a=$SIGMA([a0]+[a1]*[rr]+[a2]*[rr]**2)
+     rr=90.
+     b=$SIGMA([a0]+[a1]*[rr]+[a2]*[rr]**2)
+     a=$SIGMA([b]/[a])
+     ve/in tmprf1([ir]) [a]
+   enddo
+   col=icol(1)
+   igset pmci [col]
+   igset plci [col]
+   gr/hpl/sym rfac tmprf1 4 20 0.15
+   yc=$SIGMA([y2]*(1-0.1))
+   txt='50[m]m foil'
+   gr/hpl/key 0.3 [yc] 20 [txt]
+     
+ endif
+
+ opt date
+ opt fit
+ igset pmci 1
+ igset plci 1
+RETURN
+

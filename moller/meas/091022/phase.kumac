@@ -1,0 +1,59 @@
+MACRO phase
+
+ ve/re run,phase,bcur,rate,bp1,bp2,er,fl  phase.dat
+
+ fort/fil 56 phase.ps
+ meta 56 -112
+
+ zone 2 2
+ opt nbox
+ opt nstat
+ nr=$sigma(NCO(run))
+ sigma err=array([nr],0.1#0.1)
+ set mtyp 20
+ null -182. -140. 400. 55000.
+ ve/pl rate%phase  ! s 
+ set xlab 1.75
+ atitle 'Laser Phase, deg' 'Coincidence Rate'
+ itx -162. 30000. 'regular'
+ arrow -163.3 -163.3 20000. 50000 0.11 
+ selnt 1
+ text 10. 18.5 'Laser phase dependence  Atten.=165 Slit=14.6' 0.4 0 C 
+ selnt 10
+
+ null -182. -140. 0.05 0.7
+ set xlab 1.4
+ ve/pl bcur%phase ! s
+ atitle 'Laser Phase, deg' 'Beam Current, uAmp' 
+ itx -162. 0.4 'regular'
+ arrow -163.3 -163.3 0.3 0.6 0.11 
+
+ null -182. -140. 80. 96.
+ gr/hpl/err  phase bp2  err er [nr] 20 0.2 
+ atitle 'Laser Phase, deg' 'Beam Polarization, "Y#'
+ itx -162. 94. 'regular'
+ itx -175. 82. 'new'
+ arrow -163.3 -163.3 95.  90.2 0.11 
+ set pmci 2
+ gr/hpl/err  phase bp1  err er [nr] 24 0.2
+ set txci 2
+ itx -175. 81. 'old'
+ set pmci 1
+ set txci 1
+
+ null -182. -140. 40. 100.
+ gr/hpl/err  phase bp2  err er [nr] 20 0.2 
+ atitle 'Laser Phase, deg' 'Beam Polarization, "Y#'
+ itx -162. 94. 'regular'
+ itx -175. 82. 'new'
+ arrow -163.3 -163.3 95.  90.2 0.11 
+ set pmci 2
+ gr/hpl/err  phase bp1  err er [nr] 24 0.2
+ set txci 2
+ itx -175. 76. 'old'
+ set pmci 1
+ set txci 1
+
+ close 56
+
+RETURN

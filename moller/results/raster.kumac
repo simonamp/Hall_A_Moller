@@ -1,0 +1,42 @@
+MACRO raster
+*** fast raster ON/OFF dependence
+ nn=7
+ ve/cr ktar([nn]) r     1     1     1     2     3     3     4
+ ve/cr ron([nn])  r 89.50 88.78 90.28 89.29 90.35 91.50 91.13
+ ve/cr eron([nn]) r  0.20  0.27  0.26  0.27  0.25  0.43  0.35
+ ve/cr rof([nn])  r 86.52 86.96 89.84 89.10 90.14 91.68 91.17
+ ve/cr erof([nn]) r  0.61  0.75  0.66  0.61  0.31  0.48  0.35
+
+ ve/cr kcol(4) i 1 2 4 6 
+ opt nbox
+ opt ndat
+ opt nstat
+ nc=[nn]+1
+ sigma nch=array([nn],1#[nn])
+ sigma err=array([nn],0.01#0.01)
+
+ null 0  [nc] 85.0  93.0
+ atitle 'Measurements' 'Beam Plarization, "Y#'
+ selnt 1
+ text 13.0 20.5 'Raster ON vs. Raster OFF' 0.45 0 C
+ selnt 10
+ set pmci 2
+ set txci 2
+ gr/hpl/err nch ron  err eron [nn] 20 0.3
+ gr/hpl/key 1.0 92.0  20 'Raster ON'
+ set pmci 4
+ set txci 4
+ gr/hpl/err nch rof  err erof [nn] 22 0.3
+ gr/hpl/key 1.0 91.4  22 'Raster OFF'
+ set pmci 1
+ set txci 1
+ arrow 0.8  3.2 85.2 85.2  -0.35
+ text  1.5  85.5 'Target 1' 0.35 0
+ arrow 4.0 4.0  86.0 85.2   0.35
+ text 4.0 86.2 'Target 2' 0.35 90 
+ arrow  4.8 6.2 85.2 85.2 -0.35
+ text 5.0 85.5 'Target3' 0.35 0
+ arrow  7.0 7.0 86.0 85.2  0.35
+ text 7.0 86.2 'Target 4' 0.35 90
+
+RETURN

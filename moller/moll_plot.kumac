@@ -1,0 +1,65 @@
+MACRO moll_plot t1=20 t2=90 plot=0
+*
+* --- Plot Moller cross-section and asymmetry
+*
+
+ Application COMIS Quit
+      REAL FUNCTION SIGMOL(TH)
+      IMPLICIT NONE
+      REAL TH
+C
+      REAL thr,st2
+C
+      thr=TH*3.1415/180.
+      st2=SIN(thr)**2
+      SIGMOL=176./9.*((4.-st2)/st2)**2
+      RETURN
+      END
+ Quit
+
+ Application COMIS Quit
+      REAL FUNCTION ASMOL(TH)
+      IMPLICIT NONE
+      REAL TH
+C
+      REAL thr,st2
+C
+      thr=TH*3.1415/180.
+      st2=SIN(thr)**2
+      ASMOL=-st2/(4.-st2)**2*(8.-st2)
+      RETURN
+      END
+ Quit
+
+opt nsta
+* zone 2 2
+opt ndat
+opt liny
+set asiz 0.5
+set vsiz 0.35
+set fcol 2
+set hcol 2
+set dmod 1
+igset lwid 5
+igset plci 2
+
+if [plot]=0 .OR. [plot]=1 then
+ opt logy
+ null [t1] [t2] 100 10000
+ atit '[Q]?CM!, deg' 'd[s]/d[W] mbarn/ster'
+ fu/pl sigmol [t1] [t2] s
+ opt liny
+endif
+
+if [plot]=0 .OR. [plot]=2 then
+ null [t1] [t2] -1 0
+ atit '[Q]?CM!, deg' 'A?ZZ!'
+ fu/pl asmol [t1] [t2] s
+endif
+
+igset lwid 1
+igset plci 1
+set fcol 1
+set hcol 1
+
+RETURN 

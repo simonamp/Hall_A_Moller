@@ -1,0 +1,40 @@
+MACRO rate_plot r1=0 r2=0
+
+  ve/cr yy(20,10) r
+  ve/cr ey(20,10) r
+  ve/cr xx(20,2) r
+  ve/cr ex(20,2) r
+
+  j=0
+  do ir=[r1],[r2]
+    j=[j]+1
+    a=parrun(1,[ir])
+    ve/in xx([j],1) [a]
+    a=parrun(2,[ir])
+    ve/in xx([j],2) [a]
+    do m=1,6
+      a=resrun([m],[ir])
+      ve/in yy([j],[m]) [a]
+    enddo
+    a=resrun(13,[ir])
+    a=$SIGMA(ABS([a]))
+    ve/in yy([j],7) [a]
+    a=resrun(14,[ir])
+    ve/in ey([j],7) [a]
+  enddo
+
+  null 0 2 0 1.E6
+  atit 'Beam [m]A' 'Single rates'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],1) ex(1:[j],1) ey(1:[j],1) [j] 20 0.2   
+  gr/hpl/err xx(1:[j],1) yy(1:[j],2) ex(1:[j],1) ey(1:[j],2) [j] 24 0.2   
+
+  null 0 2 0 3.E5
+  atit 'Beam [m]A' 'Coincidence rates'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],3) ex(1:[j],1) ey(1:[j],3) [j] 20 0.2   
+
+  null 0 2 0.33 0.38 
+  atit 'Beam [m]A' 'Polarization'
+  gr/hpl/err xx(1:[j],1) yy(1:[j],7) ex(1:[j],1) ey(1:[j],7) [j] 20 0.2   
+
+
+RETURN

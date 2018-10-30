@@ -1,0 +1,70 @@
+*** Begin of history file: Fri Jun 24 10:52:28 2005
+exec run run=11756
+exec run run=11755
+exec run run=11750
+exec run run=11751
+exec run run=11747
+exec run run=11748
+exec run run=11749
+exec run run=11752
+exec run run=11753
+exec run run=11754
+exec run run=11745
+exec run run=11746
+exec run run=11190
+exec asyms run=11753 angl=20.0 delay=0 ptar=0.07426 nosubbg=1 clear=1
+exec asyms run=11754 angl=20.0 delay=0 ptar=0.07426 nosubbg=1 clear=0
+zone 2 2
+h/pl 1175463
+h/pl 1175461
+h/pl 1175481
+h/pl 1175483
+h/pl 1175363
+h/pl 1175383
+exec asyms run=11745 angl=20.0 delay=0 ptar=0.079 nosubbg=1 clear=1
+exec asyms run=11746 angl=20.0 delay=0 ptar=0.079 nosubbg=1 clear=0
+h/pl 1174563
+h/pl 1174563
+h/pl 1174563
+h/pl 1174663
+h/pl 1174583
+h/pl 1174683
+set csiz 0.4
+h/pl 1174565
+h/pl 1174665
+h/pl 1174585
+h/pl 1174685
+mess $sigma(cos(20*3.1416/180.)/cos(22*3.1416/180.))
+mess $sigma(cos(20*3.1416/180.)/cos(26*3.1416/180.))
+mess $sigma(cos(20*3.1416/180.)/cos(45*3.1416/180.))
+h/pl 1174625
+null 0 200 0 2800
+h/pl 1174625 s
+h/pl 1174625
+line 0 0 162 2350
+h/pl 1174615
+h/pl 1174605
+h/pl 1174635
+h/pl 1174535
+h/pl 1174535(1:30)
+h/pl 1174535(1:50)
+h/pl 1174635(1:50)
+h/pl 1174605
+h/pl 1174605(150:200)
+h/pl 1174605(150:180)
+h/pl 1174615
+h/pl 1174625
+ld //
+nt/scan //lun32/1 nsca>0 ! ! ! nsca isca(3) isca(5)
+nt/pl //lun32/1.isca(5) nsca>0
+nt/scan //lun32/1 nsca>0 ! ! ! nsca isca(3) isca(5)
+nt/pl //lun32/1.isca(5) nsca>0 20000 1
+nt/pl //lun32/1.isca(5) nsca>0 10000 1
+nt/pl //lun32/1.isca(5) nsca>0 15000 1
+nt/pl //lun32/1.isca(5) nsca>0 17000 1
+nt/pl //lun32/1.isca(5) nsca>0 19000 1
+nt/pl //lun32/1.isca(5) nsca>0 18000 1
+nt/pl //lun32/1.isca(5) nsca>0 17000 1
+nt/pl //lun32/1.isca(5) nsca>0 170 1
+exit
+*** End   of history file: Fri Jun 24 12:44:21 2005

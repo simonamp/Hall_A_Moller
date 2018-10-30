@@ -1,0 +1,33 @@
+MACRO cal_hprof run=0 lun=lun21 t1=190 t2=205 id=800 cut=0 i1=1 i2=16
+
+   if [run]>0 then
+     exec getrun run=[run] 
+     lun=ilun(1)
+     run=irun(1)
+
+     if [lun]=0 then
+       mess Abort ...
+       exitm
+     endif
+     lun=lun//[lun]
+   endif
+   mess Use the file [lun]
+  
+   1dh [id] 'Hodoscope profile' 16 1 17
+   id1=[id]+1
+   1dh [id1] 'Hodoscope multiplicity' 16 1 17
+   id2=[id]+2
+   1dh [id2] 'Hodoscope clusters' 16 0 16
+   id3=[id]+3
+   1dh [id3] 'Hodoscope cluster width' 16 1 17
+
+   if [cut]=0 then
+     nt/loop //[lun]/1 nadc>0.and.cal_hprof.f([t1],[t2],[id])>-1
+     nt/pl //[lun]/1.cal_hmul.f([i1],[i2],[t1],[t2]) nadc>0 -[id1]
+   else
+     nt/loop //[lun]/1 nadc>0.and.$[cut].and.cal_hprof.f([t1],[t2],[id])>-1
+     nt/pl //[lun]/1.cal_hmul.f([i1],[i2],[t1],[t2]) nadc>0.and.$[cut] -[id1]
+   endif
+   h/pl [id]
+
+RETURN

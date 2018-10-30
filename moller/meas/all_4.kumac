@@ -1,0 +1,60 @@
+MACRO all_4
+
+   clo 0
+   ve/del lrun
+   cd //pawc
+   h/del 0
+
+   n=0
+   do i=3898,3903
+     exec run run=[i]
+     exec asymp run=[i] angl=24.1 ptar=0.076 norm=1 norbcm=1 
+     n=[n]+1
+     if [n]=8 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+       cd //pawc
+       h/del 0
+     endif
+   enddo
+
+   n=0
+   do i=3906,3911
+     exec run run=[i]
+     exec asymp run=[i] angl=150.8 ptar=0.076 norm=1 norbcm=1 
+     n=[n]+1
+     if [n]=8 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+       cd //pawc
+       h/del 0
+     endif
+   enddo
+
+   n=0
+   do i=3912,3917
+     exec run run=[i]
+     exec asymp run=[i] angl=144.5 ptar=0.076 norm=1 norbcm=1 
+     n=[n]+1
+     if [n]=8 then
+       n=0
+       cd //pawc
+       h/del 0
+       ve/del lrun
+       clo 0
+       cd //pawc
+       h/del 0
+     endif
+   enddo
+
+
+
+RETURN
+
+

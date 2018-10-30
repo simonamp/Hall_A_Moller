@@ -1,0 +1,58 @@
+MACRO hv_2_plot ener=1.72 n1=5 n2=7 amp0=300
+
+ exec hv_4
+
+ ve/cr par(20) r
+ ve/cr hhv(20) r
+ ve/cr err(20) r
+
+ zone 1 1
+* nm=$VDIM(lhva,1)
+
+ np=[n2]-[n1]+1
+
+ admean=[amp0]
+ adcm=[admean]/[ener]
+ ladcm=$SIGMA(LOG10([adcm]))
+* mess adcm=[adcm] [ladcm]
+
+ tit='Moller LG HV curves '//[ener]//' GeV '//[admean]//' chan'
+
+ titl [tit]
+
+ opt liny
+ opt linx
+ opt nfit
+ null 3.22 3.32 1.1 3.0
+ atit 'LOG10(HV)' 'LOG10(ADC/E)'
+ do i=1,8
+    a=amp(3,[i])
+    is=19+[i]
+    gr/hpl/err lhva([n1]:[n2],[i]) lampae([n1]:[n2],[i]) err err [np] [is]
+    ve/fit  lhva([n1]:[n2],[i]) lampae([n1]:[n2],[i]) err p1 wsQ 0 par
+    aa=par(1)
+    bb=par(2)
+    fun/pl [aa]+[bb]*x 3.2 3.3 s
+    mess [i] [aa] [bb]
+
+    x=([ladcm]-[aa])/[bb]
+    h=$SIGMA(10**[x])
+*    mess [i] [aa] [bb] [ladcm] [x] [h]
+    ve/in hhv([i]) [h]
+    mess chan=[i]  HV=[h]
+
+    x=3.270
+    y=2.1-[i]*0.08
+    chan='LG '//[i]//'   '//[h]//' V'
+*    chan='' 
+    gr/hpl/key  [x] [y] [is] [chan]  
+
+    x=3.275
+    y=2.1-[i]*0.06
+    chan='LG '//[i]
+    thv='LG '//[i]//'   '//[h]//' V'
+*    text  [x] [y] [thv] 0.3  
+ enddo
+
+
+RETURN

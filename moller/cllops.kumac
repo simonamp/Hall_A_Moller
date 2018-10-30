@@ -1,0 +1,7 @@
+MACRO cllops 
+*
+* Closes a PostScript metafile
+*
+close 77
+
+RETURN

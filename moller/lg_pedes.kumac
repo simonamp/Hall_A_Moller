@@ -1,0 +1,97 @@
+MACRO lg_pedes id0=-1 lun=0 run=0 fill=1 fit=2 pulschk=1
+*
+* --- Fills and fits the pedestals, should be taken with the pulser on
+* --- id0 histogram offset
+* --- lun NTUPLE unit
+* --- fill = 0 - only fit
+* --- fit  = 2 - complex and reliable fit
+* ---        1 - simple fit with equal errors
+* --- pulschk >0 - check the pulser signal in the TDC
+
+ exec getrun run=[run] lun=[lun]
+ lun=ilun(1)
+ run=irun(1)
+
+ if [lun]=0 then
+   mess Abort ...
+   exitm
+ endif
+ if [id0]=-1 then
+   id0=[run]*1000 
+   mess Set id0 to [id0]
+ endif
+
+
+
+ tit='Moeller run='//[run]//' pedestals' 
+ titl [tit]
+ opt fit
+ next
+ set csiz 0.35      
+
+ ve/cre zord(12) i
+ i=0
+ do k=1,3
+   do j=1,4
+     i=[i]+1
+     m=[k]+3*([j]-1) 
+     ve/in zord([i]) [m]
+   enddo
+ enddo
+
+ next
+ zone 3 4 
+ cut $1 1=1
+ if [pulschk]>0 then
+   cut $1 pedes.f(1.)>0.
+ endif
+ if [fill]>0 then
+   do i=1,12
+     id=[id0]+100+[i]
+     tit='ADC '//[i]//' close to pedestal' 
+     1dh [id] [tit] 250 0. 250.
+     m=zord([i])
+     if [i]>1 then
+       zone 3 4 [m] s
+     endif
+     nt/pl //lun[lun]/1.iadc([i]) nadc>11.and.$1 -[id]
+   enddo
+ endif
+
+ if $VDIM(pedes)<12 then
+   ve/cre pedes(36) r
+   ve/cre pedcut(36) r
+ endif
+ ve/cre par(20) r
+
+ next
+ zone 3 4
+ do i=1,12
+   id=[id0]+[i]+100
+   m=zord([i])
+   if [i]>1 then
+     zone 3 4 [m] s
+   endif
+   h/fit [id] g 0wqn 0 par
+   if [fit]>1 then
+     h/fit [id] g 0wqn 0 par
+     h/fit [id] g l 3 par
+   else
+     h/fit [id] g w 0 par
+   endif
+   pp=par(2)
+   ve/in pedes([i]) [pp]
+   sp=par(3)
+   pp=[pp]+[sp]*3.
+   ve/in pedcut([i]) [pp]
+ enddo
+
+ mess " Pedestals and pedestal cuts at 3 sigmas"
+ ve/wri pedes,pedcut ' ' '3X,F6.1,5X,F5.1'
+ set csiz 0.
+
+RETURN
+
+
+
+

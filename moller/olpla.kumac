@@ -1,0 +1,8 @@
+MACRO olpla name='paw.ps' 
+*
+* opens postscript metafile for DIN A4, landscape
+*
+for/fil 77 [name]
+meta 77 -112
+*
+RETURN

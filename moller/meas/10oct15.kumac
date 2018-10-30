@@ -1,0 +1,27 @@
+MACRO 10oct15
+*=== daily Moller result analysis
+* 15 October 2010
+
+* ve/re nc,run,fctr,acal,adet,bpcl,bpdt,per  '10oct15.dat' ! !  -/*/
+
+ ve/cr tgt(4) r   1     2     3     4
+ ve/cr bpo(4) r 78.14 77.88 78.23 78.22
+ ve/cr ebp(4) r  0.28  0.20  0.21  0.21
+ ve/cr et1(4) r  0.01  0.01  0.01  0.01
+
+ ve/cr mf(7)  r  3.9   3.75  3.5   3.25  3.0   3.02   2.75
+ ve/cr bp2(7) r 78.67 78.25 78.58 78.05 77.67 77.74  77.38
+ ve/cr er2(7) r  0.31  0.22  0.20  0.20  0.20  0.21   0.20
+ ve/cr et2(7) r  0.001 0.001 0.001 0.001 0.001 0.001 0.001
+
+ opt nbox
+ zone
+ null 0.8 4.2  77.5 78.5
+ gr/hpl/err tgt bpo  et1 ebp 4 20 0.35
+ atitle 'Moller Target number' 'Beam Polarization, "Y#' 
+ selnt 1
+ text 10.5 18.5 'Moller results 15 October, 2010' 0.45 0 C
+ selnt 10
+
+
+RETURN

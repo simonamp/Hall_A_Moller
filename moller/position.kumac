@@ -1,0 +1,195 @@
+MACRO position run1=10625 run2=10625 picture=1
+
+ host=$SHELL('hostname')
+ if $INDEX([host],'adaq')>0 then
+   dirm=/adaqfs/home/moller/daq/coda2/RunInfo/
+ endif
+ if $INDEX([host],'jlabl')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+ elseif $INDEX([host],'jlabs')>0 then
+   dirm=/home/moller/daq/coda2/RunInfo/
+ elseif $INDEX([host],'haplix')>0 then
+   dirm=/data2c/user/gen/moller/exp/*/*/mon/
+ endif
+
+ve/de *
+read run1 'Input first run number'
+read run2 'Input second run number'
+
+ runs=[run2]-[run1]+1
+ ve/cr run_num([runs]) r
+ ve/cr beam_en([runs]) r
+ ve/cr x1([runs])   r
+ ve/cr y1([runs])   r
+ ve/cr x2([runs])   r
+ ve/cr y2([runs])   r
+ ve/cr x3([runs])   r
+ ve/cr y3([runs])   r
+ 
+ n=1
+
+ do run=[run1],[run2]
+ 
+ fmon=[dirm]//'mollerrun_'//[run]//'.set'
+ 
+ if $FEXIST([fmon])=0 then
+  mess No file [fmon]
+  goto eend
+ endif
+
+
+ mess Run Number=[run]
+ ve/in run_num([n]) [run]
+ 
+* day='fgrep Date '//[fmon]
+* dayt=$SHELL([day])
+* mess [dayt]
+
+ enr='fgrep "Beam energy, MeV Hall A " '//[fmon]//' | awk ''{printf"%.3f\n",$NF}'''
+ ener=$SHELL([enr])
+ mess Hall A Energy=[ener] MeV
+ ve/in beam_en([n]) [ener]
+ 
+   if [run]<10561 then 
+   goto 2x
+   elseif [run]>10560 .and. [run]<10608 then 
+   goto 1x
+   elseif [run]>10607 .and. [run]<10612 then 
+   goto 2x
+   elseif [run]>10611 .and. [run]<10615 then 
+   goto 1x
+   elseif [run]>10614 .and. [run]<10616 then 
+   goto 2x
+   elseif [run]<10622 then 
+   goto 1x 
+   else 
+   goto 2x
+   endif   
+ 1x:
+ xp1='fgrep "Beam Position BPM01 X" ' //[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ goto endx
+ 2x:
+ xp1='fgrep "Beam Position BPM01  X" ' //[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ endx:
+ xpp1=$SHELL([xp1])
+ ve/in x1([n]) [xpp1]
+ 
+   if [run]<10561 then 
+   goto 2y
+   elseif [run]>10560 .and. [run]<10608 then 
+   goto 1y
+   elseif [run]>10607 .and. [run]<10612 then 
+   goto 2y
+   elseif [run]>10611 .and. [run]<10615 then 
+   goto 1y
+   elseif [run]>10614 .and. [run]<10616 then 
+   goto 2y
+   elseif [run]<10622 then 
+   goto 1y 
+   else 
+   goto 2y
+   endif 
+ 1y:
+ yp1='fgrep "Beam Position BPM01 Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+   goto endy
+ 2y:
+ yp1='fgrep "Beam Position BPM01  Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+   endy:
+ ypp1=$SHELL([yp1])
+ ve/in y1([n]) [ypp1]
+
+ xp2='fgrep "Beam Position BPM03A X" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ xpp2=$SHELL([xp2])
+ ve/in x2([n]) [xpp2]
+
+ yp2='fgrep "Beam Position BPM03A Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ ypp2=$SHELL([yp2])
+ ve/in y2([n]) [ypp2]
+
+ xp3='fgrep "Beam Position BPM04A X" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ xpp3=$SHELL([xp3])
+ ve/in x3([n]) [xpp3]
+
+ yp3='fgrep "Beam Position BPM04A Y" '//[fmon]//' | awk ''{printf"%.6f\n",$NF}'''
+ ypp3=$SHELL([yp3])
+ ve/in y3([n]) [ypp3]
+  mess X1=[xpp1] mm   Y1=[ypp1] mm
+  mess X2=[xpp2] mm   Y2=[ypp2] mm
+  mess X3=[xpp3] mm   Y3=[ypp3] mm
+
+   n=[n]+1
+eend:
+enddo
+
+   if [picture]=1 then
+zone 1 2
+opt grid
+opt nbox
+
+null [run1] [run2] -1.5 1.5
+igset pmci 1
+igset txci 1
+atitle 'Run number' 'Beam deviation, mm' 
+set mtyp 20
+mt=20
+igset pmci 2
+igset txci 2
+selnt 1
+key 3. 17.5 [mt] '-X1'
+selnt 10
+ve/pl x1%run_num ! S
+set mtyp 22
+mt=22
+igset pmci 4
+igset txci 4
+selnt 1
+key 3. 17.0 [mt] '-X2'
+selnt 10
+ve/pl x2%run_num ! S
+set mtyp 29
+mt=29
+igset pmci 6
+igset txci 6
+selnt 1
+key 3. 16.5 [mt] '-X3'
+selnt 10
+ve/pl x3%run_num ! S
+
+null [run1] [run2] -2.5  2.5
+igset pmci 1
+igset txci 1
+atitle 'Run number' 'Beam deviation, mm'
+selnt 1 
+text 13.0 20.0 'Beam position horizontal' 0.45 0 C
+text 13.0 10.0 'Beam position vertical' 0.45 0 C
+selnt 10
+set mtyp 20
+mt=20
+igset pmci 2
+igset txci 2
+selnt 1
+key 3. 8.5 [mt] '-Y1'
+selnt 10
+ve/pl y1%run_num ! S
+set mtyp 22
+mt=22
+igset pmci 4
+igset txci 4
+selnt 1
+key 3. 8.0 [mt] '-Y2'
+selnt 10
+ve/pl y2%run_num ! S
+set mtyp 29
+mt=29
+igset pmci 6
+igset txci 6
+selnt 1
+key 3. 7.5 [mt] '-Y3'
+selnt 10
+ve/pl y3%run_num ! S
+   
+   endif
+
+*ve/write run_num,beam_en,x1,y1,x2,y2,x3,y3 position.dat (2(2x,F9.3),6(2x,F10.6))
+
+RETURN

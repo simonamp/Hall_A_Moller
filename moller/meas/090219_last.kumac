@@ -1,0 +1,98 @@
+*** Begin of history file: Thu Feb 19 20:25:17 2009
+prlast
+exec run run=13192
+exec lg_spectra run=13192
+exec lg_spectra run=13192
+loca
+exec asymu delay=0 run=13192
+exec asymu delay=0 run=13192
+exec lg_spectra run=13193
+exec run run=13193
+exec lg_spectra run=13193
+loca
+exec lg_spectra run=13193 icut=11
+nt/pl //lun22/1.iadc(10) $11>0
+nt/pl //lun22/1.iadc(10) $11
+zone 2 2
+nt/pl //lun22/1.iadc(10) $11
+nt/pl //lun22/1.iadc(10)
+nt/pl //lun22/1.iadc(10) nadc>0
+nt/pl //lun22/1.iadc(1) nadc>0
+nt/pl //lun22/1.iadc(10) $11
+exec asymu delay=0 run=13193
+exec run run=13194
+exec asymu delay=0 run=13194
+exec run run=13195
+exec asymu delay=0 run=13195
+call prunpri.f(10000,20000)
+exec run run=13196
+exec asymu delay=0 run=13196
+call prunpri.f(10000,20000)
+exec asym_av run1=13193 run2=13196
+call prunpri.f(10000,20000)
+ld //
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun52/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun54/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun52/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(2,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(3,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(4,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(5,0,0,0,0,0,0)%izug
+loca
+nt/pl //lun53/1.a_signal.f(6,0,0,0,0,0,0)%izug
+call prunpri.f(10000,20000)
+exec run run=13197
+exec asymu delay=0 run=13197
+exec run run=13198
+exec asymu delay=0 run=13198
+call prunpri.f(10000,20000)
+nt/pl //lun53/1.a_signal.f(7,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(8,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(6,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(1,0,0,0,0,0,0)%izug
+loca
+mess $sigma(5000*30)
+nt/pl //lun53/1.a_signal.f(17,0,0,0,0,0,0)%izug
+nt/pl //lun53/1.a_signal.f(18,0,0,0,0,0,0)%izug
+exec run run=13199
+exec asymu delay=0 run=13199
+exec run run=13200
+exec asymu delay=0 run=13200
+exec asym_av run1=13197 run2=13200
+call prunpri.f(10000,20000)
+exec run run=13201
+exec asymu delay=0 run=13201
+call prunpri.f(10000,20000)
+exec run run=13202
+exec asymu delay=0 run=13202
+exec run run=13203
+exec asymu delay=0 run=13203
+call prunpri.f(10000,20000)
+exec run run=13204
+exec asymu delay=0 run=13204
+exec asym_av run1=13201 run2=13204
+call prunpri.f(10000,20000)
+exec run run=13206
+exec asymu delay=0 run=13206
+exec run run=13207
+exec asymu delay=0 run=13207
+call prunpri.f(10000,20000)
+exec run run=13208
+exec asymu delay=0 run=13208
+call prunpri.f(10000,20000)
+exec run run=13209
+exec asymu delay=0 run=13209
+call prunpri.f(10000,20000)
+exec asym_av run1=13206 run2=13209
+exec asym_av run1=13201 run2=13209
+exec asym_av run1=13201 run2=13209
+zone 1 1
+exec asym_av run1=13201 run2=13209
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Thu Feb 19 22:56:30 2009

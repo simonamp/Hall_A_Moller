@@ -1,0 +1,19 @@
+MACRO long_scan_ch ch=1
+ 
+exec a_analyse lun=ch[ch] fill=1
+zone 1 2
+nt/pl //ch[ch]/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.0.and.a_tpos.f(2,1)<0
+h/fit 1000000 g
+wait
+*nt/pl //ch[ch]/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1.and.a_tpos.f(2,1)<2.5
+nt/pl //ch[ch]/1.a_asymm.f(3,0,1,1,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>0.and.a_tpos.f(2,1)<2.5
+h/fit 1000000 g
+wait
+nt/pl //ch[ch]/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>-2.0.and.a_tpos.f(2,1)<0
+h/fit 1000000 g
+wait
+*nt/pl //ch[ch]/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>1.and.a_tpos.f(2,1)<2.5
+nt/pl //ch[ch]/1.a_asymm.f(3,0,1,2,0,0,0) $30.and.$31.and.$32.and.$33.and.$35.and.a_tpos.f(2,1)>0.and.a_tpos.f(2,1)<2.5
+h/fit 1000000 g
+
+RETURN

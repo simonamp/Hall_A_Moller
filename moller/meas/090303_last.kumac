@@ -1,0 +1,113 @@
+*** Begin of history file: Tue Mar  3 21:12:09 2009
+exec sett_magp e0=5892 nq=2 p=2
+exec sett_magp e0=5892 nq=2 p=1
+exec sett_magp e0=5892 nq=2 p=3
+exec sett_magp e0=5.892 nq=2 p=3
+exec run run=13210
+exec lg_spectra run=13210
+exec lg_spectra run=13210 icut=11
+loca
+exec lg_spectra run=13210
+loca
+exec lg_spectra run=13210
+exec lg_spectra run=13210
+exec run run=13196
+exec lg_spectra run=13196
+loca
+exec run run=13211
+exec lg_spectra run=13211
+loca
+exec run run=13212
+exec lg_spectra run=13212
+loca
+exec run run=13213
+exec lg_spectra run=13213
+loca
+exec lg_spectra run=13212
+exec run run=13215
+exec lg_spectra run=13215
+loca
+exec run run=13216
+exec lg_spectra run=13216
+loca
+exec run run=13217
+exec lg_spectra run=13217
+loca
+exec run run=13218
+exec lg_spectra run=13218
+loca
+exec run run=13219
+exec lg_spectra run=13219
+loca
+exec run run=13220
+exec lg_spectra run=13220
+loca
+exec asymu delay=9 run=13220
+exec run run=13221
+exec lg_spectra run=13221
+loca
+loca
+exec asymu delay=9 run=13221
+exec lg_spectra run=13221 cut=11
+exec lg_spectra run=13221
+exec run run=13222
+exec lg_spectra run=13222
+loca
+exec asymt delay=0 run=13221
+exec asymu delay=0 run=13221
+call prunpri.f(10000,20000)
+exec asymu delay=0 run=13220
+exec run run=13223
+exec lg_spectra run=13223
+exec lg_spectra run=13223
+exec asymu delay=0 run=13223
+call prunpri.f(10000,20000)
+exec asymt delay=0 run=13222
+call prunpri.f(10000,20000)
+exec sett_magp e0=5892 nq=2 p=3
+exec sett_magp e0=5.892 nq=2 p=3
+exec sett_magp e0=5.892 nq=2 p=1
+exec run run=13224
+exec lg_spectra run=13225
+exec run run=13225
+exec lg_spectra run=13225
+loca
+exec asymu delay=0 run=13225
+exec run run=13226
+exec lg_spectra run=13226
+exec asymu delay=0 run=13226
+call prunpri.f(10000,20000)
+exec run run=13227
+exec lg_spectra run=13227
+exec asymu delay=0 run=13227
+call prunpri.f(10000,20000)
+exec run run=13228
+exec asymu delay=0 run=13228
+call prunpri.f(10000,20000)
+exec run run=13229
+exec asymu delay=0 run=13229
+call prunpri.f(10000,20000)
+exec asym_av run1=13226 run2=13229
+zone 1 2
+exec asym_av run1=13226 run2=13229
+exec run run=13232
+exec asymu delay=0 run=13232
+call prunpri.f(10000,20000)
+exec run run=13233
+exec asymu delay=0 run=13233
+call prunpri.f(10000,20000)
+exec run run=13234
+exec asymu delay=0 run=13234
+call prunpri.f(10000,20000)
+exec run run=13235
+exec asymu delay=0 run=13235
+call prunpri.f(10000,20000)
+exec asym_av run1=13232 run2=13235
+exec asym_av run1=13226 run2=13235
+exec run run=13230
+exec asymu delay=0 run=13230
+exec run run=13231
+exec asymu delay=0 run=13231
+call prunpri.f(10000,20000)
+exit
+*** End   of history file: Tue Mar  3 21:23:40 2009

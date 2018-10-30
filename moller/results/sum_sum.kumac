@@ -1,0 +1,142 @@
+ve/re MN,T5p,er51,T5ts,er52,T4p,er41,T4ts,er42,T3p,er31,T3ts,er32,T2p,er21,T2ts,er22  sum_sum.dat ! ! -/*/
+
+fort/fil 55 sum_sum.ps
+meta 55 -111
+set *
+opt *
+opt nbox
+opt ndate
+opt nstat
+opt grid
+
+sigma nn=nco(MN)
+nm=nn
+sigma err=array([nm],0#0)
+null 1. 22. 78.0 90.0
+*** Target 5
+set mtyp 20
+set pmci 4
+mtyp=20
+*ve/pl T5p%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T5p err err er51 er51 [nm] [mtyp] 0.25 !
+selnt 1
+atitle 'Measurement number' 'Beam polarization, "Y#'
+key 3.0 4.4 [mtyp] '- Target 5 point'
+selnt 10
+set mtyp 24
+mtyp=24
+*ve/pl T5ts%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T5ts err err er52 er52 [nm] [mtyp] 0.25 !
+selnt 1
+text 11.0 18.5 'Moller measurement summary' 0.45 0 C
+key 3.0 3.8 [mtyp] '- Target 5 scan'
+selnt 10
+*** Target 4
+set mtyp 21
+set pmci 1
+mtyp=21
+*ve/pl T4p%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T4p err err er41 er41 [nm] [mtyp] 0.25 !
+selnt 1
+key 3.0 3.2 [mtyp] '- Target 4 point'
+selnt 10
+set mtyp 25
+mtyp=25
+*ve/pl T4ts%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T4ts err err er42 er42 [nm] [mtyp] 0.25 !
+selnt 1
+key 3.0 2.6 [mtyp] '- Target 4 scan'
+selnt 10
+*** Target 3
+set mtyp 22
+set pmci 2
+mtyp=22
+*ve/pl T3p%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T3p err err er31 er31 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 4.4 [mtyp] '- Target 3 point'
+selnt 10
+set mtyp 26
+mtyp=26
+*ve/pl T3ts%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T3ts err err er32 er32 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 3.8 [mtyp] '- Target 3 scan'
+selnt 10
+*** Target 2
+set mtyp 23
+set pmci 3
+mtyp=23
+*ve/pl T2p%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T2p err err er21 er21 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 3.2 [mtyp] '- Target 2 point'
+selnt 10
+set mtyp 27
+mtyp=27
+*ve/pl T2ts%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN T2ts err err er22 er22 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 2.6 [mtyp] '- Target 2 scan'
+selnt 10
+wait
+*****
+***  Difference with Target 5
+*****
+null 1.  22.  -6.0  2.0
+*** Target 4
+set mtyp 20
+set pmci 4
+mtyp=20
+sigma rp4=((T4p-T5p)/T5p)*100.
+*ve/pl rp4%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rp4 err err er41 er41 [nm] [mtyp] 0.25 !
+selnt 1
+atitle 'Measurement number'  'Ratio (TN-T5)/T5*100, "Y#'
+key 3.0 4.2 [mtyp] '- Target 4 point'
+text 10.0 18.5 'Difference between Target 5 and other Targets' 0.45 0 C 
+mtyp=24
+sigma rts4=((T4ts-T5ts)/T5ts)*100.
+*ve/pl rts4%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rts4 err err er42 er42 [nm] [mtyp] 0.25 !
+selnt 1
+key 3.0 3.6 [mtyp] '- Target 4 scan'
+selnt 10
+*** Target 3
+set mtyp 21
+set pmci 1
+mtyp=21
+sigma rp3=((T3p-T5p)/T5p)*100.
+*ve/pl rp3%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rp3 err err er31 er31 [nm] [mtyp] 0.25 !
+selnt 1
+key 3.0 3.0 [mtyp] '- Target 3 point'
+selnt 10
+set mtyp 25
+mtyp=25
+sigma rts3=((T3ts-T5ts)/T5ts)*100.
+*ve/pl rts3%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rts3 err err er32 er32 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 4.2 [mtyp] '- Target 3 scan'
+selnt 10
+*** Target 2
+set mtyp 22
+set pmci 2
+mtyp=22
+sigma rp2=((T2p-T5p)/T5p)*100.
+*ve/pl rp2%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rp2 err err er21 er21 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 3.6 [mtyp] '- Target 2 point'
+selnt 10
+set mtyp 26
+mtyp=26
+sigma rts2=((T2ts-T5ts)/T5ts)*100.
+*ve/pl rts2%MN ! sp
+GRAPHICS/HPLOT/AERRORS MN rts2 err err er22 er22 [nm] [mtyp] 0.25 !
+selnt 1
+key 13.0 3.0 [mtyp] '- Target 2 scan'
+selnt 10
+
+close 55

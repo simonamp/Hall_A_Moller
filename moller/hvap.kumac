@@ -1,0 +1,50 @@
+MACRO hvap  ch0=300.
+* Moller calorimeter HV calculation
+ nc=4
+ ve/cr hva([nc]) r  700.    750.    800.    850.  
+ ve/cr ch1([nc]) r  261.    280.    305.    320.
+ ve/cr ch2([nc]) r  263.    278.    301.    318.
+ ve/cr ch3([nc]) r  280.    305.    330.    355.    
+ ve/cr ch4([nc]) r  260.    290.    320.    350.
+ ve/cr ch5([nc]) r  265.    285.    301.    325.
+ ve/cr ch6([nc]) r  267.    272.    306.    312.
+ ve/cr ch7([nc]) r  283.    301.    338.    358.    
+ ve/cr ch8([nc]) r  261.    296.    322.    352.
+ ve/cr par(3) r 1.0 1.0 1.0
+ ve/cr hve(8) r
+ opt nbox
+ opt ndat
+ opt nstat
+ sigma err=array([nc],0.001#0.001)
+ sigma erh=array([nc],2.#2.)
+ null  250. 370. 675. 875.
+ xc=255.
+ yc0=850.
+ text [xc] [yc0] Ebeam=[e0]GeV 0.4
+   do lg=1,8
+      lg1=[lg]
+       if [lg1]=8 then
+         lg1=1
+       endif
+     set pmci [lg1]
+     set plci [lg1]
+     set txci [lg1]
+     mt=19+[lg1]
+     set mtyp [mt]
+     gr/hpl/err  ch[lg] hva  erh err [nc] [mt] ! s
+     ve/fit  ch[lg] hva erh p1 wsq 0 par
+     aa=par(1)
+     bb=par(2)
+*     mess aa=[aa], bb=[bb]
+     hv=[aa]+[ch0]*[bb]
+     ve/in hve([lg]) [hv]
+     yc=[yc0]-[lg]*10.
+     text [xc] [yc] Ch[lg]=[hv]V 0.4 
+   enddo
+ set txci 1
+ mess For Chanel=[ch0] 
+ atitle 'Max. Channel' 'High Voltage, V'  
+ text 310 885. 'Moller Aperture Detector High Voltage' 0.5 0 C  
+ ve/pr hve
+
+RETURN

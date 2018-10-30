@@ -1,0 +1,20 @@
+*** Begin of history file: Wed Oct 24 19:09:33 2018
+exe run_18 run=16159
+shell cp ~/paw/analysis/run_18.kumac .
+exe run_18 run=16159
+exe run_18 run=16160
+exe run_18 run=16161
+exe run_18 run=16162
+exe run_18 run=16163
+exe run_18 run=16164
+shell ls asym*
+exe asym15 run=16159
+exe asym15 run=16159
+exe asym15 run=16160
+exe asym15 run=16161
+exe asym15 run=16162
+exe asym15 run=16163
+exe asym15 run=16164
+exe asym15 run=16164
+exit
+*** End   of history file: Wed Oct 24 19:39:14 2018

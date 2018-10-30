@@ -1,0 +1,46 @@
+MACRO quads_pol
+* quads scan results 
+ ve/cr runs(14) r  14381  14382  14383  14384  14385  14386  14387  14388  14389  14390 _
+                   14391  14392  14393  14394 
+ ve/cr bp1(14)  r 0.8937 0.9173 0.9049 0.8939 0.9219 0.9275 0.8315 0.8237 0.9128 0.8962 _
+                  0.8972 0.8946 0.9141 0.8917 
+*** anpow from GEANT
+ ve/cr bpg(14)  r 0.8935 0.9066 0.8990 0.8951 0.9279 0.9373   0.0    0.0   0.9140 0.9045 _
+                  0.8984 0.8957 0.9262 0.0    
+ ve/cr bpgs(11)  r 0.8935 0.9066 0.8990 0.8951 0.9279 0.9373 0.9140 0.9045 0.8984 0.8957 0.9262 
+*** anpow from GEANT normalized
+ ve/cr bpn(14)  r 0.8821 0.9008 0.8909 0.8881 0.9094 0.8929 0.8984 0.8957 0.9092 0.8881 _
+                  0.8914 0.8887 0.9058 0.8813
+ ve/cr ebp(14)  r 0.0071 0.0150 0.0099 0.0061 0.0056 0.0055 0.0088 0.0089 0.0066 0.0067 _
+                  0.0061 0.0059 0.0058 0.0070 
+ 
+
+ opt nbox
+ opt ndat
+ sigma err=array(14,0.01#0.01)
+ fort/fil 56 quads_bp.ps
+ meta 56 -112
+ null 14380 14395 0.81 0.95
+ atitle 'Moller runs' 'Beam Polarization'
+ selnt 1
+ text 13.0 20.5 'Beam Polarization for Moller Quads Scan' 0.45 0 C
+ selnt 10
+ set mscf 1.5
+ set mtyp 22
+ set pmci 1
+ set txci 1
+ gr/hpl/err runs bp1  err ebp 14 20 0.3
+ key 14381 0.86 20 'AnPow=0.764' 0.35
+ set pmci 4
+ set txci 4
+ gr/hpl/err runs bpg  err ebp 14 21 0.3
+ key 14381 0.85 21 'AnPow from GEANT' 0.35
+ set pmci 2
+ set txci 2
+ gr/hpl/err runs bpn  err ebp 14 22 0.3
+ key 14381 0.84 22 'AnPow from GEANT+shift' 0.35
+ set pmci 1
+ set txci 1
+ close 56
+
+RETURN

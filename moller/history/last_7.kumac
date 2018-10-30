@@ -1,0 +1,289 @@
+*** Begin of history file: Wed Aug 10 01:36:09 2005
+exec run run=11790
+exec run run=11793
+exec lg_spectra run=11793
+exec lg_spectra run=11793 icut=100
+exec run run=11794
+exec lg_spectra run=11794 icut=100
+exec run run=11795
+exec lg_spectra run=11795 icut=100
+exec lg_spectra run=11795 icut=100 cut=11
+exec asyms run=11795 angl=20.
+zone 2 2
+exec run run=11796
+exec asyms run=11796 angl=20.
+mess $sigma(3/400.)
+exec run run=11797
+exec lg_spectra run=11797 icut=100 cut=11
+exec asyms run=11797 angl=20.
+exec run run=11798
+exec asyms run=11798 angl=20.
+exec run run=11799
+exec asyms run=11799 angl=20.
+call prunpri.f(11000,12000)
+exec run run=11800
+exec asyms run=11800 angl=20.
+call prunpri.f(11000,12000)
+exec run run=11801
+zone 2 2
+exec asyms run=11801 angl=20. ptar=0.0762
+exec run run=11802
+exec asyms run=11802 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11803
+exec asyms run=11803 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11804
+exec asyms run=11804 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11806
+exec asyms run=11806 angl=20. ptar=0.0762
+exec run run=11807
+exec asyms run=11807 angl=20. ptar=0.0762
+mess $sigma(1)
+exec run run=11808
+exec asyms run=11808 angl=20. ptar=0.0762
+mess $sigma(400/3.0*0.02)
+exec run run=11809
+exec asyms run=11809 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11810
+exec asyms run=11810 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11801 11804
+exec asym_av run1=11801 run2=11804
+call prunpri.f(11000,12000)
+exec asym_av run1=11807 run2=11810
+call prunpri.f(11000,12000)
+exec asym_av run1=11797 run2=11800
+call prunpri.f(11000,12000)
+exec asym_av run1=11801 run2=11804
+exec asym_av run1=11807 run2=11810
+exec run run=11811
+exec asyms run=11811 angl=20. ptar=0.0762
+exec run run=11812
+exec asyms run=11812 angl=20. ptar=0.0762
+exec run run=11813
+exec asyms run=11813 angl=20. ptar=0.0762
+mess $sigma(7.95*89/84.)
+exec run run=11814
+exec asyms run=11814 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11811 run2=11814
+mess $sigma(237/300*8.)
+exec run run=11815
+exec asyms run=11815 angl=20. ptar=0.0762
+exec run run=11816
+exec asyms run=11816 angl=20. ptar=0.0762
+mess $sigma(84.8/82.7)
+mess $sigma(150/300*8.)
+exec run run=11817
+exec asyms run=11817 angl=20. ptar=0.0762
+exec run run=11818
+exec asyms run=11818 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11815 run2=11818
+exec run run=11819
+exec asyms run=11819 angl=20. ptar=0.0762
+exec run run=11820
+exec asyms run=11820 angl=20. ptar=0.0762
+exec run run=11821
+exec asyms run=11821 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11822
+exec asyms run=11822 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11819 run2=11822
+mess $sigma(300/8.*9.9)
+exec run run=11823
+exec asyms run=11823 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11824
+exec asyms run=11824 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11825
+exec asyms run=11825 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11826
+exec asyms run=11826 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11823 run2=11826
+exec run run=11828
+exec run run=11827
+exec asyms run=11827 angl=20. ptar=0.0743
+exec asyms run=11828 angl=20. ptar=0.0743
+exec asyms run=11827 angl=20. ptar=0.0762
+exec asyms run=11828 angl=20. ptar=0.0762
+exec run run=11828
+exec run run=11829
+exec asyms run=11829 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11830
+exec asyms run=11830 angl=20. ptar=0.0762
+exec asym_av run1=11827 run2=11830
+call prunpri.f(11000,12000)
+exec run run=11831
+exec asyms run=11831 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11832
+exec asyms run=11832 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11833
+exec asyms run=11833 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11834
+exec asyms run=11834 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec asym_av run1=11831 run2=11834
+exec run run=11835
+exec asyms run=11835 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11836
+exec asyms run=11836 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11837
+exec asyms run=11837 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11838
+exec asyms run=11838 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec asym_av run1=11835 run2=11838
+exec run run=11839
+exec asyms run=11839 angl=20. ptar=0.0743
+exec run run=11840
+exec asyms run=11840 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11841
+exec asyms run=11841 angl=20. ptar=0.0743
+exec run run=11842
+exec asyms run=11842 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec asym_av run1=11839 run2=11842
+exec run run=11843
+exec asyms run=11843 angl=20. ptar=0.0762
+exec run run=11844
+exec asyms run=11844 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11845
+exec asyms run=11845 angl=20. ptar=0.0762
+exec run run=11846
+exec asyms run=11846 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11843 run2=11846
+exec run run=11847
+exec asyms run=11847 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11848
+exec asyms run=11848 angl=20. ptar=0.0762
+exec run run=11849
+exec asyms run=11849 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11850
+exec asyms run=11850 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asym_av run1=11847 run2=11850
+exec run run=11851
+exec asyms run=11851 angl=20. ptar=0.0762
+exec run run=11852
+exec asyms run=11852 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec run run=11853
+exec asyms run=11853 angl=20. ptar=0.0762
+call prunpri.f(11000,12000)
+exec asyms run=11851 angl=20. ptar=0.0759
+exec asyms run=11852 angl=20. ptar=0.0758
+exec asyms run=11853 angl=20. ptar=0.0757
+exec run run=11854
+exec asyms run=11854 angl=20. ptar=0.0756
+call prunpri.f(11000,12000)
+exec asym_av run1=11851 run2=11854
+exec run run=11855
+exec asyms run=11855 angl=20. ptar=0.0743
+exec run run=11856
+exec asyms run=11856 angl=20. ptar=0.0743
+exec run run=11857
+exec asyms run=11857 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11858
+exec asyms run=11858 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec asym_av run1=11855 run2=11858
+exec run run=11859
+exec asyms run=11859 angl=20. ptar=0.0743
+exec run run=11860
+exec asyms run=11860 angl=20. ptar=0.0743
+call prunpri.f(11000,12000)
+exec run run=11861
+exec asyms run=11861 angl=20. ptar=0.0743
+exec run run=11862
+exec asyms run=11862 angl=20. ptar=0.0743
+exec asym_av run1=11859 run2=11862
+exec run run=11863
+exec asyms run=11863 angl=20. ptar=0.0743
+exec run run=11864
+exec asyms run=11864 angl=20. ptar=0.0743
+exec run run=11865
+exec asyms run=11865 angl=20. ptar=0.0743
+exec asym_av run1=11859 run2=11862
+call prunpri.f(11000,12000)
+exec run run=11866
+exec asyms run=11866 angl=20. ptar=0.0743
+exec asym_av run1=11863 run2=11866
+exec run run=11867
+exec asyms run=11867 angl=20. ptar=0.0797
+exec run run=11868
+exec asyms run=11868 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec run run=11869
+exec asyms run=11869 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec run run=11870
+exec asyms run=11870 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+call prunpri.f(11000,12000)
+exec asym_av run1=11867 run2=11870
+exec run run=11871
+exec asyms run=11871 angl=20. ptar=0.0797
+exec run run=11872
+exec asyms run=11872 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec run run=11873
+exec asyms run=11873 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec run run=11874
+exec asyms run=11874 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec asym_av run1=11871 run2=11874
+exec run run=11875
+exec asyms run=11875 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec run run=11876
+exec asyms run=11876 angl=20. ptar=0.0797
+exec run run=11877
+exec asyms run=11877 angl=20. ptar=0.0797
+exec run run=11878
+exec asyms run=11878 angl=20. ptar=0.0797
+call prunpri.f(11000,12000)
+exec asym_av run1=11875 run2=11878
+exec run run=11879
+exec asyms run=11879 angl=20. ptar=0.0795
+exec run run=11880
+exec asyms run=11880 angl=20. ptar=0.0795
+call prunpri.f(11000,12000)
+exec run run=11881
+exec asyms run=11881 angl=20. ptar=0.0795
+call prunpri.f(11000,12000)
+exec run run=11882
+exec asyms run=11882 angl=20. ptar=0.0795
+exec asyms run=11882 angl=20. ptar=0.0795
+call prunpri.f(11000,12000)
+exec asym_av run1=11879 run2=11882
+exec run run=11883
+exec asyms run=11883 angl=20. ptar=0.0795
+exec run run=11884
+exec asyms run=11884 angl=20. ptar=0.0795
+call prunpri.f(11000,12000)
+exec asym_av run1=11883 run2=11884
+shell
+exit
+*** End   of history file: Wed Aug 10 08:55:00 2005

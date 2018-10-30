@@ -1,0 +1,67 @@
+MACRO add_v_run irun=0
+*
+* --- Adds data on run irun to vector for run-wise information 
+*
+* --- ip=krunpnt(irun), resrun(1:50,ip) - the data for the run irun
+*        krunpnt(1) - is the max pointer (ip) filled 
+*
+  if [irun]<1 then
+    mess Error in add_v_run.kumac: run number [irun] is out of range
+    exitm
+  endif
+
+*  mess add_v_run 1
+  if $VDIM(krunpnt,1)<1 .OR. $VDIM(krustat,1)<2 then
+    exec book_v_run nadd=90 
+    if $VDIM(krustat,1)<2 then
+       mess Error in add_v_run.kumac : - no vector krustat
+       ve/cr krustat(2) i 0 1
+       exitm
+    endif
+    ista=krustat(2)
+    if [ista]>0 then
+      exitm
+    endif
+  endif
+
+*  mess add_v_run 2
+
+  ve/in krustat(2) 0
+
+  if $VDIM(krunpnt,1)<[irun] then
+    mess Error in add_v_run.kumac: run number [irun] is out of range
+    ve/in krustat(2) 1
+    exitm
+  endif
+
+*  mess add_v_run 3
+
+  np=krustat(1)
+  n2=$VDIM(resrun,2)
+  if [np] .GE. [n2] then
+    exec book_v_run nadd=1 
+    ista=krustat(2)
+    if [ista]>0 then
+      exitm
+    endif
+  endif
+  n2=$VDIM(resrun,2)
+
+  if [np] .GE. [n2] then
+    mess Error in add_v_run.kumac: run number [irun]: no space for this run
+    ve/in krustat(2) 1
+    exitm
+  endif
+
+  kr=krunpnt([irun])
+  if [np]<1 .OR. [kr]<1 .OR. [kr]>[np] then
+    np=[np]+1
+    ve/in krustat(1) [np]
+    ve/in krunpnt([irun]) [np]
+  endif
+
+RETURN
+
+
+
+

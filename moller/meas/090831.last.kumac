@@ -1,0 +1,54 @@
+*** Begin of history file: Tue Sep  1 10:19:02 2009
+exec sett_magp e0=3.484 nq=2 p=1
+exec sett_magp e0=3.484 nq=2 p=2
+exec sett_magp e0=3.484 nq=2 p=3
+exec run run=13465
+exec lg_spectra run=13465
+exec asymv run=13465
+zone 2 2
+exec run run=13466
+exec lg_spectra run=13466
+exec asymv run=13466
+exec asymv run=13467
+exec asymv run=13468
+exec asymv run=13469
+exec asymv run=13470
+exec asym_av run1=13467 run2=13470
+zone 2 2
+exec asymv run=13471
+exec asymv run=13472
+exec asymv run=13473
+exec asymv run=13475
+exec asym_av run1=13471 run2=13475
+exec asymv run=13476
+exec asymv run=13477
+exec asymv run=13478
+exec asymv run=13479
+exec asym_av run1=13476 run2=13479
+exec asymv run=13480
+exec asymv run=13481
+exec asymv run=13482
+exec asymv run=13483
+exec asym_av run1=13480 run2=13483
+exec asymv run=13484
+exec asymv run=13485
+exec asymv run=13486
+exec asymv run=13487
+exec asym_av run1=13484 run2=13487
+exec asymv run=13488
+exec asymv run=13489
+exec asymv run=13490
+exec asymv run=13491
+exec asymv run=13492
+exec asymv run=13493
+exec asym_av run1=13488 run2=13493
+exec asymv run=13494
+exec asymv run=13495
+exec asymv run=13496
+exec asymv run=13497
+exec asym_av run1=13494 run2=13497
+exec asym_av run1=13480 run2=13497
+exec spin_prec_13
+shell
+exit
+*** End   of history file: Tue Sep  1 10:32:02 2009

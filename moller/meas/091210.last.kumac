@@ -1,0 +1,82 @@
+*** Begin of history file: Fri Dec 11 11:13:28 2009
+exec run run=13978
+exec lg_spectra run=13978
+exec asymv run=13978
+exec asymv run=13979
+exec asymv run=13980
+exec asymv run=13981
+exec asym_av run1=13978 run2=13981
+exec asym_avt
+exec asymv run=13983
+exec asymv run=13984
+exec asymv run=13985
+exec asymv run=13986
+exec asym_av run1=13983 run2=13986
+exec asym_avt
+exec asym_av run1=13978 run2=13986
+exec asym_avt
+exec asymv run=13987
+exec asymv run=13988
+exec asymv run=13989
+exec asymv run=13990
+exec asym_av run1=13987 run2=13990
+exec asym_avt
+exec asymv run=13991
+exec asymv run=13992
+exec asymv run=13993
+exec asymv run=13994
+exec asym_av run1=13991 run2=13994
+exec asym_avt
+exec asym_av run1=13978 run2=13994
+exec asym_avt
+exec asymv run=13995
+exec asymv run=13996
+exec asymv run=13997
+exec asymv run=13998
+exec asym_av run1=13995 run2=13998
+exec asym_avt
+exec asymv run=13999
+exec asymv run=14000
+exec asymv run=14001
+exec asymv run=14002
+exec asym_av run1=13999 run2=134002
+exec asym_av run1=13999 run2=14002
+exec asym_avt
+exec asym_avt
+exec asymv run=14003
+exec asymv run=14004
+exec asymv run=14005
+exec asymv run=14006
+exec asymv run=14007
+exec asymv run=14008
+exec asym_av run1=14003 run2=14008
+exec asym_avt
+exec asymv run=14009
+exec asymv run=14010
+exec asymv run=14011
+exec asymv run=14012
+exec asymv run=14013
+exec asymv run=14014
+exec asymv run=14015
+exec asymv run=14016
+exec asymv run=14017
+exec asymv run=14018
+exec asymv run=14019
+exec asymv run=14020
+exec asym_av run1=14017 run2=14020
+exec asym_avt
+exec asymv run=14021
+exec asymv run=14022
+exec asymv run=14023
+exec asymv run=14024
+exec asymv run=14025
+exec asymv run=14026
+exec asymv run=14027
+exec asymv run=14028
+exec asymv run=14029
+exec asymv run=14030
+exec asymv run=14031
+exec asym_av run1=14028 run2=14031
+exec asym_avt
+exit
+*** End   of history file: Fri Dec 11 11:54:16 2009

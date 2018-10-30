@@ -1,0 +1,26 @@
+MACRO run_info run1=0 run2=0 dir=Info call=1
+*
+* --- Get the Run Info from the *.set file
+*
+  if [run1] .le. 0 .or. [run2] .lt. [run1] then
+    mess Wrong run range [run1] [run2]
+    exitm
+  endif
+
+  do r=[run1],[run2]
+    if $FEXIST(run.info)>0 then
+       shell rm -f run.info
+    endif
+    fnam=[dir]//'/mollerrun_'//[r]//'.set'
+    if $FEXIST([fnam])>0 then
+      shell rm -f run.info
+      shell expand [fnam] > run.info
+      if [call]>0 then
+        call run_info.f
+      endif	
+    else
+      mess ...Missing run [r] [fnam]
+    endif
+  enddo
+
+RETURN

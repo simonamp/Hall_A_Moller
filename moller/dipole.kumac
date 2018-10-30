@@ -1,0 +1,44 @@
+MACRO dipole.kumac
+
+  ve/cr field(20) r 10000  19000  18000  17000  16000  15000  14000  13000  12000  11000  10000   9000  8000   6000   5000   4000   3000   
+  ve/cr singl(20) r 126960 115086 120666 125218 123131 126237 129228 129202 127454 127247 126961 125240 119620 105180 106680 104313 103905 
+  ve/cr coinc(20) r 12136  12321  14708  16812  17564  19247  19882  19911  19307  18684  12136   6396  3648   1833   1049   747    617
+  ve/cr accid(20) r 252    265    292    287    285    295    303    302    291    285    252     215   195    139    140    132    136
+
+  ve/cr err(20) r
+  ve/cr y(20) r
+
+  null 2000. 20000. 0. 2
+  np=17
+
+  an=singl(1)
+  do i=1,[np]
+    a=singl([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 24
+  gr/hplo/key 3000. 0.1 24 'single' 0.3
+
+  an=coinc(1)
+  do i=1,[np]
+    a=coinc([i])
+    a=[a]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 25
+  gr/hplo/key 3000. 0.2 25 'coinc' 0.3
+
+  an=accid(1)
+  b=coinc(1)
+  an=[an]/[b]
+  do i=1,[np]
+    a=accid([i])
+    b=coinc([i])
+    a=[a]/[b]/[an]
+    ve/in y([i]) [a]
+  enddo
+  gr/hplo/err field(1:[np]) y(1:[np]) err err [np] 21
+  gr/hplo/key 3000. 0.3 21 'accid' 0.4
+   
+RETURN

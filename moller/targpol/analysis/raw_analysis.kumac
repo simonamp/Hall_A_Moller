@@ -1,0 +1,70 @@
+MACRO raw_analysis foil=0
+*
+* Analyze all data for the foil #foil
+*
+  nf=4
+  if $VDIM(idef_f,1)<[nf] then
+    ve/cr idef_f([nf]) i
+  endif
+
+  if $VDIM(th_f,1)<[nf] then
+    ve/cr th_f([nf]) r
+  endif
+
+  if $VDIM(ma_f,1)<[nf] then
+    ve/cr ma_f([nf]) i
+  endif
+
+  ve/in idef_f  2    3    4    5  
+  ve/in ma_f    2    1    1    2 
+  ve/in th_f 29.4 14.3  9.3  6.8
+  ft_1=s30_04
+  ft_2=f14_04
+  ft_3=f10_04
+  ft_4=s07_04
+  matn_1=Iron
+  matn_2=Supermendur
+
+  kf=0
+  do if=1,[nf]
+    jf=idef_f([if])
+    if [jf]=[foil] then
+      kf=[if]
+    endif
+  enddo
+  i=1
+
+  if [kf]=0 then
+    mess The foil=[foil] is not defined. The defined foils are:
+    do if=1,[nf]
+      jf=idef_f([if])
+      ft=ft_[if]
+      th=th_f([if])
+      ma=ma_f([if])
+      mna=matn_[ma]
+      txt='foil '//[jf]//' : '//[[ft]]//' - '//[th]//' micron '//[[mna]]   
+      mess [txt]
+    enddo
+    exitm
+  endif
+
+  host=$SHELL('hostname')
+  if $INDEX([host],'adaqel')>0 then
+    dirg=/data2/users/moller/stand/motor/newtar
+  elseif $INDEX([host],'haplix')>0 then
+    dirg=/data2a/user/gen/moller/stand/motor/newtar
+  else
+    mess Computer name [host] - where are the raw data from the magnetic measurements?  
+    exitm
+  endif
+
+  dirw=[dirg]//'/'//[ft_[kf]]
+  if $FEXIST([dirw])=0 then
+    mess No directory [dirw] found
+    exitm
+  endif
+
+  shell test -d tmpdir && rm -f tmpdir
+  shell ln -s [dirw] tmpdir
+
+RETURN

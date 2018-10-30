@@ -1,0 +1,37 @@
+*** Begin of history file: Thu Nov 19 11:05:34 2009
+exec run run=13876
+exec lg_spectra run=13876
+exec run run=13877
+exec lg_spectra run=13877
+exec run run=13878
+exec lg_spectra run=13878
+exec run run=13879
+exec lg_spectra run=13879
+exec run run=13880
+exec lg_spectra run=13880
+exec run run=13881
+exec lg_spectra run=13881
+exec run run=13882
+exec lg_spectra run=13882
+exec run run=13883
+exec lg_spectra run=13883
+exec asymv run=13883
+exec asymv run=13884
+exec asymv run=13885
+exec asymv run=13886
+exec asymv run=13887
+exec asymv run=13888
+exec asym_av run1=13883 run2=13888
+exec asym_avt
+exec asymv run=13889
+exec asymv run=13890
+exec asymv run=13891
+exec asymv run=13892
+exec asymv run=13893
+exec asymv run=13894
+exec asym_av run1=13889 run2=13894
+exec asym_avt
+exec asym_av run1=13883 run2=13894
+exec asym_avt
+exit
+*** End   of history file: Thu Nov 19 11:40:49 2009

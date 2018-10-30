@@ -1,0 +1,292 @@
+*** Begin of history file: Sat Apr 15 01:16:20 2006
+prlast
+shell cat ../last.kumac
+ve/read num,tim,temp temper_1.dat
+ve/pl temp%tim
+ve/cr err(1001) r 1001*0.01
+ve/read num1,tim1,temp1 temper_1.dat
+ve/pl temp1%tim1
+ve/cr par(10) r
+help ve/fit
+help h/fit
+ave/fit tim1 temp1 e
+ve/li
+ve/cr err1(5001) r 1001*0.01
+ve/fit tim1 temp1 err1 p0-e ! 3 par
+ve/fit tim1 temp1 err1 p0+e ! 3 par
+ve/fit tim1 temp1 err1 p0+(-1.)*e ! 3 par
+ve/cr ifitctrl(1) i 0
+ve/in par(1:3) 20 20 10000.
+ve/fit tim1 temp1 err1 fun_assympt.f ! 3 par
+ve/fit tim1 temp1 err1 fun_assymp.f ! 3 par
+fu/pl 20-20*exp(-x*10000.) 0 0.1 s
+fu/pl 20-20*exp(-x*10000.) 0 0.1
+fu/pl 20-20*exp(-x*100.) 0 0.1
+fu/pl 20-20*exp(-x*10.) 0 0.1
+fu/pl 20-20*exp(-x*80.) 0 0.1
+ve/in par(1:3) 20 20 80.
+ve/fit tim1 temp1 err1 fun_assymp.f ! 3 par
+fu/pl 20-20*exp(-x*80.) 0 0.1 s
+ve/read num2,tim2,temp2 temper_1.dat
+ve/pl temp1%tim1
+ve/pl temp2%tim2 ! s
+ve/wri temp1,temp2 ! 2F10.4
+mess $sigma((300+20)**4-300**4)
+mess $sigma(((300+2)**4-300**4)
+mess $sigma(((300+2)**4-300**4))
+mess $sigma(((300+1)**4-300**4))
+mess $sigma(((300)**4-300**4))
+mess $sigma(((300+1)**4-300**4))
+mess $sigma(((300+1)**4-300**4)*2e-12)
+mess $sigma(((300+20)**4-300**4)*2e-12)
+mess $sigma(((300+50)**4-300**4)*2e-12)
+mess $sigma(((300+100)**4-300**4)*2e-12)
+mess $sigma(0.5e-6/1.6e-19)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001)
+mess $sigma(((300+20)**4-300**4)*2e-12*0.2**2)
+mess $sigma(((300+20)**4-300**4)*2e-12*0.6**2)
+mess $sigma(((300+50)**4-300**4)*2e-12*0.2**2)
+mess $sigma(((300+1)**4-300**4)*2e-12*0.2**2)
+mess $sigma(((300+20)**4-300**4)*5.7e-12*0.2**2)
+mess $sigma(((300+100)**4-300**4)*5.7e-12*0.2**2)
+mess $sigma(((300+150)**4-300**4)*5.7e-12*0.2**2)
+mess $sigma(((300+200)**4-300**4)*5.7e-12*0.2**2)
+mess $sigma(((300+200)**4-300**4)*5.7e-12*0.9**2)
+mess $sigma(((300+100)**4-300**4)*5.7e-12*0.9**2)
+mess $sigma(((300+20)**4-300**4)*5.7e-12*0.9**2)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.01))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.006))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.001))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(2/0.001))
+ve/read num3,tim3,temp3 temper_1.dat
+ve/pl temp3%tim3 ! s
+ve/read num4,tim4,temp4 temper_1.dat
+ve/pl temp4%tim4 ! s
+ve/read num5,tim5,temp5 temper_1.dat
+ve/pl temp5%tim5 ! s
+ve/read num6,tim6,temp6 temper_1.dat
+ve/pl temp6%tim6 ! s
+mess $sigma((0.1/50.)**2*0.4*8/0.75*0.5)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.006))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1./0.006))
+ve/read num6,tim7,temp7 temper_1.dat
+ve/pl temp7%tim7 !
+ve/pl temp7%tim7
+ve/pl temp7%tim7
+ve/wri tim7,temp7 ! 2F10.4
+ve/wri tim7,temp7 ! 2F10.5
+ve/read num7,tim7,temp7 temper_1.dat
+ve/del num7,tim7,temp7
+ve/read num7,tim7,temp7 temper_1.dat
+ve/pl temp7%tim7
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.004))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.01))
+ve/wri tim7,temp7 ! 2F10.5
+ve/read num8,tim8,temp8 temper_1.dat
+ve/pl temp8%tim8 ! s
+ve/read num9,tim9,temp9 temper_1.dat
+ve/pl temp9%tim9 ! s
+ve/wri tim8,temp8 ! 2F10.5
+ve/wri tim9,temp9 ! 2F10.5
+ve/wri tim8,temp8 ! 2F10.5
+ve/wri tim9,temp9 ! 2F10.5
+ve/read num10,tim10,temp10 temper_1.dat
+ve/pl temp10%tim10
+ve/wri tim10,temp10 ! 2F10.5
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.02))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.03))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.05))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.06))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.2/0.07))
+ve/read num11,tim11,temp11 temper_1.dat
+ve/pl temp11%tim11 ! s
+ve/pl temp10%tim10
+ve/pl temp11%tim11 ! s
+ve/wri tim10,temp10 ! 2F10.5
+ve/wri tim11,temp11 ! 2F10.5
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1./0.055))
+ve/read num12,tim12,temp12 temper_1.dat
+ve/pl temp12%tim12 ! s
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(0.4/0.1))
+mess $sigma(.38*25.4)
+mess $sigma(.45*25.4)
+mess $sigma(7.62/25.4)
+mess $sigma(7.62/25.4)
+ve/read num13,tim13,temp13 temper_1.dat
+ve/pl temp13%tim13 ! s
+ve/pl temp13%tim13 !
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.1))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.01))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.1))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.205))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.305))
+ve/read num14,tim14,temp14 temper_1.dat
+ve/pl temp14%tim14
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.1))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.06))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.1))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/6.3*log(1.0/0.3))
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/2)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/2)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/2/2)
+mess $sigma(0.5e-6/1.6e-19*2.4e-13*8*0.001/0.001/.75/2/2*2)
+ve/read num15,tim15,temp15 temper_1.dat
+ve/pl temp15%tim15
+ve/read num16,tim16,temp16 temper_1.dat
+ve/pl temp16%tim16
+ve/pl temp15%tim15 s
+ve/pl temp16%tim16
+ve/pl temp15%tim15 ! s
+ve/del num16,tim16,temp16
+ve/read num16,tim16,temp16 temper_1.dat
+ve/pl temp16%tim16
+ve/read num17,tim17,temp17 temper_1.dat
+ve/pl temp17%tim17 ! s
+ve/pl temp17%tim17
+ve/pl temp16%tim16 ! s
+ve/read num18,tim18,temp18 temper_1.dat
+ve/pl temp18%tim18 ! s
+ve/pl temp18%tim18
+ve/read num19,tim19,temp19 temper_1.dat
+ve/pl temp19%tim19
+ve/pl temp18%tim18 ! s
+ve/pl temp17%tim17 ! s
+mess $sigma(2.2068-1.987)
+mess $sigma(1.987-1.5899)
+mess $sigma(.22/0.04)
+ve/read num20,tim20,temp20 temper_1.dat
+ve/pl temp20%tim20 ! s
+ve/pl temp20%tim20
+ve/pl temp19%tim19 ! s
+set fcol 2
+ve/pl temp19%tim19 ! s
+set hcol 2
+ve/pl temp19%tim19 ! s
+igset plci 2
+ve/pl temp19%tim19 ! s
+igset pmci 2
+ve/pl temp19%tim19 ! s
+igset pmci 4
+ve/pl temp20%tim20 ! s
+mess $sigma(200/30)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4/5e8)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4*1e-6)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4*10e-6)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4*250e-6)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4*25e-6)
+mess $sigma(100e-6/1.6e-19*2.4e-13/6.28/0.004**2/0.4*10e-6)
+mess $sigma(100*3.14*2/50*10)
+mess $sigma(50*3.14*2/50*10)
+mess $sigma(1*0.75*8*0.4)
+mess $sigma(0.1**2*0.75*8*0.4)
+mess $sigma(0.01**2*0.75*8*0.4)
+mess $sigma(0.02**/.01**2)
+mess $sigma(0.02**2/.01**2)
+shell cat last.kumac
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.010_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.10_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-5.e-6_v-01/ log=1 xmx=0.2 same=1 col=4
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-5.e-6_v-01/ log=1 xmx=0.2 same=1 col=4 zone=1
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-5.e-6_v-01/ log=1 xmx=0.2 same=1 col=4 zone=2
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_0.100_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.6
+exec temp_get5 dir=f5_t_1.0_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.6
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-5.e-6_v-01/ log=1 xmx=0.6
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-20.e-6_v-01/ log=1 xmx=0.6
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.0_dtv-20.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1 zone=2
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1 zone=2 col=2
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1 zone=2 col=4
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1
+mess $sigma(1)
+loca
+mess $sigma(200*60e-3/(4*1.4*500/40.))
+mess $sigma(200*60e-3/(4*1.4*250/40.))
+mess $sigma(200*60e-3/(2*1.4*500/40.))
+mess $sigma(200*100e-3/(2*1.4*500/40.))
+mess $sigma()
+mess $sigma(60e-3/(2*1.4*500/40.))
+mess $sigma(100e-3/(2*1.4*500/40.))
+mess $sigma(100e-3/(2*1.4*250/40.))
+mess $sigma(6.28*.003**2/0.1**2)
+mess $sigma(6.28*.003**2/0.1**2*200)
+mess $sigma(100e-3/(1*3.14))
+mess $sigma((2*1.4*500/40.))
+mess $sigma((2*1.4*500/40.)*60e-3)
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-06_v-01/ log=1 col=4 zone=1 same=1
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-06_v-01/ log=1 col=4 zone=1 same=0
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-6_v-01/ log=1 col=2 zone=1 same=0
+exec temp_get5 dir=f5_t_1.000_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-20.e-06_v-01/ log=1 col=4 zone=1 same=1
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2)
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2*20e-6)
+loca
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*20e-6)
+loCA
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0)
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*20e-6)
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-1.e-6_v-01/ log=1 col=2 zone=1 same=0
+loca
+loca
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*4e-6)
+loca
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*3e-6)
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*1e-6)
+loca
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=0
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=0
+loca
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*0.3e-6)
+loca
+aafu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x
+usgae fu/pl
+usage fu/pl
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 2e-7 5e-4 s
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 2e-7 5e-4
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=1
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 2e-7 1e-5
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=1
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*0.3e-6)
+mess $sigma(50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*500e-6)
+mess $sigma(50e-6/1.6e-19*2.4e-13/0.1**2/0.4*500e-6)
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-5
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=1
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=4 zone=1 same=1
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=1 col=2 zone=1 same=1
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=1 col=4 zone=1 same=1
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=1 col=4 zone=1 same=0
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=0 col=4 zone=1 same=0
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=0 col=2 zone=1 same=1
+loca
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-5 s
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-5
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=0 col=4 zone=1 same=1
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-4
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=0 col=4 zone=1 same=1
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-5
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=0 col=4 zone=1 same=1
+fu/pl 50e-6/1.6e-19*2.4e-13/6.28/30e-4**2/0.4*x 0 1e-3
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-02/ log=0 col=4 zone=1 same=1
+exec temp_get5 dir=f5_t_0.0005_beam-50.-ua-0.003_foil-90.-deg-z-0.0001_rad-0.1_dtv-0.2e-6_v-01/ log=0 col=2 zone=1 same=1
+mess $sigma(50e-6/1.6e-19*2.4e-13/0.1**2/0.4*500e-6)
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.003))
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.1))
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.1))
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.5))
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.9))
+mess $sigma(50e-6/1.6e-19*2.4e-13*8/6.28/0.75*log(1./0.003))
+*** End   of history file: Thu Apr 27 01:08:34 2006

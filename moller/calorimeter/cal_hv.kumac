@@ -1,0 +1,292 @@
+MACRO cal_hv t1=190 t2=205 id=5000 cut=0 fill=1 conf=1
+
+*
+* -- HV dependence
+*
+*    conf: =1 - Spag. calor, 2 channels
+
+
+   if [conf]=1 then
+     n=2
+     nru=5
+     ve/cr ihvrun([nru]) i 7556 7540 7538 7537 7536 
+     ve/cr hvval([n],[nru]) r 1800 1300   1700 1400   1600 1470  1700 1450   1900 1500         
+   else
+     mess "***" Error: no configuration defined=[conf]
+     exitm
+   endif
+
+   if [fill]=0 then
+     goto plotm
+   endif
+
+   ve/cr hvv([nru],[n]) r
+   ve/cr amp([nru],[n]) r
+   ve/cr eamp([nru],[n]) r
+   ve/cr aml([nru],[n]) r
+   ve/cr errx(100) r
+
+*   nru=1
+   ve/cr para(10) r
+   ve/cr epara(10) r
+
+   cut $20 nadc>0
+   if [cut]=0 then
+     cut $21 $20
+   else
+     cut $21 $20.and.$[cut]
+   endif
+
+   do iru=1,[nru]
+     run=ihvrun([iru])
+     if [run]>0 then
+       exec getrun run=[run] 
+       lun=ilun(1)
+       run=irun(1)
+
+       if [lun]=0 then
+         mess Abort ...
+         exitm
+       endif
+       lun=lun//[lun]
+     endif
+     do i=1,[n]
+       id1=[id]+[iru]*100+[i]
+       hv=hvval([i],[iru])
+       txt='ADC-ped, center='//[i]//', HV='//[hv]
+       1dh [id1] [txt] 100 50 1050 
+     enddo
+
+     id1=[id]+[iru]*100
+     nt/loop //[lun]/1 $21.and.cal_hv.f([n],[t1],[t2],[id1])>-1
+
+     do i=1,[n]
+       id1=[id]+[iru]*100+[i]
+       hv=hvval([i],[iru])
+
+       ve/in hvv([iru],[i]) [hv]
+
+       a=$HINFO([id1],'MEAN')
+       c=$HINFO([id1],'MAX')
+       b=[a]*0.1
+       ve/in para(1:3) [c] [a] [b]
+       h/fit [id1] g N 3 para ! ! ! epara
+       do iter=1,3
+         a=para(2)
+         b=para(3)
+         s=$SIGMA(([a]-ABS([b])*0.8-50)/10)
+         s=$SIGMA(INT([s]))
+         mess s=[s] [a] [b]
+         mess h/fit [id1]([s]:100) g 0 3 para ! ! ! epara
+         h/fit [id1]([s]:100) g 0 3 para ! ! ! epara
+       enddo
+       a=para(2)
+       al=$SIGMA(LOG([a]))
+       ve/in amp([iru],[i]) [a]
+       ve/in aml([iru],[i]) [al]
+       a=epara(2)
+       ve/in eamp([iru],[i]) [a]
+     enddo
+
+   enddo
+
+   plotm:
+
+   if [conf]=1 then
+     titl 'Spaghetti calor. '
+     xx1=1000
+     xx2=2500
+     yy1=50
+     yy2=2000
+   else
+     mess "***" Error: no configuration defined=[conf]
+     exitm
+   endif
+
+   zone 1 1
+   opt logy
+   null [xx1] [xx2] [yy1] [yy2]
+   atit 'HV' 'ADC amplitude'
+   do i=1,[n]
+     sy=19+[i]
+     gr/hpl/err hvv(1:[nru],[i]) amp(1:[nru],[i]) errx eamp(1:[nru],[i]) [nru] [sy] 0.17
+     opt liny
+     opt ntic     
+     null 0 1 0 1 sab
+     xk1=$SIGMA(0.4-[i]*0.05)
+     tit='chan '//[i]
+     gr/hpl/key 0.8 [xk1] [sy] [tit]
+     opt logy
+     null [xx1] [xx2] [yy1] [yy2] sab
+     opt tic     
+   enddo
+   opt liny
+
+
+   exitm
+
+   titl 'Run '//[run]//' calorimeter calibration'
+
+   if [fill]=0 then
+     goto fitl
+   endif
+
+   if $VDIM(calibtmp)<[n] then
+     ve/cr calibtmp([n]) r
+     do i=1,[n]
+       j=[i]+12
+       a=calib([j])
+       ve/in calibtmp([i]) [a]
+     enddo
+     ve/wri calibtmp calibtmp.dat
+   endif
+
+   if $VDIM(restmp)<[n] then
+     ve/cr restmp([n]) r
+   endif
+
+   if $VDIM(ichlim)<10 then
+     ve/cr ichlim(2,5) i 
+   endif
+   ve/in ichlim(1:2,3)  1  3 
+   ve/in ichlim(1:2,2)  6  9 
+   ve/in ichlim(1:2,1) 14 16 
+
+   ve/in ichlim(1:2,1)  1  8 
+   ve/in ichlim(1:2,2) 11 16 
+   ve/in ichlim(1:2,3) 17 17 
+
+   ve/in ichlim(1:2,1)  1  8 
+   ve/in ichlim(1:2,2) 11 16   
+   ve/in ichlim(1:2,3) 17 17 
+
+   if $VDIM(ilglim)<10 then
+     ve/cr ilglim(2,5) i 
+   endif
+   ve/in ilglim(1:2,1)  1  3 
+   ve/in ilglim(1:2,2)  4  6 
+   ve/in ilglim(1:2,3)  7  9 
+
+   ve/in ilglim(1:2,1)  1  1 
+   ve/in ilglim(1:2,2)  2  2 
+   ve/in ilglim(1:2,3) 20 20 
+
+   ve/cr para(10) r
+   ve/cr epara(10) r
+
+   id1=[id]+400
+   txt='Energy in '//[n]//' modules vs HOD coordinate'
+   h/cr/prof [id1] [txt] 16 0 8. 0.1 2.1 ' '
+   do i=1,[n]
+     id1=[id]+[i]
+     txt='Energy in '//[n]//'modules, center='//[i]
+     1dh [id1] [txt] 200 [x1] [x2]
+     id1=[id]+[i]+100
+     txt='Energy perif/all, center='//[i]
+     1dh [id1] [txt] 200 0. 1.
+     id1=[id]+[i]+200
+     txt='Particle energy, center='//[i]
+     1dh [id1] [txt] 200 0. 4.
+     id1=[id]+[i]+300
+     txt='Energy in '//[n]//'modules, center='//[i]//' vs HOD channel'
+     2dh [id1] [txt] 200 [x1] [x2] 16 1 17
+     id1=[id]+[i]+400
+     id2=[id]+[i]
+     txt='Energy in '//[n]//'modules, center='//[i]//' vs HOD coordinate'
+     h/cop [id2] [id1]
+     id1=[id]+[i]+500
+     txt='ADC , center='//[i]
+     1dh [id1] [txt] 120 0. 1000.
+   enddo
+
+   cut $20 nadc>0.and.cal_hmul.f([i1],[i2],[t1],[t2])=1
+   if [cut]=0 then
+     cut $21 $20
+   else
+     cut $21 $20.and.$[cut]
+   endif
+
+   fitl:
+
+   do iter=1,[niter]
+    if [fill]>0 then 
+      id1=[id]+400
+      h/op/res [id1]
+      do i=1,[n]
+        id1=[id]+[i]
+        h/op/res [id1]
+        id1=[id]+[i]+100
+        h/op/res [id1]
+        id1=[id]+[i]+200
+        h/op/res [id1]
+        id1=[id]+[i]+300
+        h/op/res [id1]
+        id1=[id]+[i]+400
+        h/op/res [id1]
+        id1=[id]+[i]+500
+        h/op/res [id1]
+      enddo
+
+      nt/loop //[lun]/1 nadc>0.and.$21.and.cal_calib.f([n],[i1],[i2],[t1],[t2],[corr],[id])>-1
+    endif
+
+*     zone 3 3
+    do ich=1,[n]
+       id1=[id]+[ich]
+       a=$HINFO([id1],'MEAN')
+       c=$HINFO([id1],'MAX')
+       b=[a]*0.1
+       ve/in para(1:3) [c] [a] [b]
+       h/fit [id1] g 0 3 para ! ! ! epara
+       a=calibtmp([ich])
+       b=para(2)
+       w=para(3)
+       res=0.
+       c=[a]
+       id2=[id]+[ich]+200
+       emean=$HINFO([id2],'MEAN')
+       if [b]>0 then
+         c=[a]*1./[b]
+         res=$SIGMA(ABS([w])/[b]*sqrt([emean]))
+       endif
+       if [update]>0 then
+         ve/in calibtmp([ich]) [c]
+         ve/in restmp([ich]) [res]
+       endif
+
+       tit=$HTITLE([id1])
+       ind=$INDEX([tit],', mean')
+       if [ind]>0 then
+         ind1=[ind]-1
+         tit1=$SUBSTRING([tit],1,[ind1])
+         tit=[tit1]
+       endif
+       emf=$FORMAT([emean],F4.2)
+       tit=[tit]//', mean E='//[emf]//'GeV'
+       h/cop [id1] 99 
+       h/cop 99 [id1] [tit]
+       h/pl [id1]
+*       mess id1=[id1] [ich] [tit]
+       opt ntic
+       null 0 1 0 1 sab
+       res1=$FORMAT([res],F5.3)
+       tit='resol='//[res1]//' GeV^0.5!'
+       text 0.05 0.9 [tit] 0.25
+       opt tic
+    enddo
+    ve/pri calibtmp
+    ve/pri restmp
+   enddo  
+
+   ve/wri calibtmp calibtmp.dat
+
+RETURN
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,98 @@
+ve/re MN,T5p,er51,T5ts,er52,T4p,er41,T4ts,er42,T3p,er31,T3ts,er32,T2p,er21,T2ts,er22  sum_sum.dat ! ! -/*/
+
+fort/fil 55 sum_sum_av.ps
+meta 55 -111
+set *
+opt *
+opt nbox
+opt ndate
+opt nstat
+opt grid
+
+sigma nn=nco(MN)
+nm=nn
+sigma err=array([nm],0#0)
+ve/cr pmc(5)  r 6  6  2  4  1
+ve/cr mty1(5) r 23 23 22 21 20
+ve/cr mty2(5) r 27 27 26 25 24
+null 1. 22. 79.0 90.0
+	DO k=2,5
+mtyp=mty1([k])
+pmc1=pmc([k])
+set pmci [pmc1]
+GRAPHICS/HPLOT/AERRORS MN T[k]p err err er[k]1 er[k]1 [nm] [mtyp] 0.25 !
+selnt 1
+tpos=5.7-[k]*0.6
+key 3.5 [tpos] [mtyp] 
+selnt 10
+mtyp=18
+	ENDDO
+	DO k=2,5
+mtyp=mty2([k])
+pmc1=pmc([k])
+set pmci [pmc1]
+GRAPHICS/HPLOT/AERRORS MN T[k]ts err err er[k]1 er[k]1 [nm] [mtyp] 0.25 !
+selnt 1
+tpos=5.7-[k]*0.6
+key 12.0 [tpos] [mtyp] 
+selnt 10
+	ENDDO
+selnt 1
+atitle 'Measurement number' 'Beam polarization, "Y#'
+text 11.0 18.5 'Moller measurement summary' 0.45 0 C
+text 4.0 4.3 '- Target 2 point' 0.35 0 
+text 4.0 3.7 '- Target 3 point' 0.35 0 
+text 4.0 3.1 '- Target 4 point' 0.35 0 
+text 4.0 2.5 '- Target 5 point' 0.35 0
+text 12.5 4.3 '- Target 2 scan' 0.35 0 
+text 12.5 3.7 '- Target 3 scan' 0.35 0 
+text 12.5 3.1 '- Target 4 scan' 0.35 0 
+text 12.5 2.5 '- Target 5 scan' 0.35 0
+selnt 10
+wait
+
+*****
+***  Difference with Average Polarization
+*****
+
+ve/cr npt(16) r 3. 3. 3. 3. 4. 4. 2. 1. 1. 1. 1. 2. 4. 2. 2. 2.
+ve/cr nsc(16) r 0. 0. 1. 3. 4. 0. 2. 1. 4. 3. 4. 2. 2. 2. 2. 2. 
+sigma avpt=(T5p+T4p+T3p+T2p)/npt
+sigma avts=(T5ts+T4ts+T3ts+T2ts)/nsc
+null 1.  22.  -4.0  3.0
+	DO k=2,5
+mtyp=mty1([k])
+pmc1=pmc([k])
+set pmci [pmc1]
+sigma rp[k]=((T[k]p-avpt)/avpt)*100.
+GRAPHICS/HPLOT/AERRORS MN rp[k] err err er[k]1 er[k]1 [nm] [mtyp] 0.25 !
+selnt 1
+tpos=5.7-[k]*0.6
+key 3.5 [tpos] [mtyp] 
+selnt 10
+	ENDDO
+	DO k=2,5
+mtyp=mty2([k])
+pmc1=pmc([k])
+set pmci [pmc1]
+sigma rts[k]=((T[k]ts-avts)/avts)*100.
+GRAPHICS/HPLOT/AERRORS MN rts[k] err err er[k]1 er[k]1 [nm] [mtyp] 0.25 !
+selnt 1
+tpos=5.7-[k]*0.6
+key 12.0 [tpos] [mtyp] 
+selnt 10
+	ENDDO
+selnt 1
+atitle 'Measurement number' 'Ratio (TN-Tav)/Tav, "Y#'
+text 10.0 18.5 'Difference between Average Target Polarization' 0.45 0 C 
+text 4.0 4.3 '- Target 2 point' 0.35 0 
+text 4.0 3.7 '- Target 3 point' 0.35 0 
+text 4.0 3.1 '- Target 4 point' 0.35 0 
+text 4.0 2.5 '- Target 5 point' 0.35 0
+text 12.5 4.3 '- Target 2 scan' 0.35 0 
+text 12.5 3.7 '- Target 3 scan' 0.35 0 
+text 12.5 3.1 '- Target 4 scan' 0.35 0 
+text 12.5 2.5 '- Target 5 scan' 0.35 0
+selnt 10
+
+close 55

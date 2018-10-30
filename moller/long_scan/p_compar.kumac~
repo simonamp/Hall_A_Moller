@@ -1,0 +1,122 @@
+MACRO p_compar
+*****
+* p48  - polarization in point for Target 4 at BOP=8Amp
+* er48 - stat. error for p48
+* cp48 - target coordinate for p48
+* t48  - polarization from transverce scan for Target 4 at BOP=8Amp 
+* l48  - polarization from longitudinal scan for Target 4 at BOP=8Amp
+*****
+* measurement 09/10/2005
+ve/cr p48(1)  r  0.8330
+ve/cr ep48(1) r  0.21E-02
+ve/cr cp48(1) r  0.1
+ve/cr t48(6)  r  0.83931      0.83975      0.82981      0.83764      0.83634      0.85036
+ve/cr et48(6) r  0.19766E-02  0.22526E-02  0.22564E-02  0.22679E-02  0.21653E-02  0.21297E-02
+ve/cr ct48(6) r  0.0         -10.0        -20.0         10.0         20.0         5.0
+ve/cr t44(6)  r  0.8425       0.8371       0.8308       0.8427       0.8460       0.8588
+ve/cr et44(6) r  0.33E-02     0.23E-02     0.23E-02     0.25E-02     0.24E-02     0.24E-02
+ve/cr ct44(6) r  0.2         -10.2        -20.2         10.2         20.2         5.2
+ve/cr l44(7)  r  0.84868      0.83042      0.82355      0.84350      0.84725      0.83412      0.84263
+ve/cr el44(7) r  0.46826E-02  0.47762E-02  0.44907E-02  0.47287E-02  0.46710E-02  0.26750E-02  0.32042E-02
+ve/cr cl44(7) r  0.3         -10.3        -20.3         10.3         20.3        -15.0         15.0
+
+fort/fil 55 p_compar.ps
+meta 55 -111
+
+opt *
+opt grid
+opt ndat
+opt nbox
+
+null -25.0  30.0  0.815  0.865
+selnt 1
+text 11.0 19.0 'Moller Meas. Target 4 09.10.2005' 0.45 0 C
+selnt 10
+atitle 'Target Coordinate, mm' 'Beam Polarization'
+set pmci 2
+set mtyp 20
+mt=20
+GRAPHICS/HPLOT/AERRORS ct48 t48 et48 et48 et48 et48 6 [mt] 0.4 ! S
+key -18.0 0.823 [mt] '- transv. scan 8Amp'
+set mtyp 24
+mt=24
+GRAPHICS/HPLOT/AERRORS cp48 p48 ep48 ep48 ep48 ep48 1 [mt] 0.4 ! S
+key -18.0 0.825 [mt] '- in point 8Amp'
+set pmci 1
+set mtyp 22
+mt=22
+GRAPHICS/HPLOT/AERRORS ct44 t44 et44 et44 et44 et44 6 [mt] 0.4 ! S
+key 8.0 0.823 [mt] '- transv. scan 4Amp'
+set mtyp 24
+mt=24
+GRAPHICS/HPLOT/AERRORS cl44 l44 el44 el44 el44 el44 7 [mt] 0.4 ! S
+key 8.0 0.825 [mt] '- long. scan 4Amp'
+
+wait
+
+***** measurement 09.11.2005
+ve/cr p44(1)  r  0.8553
+ve/cr ep44(1) r  0.20E-02
+ve/cr cp44(1) r  0.3
+ve/cr l44(7)  r 0.84361        0.84807      0.84258      0.84258      0.85164      0.84006      0.85241
+ve/cr el44(7) r 0.30156E-02    0.39368E-02  0.52008E-02  0.52008E-02  0.51653E-02  0.53961E-02  0.44848E-02
+ve/cr cl44(7) r -15.0          15.0         0.2          10.1        -20.0        -10.0         20.0
+ve/cr t44(3)  r 0.8549         0.8513         0.8486  
+ve/cr et44(3) r 0.21E-02       0.21E-02       0.20E-02
+ve/cr ct44(3) r 0.0            5.0            10.0
+***
+ve/cr p58(1)  r 0.8595  
+ve/cr ep58(1) r 0.21E-02
+ve/cr cp58(1) r 0.0
+ve/cr l58(7)  r 0.86120      0.86210      0.85710      0.86052      0.86381      0.86428      0.86171
+ve/cr el58(7) r 0.24280E-02  0.23455E-02  0.43319E-02  0.38185E-02  0.34751E-02  0.42044E-02  0.42259E-02
+ve/cr cl58(7) r -15.0        15.0        -20.0        -10.0         0.3          10.0         20.0
+ve/cr t58(2)  r 0.8627       0.8704
+ve/cr et58(2) r 0.25E-02     0.43E-02
+ve/cr ct58(2) r 0.5         20.0
+
+null -25.0  30.0  0.83  0.86
+selnt 1
+text 11.0 19.0 'Moller Meas. Target 4 09.11.2005' 0.45 0 C
+selnt 10
+atitle 'Target Coordinate, mm' 'Beam Polarization'
+set pmci 2
+set mtyp 25
+mt=24
+GRAPHICS/HPLOT/AERRORS cp44 p44 ep44 ep44 ep44 ep44 1 [mt] 0.4 ! S
+key -18.0 0.832 [mt] '- in point 4Amp'
+set pmci 1
+set mtyp 22
+mt=22
+GRAPHICS/HPLOT/AERRORS ct44 t44 et44 et44 et44 et44 3 [mt] 0.4 ! S
+key 8.0 0.832 [mt] '- transv. scan 4Amp'
+set mtyp 24
+mt=24
+GRAPHICS/HPLOT/AERRORS cl44 l44 el44 el44 el44 el44 7 [mt] 0.4 ! S
+key 8.0 0.834 [mt] '- long. scan 4Amp
+
+wait
+
+null -25.0  30.0  0.85  0.9
+selnt 1
+text 11.0 19.0 'Moller Meas. Target 5 09.11.2005' 0.45 0 C
+selnt 10
+atitle 'Target Coordinate, mm' 'Beam Polarization'
+set pmci 2
+set mtyp 25
+mt=24
+GRAPHICS/HPLOT/AERRORS cp58 p58 ep58 ep58 ep58 ep58 1 [mt] 0.4 ! S
+key -18.0 0.852 [mt] '- in point 8Amp'
+set pmci 1
+set mtyp 22
+mt=22
+GRAPHICS/HPLOT/AERRORS ct58 t58 et58 et58 et58 et58 2 [mt] 0.4 ! S
+key 8.0 0.852 [mt] '- transv. scan 8Amp'
+set mtyp 24
+mt=24
+GRAPHICS/HPLOT/AERRORS cl58 l58 el58 el58 el58 el58 7 [mt] 0.4 ! S
+key 8.0 0.854 [mt] '- long. scan 8Amp
+
+set pmci 1
+close 55
+RETURN

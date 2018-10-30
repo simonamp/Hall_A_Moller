@@ -1,0 +1,2402 @@
+*** Begin of history file: Fri Mar 17 19:28:36 2006
+exec vmeas file=tmp.out
+ve/dr vtmp
+ve/dr vtmp(10001:15000)
+ve/dr vtmp(10001:15000)
+exec vmeas file=tmp.out
+ve/dr vtmp(10001:15000)
+ve/dr vtmp
+ve/dr vtmp(10001:15000)
+exec vclean serr=3.
+ve/dr vtmp(10001:15000)
+exec vclean serr=3.
+ve/dr vtmp(10001:15000)
+ exec vbgsub nd=1000 dastep=0.3E-4 nshift=61 tune=1
+mess $sigma(1e-4*1000)
+mess $sigma(1e-4*1000*60)
+ve/dr vtmp(10001:15000)
+ve/dr vtmp1(10001:15000)
+ve/dr vtmp(10001:15000)
+ve/dr vtmp1(10001:15000)
+ve/dr vtmp1(9001:10000)
+ve/dr vtmp(9001:10000)
+ve/dr vtmp1(9001:10000)
+ve/dr vtmp(9001:10000)
+ve/pl vtmp(9001:10000)
+ve/pl vtmp1(9001:10000)
+zone 1 2
+ve/pl vtmp(9001:10000)
+ve/pl vtmp1(9001:10000)
+ve/dr vtmp(9001:10000)
+ve/dr vtmp1(9001:10000)
+ve/dr vtmp(9001:10000)
+set hcol 2
+ve/dr vtmp1(9001:10000) s
+help h/dr
+help ve/dr
+set hcol 1
+ve/dr vtmp(9001:10000)
+set hcol 2
+ve/dr vtmp1(9001:10000) ! s
+set hcol 1
+null 0 1000 -0.1e-3 0.4e-3
+ve/dr vtmp(9001:10000) ! s
+set hcol 2
+ve/dr vtmp1(9001:10000) ! s
+null 0 1000 -0.1e-3 0.4e-3
+ve/dr vtmp(8001:9000) ! s
+ve/dr vtmp1(8001:9000) ! s
+ve/cop vtmp vvtmp
+exec vmeas file=tmp.out
+ve/dr vtmp(8001:9000)
+ve/dr vtmp1(8001:9000)
+ve/pl vtmp1(8001:9000)
+ve/pl vtmp(1:9000)
+ve/dr vtmp(1:9000)
+ve/dr vtmp(15000:25000)
+ve/li
+clo 0
+ve/del *
+h/del *
+ve/dr vtmp(1:5000)
+exec vmeas file=tmp.out
+ve/dr vtmp0(1:5000)
+ve/dr vtmp0(1:5000)
+ve/dr vtmp1(1:5000)
+ve/pl vtmp0(1:10000)
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/pl vtmpps
+ve/dr vtmpps
+ve/pl vtmp(1:10000)
+ve/dr vtmpps
+ve/dr vtmp(1:10000)
+ve/dr vtmp(1:10000)
+ve/dr vtmp1(1:10000)
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/dr vtmp1(1:1000)
+ve/cop vtmp1 vtmp
+mess $vdim(vtmp,1)
+mess $vdim(vtmp1,1)
+mess $vdim(vtmp0,1)
+mess $vdim(tmp1,1)
+mess $vdim(pp1,1)
+mess $vdim(pp1,2)
+ve/dr vtmp1
+mess $VLEN(pp1,1)
+exec vmeas file=tmp.out
+mess $VLEN(pp1,1)
+shell pwd
+ve/pri vtmp(1:20)
+shell pwd
+exec vmeas file=tmp.out
+ve/dr vtmp
+ve/del *
+ld //
+exec vmeas file=s07_04_80a_b0
+exec vmeas file=s07_04_80a_b0
+ve/pl vtmp0(1:10000)
+ve/pl vtmp0(1:10000)
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/pl pp1(1:10000)
+exec vmeas file=s07_04_80a_b0
+ve/pl pp1(1:10000)
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/dr pp1(1:10000)
+ve/dr vtmp(1:10000)
+ve/dr vtmp(1:10000)
+ve/dr vtmp1(1:10000)
+ve/cr vv1(60002) r
+ve/cop vtmp1(1:60000) vv1(2:60001)
+ve/dr vtmp1(1:10)
+ve/dr vv1(1:10)
+ve/dr vtmp1(59980:60000)
+ve/dr vv1(59981:60001)
+mess $vdim(vv1,1)
+ve/dr pp1(1:10000)
+ve/dr vtmp(1:10)
+ve/dr vtmp(1:10)
+ve/dr vtmp1(1:10)
+ve/cop vtmp1 vtmp
+ve/dr vtmp(1:10)
+exec vsmooth nav=1
+ve/dr vtmp1(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vv1(1:1000)
+ve/dr vv2(1:1000)
+ve/dr vv0(1:1000)
+ve/dr vtmp
+ve/dr vtmp(1:1000)
+ve/dr vtmp1(1:1000)
+ve/dr vtmpf(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmpf(1:1000)
+ve/dr vtmp(1:100)
+ve/dr vtmpf(1:100)
+ve/pl vtmp(1:10000)
+ve/pl vtmpf(1:10000)
+ve/dr vtmp(1:20)
+ve/dr vtmpf(1:20)
+ve/pl vtmpf
+ve/dr vtmpf
+ve/dr vtmp
+ve/dr vtmpf
+ve/dr vtmp(22001:25000)
+ve/dr vtmp(23001:22000)
+ve/dr vtmp(23001:23500)
+ve/dr vtmp(23001:23500)
+ve/dr vtmpf(23001:23500) ! s
+ve/dr vtmpf(1:2000)
+ve/dr vtmpf(1:2000)
+ve/dr vtmpf(1:10000)
+ve/dr vtmpf(1:20000)
+ve/dr vtmpf(30001:60000)
+ve/dr vtmpf(1:20000)
+ve/dr vtmpf(40001:60000)
+loca
+ve/dr vtmpf(1:5000)
+ve/dr vtmp(1:5000)
+ve/dr vtmpf(1:5000)
+ve/dr vtmpf(1:500)
+loca
+mess $sigma((487-116)/20)
+ve/dr vtmpf(1:500)
+ve/dr vtmp(1:500)
+ve/cop vtmpf vtmp
+exec vbgsub nd=1855 dastep=0.1E-4 nshift=61 tune=1
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:2000)
+ve/dr vtmp1(1:2000)
+ve/dr vtmpps
+ve/dr vtmp(1:2000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmp(1:2000)
+exec vbgsub nd=185 dastep=0.1E-4 nshift=61 tune=1
+exec vbgsub nd=185 dastep=0.3E-4 nshift=61 tune=1
+exec vbgsub nd=185 dastep=0.01E-4 nshift=61 tune=1
+ve/dr vtmp(1:2000)
+ve/dr vtmp1(1:2000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+mess $sigma(18.55*4)
+mess $sigma(18.5*4)
+mess $sigma(18.55*4)
+mess $sigma(18.55*2)
+mess $sigma(18.55*2*10)
+mess $sigma(18.55*200)
+mess $sigma(18.55*20)
+exec vbgsub nd=371 dastep=0.1E-4 nshift=61 tune=1
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/dr vtmp(1:20000)
+loca
+mess $sigma((16929-8223))
+loca
+mess $sigma((16951-8363))
+exec vbgsub nd=8570 tune=1 dastep=0.0005 nshift=41
+ve/dr vtmp
+ve/dr vtmp1
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmpps
+ve/dr vtmp(1:10000)
+ve/dr vtmp(1:10000)
+ve/dr vtmp(1:20000)
+ve/dr vtmp(1:20000)
+ve/dr vtmp1(1:20000)
+ve/dr vtmp1(30000:50000)
+ve/dr vtmp(30000:50000)
+loca
+ve/dr vtmp1(1:10000)
+ve/dr vtmp1(1:1000)
+vr/wri vtmp1
+ve/wri vtmp1
+ve/dr vtmp1
+null 0 60000 -1e-4 1e-4
+ve/dr vtmp1 ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vtmp1 ! s
+ve/wri vtmp1 s07_04_80a_b0.proc.1
+mess $sigma(2**15)
+ve/del vv0
+ve/read vv0 fort.22
+ve/dr vv0
+ve/dr vv0(1:1000)
+ve/dr vv0(1:100)
+ve/del vv1
+ve/del vv2
+ve/read vv1 fort.23
+ve/read vv2 fort.24
+ve/read vv3 fort.25
+ve/dr vv0
+ve/dr vv1
+ve/dr vv1(1:100)
+ve/dr vv1
+ve/dr vv2
+ve/dr vv3
+ve/dr vv3
+ve/dr vtmp1
+ve/dr vtmp1(1:20000)
+ve/dr vv3(1:20000)
+ve/read vvi fort.21
+ve/dr vvi(1:20000)
+ve/dr vtmp1(1:20000)
+ve/del vvi
+ve/dr vv0
+ve/dr vv1
+ve/dr vv2
+ve/dr vv2(1:20000)
+ve/dr vv2(1:2000)
+ve/dr vv2(1:200)
+ve/dr vv1(1:200)
+ve/dr vv2(1:200)
+ve/dr vv3(1:200)
+ve/dr vv3
+ve/read vv4 fort.25
+ve/dr vv3(1:2000)
+ve/dr vv3(1:20000)
+ve/dr vv4(1:20000)
+ve/dr vtmp(1:20000)
+ve/dr vv4
+ve/dr vtmp
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vtmp ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv4(1:60000) ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv3(1:60000) ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv3(1:60000) ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv3(1:60000) ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv4(1:60000) ! s
+ve/read vv4 fort.25
+null 0 60000 -0.6e-4 0.6e-4
+ve/read vv4 fort.25
+ve/dr vv5(1:60000) ! s
+ve/dr vv4(1:60000) ! s
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv3(1:60000) ! s
+ve/read vv5 fort.26
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv5(1:60000) ! s
+ve/dr vv5(1:60000)
+ve/read vv5 fort.25
+null 0 60000 -0.6e-4 0.6e-4
+ve/dr vv5(1:60000) ! s
+ve/dr vv5(1:2000)
+ve/dr vv5(1:2000)
+ve/dr vtmp(1:2000)
+ve/dr vtmp1(1:2000)
+ve/dr vv5(1:2000)
+ve/op/sub vv5 vtmp1 vv6
+ve/op/vsub vv5 vtmp1 vv6
+ve/dr vv6(1:2000)
+ve/dr vtmp1(1:2000)
+ve/read vv4 fort.26
+ve/dr vv4(1:2000)
+ve/read vv4 fort.26
+ve/read vv3 fort.22
+ve/dr vv3
+ve/dr vv3
+ve/dr vv4
+ve/dr vv4(1:200)
+ve/dr vtmp(1:200)
+ve/dr vtmp1(1:200)
+ve/dr vv4(1:200)
+ve/op/vsub vv4 vtmp1 vv6
+ve/dr vv6
+ve/dr vv6(1:60000)
+ve/read vv4 fort.26
+ve/read vv3 fort.22
+ve/op/vsub vv4 vtmp1 vv6
+ve/dr vv6(1:60000)
+ve/read vv4 fort.26
+ve/read vv3 fort.22
+ve/op/vsub vv4 vtmp1 vv6
+ve/dr vv6(1:60000)
+ve/dr vv6(1:60)
+ve/read vv0 fort.22
+ve/read vv1 fort.23
+ve/read vv1 fort.24
+ve/read vv1 fort.23
+ve/read vv2 fort.24
+ve/read vv3 fort.25
+ve/read vv4 fort.26
+ve/dr vv0(1:60000)
+ve/dr vv1(1:60000)
+opt logy
+ve/dr vv1(1:60000)
+ve/dr vv0(1:60000)
+ve/dr vv2(1:60000)
+ve/dr vv3(1:60000)
+ve/dr vv4(1:60000)
+opt liny
+ve/dr vv4(1:60000)
+ve/read vv0 fort.22
+ve/read vv1 fort.23
+ve/read vv2 fort.24
+ve/read vv3 fort.25
+ve/read vv4 fort.26
+ve/dr vv0(1:60000)
+opt logy
+ve/dr vv0(1:60000)
+ve/dr vv0
+loca
+mess $sigma(2**16)
+mess $sigma((2**16*1e-4))
+mess $sigma(1/(2**16*1e-4))
+mess $sigma(1/(2**16*1e-4)*10000)
+mess $sigma(1/(2**16*1e-4)*30000)
+mess $sigma(1/(2**16*1e-4))
+mess $sigma((2**16*1e-4))
+mess $sigma(1/(2**16*1e-4))
+mess $sigma((2**16*1e-4))
+mess $sigma((2**16*1e-4)*60)
+loca
+ve/dr vv0
+ve/dr vv0
+ve/dr vv0(1:1000)
+mess $sigma(1/(2**16*1e-4)*1000)
+mess $sigma((2**16*1e-4)*60)
+mess $sigma((2**16*1e-4)*60*2)
+loca
+loca
+mess $sigma(786./(2**16*1e-4))
+mess $sigma(786./(2**16*1e-4)/2)
+mess $sigma(17.2/(2**16*1e-4))
+ve/dr vv0(1:2000)
+ve/dr vv0(1000:2000)
+ve/dr vv0(1001:2000)
+loca
+mess $sigma(1179/(2**16*1e-4))
+loca
+mess $sigma(1968/(2**16*1e-4))
+ve/dr vv0(1:4000)
+ve/dr vv0(3001:4000)
+loca
+exec vfget
+ve/dr vv0
+ve/dr vv0(1:2000)
+loca
+ve/dr vv0(1:4000)
+loca
+ve/dr vv0(1:2000)
+ve/dr vv0(1:200)
+ve/dr vv0(1:500)
+loca
+ve/dr vv0(1:2000)
+loca
+ve/dr vv0(1:6000)
+ve/dr vv0(3001:4000)
+exec vfget
+ve/dr vv0(1:6000)
+ve/dr vv60(1:6000)
+exec vfget
+ve/dr vv60(1:6000)
+ve/dr vv0(1:6000)
+ve/dr vv60(1:6000) ! s
+loca
+opt liny
+ve/dr vv0(3001:6000)
+ve/dr vv0(3001:4000)
+ve/dr vv60(3001:4000) ! s
+ve/dr vv60(3001:4000) !
+ve/dr vv0(3001:4000)
+ve/dr vv0(3001:6000)
+ve/dr vv0(3001:4000)
+ve/dr vv0(3001:4000)
+ve/dr vv0(4001:5000)
+ve/dr vv60(3001:4000) ! s
+ve/dr vv0(4001:5000)
+ve/dr vv60(4001:5000) ! s
+ve/dr vv0(4001:6000)
+ve/dr vv60(4001:6000) ! s
+ve/dr vv0(4001:6000)
+ve/dr vv60(4001:6000) ! s
+ve/dr vv60(4001:6000) !
+ve/dr vv0(4001:6000) ! s
+exec vfget
+ve/dr vv0(4001:6000)
+ve/dr vv60(4001:6000) ! s
+ve/dr vv0(1:1000)
+opt logy
+ve/dr vv0(1:1000)
+ve/dr vv60(1:1000) ! s
+ve/dr vv0(1:2000)
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000) ! s
+opt liny
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000) ! s
+loca
+ve/dr vtmp
+loca
+exec vfget
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000) ! s
+loca
+ve/dr vv0
+opt logy\
+ve/dr vv0
+ve/dr vv0(1:5000)
+ve/cop vv0 vv00
+exec vfget
+ve/dr vv0(1:5000)
+ve/dr vv0(1:500)
+ve/dr vv0(1:1000)
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000) ! s
+loca
+loca
+loca
+exec vmeas file=s07_04_80a_b0
+ve/dr vtmp(1:20000)
+ve/dr vtmp1(1:20000)
+opt liny
+ve/dr vtmp(1:20000)
+ve/dr vtmp1(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/cop vtmp1 vtmp
+exec vbgsub nd=40 dastep=0.3E-4 nshift=61 tune=1
+exec vbgsub nd=80 dastep=0.3E-4 nshift=61 tune=1
+ve/dr vv0(1001:2000)
+ve/dr vv0(1001:10000)
+ve/dr vv0(8001:10000)
+ve/dr vv60(8001:10000) ! s
+loca
+ve/dr vv60(1001:2000) ! s
+ve/dr vv0(1001:2000)
+ve/dr vv0(1001:4000)
+ve/dr vv0(1001:8000)
+ve/dr vv0(1001:32000)
+ve/dr vv0(1:32000)
+opt logy
+ve/dr vv0(1:32000)
+ve/dr vv60(1:32000) ! s
+ve/dr vv0(1001:2000)
+ve/dr vv0(1001:4000)
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000) ! s
+ve/dr vv0(2001:3000)
+ve/dr vv60(2001:3000) ! s
+ve/dr vv0(1501:1800)
+ve/dr vv60(1501:1800) ! s
+loca
+exec vbgsub nd=80 dastep=0.3E-4 nshift=5 tune=1
+opt liny
+exec vbgsub nd=80 dastep=0.3E-4 nshift=5 tune=1
+exec vbgsub nd=80 dastep=0.3E-4 nshift=2 tune=1
+exec vbgsub nd=80 dastep=0.3E-4 nshift=2 tune=1
+exec vbgsub nd=1000 dastep=0.3E-4 nshift=2 tune=1
+exec vbgsub nd=1000 dastep=0.3E-4 nshift=3 tune=1
+exec vbgsub nd=1000 dastep=0.3E-4 nshift=5 tune=1
+exec vbgsub nd=1000 dastep=0.3E-4 nshift=5 tune=1
+exec vbgsub nd=1000 dastep=0.3E-4 nshift=5 tune=1
+exec vbgsub nd=80 dastep=0.125E-4 nshift=20 tune=1
+exec vbgsub nd=80 dastep=0.05E-4 nshift=20 tune=1
+exec vbgsub nd=80 dastep=0.1E-4 nshift=20 tune=1
+exec vbgsub nd=199 dastep=0.2E-4 nshift=20 tune=1
+exec vbgsub nd=80 dastep=0.1E-4 nshift=2 tune=1
+exec vbgsub nd=80 dastep=0.2E-4 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0.4E-4 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0.6E-4 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0.6E-4 nshift=2 tune=1
+exec vbgsub nd=80 dastep=0.6E-4 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0 nshift=1 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 nshift=1 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=-0.001 nshift=1 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.002 nshift=1 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.102 nshift=1 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.002 nshift=3 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.022 nshift=3 tune=0
+ve/dr vtmpps
+exec vbgsub nd=81 dastep=0.022 nshift=3 tune=0
+ve/dr vtmpps
+exec vbgsub nd=79 dastep=0.022 nshift=3 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.01 nshift=3 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.01 nshift=3 tune=0
+exec vbgsub nd=80 dastep=0.01 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0.001 nshift=3 tune=1
+exec vbgsub nd=80 dastep=0.001 da=-0.1 nshift=0 tune=0
+exec vbgsub nd=80 dastep=0.001 da=0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.01 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=0.01 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.005 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0052 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.007 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.008 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.005 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.004 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.003 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.002 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0065 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0055 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0062 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=20 dastep=0.001 da=-0.0015 nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp(1:500)
+ve/dr vtmp1(1:500)
+ve/dr vtmp0(1:500)
+ve/dr vtmp(1:500)
+ve/dr vtmp1(1:500)
+ve/dr vtmp(1:500)
+ve/dr vtmp(1:5000)
+ve/dr vtmp1(1:5000)
+exec vbgsub nd=40 dastep=0.001 da=-0.003 nshift=0 tune=0
+ve/pl vtmp1(1:1000)
+ve/dr vtmp(1:5000)
+ve/dr vtmp1(1:5000)
+ve/dr vtmp(1:5000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmps(1:1000)
+ve/dr vtmpps(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmps(1:1000) ! s
+ve/dr vtmp(1:200)
+ve/dr vtmps(1:200) ! s
+ve/cop vtmp vtmpq
+ve/del vtmp
+ve/cop vtmpq(1:2000) vtmp
+exec vbgsub nd=40 dastep=0.001 da=-0.003 nshift=0 tune=0
+ve/pl vtmp
+ve/dr vtmp
+exec vbgsub nd=40 dastep=0.001 da=-0.003 nshift=0 tune=0
+exec vbgsub nd=40 dastep=0.001 da=-0.003 nshift=0 tune=0
+exec vbgsub nd=40 dastep=0.001 da=-0.003 nshift=0 tune=0
+ve/pl vtmp
+ve/pl vtmp1
+ve/dr vtmp(1:200)
+ve/dr vtmps(1:200) ! s
+exec vbgsub nd=40 dastep=0.001 da=-0.00 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.01 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.03 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.04 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=-0.06 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=0.01 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=0.03 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=40 dastep=0.001 da=0.04 nshift=0 tune=0
+ve/dr vtmpps
+ve/cop vtmpq vtmp
+ve/dr vtmp
+ve/del vtmp
+ve/cop vtmpq vtmp
+ve/del vtmp
+ve/cop vtmpq vtmp
+ve/dr vtmp
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:200)
+exec vbgsub nd=40 dastep=0.001 da=-0.06 nshift=0 tune=0
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:200)
+ve/dr vtmpps(1:200) ! s
+ve/dr vtmps(1:200) ! s
+ve/dr vtmps(1:2000) ! s
+ve/dr vtmp(1:2000)
+ve/dr vtmps(1:2000) ! s
+ve/dr vtmp(1:400)
+ve/dr vtmps(1:400) ! s
+exec vbgsub nd=80 dastep=0.001 da=-0.06 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.03 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.12 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0. nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.001 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.002 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.004 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.008 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.01 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.012 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.014 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.016 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.018 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.022 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.026 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.030 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.036 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.04 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.045 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.055 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.06 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.065 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.07 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.08 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.082 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.085 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.09 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.1 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.12 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.14 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.14 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0. nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.001 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.002 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.006 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.005 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0055 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0065 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0060 nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1:80)
+ve/dr vtmp(40001:40080)
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0058 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0062 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.0061 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=80 dastep=0.001 da=-0.00605 nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1:160)
+ve/dr vtmps(1:160) ! s
+exec vbgsub nd=80 dastep=0.000015 da=-0.0060 nshift=21 tune=1
+exec vbgsub nd=80 dastep=0.00001 da=-0.0060 nshift=61 tune=1
+exec vbgsub nd=80 dastep=0.001 da=-0.00605 nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1:160)
+ve/dr vtmps(1:160) ! s
+ve/dr vtmp1(1:160)
+ve/dr vtmp1(27233:60000)
+ve/dr vtmp1(27233:28000)
+ve/dr vtmp(27233:28000)
+ve/pl vtmp(27233:28000)
+ve/pl vtmp1(27233:28000)
+exec vbgsub nd=577 dastep=0.001 da=-0.00 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.04 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.041 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.042 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.043 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.044 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.045 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.046 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.047 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.08 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.043 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=0.02 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=0.08 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=0.04 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=577 dastep=0.001 da=0.1 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1923 dastep=0.001 da=0. nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1933 dastep=0.001 da=0. nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1:1000)
+ve/dr vtmps(1:1000) ! s
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/pl vtmp(1:10000)
+exec vbgsub nd=1920 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1930 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+ve/dr vtmpps
+ve/dr vtmp(1:2000)
+ve/dr vtmps(1:2000) ! s
+ve/dr vtmp(1:200)
+ve/dr vtmps(1:200) ! s
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1950 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1960 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1970 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1980 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1990 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1999 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=2000 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1970 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1960 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1950 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1945 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1935 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1930 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1935 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1920 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0.01 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0.1 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1941 dastep=0.001 da=0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1939 dastep=0.001 da=0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=-0.01 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1940 dastep=0.001 da=-0.1 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+ve/dr vtmp1(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp1(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmps(1:1000) ! s
+ve/dr vtmp(1:1000)
+set hcop 2
+set hcol 2
+ve/dr vtmps(1:1000) ! s
+set hcol 4
+set hcol 3
+ve/dr vtmp(1:1000)
+set hcol 4
+ve/dr vtmps(1:1000) ! s
+set hcol 3
+ve/dr vtmp(1001:2000)
+set hcol 4
+ve/dr vtmps(1001:2000) ! s
+ve/dr vtmp(1001:1400)
+loca
+exec vbgsub nd=190 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+ve/dr vtmp(1001:1400)
+loca
+ve/dr vtmp(2001:2400)
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1910 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1890 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1890 dastep=0.001 da=-0.0 nshift=0 tune=0
+exec vbgsub nd=1902 dastep=0.001 da=-0.0 nshift=0 tune=0
+exec vbgsub nd=1890 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1902 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1904 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/dr vtmpps
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:1000)
+ve/pl vtmp(1:1000)
+exec vbgsub nd=1988 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp(1:1000)
+exec vbgsub nd=1902 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp(1:1000)
+ve/pl vtmp(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+ve/pl vtmp(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1995 dastep=0.001 da=-0.0 nshift=0 tune=0
+exec vbgsub nd=1895 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1902 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+ve/pl vtmp(1:10000)
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1904 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1908 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1902 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.1 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.2 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.05 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=-0.0 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.01 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.02 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.04 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.09 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.12 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0.4 nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+exec vbgsub nd=1900 dastep=0.001 da=0. nshift=0 tune=0
+ve/pl vtmp1(1:10000)
+ve/dr vtmpps
+ve/pl vtmp(1:2000)
+ve/dr vtmp(1:2000)
+set hcol 2
+ve/dr vtmps(1:2000) ! s
+ve/dr vv0
+ve/dr vv1
+ve/dr vv2
+opt liny
+ve/dr vv2
+ve/dr vv0
+ve/dr vv1
+exec vfget
+exec vfget
+ve/dr vv0
+opt logy
+ve/dr vv0
+ve/dr vv0(1:2000)
+ve/dr vv0(1:4000)
+ve/dr vv0(1:8000)
+ve/dr vv0(6001:8000)
+loca
+ve/dr vv0
+ve/dr vv0(1:16000)
+loca
+ve/dr vv0(1:1600)
+ve/dr vv0(301:400)
+ve/dr vv0(301:600)
+ve/dr vv0
+ve/dr vv0(1:16600)
+ve/dr vv0(1:100)
+ve/dr vv0(1:1000)
+ve/dr vv0(1:2000)
+loca
+exec vfget
+ve/dr vv0(1:2000)
+ve/dr vv0(1:2000)
+ve/dr vv3(1:2000)
+opt liny
+ve/dr vv3(1:2000)
+ve/dr vv3
+ve/dr vv3
+ve/dr vv2
+ve/dr vv3
+ve/dr vv4
+ve/dr vv3
+exec vmeas file=s07_04_80a_b0
+ve/dr vtmp0(1:100)
+mess $sigma(60000-2**15)
+ve/dr vtmp0(27233:30000)
+ve/dr vtmp0(27233:30000)
+ve/dr vv3(1:1000)
+ve/dr vv3(1:1000)
+ve/dr vtmp0(27233:28232)
+ve/dr vtmp0(27233:28232)
+ve/dr vv3(1:1000)
+ve/dr vv3
+ve/dr vtmp0(27233:60000)
+set hcol 3
+ve/dr vv3 ! s
+exec vfget
+ve/dr vtmp0(27233:60000)
+set hcol 4
+ve/dr vtmp0(27233:60000)
+ve/dr vtmp0(27233:60000)
+ve/dr vv3
+ve/dr vtmp0(27233:60000)
+set hcol 3
+ve/dr vv3 ! s
+set hcol 4
+ve/dr vtmp0(27233:60000) ! s
+exec vfget
+ve/dr vtmp0(27233:60000)
+ve/dr vtmp0(27233:60000)
+ve/dr vv3
+set hcol 3
+ve/dr vv3 ! s
+ve/dr vtmp0(27233:27332)
+ve/dr vv3(1:100)
+ve/op/vsub vv3 vtmp0(27233:60000) vvsub
+ve/dr vvsub
+ve/dr vv3
+ve/dr vv3
+set hcol 4
+ve/cop vtmp0(27233:60000) vvrt
+ve/dr vvrt(1:1000)
+ve/dr vvrt(1:1000)
+ve/dr vv3(1:1000)
+ve/dr vvrt(1:8000)
+ve/dr vv3(1:8000)
+ve/op/vsub vv3 vvrt vvsub
+ve/pl vvrt
+ve/pl vvsub
+mess $sigma(60000-2**15)
+mess $sigma(60000-2**15-2**14)
+ve/pri vv3(1)
+mess $vdim(vv3)
+ve/pri vv3(32768)
+ve/pri vtmp
+ve/dr vtmp
+loca
+ve/dr vtmp1
+ve/dr vtmp1(20001:30000)
+ve/dr vtmp1(30001:60000)
+mess $sigma(2**15)
+mess $sigma(60000-2**15)
+mess $sigma(2**15)
+mess $sigma(60000-2**15-32768)
+ve/dr vtmp0(1:10000)
+ve/dr vv3(5537:15536)
+loca
+ve/op/vsub vtmp0(1:10000) vv3(5537:15536) vvs1
+ve/pl vvs1
+ve/dr vvs1
+ve/cop vtmp0(1:10000) vss0
+ve/cop vv3(5537:15536) vss1
+del del vvs1
+ve/del vvs1
+ve/op/vsub vss0 vss1 vvs1
+ve/dr vvs1
+ve/pl vvs1
+ve/pl vss0
+ve/pl vvs1
+ve/dr vv0
+ve/dr vv1
+ve/dr vv2
+ve/dr vv3
+ve/dr vv0
+opt logy
+ve/dr vv0
+opt liny
+ve/dr vv0(1:17000)
+ve/dr vv0(2:17000)
+ve/dr vv0(2:2000)
+ve/dr vv0(2:6000)
+ve/dr vv0(2:9000)
+ve/dr vv0(8001:9000)
+ve/dr vv0(8501:8700)
+loca
+ve/cop vtmp1 vtmp
+exec vbgsub nd=3806 tune=0 dastep=0.0005 nshift=0 da=0 spline=0
+ve/dr vtmpps
+ve/dr vtmp(1:4000)
+ve/dr vtmp(1:4000)
+ve/dr vtmp1(1:4000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmpps(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp1(1:1000)
+ve/dr vtmp(1:1000)
+exec vbgsub nd=380 tune=1 dastep=0.0001 nshift=11 da=0 spline=0
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmps(1:1000)
+ve/dr vtmp(1:1000)
+ve/dr vtmp1(1:1000)
+ve/dr vtmp(1:1000)
+set hcol 2
+ve/dr vtmps(1:1000) ! s
+exec vmeas file=s07_04_80a_b0
+ve/pl vtmp1(27333:60000)
+ve/pl vtmp(27333:60000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(27333:60000)
+ve/pl vtmp1(27333:60000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/dr vtmp0(1:20000)
+ve/dr vtmp0
+ve/dr vtmp0(1:20000)
+ve/dr vv0
+ve/dr vv0(2:33000)
+ve/dr vv0(2:17000)
+ve/dr vv0(2:1000)
+ve/dr vv0(1001:2000)
+ve/dr vv60(1001:2000)
+ve/dr vv0(2:17000)
+ve/dr vv60(8001:9000)
+ve/dr vv0(8001:9000)
+loca
+ve/dr vtmp(1:1000)
+ve/dr vtmp(1:500)
+ve/dr vtmp0(1:500)
+ve/dr vtmp1(1:500)
+loca
+ve/dr vtmp1(1:100)
+ve/pl vtmpps
+ve/dr vtmpps
+ve/dr vtmp(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+exec vbgsub nd=380 tune=1 dastep=0.0001 nshift=11 da=0 spline=0
+exec vbgsub nd=380 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+ve/cop vtmp1 vtmp
+exec vbgsub nd=380 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+exec vbgsub nd=380 tune=1 dastep=0.00002 nshift=21 da=0 spline=0
+exec vbgsub nd=380 tune=1 dastep=0.00004 nshift=61 da=0 spline=0
+exec vbgsub nd=3806 tune=0 dastep=0.0005 nshift=0 da=0 spline=0
+ve/dr vtmpps
+ve/dr vtmpps(1:300)
+ve/dr vtmp(1:300)
+ve/dr vtmp(1:1000)
+set hcol 2
+ve/dr vtmps(1:1000) ! s
+exec vbgsub nd=1906 tune=0 dastep=0.0005 nshift=0 da=0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1906 tune=1 dastep=0.0005 nshift=21 da=0 spline=0
+ve/dr vtmp(1:1000)
+set hcol 4
+ve/dr vtmps(1:1000) ! s
+ve/dr vtmp1(30000:60000)
+ve/pl vtmp0(30000:60000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmp0
+ve/dr vtmp0
+ve/dr vtmp0(22000:26000)
+ve/dr vtmp0(22000:28000)
+ve/dr vtmp0(22000:26000)
+ve/dr vtmp0(22000:23000)
+exec vmeas file=s07_04_80a_b0
+ve/dr vtmp0(1:2000)
+set hcol 2
+ve/dr vtmps(1:2000) ! s
+ve/dr vtmp0(1:2000)
+set hcol 4
+ve/dr vtmp1(1:2000) ! s
+ve/pl vtmp1(1:20000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmps(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmp0(30000:60000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmp0(1:20000)
+ve/pl vtmps(1:20000)
+ve/pl vtmpps
+ve/pl vtmp0(1:20000)
+mess $sigma(.3e-4/sqrt(50000))
+ve/pri vtmppf
+ve/pri vtmppx
+exec vmeas file=s07_04_80a_b0
+exec vmeas file=s07_04_80a_b0
+ve/pl vtmps(1:22147)
+ve/pl vtmps(1:22147)
+ve/pl vtmps(27398-60000)
+ve/pl vtmps(27398:60000)
+ve/pl vtmp0(1:22147)
+ve/pl vtmp0(1:22147)
+ve/pl vtmp0(27398:60000)
+ve/pl vtmpps
+ve/pl vtmps(1:20000)
+exec vmeas file=s07_04_80a_b0
+ve/pl vtmps(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp1(30000:60000)
+ve/dr vtmp1(1:20000)
+exec vbgsub nd=380 tune=1 dastep=0.00004 nshift=61 da=0 spline=0
+exec vmeas file=s07_04_80a_b0
+ve/cop vtmp1 vtmp
+exec vbgsub nd=380 tune=1 dastep=0.00004 nshift=61 da=0 spline=0
+exec vbgsub nd=380 tune=1 dastep=0.00004 nshift=61 da=0 spline=0
+ve/dr vtmp(1:1000)
+set hcol 2
+ve/dr vtmps(1:1000) ! s
+ve/dr vtmp(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+exec vbgsub nd=3806 tune=1 dastep=0.00001 nshift=61 da=0 spline=0
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+exec vfget
+ve/dr vv0
+ve/dr vv0(1:16800)
+ve/dr vv0(8201:8500)
+ve/dr vv0(8201:8800)
+ve/dr vv0(8501:8800)
+ve/dr vv0(8501:8700)
+ve/dr vv0(8601:8700)
+kica
+loca
+loca
+exec vmeas file=s07_04_80a_b0
+exec vmeas file=s07_04_80a_b0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+exec vfget
+ve/dr vv0
+exec vbgsub nd=380 tune=1 dastep=0.00004 nshift=61 da=0 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+exec vbgsub nd=380 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+ve/pl vtmp1(1:20000)
+exec vfget
+ve/dr vv0
+ve/dr vv0(8001:9000)
+loca
+ve/pl vtmpps(1:17000)
+ve/pl vv0(1:17000)
+ve/dr vv0(1:17000)
+ve/dr vv60(1:17000)
+ve/dr vv0(1:2000)
+ve/dr vv60(1:2000)
+ve/dr vv0(8001:9000)
+ve/dr vv60(8001:9000)
+ve/dr vv0(8001:9000)
+ve/dr vv0(8501:8800)
+loca ! i
+ve/dr vv0(8001:9000)
+fu/pl x 0 1
+loca ! i
+ve/dr vv0(8001:9000)
+ve/dr vv0
+ve/dr vv0(1:17000)
+ve/dr vv60(1:17000)
+ve/dr vv3
+exec vfget
+ve/dr vv0(1:17000)
+ve/cop vv0 vv00
+exec vfget
+ve/dr vv0(1:17000)
+ve/dr vv00(1:17000)
+loca
+mess $sigma(1698+2)
+mess $sigma(1698+3)
+mess $sigma(1698*2)
+mess $sigma(1698*3)
+mess $sigma(1698*4)
+mess $sigma(1698*5)
+mess $sigma(1698*6)
+loca
+mess $sigma(1736*2)
+mess $sigma(1736*3)
+mess $sigma(1736*4)
+mess $sigma(1736*5)
+mess $sigma(1736*6)
+help loca
+loca ! s
+ve/dr vv00(15001:16000)
+ve/dr vv00(15401:15600)
+loca
+mess $sigma(15512)
+ve/dr vv0(1:17000)
+mess $sigma(15512/9)
+loca
+exec vbgsub nd=1052 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+exec vbgsub nd=525 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+exec vbgsub nd=526 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+exec vbgsub nd=526 tune=1 dastep=0.00002 nshift=81 da=0 spline=0
+exec vbgsub nd=526 tune=1 dastep=0.00001 nshift=81 da=0 spline=0
+exec vbgsub nd=500 tune=1 dastep=0.00001 nshift=81 da=0 spline=0
+ve/pl vtmp1(1:20000)
+ve/dr vtmp1(1:20000)
+ve/dr vtmp(1:20000)
+set hcol 2
+ve/dr vtmps(1:20000) ! s
+ve/dr vv0(1:17000)
+opt logy
+ve/dr vv0(1:17000)
+ve/dr vv3(1:17000)
+opt liny
+ve/dr vv3(1:17000)
+ve/dr vv3
+ve/dr vv3
+ve/dr vtmp(27233:60000)
+ve/dr vtmp(1:20000)
+ve/dr vv3
+ve/dr vtmp(1:20000)
+ve/dr vv3(1:20000)
+loca
+ve/dr vv0
+exec vfget
+ve/dr vv0
+ve/dr vv3
+exec vfget
+ve/dr vv3
+ve/dr vv0
+exec vfget
+ve/dr vv3
+ve/dr vv3(1:100)
+ve/dr vtmp(27233:27332)
+exec vfget
+ve/dr vv3
+ve/dr vv3(1:1000)
+ve/dr vv3(1:100)
+ve/dr vv3(1:400)
+ve/dr vv3(1:100)
+ve/cop vtmp(27233:60000)
+ve/cop vtmp(27233:60000) vtt
+ve/pl vtt
+ve/op/vsub vtt vv3 vv3a
+ve/pl vv3a
+ve/dr vtt
+set hcol 4
+ve/dr vv3 ! s
+ve/dr vtmp
+ve/dr vtmp(1:2000)
+ve/wri vtmp(1:16384) s07_head_3
+exec vfget
+exec vfget
+ve/dr vv0
+ve/dr vv3
+ve/dr vtmp(1:16384)
+set hcol 2
+ve/dr vv3 ! s
+exec vfget
+ve/dr vv3
+ve/dr vtmp(1:16384)
+set hcol 4
+ve/dr vv3 ! s
+exec vfget
+ve/dr vv3
+ve/dr vv3(1:1000)
+ve/dr vv3(1:2000)
+ve/dr vv3(1:1000)
+ve/dr vtmp(1:1000)
+ve/cop vtmp(1:16384) vtt1
+ve/op/vsub vtt1 vv3 vvs3
+ve/pl vvs3
+ve/dr vvs3
+ve/dr vtt1
+set hcol 2
+ve/dr vvs3 ! s
+ve/dr vtmp(1:20000)
+ve/dr vtmp(1:22000)
+ve/pl vtmp(16385:22384)
+ve/dr vtmp(16385:22384)
+ve/dr vtmp(1:22000)
+ve/dr vtmp(16385:22384)
+set hcol 4
+ve/dr vv3(1:6000) ! s
+ve/dr vtmp(1:22000)
+ve/dr vtmp(28001:60000)
+ve/dr vtmp(28001:50000)
+ve/dr vtmp(28001:50000)
+ve/dr vtmp(1:22000)
+loca
+ve/dr vv0(1:100)
+loca
+ve/cop vv0 vv00
+exec vfget
+ve/dr vv0(1:100)
+ve/dr vv0(1:17000)
+ve/dr vv00(1:17000)
+ve/pl vv0
+opt logy
+ve/pl vv0
+ve/dr vv0(1:17000)
+ve/dr vv0
+ve/pl vv0
+mess $sigma(.4e-7+10*.14e-6)
+mess $sigma(.4e-7+10*.14e-6)
+mess $sigma(.4e-7+10*.14e-6)
+exec vfget
+ve/pl vv0
+ve/pl vv3
+ve/dr vv3
+opt liny
+ve/dr vv3
+exec vfget
+ve/dr vv3
+ve/dr vv3(1:16700)
+ve/dr vv3
+ve/dr vv3(1:16700)
+exec vfget
+ve/dr vv3(1:16700)
+ve/dr vv3
+mess $sigma(2**14)
+exec vfget
+ve/dr vv0
+ve/dr vv3(1:1000)
+ve/dr vtmp(1:1000)
+set hcol 3
+ve/dr vv3(1:1000) ! s
+ve/cop vv0 vv0h
+ve/cop vv3 vv3h
+exec vfget
+ve/cop vv3 vv3t
+ve/cop vv0 vv0t
+ve/dr vv3h(1:1000)
+set hcol 4
+ve/dr vv3h(1:1000)
+ve/dr vv3h(1:1000)
+ve/dr vv3t(1:1000)
+ve/dr vv0h(1:8000)
+ve/dr vv0t(1:16000)
+line 0 1.68090548E-06 16000 1.68090548E-06
+ve/dr vv0t(1:16000)
+line 100 1.68090548E-06 16000 1.68090548E-06
+ve/dr vv0t(1:1600)
+line 100 1.68090548E-06 16000 1.68090548E-06
+ve/dr vv0h(1:1600)
+ve/dr vv0t(1:16000)
+ve/dr vv0h(1:16000)
+ve/dr vv0h(1:8000)
+line 100 2.28397789E-06 8000 2.28397789E-06
+ve/dr vv0h(1:16000)
+ve/dr vv0t
+ve/dr vv0h(1:16000)
+ve/dr vv0t(1:32000)
+set hcol 2
+ve/dr vv0h(1:16000) ! s
+exec vfget
+ve/dr vv4
+ve/pri vv4
+mess $sigma(atan2(.1,1.))
+exec vfget
+ve/dr vv4
+ve/dr vv4(1:16000)
+ve/dr vv4(1:1600)
+mess $sigma(2**15)
+mess $sigma(2**14)
+ve/read vvv1 s07_04_80a_b0.proc.1
+ve/dr vvv1
+ve/dr vvv1(1:1000)
+exec vmeas file=s07_04_80a_b0 stage=0
+ve/wri vtmp1 s07_04_80a_b0.proc.0
+exev vfget new=1
+exec vfget new=1
+exec vfget new=1
+ve/dr vv0
+ve/dr vv0
+ve/dr vv1
+ve/dr vv0(201:2000)
+ve/dr vv1(201:2000)
+ve/dr vv0(201:10000)
+ve/dr vv0(3000:3500)
+ve/dr vv0(3000:3500)
+ve/dr vv1(3000:3500)
+loca
+ve/dr vv1(3000:4000)
+ve/dr vv0(3000:4000)
+loca
+ve/dr vv0(3201:3600)
+ve/dr vv1(3201:3600)
+loca
+ve/dr vv0
+ve/dr vv1
+ve/dr vv0(1:33000)
+ve/dr vv1(1:33000)
+ve/dr vv0(16001:18000)
+ve/dr vv0(17001:18000)
+ve/dr vv0(17001:18000)
+ve/dr vv1(17001:18000)
+loca
+exec vfget new=1
+ve/dr vv2
+ve/dr vv3
+exec vfget new=1
+ve/dr vv2
+ve/dr vv3
+ve/dr vtmp1(1:10000)
+ve/dr vv3(1:10000)
+ve/dr vv3(1:20000)
+ve/dr vtmp1(1:20000)
+set hcol 2
+ve/dr vv3(1:20000) ! s
+ve/dr vtmp1(28000:60000)
+set hcol 4
+ve/dr vv3(28000:60000) ! s
+ve/dr vv3(1:2000)
+ve/dr vv3(10001:12000)
+ve/dr vv3(10001:11000)
+ve/dr vv3(10001:10200)
+ve/dr vtmp1(10001:10200)
+exec vfget new=1
+ve/dr vv3
+exec vfget new=1
+ve/dr vv3
+ve/dr vv0*1:17000)
+ve/dr vv0(1:17000)
+ve/dr vv1(1:17000)
+exec vfget new=1
+ve/dr vv6
+set hcol 2
+ve/dr vtmp1 ! s
+exec vfget new=1
+ve/dr vv6
+set hcol 4
+ve/dr vtmp1 ! s
+ve/dr vtmp1(1:1000)
+ve/dr vtmp1(1:4000)
+ve/dr vtmp1(1:1000)
+set hcol 2
+ve/dr vv6(1:1000) ! s
+ve/cop vtmp1(1:20000) vs1
+ve/del vs1
+ve/del vs2
+ve/cop vtmp1(1:20000) vs1
+ve/cop vtmp1(30000:60000) vs2
+ve/cop vv6(1:20000) vsb1
+ve/cop vv6(30000:60000) vsb2
+ve/op/vsub vs1 vsb1
+ve/op/vsub vs1 vsb1 vss1
+ve/del vss1
+ve/del vss2
+ve/op/vsub vs1 vsb1 vss1
+ve/dr vss1
+ve/dr vs1
+ve/dr vss1
+ve/pl vs1
+ve/pl vss1
+ve/dr vs1
+set hcol 4
+ve/dr vss1 ! s
+ve/dr vs1
+set hcol 2
+ve/dr vsb1 ! s
+ve/dr vs1
+ve/dr vss1
+ve/dr vs2
+ve/dr vss2
+ve/op/vsub vs2 vsb2 vss2
+ve/dr vss2
+ve/dr vv3
+exec vfget new=1
+ve/dr vv6
+ve/dr vv6(1:1000)
+ve/dr vtmp1(1:1000)
+exec vfget new=1
+ve/dr vv3
+exec vfget new=1
+ve/dr vv3
+set hcol 4
+ve/dr vtmp1 ! s
+ve/dr vtmp1(1:20000)
+set hcol 2
+ve/dr vv3(1:20000) ! s
+exec vfget new=1
+ve/dr vv3
+ve/dr vv0(1:10000)
+ve/dr vv1(1:10000)
+ve/dr vv0(3001:4000)
+ve/dr vv1(3001:4000)
+loca
+ve/dr vv3
+ve/dr vv0
+ve/dr vv0(15501:16000)
+ve/dr vv0(15501:18000)
+ve/dr vv0(16501:18000)
+ve/dr vv1(16501:18000)
+ve/dr vv0(16901:14000)
+ve/dr vv0(16901:17600)
+ve/dr vv1(16901:17600)
+loca
+ve/pl ivp4%vv4
+ve/pl vv4%ivp4
+ve/pl vv6
+ve/dr vv6
+ve/dr vv1(16901:17600)
+ve/dr vv1
+ve/dr vv1(1:33000)
+ve/dr vv0(1:33000)
+ve/dr vv0(1:33000)
+ve/dr vv0(16000:17000)
+ve/dr vv0(16000:18000)
+ve/dr vv0(17000:18000)
+ve/dr vv0(17000:18000)
+ve/dr vv1(17000:18000)
+ve/dr vv0(23000:24000)
+ve/dr vv0(33000:34000)
+ve/dr vv0(31000:34000)
+ve/dr vv0(30000:32000)
+ve/dr vv0(30700:31300)
+ve/dr vv1(30700:31300)
+loca
+loca
+ve/dr vv2
+ve/dr vv2(1:5000)
+ve/dr vv2(3001:3500)
+exec vfget new=1
+ve/dr vv2
+ve/dr vv3
+ve/dr vv1
+ve/dr vv2
+exec vfget new=1
+ve/dr vv3
+ve/dr vv2
+exec vfget new=1
+ve/dr vv3
+ve/dr vv2
+exec vfget new=1
+ve/dr vv0
+ve/dr vv1
+ve/dr vv2
+ve/dr vv3
+mess $sigma(60000-2**15)
+ve/cop vtmp1(27233:60000) vv7
+mess $sigma(2**15)
+ve/dr vv3
+ve/dr vv3(1:10000)
+ve/dr vv7(1:10000)
+set hcol 4
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+ve/dr vv7(1:10000)
+set hcol 2
+ve/dr vv3(1:10000) ! s
+ve/dr vv3(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vv7(1:10000)
+exec vfget new=1
+ve/dr vv7(1:10000)
+ve/dr vv3(1:10000)
+exec vfget new=1
+ve/dr vv7(1:10000)
+ve/dr vv3(1:10000)
+ve/dr vv7(1:10000)
+set hcol 4
+ve/dr vv3(1:10000) ! s
+ve/dr vv3
+ve/dr vv7
+ve/dr vtmp1
+ve/dr vtmp1(1:10000)
+ve/dr vv3(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+ve/dr vv2(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vv0(1:10000)
+ve/dr vv3(1:10000)
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+set hcol 2
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+ve/dr vv3(1:10000) ! s
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+set hcol 4
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+ve/dr vv2(1:10000)
+ve/dr vv0(1:10000)
+ve/dr vv0
+ve/dr vv0(1:20000)
+ve/dr vv0(1:30000)
+ve/dr vv0(1:33000)
+ve/dr vv1(1:33000)
+ve/dr vv0(1:33000)
+ve/dr vv3(1:33000)
+ve/dr vv0(1:33000)
+ve/dr vv2(1:33000)
+exec vfget new=1
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+set hcol 2
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+ve/dr vv3(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vtmp1(1:10000)
+set hcol 4
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+ve/dr vv3(1:10000)
+exec vfget new=1
+ve/dr vv3(1:10000)
+set hcol 2
+ve/dr vtmp1(1:10000) ! s
+ve/dr vtmp1(1:10000)
+set hcol 4
+ve/dr vv3(1:10000) ! s
+exec vfget new=1
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/cop vv3 vv3a
+exec vfget new=1
+ve/dr vv3(1:10000)
+ve/dr vv3a(1:10000)
+exec vfget new=1
+exec vfget new=1
+exec vfget new=1
+ve/dr vv7
+ve/li
+ve/del vv0h
+ve/del vv3h
+ve/del vv3t
+ve/del vvv1
+ve/del pp1
+ve/del pp2
+ve/del vs1
+ve/del vs2
+ve/del vsb1
+ve/del vsb2
+ve/del vss1
+ve/del vss2
+ve/dr vv7
+ve/dr vv7(1:2000)
+ve/dr vv7(1:20000)
+ve/dr vv0(1:20000)
+ve/dr vv7(1:20000)
+loca
+exec vfget new=1
+ve/dr vv7(1:20000)
+ve/dr vv7(1:2000)
+ve/dr vv7(1:200)
+exec vfget new=1
+ve/dr vv7(1:2000)
+ve/dr vv7(1:33000)
+exec vfget new=1
+ve/dr vv7(1:33000)
+ve/dr vv7(1:17000)
+exec vfget new=1
+ve/dr vv7(1:17000)
+exec vfget new=1
+ve/dr vv7(1:17000)
+ve/dr vv7(1:17000)
+ve/dr vv7(1:40000)
+exec vfget new=1
+ve/dr vv7(1:40000)
+exec vfget new=1
+ve/dr vv7(1:40000)
+opt logy
+ve/dr vv7(1:40000)
+ve/dr vv7(1:8000)
+ve/dr vv7(1:8200)
+ve/dr vv7(1:8400)
+ve/dr vv7(1:8200)
+loca
+exec vfget new=1
+ve/dr vv7(1:8200)
+exec vfget new=1
+ve/dr vv7(1:8200)
+ve/dr vv7(1:1700)
+ve/dr vv7(1:17000)
+exec vfget new=1
+ve/dr vv7(1:17000)
+ve/dr vv7(1:34000)
+ve/dr vv7(1:34000)
+ve/dr vv0(1:34000)
+exec vfget new=1
+ve/dr vv7(1:34000)
+ve/dr vv6(1:34000)
+opt liny
+ve/dr vv6(1:10000)
+ve/dr vtmp1(1:10000)
+exec vfget new=1
+ve/dr vv8(1:10000)
+ve/dr vv8(1:33000)
+exec vfget new=1
+ve/dr vv8(1:33000)
+ve/dr vv7(1:33000)
+ve/dr vv6(1:33000)
+ve/dr vtmp1(1:10000)
+set hcol 2
+ve/dr vv6(1:10000) ! s
+ve/dr vtmp1(10001:20000)
+ave/dr vv6(10001:20000) ! s
+set hcol 4
+ve/dr vv6(10001:20000) ! s
+ve/dr vtmp1(30001:40000)
+set hcol 2
+ve/dr vv6(30001:40000) ! s
+ve/dr vtmp1(10001:20000)
+exec vfget new=1
+ve/dr vv6(1:33000)
+exec vfget new=1
+ve/dr vv6(1:33000)
+exec vfget new=1
+ve/dr vv6(1:33000)
+ve/dr vv7(1:33000)
+exec vfget new=1
+ve/dr vv6(1:33000)
+exec vfget new=1
+ve/dr vv6(1:33000)
+ve/dr vv6(1:10000)
+ve/dr vv6(1:10000)
+ve/dr vtmp1(1:10000)
+ve/cop vtmp1(1:20000) v1
+ve/cop vv6(1:20000) v2
+vsub v1 v2 v3
+ve/pl v3
+ve/pl v1
+ve/dr vv7(1:20000)
+ve/dr vv7(1:200)
+ve/dr vv7(3001:4000)
+loca
+loca
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:2000)
+ve/dr vtmp1(1:2000)
+ve/cop vtmp1 vtmp10
+ve/cop vtmp1 vtmp
+exec vbgsub nd=1923 tune=1 dastep=0.00001 nshift=81 da=0 spline=0
+exec vbgsub nd=40 tune=1 dastep=0.0001 nshift=81 da=0 spline=0
+exec vbgsub nd=400 tune=1 dastep=0.0001 nshift=81 da=0 spline=0
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmps(1:20000)
+ve/dr vtmps(1:20000)
+ve/dr vtmps(1:200)
+exec vbgsub nd=400 tune=1 dastep=0.00002 nshift=81 da=0 spline=0
+exec vbgsub nd=400 tune=1 dastep=0.00001 nshift=41 da=0 spline=0
+exec vbgsub nd=400 tune=1 dastep=0.000007 nshift=41 da=0 spline=0
+exec vbgsub nd=400 tune=1 dastep=0.000005 nshift=21 da=0 spline=0
+exec vbgsub nd=400 tune=1 dastep=0.00001 nshift=21 da=0 spline=0
+exec vbgsub nd=400 tune=0 dastep=0.00001 nshift=0 da=-0.02 spline=0
+ve/dr vtmpps
+exec vbgsub nd=400 tune=0 dastep=0.00001 nshift=0 da=-0.01 spline=0
+ve/dr vtmpps
+exec vbgsub nd=400 tune=0 dastep=0.00001 nshift=0 da=-0.03 spline=0
+ve/dr vtmpps
+exec vbgsub nd=400 tune=0 dastep=0.00001 nshift=0 da=-0.02 spline=0
+ve/dr vtmpps
+exec vbgsub nd=400 tune=1 dastep=0.00001 nshift=21 da=0 spline=0
+ve/pl vtmps(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pri vtmp1 s07_04_80a_b0.proc.1
+ve/wr vtmp1 s07_04_80a_b0.proc.1
+exec vfget new=1
+ve/pl vv7(1:34000)
+ve/dr vv7(1:34000)
+ve/dr vv7(3001:4000)
+loca
+ve/dr vv7(3201:3600)
+loca
+ve/cop vtmp1 vtmp
+exec vbgsub nd=384 tune=1 dastep=0.00001 nshift=21 da=0 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+exec vbgsub nd=384 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vv7(3201:3600)
+loca
+exec vbgsub nd=1921 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+exec vbgsub nd=192 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+ve/pl vtmp1(1:20000)
+ve/dr vtmp(1:10000)
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:200)
+set hcol 4
+ve/dr vtmps(1:200) ! s
+ve/dr vtmp(40001:40200)
+ve/dr vtmps(40001:40200) ! s
+ve/dr vtmp(40001:42000)
+ve/dr vtmp(30001:42000)
+set hcol 3
+ve/dr vtmps(30001:42000) ! s
+ve/dr vtmp(40001:42000)
+ve/dr vtmp(40001:40600)
+set hcol 4
+ve/dr vtmps(40001:40600) ! s
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/wr vtmp1 s07_04_80a_b0.proc.2
+ve/cop vtmp1 vtmp
+ve/dr vv7(3201:3600)
+exec vfget new=1
+ve/dr vv7(3201:3600)
+loca
+ve/dr vv7(3201:36000)
+ve/dr vv7(16000:19000)
+ve/dr vv7(17000:17500)
+ve/dr vv7(17100:17300)
+loca
+exec vbgsub nd=380 tune=1 dastep=0.0001 nshift=21 da=0 spline=0
+exec vbgsub nd=380 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vv7(1:500)
+loca
+ve/dr vv7(1:200)
+loca
+exec vbgsub nd=1680 tune=1 dastep=0.0001 nshift=41 da=0 spline=0
+exec vbgsub nd=1680 tune=1 dastep=0.00002 nshift=41 da=0 spline=0
+ve/pl vtmpps(1:100)
+ve/dr vtmpps(1:100)
+loca
+ve/dr vtmp(1:200)
+ve/dr vtmp(1:2000)
+ve/dr vtmp(1:500)
+loca
+exec vbgsub nd=1915 tune=1 dastep=0.000001 nshift=41 da=0 spline=0
+exec vbgsub nd=1915 tune=1 dastep=0.0001 nshift=41 da=0 spline=0
+exec vmeas file=s07_04_80a_b0 stage=2
+ve/dr vtmp(1:500)
+ve/dr vtmp1(1:500)
+ve/dr vtmpps
+ve/dr vtmp(1:500)
+ve/dr vtmp(30001:30500)
+loca
+ve/dr vtmp(30001:30200)
+loca
+exec vbgsub nd=190 tune=1 dastep=0.00001 nshift=41 da=0 spline=0
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0. spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.001 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.00001 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.0001 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.001 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.01 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.001 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.002 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.003 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.004 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.0035 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.0032 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.0033 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.0034 spline=0
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.1 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.11 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.12 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0.2 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2. spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=1. spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=0. spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2.5 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2.1 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=1.9 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2.0 spline=0
+ve/dr vtmpps
+ve/dr vtmp1(1:500)
+ve/dr vtmp(1:50)
+ve/dr vtmp(1:100)
+ve/dr vtmp(1901:2000)
+ve/dr vtmp(10001:10100)
+ve/dr vtmp(1:100)
+loca
+exec vbgsub nd=19 tune=0 dastep=0.00001 nshift=0 da=0.0 spline=0
+ve/dr vtmpps
+ve/dr vtmp(40001:40100)
+loca
+ve/dr vtmp(41001:41100)
+ve/dr vtmp(41001:42100)
+ve/dr vtmp(41301:41400)
+loca
+ve/dr vtmp(41301:41400)
+ve/dr vtmp(51301:51400)
+ve/dr vtmp(46301:46400)
+ve/dr vtmp(41301:41400)
+loca
+loca
+ve/dr vtmp(42301:42400)
+loca
+ve/dr vtmp(41301:41400)
+ve/dr vtmp(41401:41500)
+loca
+ve/dr vtmp(41501:41600)
+ve/dr vtmp(41601:41700)
+loca
+ve/dr vtmp(41601:41720)
+loca
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2.78 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmpps
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=-2.78 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=-2.8 spline=0
+ve/dr vtmpps
+ve/dr vtmp(41601:41720)
+ve/dr vtmp(41601:41720)
+ve/dr vtmp(41401:41520)
+loca
+ve/dr vtmp(41301:41420)
+loca
+ve/dr vtmp(41401:41520)
+ve/dr vtmp(41401:41520)
+ve/dr vtmp(41601:41620)
+ve/dr vtmp(41401:41520)
+ve/dr vtmp(41601:41720)
+loca
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=3.12 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=3. spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=3.2 spline=0
+ve/dr vtmpps
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=3.3 spline=0
+ve/dr vtmpps
+ve/dr vtmp(1:100)
+ve/dr vtmp(101:200)
+ve/dr vtmp(201:300)
+ve/dr vtmp(1:100)
+ve/dr vtmp(191:290)
+ve/dr vtmp(1:100)
+ve/dr vtmp(1:100)
+ve/dr vtmp(191:290)
+loca
+ve/dr vtmp(1:100)
+ve/dr vtmp(381:480)
+loca
+loca
+ve/dr vtmp(1901:2000))
+ve/dr vtmp(1901:2000)
+ve/dr vtmp(1:100)
+loca
+ve/dr vtmp(1:100)
+ve/dr vtmp(571:670)
+loca
+loca
+ve/dr vtmp(1901:2000)
+loca
+ve/dr vtmp(2091:2190)
+loca
+loca
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=3.727 spline=0
+ve/dr vtmpps
+ve/dr vtmp(1:100)
+ve/dr vtmp(571:670)
+ve/dr vtmp(561:670)
+loca
+ve/dr vtmp(1:100)
+ve/dr vtmp(1:190)
+help loca
+loca ! s
+ve/dr vtmp(191:380)
+loca ! s
+ve/dr vtmp0(1:190)
+ve/dr vtmp(191:380)
+ve/dr vtmp(1:190)
+ve/dr vtmp(191:380)
+loca
+loca
+exec vbgsub nd=190 tune=0 dastep=0.00001 nshift=0 da=2.857 spline=0
+ve/dr vtmpps
+exec vbgsub nd=192 tune=0 dastep=0.0001 nshift=0 da=2.857 spline=0
+exec vbgsub nd=192 tune=1 dastep=0.0001 nshift=21 da=2.857 spline=0
+exec vbgsub nd=192 tune=1 dastep=0.0001 nshift=21 da=2.857 spline=0
+ve/dr vtmpps
+ve/dr vtmp(1:380)
+ve/dr vtmp1(1:380)
+ve/dr vtmp(1:380)
+set hcol 2
+ve/dr vtmps(1:380) ! s
+exec vbgsub nd=193 tune=1 dastep=0.0001 nshift=21 da=2.857 spline=0
+exec vbgsub nd=193 tune=1 dastep=0.0001 nshift=41 da=2.857 spline=0
+exec vbgsub nd=192 tune=1 dastep=0.0001 nshift=41 da=2.857 spline=0
+ve/dr vtmp(1:380)
+set hcol 4
+ve/dr vtmps(1:380) ! s
+ve/dr vtmps(40001:40380) ! s
+ve/dr vtmps(40001:40380)
+ve/dr vtmp(40001:40380)
+set hcol 2
+ve/dr vtmps(40001:40380) ! s
+ve/dr vv7(1:34000)
+ve/dr vv7(3201:4000)
+ve/dr vv7(3201:3400)
+ve/dr vv7(3201:3700)
+loca
+ve/dr vv7(1:34000)
+ve/dr vv7(17001:19000)
+ve/dr vv7(17001:17400)
+ve/dr vv7(1:34000)
+ve/dr vv7(17001:17400)
+loca
+exec vbgsub nd=19 tune=1 dastep=0.0001 nshift=41 da=0.28 spline=0
+exec vbgsub nd=38 tune=0 dastep=0.0001 nshift=0 da=0.56 spline=0
+ve/dr vtmpps
+exec vbgsub nd=38 tune=1 dastep=0.06 nshift=21 da=0.56 spline=0
+exec vbgsub nd=76 tune=1 dastep=0.02 nshift=21 da=0.56 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp1(1:20000)
+ve/dr vv7(17001:17400)
+ve/dr vv7(17101:17400)
+loca ! s
+exec vbgsub nd=3806 tune=0 dastep=0.02 nshift=21 da=0.4 spline=0
+ve/dr vtmpps
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/dr vtmp1(30001:60000)
+ve/dr vtmp(30001:60000)
+ve/dr vtmp(30001:30200)
+set hcol 4
+ve/dr vtmps(30001:30200) ! s
+ve/dr vtmp(1:200)
+set hcol 2
+ve/dr vtmps(1:200) ! s
+exec vbgsub nd=3806 tune=1 dastep=0.2 nshift=81 da=0.4 spline=0
+exec vbgsub nd=3806 tune=1 dastep=2. nshift=81 da=0.4 spline=0
+exec vbgsub nd=3806 tune=1 dastep=2. nshift=81 da=0.0001 spline=0
+exec vbgsub nd=3806 tune=1 dastep=0.0001 nshift=81 da=0.4 spline=0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/wri vtmp1 s07_04_80a_b0.proc.3
+ve/dr vv7(17101:17400)
+exec vfget new=1
+ve/dr vv7(17101:17400)
+ve/dr vv7(17101:17400)
+exec vfget new=1
+ve/dr vv7(17101:17400)
+loca
+exec vbgsub nd=3806 tune=1 dastep=0.00002 nshift=41 da=0.4 spline=0
+exec vbgsub nd=3806 tune=1 dastep=0.00001 nshift=61 da=0.4 spline=0
+ve/pl vtmp1(1:20000)
+exec vbgsub nd=3806 tune=0 dastep=0.00001 nshift=0 da=0.837 spline=0
+ve/pl vtmp1(1:20000)
+exec vbgsub nd=3806 tune=0 dastep=0.00001 nshift=0 da=0.937 spline=0
+ve/pl vtmp1(1:20000)
+ve/pl vtmpps
+ve/dr vtmpps
+ve/dr vv7(17101:17400)
+loca
+ve/dr vtmp(1:5000)
+set hcol 4
+ve/dr vtmps(1:5000) ! s
+ve/dr vtmp(40001:45000)
+set hcol 2
+ve/dr vtmps(40001:45000) ! s
+ve/dr vtmp1(40001:45000)
+ve/dr vtmp(40001:45000)
+exec vbgsub nd=380 tune=0 dastep=0.00001 nshift=0 da=0.6837 spline=0
+ve/dr vtmpps
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+exec vbgsub nd=1903 tune=0 dastep=0.00001 nshift=0 da=0.418 spline=0
+ve/dr vtmpps
+ve/pl vtmp1(1:20000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+exec vbgsub nd=1903 tune=0 dastep=0.00001 nshift=41 da=0.418 spline=0
+exec vbgsub nd=1903 tune=1 dastep=0.00001 nshift=41 da=0.418 spline=0
+ve/pl vtmp(1:20000)
+ve/dr vtmp(1:20000)
+set hcol 4
+ve/dr vtmps(1:20000) ! s
+exec vbgsub nd=1903 tune=0 dastep=0.00001 nshift=0 da=0.304 spline=0
+ve/pl vtmp1(30001:60000)
+exec vbgsub nd=1903 tune=0 dastep=0.00001 nshift=0 da=0.204 spline=0
+ve/pl vtmp1(30001:60000)
+exec vmeas new=1
+exec vmeas new=1 file=s07_04_80a_b0
+ve/pl vtmp1(30001:60000)
+exec vmeas stage=3 file=s07_04_80a_b0
+exec vmeas stage=3 file=s07_04_80a_b0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp0(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/dr vtmp1(30001:60000)
+ve/wri vtmp1 s07_04_80a_b0.proc.3
+exec vfget new=1
+ve/dr vv7(17101:17400)
+ve/dr vv7(3001:3700)
+loca
+exec vmeas stage=3 file=s07_04_80a_b0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp0(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/dr vtmp1(30001:60000)
+ve/dr vtmp1(1:20000)
+ve/wri vtmp1 s07_04_80a_b0.proc.3
+exec vfget new=1
+ve/dr vv7(3001:3700)
+ve/dr vv7(17001:17700)
+ve/dr vv7(1:34000)
+ve/dr vv7(17001:17700)
+ve/dr vv7(1:500)
+mess $sigma(14/3500.*sqrt(7e-4/1.5))
+mess $sigma(14/3500.*sqrt(7e-4/1.5)*17)
+mess $sigma(14/3500.*sqrt(7e-4*3/1.5)*17)
+loca
+exec vbgsub nd=1680 tune=0 dastep=0.00001 nshift=0 da=0.0 spline=0
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/dr vtmps(30001:60000)
+ve/dr vtmp(30001:60000)
+exec vbgsub nd=1680 tune=1 dastep=0.02 nshift=21 da=0.0 spline=0
+exec vbgsub nd=1680 tune=1 dastep=0.002 nshift=21 da=0.0 spline=0
+exec vbgsub nd=1680 tune=1 dastep=0.0001 nshift=81 da=0.0 spline=0
+exec vbgsub nd=1680 tune=1 dastep=0.0002 nshift=81 da=0.0 spline=0
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(1:20000)
+ve/pl vtmp1(1:20000)
+ve/dr vtmp(30001:60000)
+set hcol 2
+ve/dr vtmps(30001:60000) ! s
+ve/dr vtmp(30001:40000)
+set hcol 4
+ve/dr vtmps(30001:40000) ! s
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=0.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=10.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=9.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=13.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=15.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=6.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=-7.0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=-20 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=20 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=30 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=33 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=32 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=28 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1680 tune=0 dastep=0.0002 nshift=0 da=25 spline=0
+ve/dr vtmpps
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=-5 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=-10 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=20 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=10 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1705 tune=0 dastep=0.0002 nshift=0 da=5 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1710 tune=0 dastep=0.0002 nshift=0 da=0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1710 tune=0 dastep=0.0002 nshift=0 da=4 spline=0
+ve/dr vtmpps
+ve/dr vtmp(30001:40000)
+set hcol 2
+ve/dr vtmps(30001:40000) ! s
+ve/dr vtmp(30001:50000)
+set hcol 4
+ve/dr vtmps(30001:50000) ! s
+exec vbgsub nd=1710 tune=1 dastep=0.0002 nshift=21 da=0 spline=0
+exec vbgsub nd=1715 tune=1 dastep=0.0002 nshift=21 da=0 spline=0
+exec vbgsub nd=1715 tune=1 dastep=0.0002 nshift=41 da=0 spline=0
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=0 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=0.5 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=0.7 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=1 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=2 spline=0
+ve/dr vtmpps
+exec vbgsub nd=1711 tune=0 dastep=0.0002 nshift=0 da=1.5 spline=0
+ve/dr vtmpps
+ve/dr vtmp1
+ve/dr vtmp1(30001:60000)
+ve/dr vtmp1(30001:40000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+exec vsmooth nav=1
+ve/pl vtmpf(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmp(30001:60000)
+ve/pl vtmp1(30001:60000)
+ve/pl vtmpf(30001:60000)
+ve/dr vtmpf(30001:60000)
+ve/vop vtmp vtmpa
+ve/cop vtmp vtmpa
+ve/cop vtmpf vtmp
+exec vsmooth nav=1
+ve/dr vtmpf(30001:60000)
+ve/dr vtmpf(1:20000)
+ve/wri vtmpf s07_04_80a_b0.proc.4
+aexec vfget new=1
+ve/dr vv7(1:34000)
+exec vfget new=1
+ve/dr vv7(1:34000)
+ve/dr vv7(3201:3800)
+*** End   of history file: Fri Mar 24 17:45:37 2006

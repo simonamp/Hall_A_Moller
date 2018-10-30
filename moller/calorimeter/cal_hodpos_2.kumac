@@ -1,0 +1,31 @@
+MACRO cal_hodpos_2
+
+*
+*  - Hodoscope cross-hits (LG x 16, Aug 1999)
+*
+  ve/cr hcros(16) r 
+  ve/in hcros(1:16) 11.5 11. 0 0 8.5 8 0 0 0 3.5 0 0 0 0 0 0
+*   15 14.8 14 13 13 12.3 11.7 11 0 0 7 0 4.3 3 1 0
+
+  ve/cr ehcros(16) r 16*0.5
+
+  ve/cr hodx(16) r
+  ve/cr ehodx(16) r
+  do i=1,16
+    ve/in hodx([i]) [i] 
+    a=hcros([i])
+    if [a]=0 then
+      ve/in ehcros([i]) 0.
+    endif
+  enddo
+
+*  null 1 17 0 17
+  ve/fit hodx hcros ehcros p2
+  atit 'Hodoscope hit h1' 'Hodoscope hit h2'
+  gr/hpl/err hodx hcros ehodx ehcros 16 24 0.2
+  text 3 4 'h1=h2 at 7.' 0.3
+  line 7. 1 7. 16
+  line 1 7 16 7
+ 
+RETURN
+ 

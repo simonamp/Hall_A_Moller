@@ -1,0 +1,104 @@
+MACRO btpos id0=-1 nlun=0 run1=0 run2=0 ncha=-1 n1=1 n2=999999 nevadc=-1 angl=20.5 anpow=0.76 ptar=0.0795 norm=1 norbcm=1 nocut=0 _
+            coil=0 gate=0.033 mxdiff=50 clear=1 delay=-1 heladc=0 nococut=0 nosubbg=0 tauto=1 pr=5
+
+*
+* --- Beam position on the target
+*
+* --- id0 histogram offset
+* --- nlun NTUPLE name (lun21 or lll - for the chain)
+* --- or run number
+* --- ncha > 0 - number of bins, <0 - automatic = 0 - no hist
+* --- n1,n2 - the range of the scaler cycles to accept
+* --- nevadc - the numbers of adc triggers per window to select (<0 - all)
+* --- nococut - >0 do not make coincidence counting rate cut (for parasitic beam studies)
+* --- nocut  - make no cuts on the cycles
+* --- angl   - target angle
+* --- anpow  - Moller analysing power
+* --- ptar   - target polarizarion
+* --- tauto  - >0 - automatically find which target foil is used and retrieve its polarization
+* --- norm   - normalization, =0 - scaler, =1 - BCM
+* --- coil   - polarity of the Helmholz coil
+* --- gate   - helicity gate length in sec
+* --- mxdiff - max difference between two scalers
+* --- clear  >0 - erase old histograms for a new run
+* --- delay  > =-1 - automatical evaluation, =0 - forced (no delay), =9 - delay
+* --- heladc>0 - take the helicity from ADCs 
+* --- nosubbg >0 - do not subtract the accidenntals
+* --- pr - coefficient of the target polarizatioin normalization
+*
+mess  run=[run] angl=[angl] delay=[delay] nevadc=[nevadc] heladc=[heladc]
+mess  pr=[pr]
+k=0
+	do i=[run1],[run2]
+	run=[run1]+[k]
+
+ opt liny
+* mess delay=[delay]
+ exec run run=[run]
+
+ if $VDIM(ichis,1)<10 then
+   ve/cr ichis(10) i
+ endif
+ ve/in ichis(1:8) 1 2 3 4 5 6 12 15
+ if $VDIM(nnlim,1)<2 then
+   ve/cr nnlim(2) i
+ endif
+ ve/in nnlim [n1] [n2]
+
+
+ if [run]<1 then
+   mess Error in btpos.kumac : run number [run] is out of range
+   exitm
+ endif
+
+*  Load the settings data
+ mess  Find the settings for run=[run]
+* exec get_settings run=[run]
+  exec get_settings_2009 run=[run]
+ nl=$VLEN(run_sett,1)
+ if [nl]<1 then
+   mess Setting data have not been found. Exiting...
+   exitm
+ endif  
+
+ hcoil=run_sett(79)
+ itarg=run_sett(101)
+	if [run]<11993 then
+*** Target Y coordinate from EPICS  
+   ydifcm0=run_sett(103)
+        else
+*** Target Y coordinate (cm) from a_tpos.f (VtoF)
+ exec run_scalu run=[run]
+ lunn=tlun(1)
+ nt/pl //lun[lunn]/1.(a_tpos.f(2,0)) ifzug=0
+ ydifcm0=$HINFO(1000000,'MEAN')
+         endif
+ mess ydifcm0=[ydifcm0]
+*** beam position correction
+ bpm01ym=run_sett(21)
+ bpm01xm=run_sett(20)
+ bpm01yc=[bpm01ym]/10.
+ ydifcm=[ydifcm0]+[bpm01yc]
+ ydifm=[ydifcm]*10.
+
+ mess hcoil=[hcoil] A
+ mess ydifcm0=[ydifcm0] BPM01Y=[bpm01ym] ydifcm=[ydifcm] cm
+ mess Run=[run]  Target=[itarg] 
+ mess Beam position X=[bpm01xm], Y=[bpm01ym]mm
+ mess Beam position on target: X=[bpm01xm], Y=[ydifm]mm
+  ve/cr btpos(5) r
+  ve/in btpos(1) [run]
+  ve/in btpos(2) [itarg]
+  ve/in btpos(3) [bpm01xm]
+  ve/in btpos(4) [bpm01ym]
+  ve/in btpos(5) [ydifm]
+
+ ve/write btpos(1),btpos(2),btpos(3),btpos(4),btpos(5)  bpos.dat (2(F6.0),3(F10.6))
+ shell cat  bpos.dat >> btpos.dat
+ k=[k]+1
+ ve/de btpos
+
+	enddo
+
+RETURN
+

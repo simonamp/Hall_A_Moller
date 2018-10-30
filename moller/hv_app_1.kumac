@@ -1,0 +1,47 @@
+MACRO hv_app_1
+*
+*  --- HV on the apperture counters
+*          09 June 2000
+
+ n=8
+
+ ve/cr hv1([n])  r   1700   1750   1800   1850   1900   1925
+ ve/cr ap1([n])  r  82500 142400 257000 406000 492000 507000
+ ve/cr bc1([n])  r   6580   6640   6650   6540   6480   6490
+
+ ve/cr hv2([n])  r   1690   1740   1790   1840   1890   1940   1990   2015
+ ve/cr ap2([n])  r 215000 378000 496000 514000 514000 513000 512000 515000
+ ve/cr bc2([n])  r   6620   6380   6490   6510   6500   6480   6480   6510
+
+ ve/cr y1([n]) r 
+ ve/cr y2([n]) r
+ ve/cr err([n]) r 
+
+ n1=0
+ n2=0
+ do i=1,[n]
+   a=ap1([i])
+   b=bc1([i])
+   if [b]>10 then
+     a=[a]/[b]
+     n1=[n1]+1
+     ve/in y1([i]) [a]
+   endif
+   a=ap2([i])
+   b=bc2([i])
+   if [b]>10 then
+     a=[a]/[b]
+     n2=[n2]+1
+     ve/in y2([i]) [a]
+   endif
+ enddo
+
+ null 1500 2000 0 100 
+ atit 'HV apperture counters' 'relative rates'
+ gr/hpl/err hvap y1 err err [n1] 20 0.2
+ gr/hpl/err hvap y2 err err [n2] 21 0.2
+ set csiz 0.3
+ gr/hpl/key 1550 60.0 20 'Ap Left'
+ gr/hpl/key 1550 40.0 21 'Ap Right'
+ set csiz 0.3
+RETURN

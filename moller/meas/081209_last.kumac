@@ -1,0 +1,60 @@
+*** Begin of history file: Tue Dec  9 18:53:32 2008
+exec run run=13015
+exec lg_spectra run=13016 cut=0
+exec lg_spectra run=13015 cut=0
+loca
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13015
+exec run run=13016
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13016
+call prunpri.f(10000,20000)
+exec run run=13017
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13017
+exec run run=13018
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13018
+zone 2 2
+exec asym_av run1=13015 run2=13018
+exec run run=13019
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13019
+exec run run=13020
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13020
+call prunpri.f(10000,20000)
+exec run run=13021
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13021
+call prunpri.f(10000,20000)
+exec run run=13022
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0744 run=13022
+exec asym_av run1=13019 run2=13022
+exec run run=13023
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13023
+exec run run=13024
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13024
+exec run run=13025
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13025
+exec run run=13026
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0762 run=13026
+call prunpri.f(10000,20000)
+exec asym_av run1=13023 run2=13026
+exec run run=13027
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13027
+exec run run=13028
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13028
+exec run run=13029
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13029
+call prunpri.f(10000,20000)
+exec run run=13030
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0821 run=13030
+call prunpri.f(10000,20000)
+exec run run=13031
+exec asym_av run1=13027 run2=13030
+exec run run=13031
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13031
+exec run run=13032
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13032
+exec run run=13033
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13033
+call prunpri.f(10000,20000)
+exec run run=13034
+exec asymt delay=0 angl=20.0 tauto=0 ptar=0.0797 run=13034
+exec asym_av run1=13031 run2=13034
+exit
+*** End   of history file: Tue Dec  9 20:26:41 2008

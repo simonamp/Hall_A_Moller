@@ -1,0 +1,152 @@
+*** Begin of history file: Wed Sep 28 19:14:11 2005
+exec run run=12030
+zone 2 2
+exec asymt delay=9 run=12030
+exec run run=12033
+exec asymt delay=9 run=12033
+exec run_scal run=12030
+exec run_scal run=12033
+nt/pri //lun51/1
+nt/pl //lun51/1.a_tpos.f(1,0)%izug
+nt/pl //lun51/1.a_tpos.f(1,1)%izug
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)%a_tpos.f(1,1)
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun52/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+ld //
+nt/pl //lun52/1.izrun abs(a_tpos.f(1,1))<2.2
+nt/pl //lun51/1.izrun abs(a_tpos.f(1,1))<2.2
+exec run_scal run=12130
+exec run_scal run=12133
+nt/pl //lun53/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun54/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun54/1.a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun54/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun54/1.a_signal.f(3,0,1,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>100
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>100
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(3,5,0,0,0,0,0)>100
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<2.2
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0)
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0) ifzug=0
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0)%a_signal.f(3,0,1,0,0,0) ifzug=0
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0)%a_signal.f(3,5,0,0,0,0,0) ifzug=0
+nt/pl //lun54/1.a_asymm.f(3,0,5,0,0,0)%a_signal.f(3,5,0,0,0,0,0) ifzug=0
+nt/pl //lun54/1.a_asymm.f(3,4,1,0,0,0)%a_signal.f(3,5,0,0,0,0,0) ifzug=0
+nt/pl //lun54/1.a_asymm.f(3,0,1,0,0,0) ifzug=0.and.abs(a_tpos.f(1,1))<1.
+nt/pl //lun54/1.izug ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9
+nt/pl //lun54/1.a_signal.f(3,5,0,0,0,0,0)%izug ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9
+nt/pri //lun51/1
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! izug
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jcnt(3,1) jcnt(3,2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jcnt(3,1) jcnt(3,2) jhel
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jcnt(3,1) jcnt(3,2) jhel(1) jhel(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.-0.1<a_asymm.f(3,0,1,0,0,0)<0.1 200 1 ! jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.-0.1<a_asymm.f(3,0,1,0,0,0)<0.1 200 1 ! nelem jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! nelem jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(1) jtick(2) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun51/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun52/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun53/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 !  200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2) jfla(1) jfla(2)
+nt/sca //lun54/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2)
+ld //
+exec run run=12133
+exec asymt delay=9 run=12133
+nt/sca //lun23/1 nsca>0 20 1 ! nsca itrig(1)
+nt/sca //lun23/1 nsca>0 20 1 ! nsca itrig
+nt/sca //lun23/1 nsca>0 20 1 ! nsca itrig(1) itrig(2) itrig(3) itrig(4) itrig(5) itrig(6) itrig(7) itrig(8)
+nt/sca //lun23/1 nsca>0 20 1 ! nsca itrig(2) itrig(6) itrig(7) itrig(8)
+nt/sca //lun23/1 nsca>0 50 1 ! nsca itrig(2) itrig(6) itrig(7) itrig(8)
+nt/sca //lun23/1 ! 50 1 ! nsca itrig(2) itrig(6) itrig(7) itrig(8)
+exec run_scal run=12097
+nt/sca //lun55/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2)
+exec run run=12097
+exec asymwr delay=8 run=12097
+exec run_scal clear=1
+ld //
+exec run_scal run=12097
+nt/sca //lun51/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2)
+exec run_scal clear=1
+exec asymwr_run run1=12097 run2=12138
+ld //
+exec run_scal run=12133
+nt/sca //lun51/1 ifzug=0.and.abs(a_tpos.f(1,1))<1. 200 1 ! jtick(2)-jtick(1) jcnt(3,1) jcnt(3,2) jhel(1) jhel(2)
+nt/pl //lun54/1.a_signal.f(3,5,0,0,0,0,0)%izug ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)%izug ifzug=0.and.abs(a_tpos.f(1,1))<1..and.a_asymm.f(3,0,1,0,0,0)<-0.9
+nt/pl //lun51/1.a_signal.f(3,5,0,0,0,0,0)%izug ifzug=0.and.abs(a_tpos.f(1,1))<1.
+nt/pl //lun54/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun51/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun51/1.a_asymm.f(3,0,1,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>100
+nt/pl //lun51/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+nt/pl //lun51/1.a_signal.f(2,5,0,0,0,0,0)/a_signal.f(1,5,0,0,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<2.2.and.a_signal.f(1,5,0,0,0,0,0)>1
+loca
+nt/pl //lun51/1.a_asymm.f(3,0,1,0,0,0)%a_tpos.f(1,1) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+nt/pl //lun51/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+exec run_scal run=12130
+nt/pl //lun52/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+h/fit 1000000 g
+h/fit 1000000 g
+nt/pl //lun51/1.a_asymm.f(3,0,1,0,0,0) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+h/fit 1000000 g
+nt/pri //lun51/1
+1dh 101 'pol' 500 0.5 1.0
+mess $sigma(1/.76/cos(20*3.1416/180.))
+nt/pl //lun51/1.helmf
+nt/pl //lun51/1.helmh
+nt/pl //lun51/1.sign(1.,helmh)
+nt/pl //lun51/1.sign(1.,-helmh)
+nt/pl //lun51/1.(a_asymm.f(3,0,1,0,0,0)*sign(1.,helmh)*1.4/ptarg) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+exec run_scal run=12087
+nt/pl //lun52/1.(a_asymm.f(3,0,1,0,0,0)*sign(1.,helmh)*1.4/ptarg) abs(a_tpos.f(1,1))<1.0.and.a_signal.f(1,5,0,0,0,0,0)>100
+ve/pri run_sett
+exec get_settings run=12133
+ve/pri run_sett
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+ve/pri run_sett
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+ve/pri run_sett
+exec get_settings_n run=12133
+exec get_settings_n run=12133
+ve/pri run_sett
+exec get_settings_n run=12132
+ve/pri run_sett
+exec get_settings_n run=12133
+mess $sigma(1.1*3.6*0.3)
+mess $sigma(1.1*3.6*0.3*24)
+mess $sigma(1.1*3.6*0.3*24*30)
+mess $sigma(((.1.11+.495)**2-.938**2)/2/.938)
+mess $sigma(((1.11+.495)**2-.938**2)/2/.938)
+*** End   of history file: Fri Oct 14 14:30:51 2005

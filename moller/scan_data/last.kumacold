@@ -1,0 +1,28 @@
+*** Begin of history file: Wed Dec  7 14:40:03 2011
+ve/re nn,coor,sig015 5_15a_12059_015.dat
+ve/re nn,coor,sig01 5_15a_12059_01.dat
+ve/re nn,coor,sig005 5_15a_12059_005.dat
+ve/pl sig005%coor
+null -26. 31 13.0 18.0
+set pmci 2
+ve/pl sig015%coor ! s
+set pmci 4
+ve/pl sig01%coor ! s
+set pmci 1
+ve/pl sig005%coor ! s
+ null -26. 31 14.2 16.3
+set pmci 2
+ve/pl sig015%coor ! s
+set pmci 4
+ve/pl sig01%coor ! s
+set pmci 1
+ve/pl sig005%coor ! sl
+set pmci 2
+ve/pl sig015%coor ! sl
+set plci 2
+ve/pl sig015%coor ! sl
+set plci 4
+set pmci 4
+ve/pl sig01%coor ! sl
+exit
+*** End   of history file: Wed Dec  7 14:52:39 2011

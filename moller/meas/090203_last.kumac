@@ -1,0 +1,67 @@
+*** Begin of history file: Tue Feb  3 15:45:29 2009
+exec run run=13113
+exec asymt run=13113 delay=0
+exec asymt run=13100 delay=0
+exec run run=13100
+exec asymt run=13100 delay=0
+exec asymt run=13100 delay=0
+exec run run=13114
+exec lg_spectra run=13114
+exec lg_spectra run=13114
+exec lg_spectra run=13114 cut=11
+loca
+exec asymt run=13114 delay=0
+exec run run=13115
+exec lg_spectra run=13115 cut=11
+exec asymt run=13115\ delay=0
+exec asymt run=13115 delay=0
+exec run run=13116
+exec asymt run=13116 delay=0
+exec run run=13117
+exec lg_spectra run=13117 cut=11
+exec asymt run=13117 delay=0
+call prunpri.f(10000,20000)
+call prunpri.f(13114,20000)
+exec run run=13118
+exec asymt run=13118 delay=0
+call prunpri.f(13114,20000)
+exec run run=13119
+exec asymt run=13119 delay=0
+call prunpri.f(13114,20000)
+exec asymt run=13119 delay=0 tauto=0 ptar=0.0797 angl=20.
+exec asymt run=13119 delay=0
+exec run run=13120
+exec asymt run=13120 delay=0
+zone 2 2
+exec asym_av run1=12117 run2=12120
+exec asym_av run1=12117 run2=12120
+exec asym_av run1=13117 run2=13120
+exec asym_av run1=13115 run2=13120
+exec run run=13121
+exec asymt delay=0 run=13121
+exec run run=13122
+exec asymt delay=0 run=13122
+call prunpri.f(13114,20000)
+exec run run=13123
+exec asymt delay=0 run=13123
+exec run run=13124
+exec asymt delay=0 run=13124
+call prunpri.f(13114,20000)
+exec asym_av run1=13121 run2=13124
+call prunpri.f(13114,20000)
+exec run run=13125
+exec asymt delay=0 run=13125
+zone 2 2
+exec run run=13126
+exec asymt delay=0 run=13126
+exec run run=13127
+exec asymt delay=0 run=13127
+call prunpri.f(13114,20000)
+exec run run=13128
+exec asymt delay=0 run=13128
+exec asym_av run1=13125 run2=13128
+exec asym_av run1=13116 run2=13128
+exec asym_av run1=13117 run2=13128
+call prunpri.f(13114,20000)
+exit
+*** End   of history file: Tue Feb  3 19:28:23 2009
