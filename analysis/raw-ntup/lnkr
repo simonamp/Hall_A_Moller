@@ -1,0 +1,23 @@
+#! /bin/sh
+#
+
+os=`uname`
+
+if [ "$os" = "HP-UX" ] ; then
+  fort77 +ppu -g -o rawread_"$os".exe rawread.f \
+    /site/coda/1.4.1/HP_UX/lib/libcoda.a   \
+   -L/site/cernlib/hp700_ux90/96a/lib -lpacklib -lmathlib
+elif [ "$os" = "SunOS" ] ; then
+  f77 -g rawread.f /usr/local/coda/2.0/SunOS/lib/libcoda.a -L/apps/cernlib/97a/lib \
+    -lpacklib -lmathlib /usr/lib/libdl.so.1 -lw -lc -lgen -lsocket -lnsl -o rawread_"$os".exe
+elif [ "$os" = "Linux" ] ; then
+#  g77 rawread.f /apps/coda/2.2/Linux/lib/libcoda.a -L/cern/pro/lib -lpacklib -o rawread_"$os".exe
+#  g77 rawread.f /adaqfs/coda/2.5/Linux/lib/libcoda.a -L/cern/2002-rh9/lib -lpacklib -o rawread_"$os".exe
+#  g77 rawread.f /adaqfs/coda/2.5/Linux/lib/libcoda.a -L/apps/cernlib/i386_rhel3/2004/lib -lpacklib -o rawread_"$os".exe
+#  gfortran rawread.f /adaqfs/coda/2.5/Linux/lib/libcoda.a -L/apps/cernlib/x86_64_rhel7/2005/lib -lpacklib -o rawread_"$os".exe
+#  14-May-2018 compile on 'hamoller'
+  gfortran rawread.f /site/coda/2.5/Linux/lib/libcoda.a -L /apps/cernlib/i386_rhel5/2005/lib -lpacklib -o rawread_"$os".exe
+
+
+fi
+  chmod +x rawread_"$os".exe
